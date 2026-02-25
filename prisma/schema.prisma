@@ -1,0 +1,176 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Game Data ────────────────────────────────────────────────────
+
+model Item {
+  id          Int      @id // Item ID from rAthena
+  name        String
+  nameKo      String?  // Korean name
+  namePt      String?  // Portuguese (bRO) name
+  type        ItemType
+  subType     String?
+  weight      Int      @default(0)
+  atk         Int?
+  matk        Int?
+  defense     Int?
+  slots       Int      @default(0)
+  requiredLevel Int?
+  jobs        String[] // Job flags
+  description String?
+  flavorText  String?
+  imageUrl    String?
+  isEquipment Boolean  @default(false)
+  locations   String[] // Equipment locations (head, body, weapon, etc.)
+  refineable  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  cards        Card[]       @relation("CardItems")
+  comboItems   ItemCombo[]  @relation("ComboItems")
+  buildItems   BuildItem[]
+  enchantments Enchantment[]
+
+  @@index([type])
+  @@index([name])
+}
+
+model Card {
+  id          Int      @id // Card Item ID
+  name        String
+  namePt      String?
+  effect      String   // Description of effect
+  prefix      String?  // e.g. "Soldier's"
+  suffix      String?  // e.g. "of Soldier"
+  compoundOn  String[] // head, body, weapon, shield, shoes, accessory, etc.
+  monster     String?  // Monster drop source
+  imageUrl    String?
+
+  items       Item[]   @relation("CardItems")
+
+  @@index([compoundOn])
+}
+
+model Enchantment {
+  id          String   @id @default(cuid())
+  itemId      Int
+  slot        Int      // 1, 2, 3...
+  tier        String   // "Special", "Upper", "Normal"
+  effect      String
+  weight      Int      @default(1) // Rarity weight
+
+  item        Item     @relation(fields: [itemId], references: [id])
+
+  @@index([itemId])
+}
+
+model ItemCombo {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  effect      String
+  items       Item[]   @relation("ComboItems")
+}
+
+// ─── Classes ─────────────────────────────────────────────────────
+
+model JobClass {
+  id          String   @id // e.g. "archbishop", "ranger", "warlock"
+  name        String
+  namePt      String?
+  tree        String   // e.g. "acolyte > priest > archbishop"
+  baseClass   String?
+  icon        String?
+  description String?
+  roles       String[] // support, dps, tank, utility
+
+  skills      Skill[]
+  builds      Build[]
+}
+
+model Skill {
+  id          Int      @id // Skill ID
+  name        String
+  namePt      String?
+  jobClassId  String
+  type        String   // active, passive, toggle
+  maxLevel    Int
+  description String
+  spCost      String?  // Can vary per level
+  cooldown    String?
+
+  jobClass    JobClass @relation(fields: [jobClassId], references: [id])
+
+  @@index([jobClassId])
+}
+
+// ─── Builds ───────────────────────────────────────────────────────
+
+model Build {
+  id          String     @id @default(cuid())
+  title       String
+  jobClassId  String
+  patch       String     // e.g. "2025-10"
+  role        String     // mvp, woe, pve, pvp
+  score       Float?     // Meta score 0-10
+  isAiGenerated Boolean  @default(false)
+  description String?
+  statPoints  Json?      // { str, agi, vit, int, dex, luk }
+  skillPoints Json?      // { skillId: level }
+  notes       String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  jobClass    JobClass   @relation(fields: [jobClassId], references: [id])
+  items       BuildItem[]
+
+  @@index([jobClassId])
+  @@index([patch])
+  @@index([role])
+}
+
+model BuildItem {
+  id       String @id @default(cuid())
+  buildId  String
+  itemId   Int
+  slot     String // head_top, head_mid, head_low, body, weapon, offhand, garment, shoes, acc1, acc2
+  refine   Int    @default(0)
+  cards    Int[]  // Card Item IDs in each slot
+  enchants Json?  // Enchantment selections
+
+  build    Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+  item     Item   @relation(fields: [itemId], references: [id])
+
+  @@index([buildId])
+}
+
+// ─── Meta ─────────────────────────────────────────────────────────
+
+model MetaSnapshot {
+  id          String   @id @default(cuid())
+  patch       String
+  snapshotAt  DateTime @default(now())
+  tierList    Json     // { jobClassId: { role: "S/A/B/C/D", notes: "..." } }
+  topBuilds   Json     // Top build IDs per class
+  changes     String?  // What changed from previous patch
+  sources     String[] // URLs or references
+}
+
+// ─── Enums ────────────────────────────────────────────────────────
+
+enum ItemType {
+  WEAPON
+  ARMOR
+  CARD
+  CONSUMABLE
+  QUEST
+  MISC
+  AMMUNITION
+  SHADOW
+}
