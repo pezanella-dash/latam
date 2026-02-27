@@ -7,75 +7,140 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ─── Game Data ────────────────────────────────────────────────────
+// ─── Game Data: Items ─────────────────────────────────────────────
 
 model Item {
-  id          Int      @id // Item ID from rAthena
-  name        String
-  nameKo      String?  // Korean name
-  namePt      String?  // Portuguese (bRO) name
-  type        ItemType
-  subType     String?
-  weight      Int      @default(0)
-  atk         Int?
-  matk        Int?
-  defense     Int?
-  slots       Int      @default(0)
-  requiredLevel Int?
-  jobs        String[] // Job flags
-  description String?
-  flavorText  String?
-  imageUrl    String?
-  isEquipment Boolean  @default(false)
-  locations   String[] // Equipment locations (head, body, weapon, etc.)
-  refineable  Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            Int      @id // Item ID from rAthena/GRF
+  aegisName     String   @default("") // rAthena internal name
+  name          String   // English name
+  namePt        String?  // Portuguese (LATAM) name from GRF
+  type          ItemType
+  subType       String?
+  weight        Float    @default(0)
+  atk           Int?
+  matk          Int?
+  defense       Int?
+  range         Int?
+  slots         Int      @default(0)
+  equipLevelMin Int?
+  equipLevelMax Int?
+  weaponLevel   Int?
+  armorLevel    Int?
+  buy           Int?
+  sell          Int?
+  jobs          String[] // Job flags that can equip
+  classes       String[] // Class restrictions (All, Normal, Upper, etc.)
+  locations     String[] // Equipment locations (Right_Hand, Body, etc.)
+  description   String[] // pt-BR description lines from GRF
+  script        String?  // rAthena equip/use script
+  equipScript   String?  // rAthena on-equip script
+  refineable    Boolean  @default(false)
+  gradable      Boolean  @default(false)
+  costume       Boolean  @default(false)
+  classNum      Int      @default(0) // Sprite class number
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  cards        Card[]       @relation("CardItems")
-  comboItems   ItemCombo[]  @relation("ComboItems")
-  buildItems   BuildItem[]
-  enchantments Enchantment[]
+  buildItems    BuildItem[]
+  drops         MonsterDrop[]
 
   @@index([type])
   @@index([name])
+  @@index([aegisName])
+  @@index([namePt])
 }
 
-model Card {
-  id          Int      @id // Card Item ID
-  name        String
-  namePt      String?
-  effect      String   // Description of effect
-  prefix      String?  // e.g. "Soldier's"
-  suffix      String?  // e.g. "of Soldier"
-  compoundOn  String[] // head, body, weapon, shield, shoes, accessory, etc.
-  monster     String?  // Monster drop source
-  imageUrl    String?
+// ─── Game Data: Monsters ──────────────────────────────────────────
 
-  items       Item[]   @relation("CardItems")
+model Monster {
+  id            Int      @id // Monster ID
+  aegisName     String   @unique
+  name          String   // English name
+  namePt        String?  // Portuguese name (future: from GRF)
+  level         Int      @default(1)
+  hp            Int      @default(1)
+  sp            Int      @default(0)
+  baseExp       Int      @default(0)
+  jobExp        Int      @default(0)
+  mvpExp        Int      @default(0)
+  attack        Int      @default(0)
+  magicAttack   Int      @default(0)
+  defense       Int      @default(0)
+  magicDefense  Int      @default(0)
+  str           Int      @default(0)
+  agi           Int      @default(0)
+  vit           Int      @default(0)
+  int_          Int      @default(0) @map("int")
+  dex           Int      @default(0)
+  luk           Int      @default(0)
+  attackRange   Int      @default(0)
+  skillRange    Int      @default(0)
+  chaseRange    Int      @default(0)
+  size          String   @default("Small") // Small, Medium, Large
+  race          String   @default("Formless")
+  element       String   @default("Neutral")
+  elementLevel  Int      @default(1)
+  walkSpeed     Int      @default(200)
+  attackDelay   Int      @default(0)
+  attackMotion  Int      @default(0)
+  damageMotion  Int      @default(0)
+  ai            String   @default("06")
+  class         String   @default("Normal") // Normal, Boss, Guardian
+  isMvp         Boolean  @default(false)
+  modes         String[] // Special behavior flags
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  @@index([compoundOn])
+  drops         MonsterDrop[]
+  mvpDrops      MonsterMvpDrop[]
+
+  @@index([name])
+  @@index([level])
+  @@index([race])
+  @@index([element])
+  @@index([isMvp])
 }
 
-model Enchantment {
-  id          String   @id @default(cuid())
-  itemId      Int
-  slot        Int      // 1, 2, 3...
-  tier        String   // "Special", "Upper", "Normal"
-  effect      String
-  weight      Int      @default(1) // Rarity weight
+model MonsterDrop {
+  id             String  @id @default(cuid())
+  monsterId      Int
+  itemId         Int
+  rate           Int     // Drop rate (10000 = 100%)
+  stealProtected Boolean @default(false)
 
-  item        Item     @relation(fields: [itemId], references: [id])
+  monster        Monster @relation(fields: [monsterId], references: [id], onDelete: Cascade)
+  item           Item    @relation(fields: [itemId], references: [id])
 
+  @@index([monsterId])
   @@index([itemId])
 }
 
-model ItemCombo {
-  id          String   @id @default(cuid())
-  name        String
-  description String
-  effect      String
-  items       Item[]   @relation("ComboItems")
+model MonsterMvpDrop {
+  id        String  @id @default(cuid())
+  monsterId Int
+  aegisName String  // Item aegis name (may not exist in our Item table)
+  rate      Int
+
+  monster   Monster @relation(fields: [monsterId], references: [id], onDelete: Cascade)
+
+  @@index([monsterId])
+}
+
+// ─── Game Data: Skills ────────────────────────────────────────────
+
+model Skill {
+  id          Int      @id // Skill ID
+  aegisName   String   @unique // e.g. SM_BASH, MG_FIREBOLT
+  name        String   // Description/display name
+  namePt      String?  // Portuguese name (future)
+  maxLevel    Int      @default(1)
+  type        String   @default("None") // Weapon, Magic, Misc, None
+  targetType  String   @default("Passive") // Self, Attack, Ground, Passive, etc.
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([aegisName])
+  @@index([type])
 }
 
 // ─── Classes ─────────────────────────────────────────────────────
@@ -90,45 +155,28 @@ model JobClass {
   description String?
   roles       String[] // support, dps, tank, utility
 
-  skills      Skill[]
   builds      Build[]
-}
-
-model Skill {
-  id          Int      @id // Skill ID
-  name        String
-  namePt      String?
-  jobClassId  String
-  type        String   // active, passive, toggle
-  maxLevel    Int
-  description String
-  spCost      String?  // Can vary per level
-  cooldown    String?
-
-  jobClass    JobClass @relation(fields: [jobClassId], references: [id])
-
-  @@index([jobClassId])
 }
 
 // ─── Builds ───────────────────────────────────────────────────────
 
 model Build {
-  id          String     @id @default(cuid())
-  title       String
-  jobClassId  String
-  patch       String     // e.g. "2025-10"
-  role        String     // mvp, woe, pve, pvp
-  score       Float?     // Meta score 0-10
-  isAiGenerated Boolean  @default(false)
-  description String?
-  statPoints  Json?      // { str, agi, vit, int, dex, luk }
-  skillPoints Json?      // { skillId: level }
-  notes       String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id            String     @id @default(cuid())
+  title         String
+  jobClassId    String
+  patch         String     // e.g. "2025-10"
+  role          String     // mvp, woe, pve, pvp
+  score         Float?     // Meta score 0-10
+  isAiGenerated Boolean    @default(false)
+  description   String?
+  statPoints    Json?      // { str, agi, vit, int, dex, luk }
+  skillPoints   Json?      // { skillId: level }
+  notes         String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
-  jobClass    JobClass   @relation(fields: [jobClassId], references: [id])
-  items       BuildItem[]
+  jobClass      JobClass   @relation(fields: [jobClassId], references: [id])
+  items         BuildItem[]
 
   @@index([jobClassId])
   @@index([patch])
@@ -169,8 +217,12 @@ enum ItemType {
   ARMOR
   CARD
   CONSUMABLE
+  HEALING
+  USABLE
+  DELAYCONSUME
   QUEST
   MISC
   AMMUNITION
   SHADOW
+  UNKNOWN
 }

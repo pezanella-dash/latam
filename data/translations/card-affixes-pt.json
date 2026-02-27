@@ -1,0 +1,5046 @@
+{
+  "4001": {
+    "text": "da Fortuna",
+    "type": "suffix"
+  },
+  "4002": {
+    "text": "Vital",
+    "type": "suffix"
+  },
+  "4003": {
+    "text": "Resistente",
+    "type": "suffix"
+  },
+  "4004": {
+    "text": "Expediente",
+    "type": "suffix"
+  },
+  "4005": {
+    "text": "Celestial",
+    "type": "suffix"
+  },
+  "4006": {
+    "text": "Talismã",
+    "type": "suffix"
+  },
+  "4007": {
+    "text": "Espectral",
+    "type": "suffix"
+  },
+  "4008": {
+    "text": "Extraforte",
+    "type": "suffix"
+  },
+  "4009": {
+    "text": "Leves",
+    "type": "suffix"
+  },
+  "4010": {
+    "text": "Sagaz",
+    "type": "suffix"
+  },
+  "4011": {
+    "text": "Eficaz",
+    "type": "suffix"
+  },
+  "4012": {
+    "text": "Tenaz",
+    "type": "suffix"
+  },
+  "4013": {
+    "text": "Excelente",
+    "type": "suffix"
+  },
+  "4014": {
+    "text": "da Disciplina",
+    "type": "suffix"
+  },
+  "4015": {
+    "text": "do Vento",
+    "type": "suffix"
+  },
+  "4016": {
+    "text": "Veloz",
+    "type": "suffix"
+  },
+  "4017": {
+    "text": "Estonteante",
+    "type": "suffix"
+  },
+  "4018": {
+    "text": "Consciente",
+    "type": "suffix"
+  },
+  "4019": {
+    "text": "Tonificante",
+    "type": "suffix"
+  },
+  "4020": {
+    "text": "Cegante",
+    "type": "suffix"
+  },
+  "4021": {
+    "text": "Hábil",
+    "type": "suffix"
+  },
+  "4022": {
+    "text": "do Vigor",
+    "type": "suffix"
+  },
+  "4023": {
+    "text": "Mental",
+    "type": "suffix"
+  },
+  "4024": {
+    "text": "Nocauteante",
+    "type": "suffix"
+  },
+  "4025": {
+    "text": "Fatal",
+    "type": "suffix"
+  },
+  "4026": {
+    "text": "Acelerante",
+    "type": "suffix"
+  },
+  "4027": {
+    "text": "Ágil",
+    "type": "suffix"
+  },
+  "4028": {
+    "text": "do Lutador",
+    "type": "suffix"
+  },
+  "4029": {
+    "text": "Feroz",
+    "type": "suffix"
+  },
+  "4030": {
+    "text": "Lunar",
+    "type": "suffix"
+  },
+  "4031": {
+    "text": "de Ares",
+    "type": "suffix"
+  },
+  "4032": {
+    "text": "de Atena",
+    "type": "suffix"
+  },
+  "4033": {
+    "text": "Desintoxicante",
+    "type": "suffix"
+  },
+  "4034": {
+    "text": "Pontual",
+    "type": "suffix"
+  },
+  "4035": {
+    "text": "Capital",
+    "type": "suffix"
+  },
+  "4036": {
+    "text": "Possante",
+    "type": "suffix"
+  },
+  "4037": {
+    "text": "Inoculante",
+    "type": "suffix"
+  },
+  "4038": {
+    "text": "Saudáveis",
+    "type": "suffix"
+  },
+  "4039": {
+    "text": "do Filósofo",
+    "type": "suffix"
+  },
+  "4040": {
+    "text": "de Teleporte",
+    "type": "suffix"
+  },
+  "4041": {
+    "text": "do Insone",
+    "type": "suffix"
+  },
+  "4042": {
+    "text": "do Defensor",
+    "type": "suffix"
+  },
+  "4043": {
+    "text": "Excepcional",
+    "type": "suffix"
+  },
+  "4044": {
+    "text": "do Esconderijo",
+    "type": "suffix"
+  },
+  "4045": {
+    "text": "Resiliente",
+    "type": "suffix"
+  },
+  "4046": {
+    "text": "do Clérigo",
+    "type": "suffix"
+  },
+  "4047": {
+    "text": "Intangível",
+    "type": "suffix"
+  },
+  "4048": {
+    "text": "de Veneno",
+    "type": "suffix"
+  },
+  "4049": {
+    "text": "Inflamável",
+    "type": "suffix"
+  },
+  "4050": {
+    "text": "de Hermes",
+    "type": "suffix"
+  },
+  "4051": {
+    "text": "Lábil",
+    "type": "suffix"
+  },
+  "4052": {
+    "text": "Brilhante",
+    "type": "suffix"
+  },
+  "4053": {
+    "text": "de Cura",
+    "type": "suffix"
+  },
+  "4054": {
+    "text": "Celeste",
+    "type": "suffix"
+  },
+  "4055": {
+    "text": "Congelante",
+    "type": "suffix"
+  },
+  "4056": {
+    "text": "da Tempestade",
+    "type": "suffix"
+  },
+  "4057": {
+    "text": "Silenciante",
+    "type": "suffix"
+  },
+  "4058": {
+    "text": "de Prometeu",
+    "type": "suffix"
+  },
+  "4059": {
+    "text": "de Hera",
+    "type": "suffix"
+  },
+  "4060": {
+    "text": "Bestial",
+    "type": "suffix"
+  },
+  "4061": {
+    "text": "Imortal",
+    "type": "suffix"
+  },
+  "4062": {
+    "text": "Neutralizante",
+    "type": "suffix"
+  },
+  "4063": {
+    "text": "Imunizante",
+    "type": "suffix"
+  },
+  "4064": {
+    "text": "Integral",
+    "type": "suffix"
+  },
+  "4065": {
+    "text": "Fundamental",
+    "type": "suffix"
+  },
+  "4066": {
+    "text": "de Artemis",
+    "type": "suffix"
+  },
+  "4067": {
+    "text": "Energizante",
+    "type": "suffix"
+  },
+  "4068": {
+    "text": "Termal",
+    "type": "suffix"
+  },
+  "4069": {
+    "text": "Desidratante",
+    "type": "suffix"
+  },
+  "4070": {
+    "text": "de Wicca",
+    "type": "suffix"
+  },
+  "4071": {
+    "text": "dos Anjos",
+    "type": "suffix"
+  },
+  "4072": {
+    "text": "Indestrutível",
+    "type": "suffix"
+  },
+  "4073": {
+    "text": "do Vendedor",
+    "type": "suffix"
+  },
+  "4074": {
+    "text": "de Urtiga",
+    "type": "suffix"
+  },
+  "4075": {
+    "text": "Hipnotizante",
+    "type": "suffix"
+  },
+  "4076": {
+    "text": "Amaldiçoante",
+    "type": "suffix"
+  },
+  "4077": {
+    "text": "de Concentração",
+    "type": "suffix"
+  },
+  "4078": {
+    "text": "de Regeneração",
+    "type": "suffix"
+  },
+  "4079": {
+    "text": "Descomunal",
+    "type": "suffix"
+  },
+  "4080": {
+    "text": "Estival",
+    "type": "suffix"
+  },
+  "4081": {
+    "text": "da Montanha",
+    "type": "suffix"
+  },
+  "4082": {
+    "text": "Gigante",
+    "type": "suffix"
+  },
+  "4083": {
+    "text": "de Alga",
+    "type": "suffix"
+  },
+  "4084": {
+    "text": "da Explosão",
+    "type": "suffix"
+  },
+  "4085": {
+    "text": "Abissal",
+    "type": "suffix"
+  },
+  "4086": {
+    "text": "Letal",
+    "type": "suffix"
+  },
+  "4087": {
+    "text": "do Juiz",
+    "type": "suffix"
+  },
+  "4088": {
+    "text": "do Ilusionista",
+    "type": "suffix"
+  },
+  "4089": {
+    "text": "de Poseidon",
+    "type": "suffix"
+  },
+  "4090": {
+    "text": "Escarlate",
+    "type": "suffix"
+  },
+  "4091": {
+    "text": "de Contra-ataque",
+    "type": "suffix"
+  },
+  "4092": {
+    "text": "Primordial",
+    "type": "suffix"
+  },
+  "4093": {
+    "text": "Medicinal",
+    "type": "suffix"
+  },
+  "4094": {
+    "text": "Ciclonal",
+    "type": "suffix"
+  },
+  "4095": {
+    "text": "do Oceano",
+    "type": "suffix"
+  },
+  "4096": {
+    "text": "Feral",
+    "type": "suffix"
+  },
+  "4097": {
+    "text": "Verdes",
+    "type": "suffix"
+  },
+  "4098": {
+    "text": "de Zefir",
+    "type": "suffix"
+  },
+  "4099": {
+    "text": "de Hefestus",
+    "type": "suffix"
+  },
+  "4100": {
+    "text": "de Fada",
+    "type": "suffix"
+  },
+  "4101": {
+    "text": "de Gaia",
+    "type": "suffix"
+  },
+  "4102": {
+    "text": "de Loki",
+    "type": "suffix"
+  },
+  "4103": {
+    "text": "Clarividente",
+    "type": "suffix"
+  },
+  "4104": {
+    "text": "Caotizante",
+    "type": "suffix"
+  },
+  "4105": {
+    "text": "Anti-congelante",
+    "type": "suffix"
+  },
+  "4106": {
+    "text": "Ancestral",
+    "type": "suffix"
+  },
+  "4107": {
+    "text": "Essenciais",
+    "type": "suffix"
+  },
+  "4108": {
+    "text": "da Nascente",
+    "type": "suffix"
+  },
+  "4109": {
+    "text": "do Deserto",
+    "type": "suffix"
+  },
+  "4110": {
+    "text": "da Vacina",
+    "type": "suffix"
+  },
+  "4111": {
+    "text": "Exorcisante",
+    "type": "suffix"
+  },
+  "4112": {
+    "text": "do Arauto",
+    "type": "suffix"
+  },
+  "4113": {
+    "text": "da Alma",
+    "type": "suffix"
+  },
+  "4114": {
+    "text": "de Apolo",
+    "type": "suffix"
+  },
+  "4115": {
+    "text": "Cabal",
+    "type": "suffix"
+  },
+  "4116": {
+    "text": "da Luz",
+    "type": "suffix"
+  },
+  "4117": {
+    "text": "do Duelista",
+    "type": "suffix"
+  },
+  "4118": {
+    "text": "Nobre",
+    "type": "suffix"
+  },
+  "4119": {
+    "text": "do Mal",
+    "type": "suffix"
+  },
+  "4120": {
+    "text": "do Dragão",
+    "type": "suffix"
+  },
+  "4121": {
+    "text": "Magistral",
+    "type": "suffix"
+  },
+  "4122": {
+    "text": "do Sentinela",
+    "type": "suffix"
+  },
+  "4123": {
+    "text": "de Heimdall",
+    "type": "suffix"
+  },
+  "4124": {
+    "text": "de Perseu",
+    "type": "suffix"
+  },
+  "4125": {
+    "text": "Hibernal",
+    "type": "suffix"
+  },
+  "4126": {
+    "text": "Colossal",
+    "type": "suffix"
+  },
+  "4127": {
+    "text": "do Vigilante",
+    "type": "suffix"
+  },
+  "4128": {
+    "text": "do Escaravelho",
+    "type": "suffix"
+  },
+  "4129": {
+    "text": "da Noite",
+    "type": "suffix"
+  },
+  "4130": {
+    "text": "Solar",
+    "type": "suffix"
+  },
+  "4131": {
+    "text": "Fugazes",
+    "type": "suffix"
+  },
+  "4132": {
+    "text": "de Jóias",
+    "type": "suffix"
+  },
+  "4133": {
+    "text": "de Balder",
+    "type": "suffix"
+  },
+  "4134": {
+    "text": "Espiritual",
+    "type": "suffix"
+  },
+  "4135": {
+    "text": "de Espelhos",
+    "type": "suffix"
+  },
+  "4136": {
+    "text": "do Inferno",
+    "type": "suffix"
+  },
+  "4137": {
+    "text": "do Infinito",
+    "type": "suffix"
+  },
+  "4138": {
+    "text": "do Paraíso",
+    "type": "suffix"
+  },
+  "4139": {
+    "text": "do Luar",
+    "type": "suffix"
+  },
+  "4140": {
+    "text": "Rebelde",
+    "type": "suffix"
+  },
+  "4141": {
+    "text": "de Hades",
+    "type": "suffix"
+  },
+  "4142": {
+    "text": "da Fúria",
+    "type": "suffix"
+  },
+  "4143": {
+    "text": "do Herói",
+    "type": "suffix"
+  },
+  "4144": {
+    "text": "da Eternidade",
+    "type": "suffix"
+  },
+  "4145": {
+    "text": "do Ventríloquo",
+    "type": "suffix"
+  },
+  "4146": {
+    "text": "de Reflexão",
+    "type": "suffix"
+  },
+  "4147": {
+    "text": "do Ceifeiro",
+    "type": "suffix"
+  },
+  "4148": {
+    "text": "do Místico",
+    "type": "suffix"
+  },
+  "4149": {
+    "text": "do Céu Limpo",
+    "type": "suffix"
+  },
+  "4150": {
+    "text": "da Resistência à Magia",
+    "type": "suffix"
+  },
+  "4151": {
+    "text": "do Destruidor da Natureza",
+    "type": "suffix"
+  },
+  "4152": {
+    "text": "Suculenta",
+    "type": "suffix"
+  },
+  "4153": {
+    "text": "de Câncer",
+    "type": "suffix"
+  },
+  "4154": {
+    "text": "Aromático",
+    "type": "suffix"
+  },
+  "4155": {
+    "text": "Goblin Fatal",
+    "type": "suffix"
+  },
+  "4156": {
+    "text": "Chama Fatal",
+    "type": "suffix"
+  },
+  "4157": {
+    "text": "Fuminante",
+    "type": "suffix"
+  },
+  "4158": {
+    "text": "da Chacina",
+    "type": "suffix"
+  },
+  "4159": {
+    "text": "do Nível Alto",
+    "type": "suffix"
+  },
+  "4160": {
+    "text": "do Nível Alto",
+    "type": "suffix"
+  },
+  "4161": {
+    "text": "Contra Magia",
+    "type": "suffix"
+  },
+  "4162": {
+    "text": "do Cego",
+    "type": "suffix"
+  },
+  "4163": {
+    "text": "Selvagem",
+    "type": "suffix"
+  },
+  "4164": {
+    "text": "do Pescador",
+    "type": "suffix"
+  },
+  "4165": {
+    "text": "do Inseto Sugador",
+    "type": "suffix"
+  },
+  "4166": {
+    "text": "do Azar",
+    "type": "suffix"
+  },
+  "4167": {
+    "text": "Bestiano",
+    "type": "suffix"
+  },
+  "4168": {
+    "text": "da Perdição",
+    "type": "suffix"
+  },
+  "4169": {
+    "text": "do Mestre Encantador",
+    "type": "suffix"
+  },
+  "4170": {
+    "text": "do Endurecimento",
+    "type": "suffix"
+  },
+  "4171": {
+    "text": "Drenador de Almas",
+    "type": "suffix"
+  },
+  "4172": {
+    "text": "Cortante",
+    "type": "suffix"
+  },
+  "4173": {
+    "text": "do Hipnotismo",
+    "type": "suffix"
+  },
+  "4174": {
+    "text": "Maravilhoso",
+    "type": "suffix"
+  },
+  "4175": {
+    "text": "Empurrador",
+    "type": "suffix"
+  },
+  "4176": {
+    "text": "Serpente Fatal",
+    "type": "suffix"
+  },
+  "4177": {
+    "text": "da Pedra Verde",
+    "type": "suffix"
+  },
+  "4178": {
+    "text": "do Mestre Arqueiro",
+    "type": "suffix"
+  },
+  "4179": {
+    "text": "da Luz Intensa",
+    "type": "suffix"
+  },
+  "4180": {
+    "text": "Draconiano",
+    "type": "suffix"
+  },
+  "4181": {
+    "text": "do Silêncio Mortal",
+    "type": "suffix"
+  },
+  "4182": {
+    "text": "Demoníaco",
+    "type": "suffix"
+  },
+  "4183": {
+    "text": "do Lobisomem",
+    "type": "suffix"
+  },
+  "4184": {
+    "text": "da Parada",
+    "type": "suffix"
+  },
+  "4185": {
+    "text": "da Sabedoria",
+    "type": "suffix"
+  },
+  "4186": {
+    "text": "Musculoso",
+    "type": "suffix"
+  },
+  "4187": {
+    "text": "da Noite Brilhante",
+    "type": "suffix"
+  },
+  "4188": {
+    "text": "da Pedra Vermelha",
+    "type": "suffix"
+  },
+  "4189": {
+    "text": "da Miséria",
+    "type": "suffix"
+  },
+  "4190": {
+    "text": "do Animador",
+    "type": "suffix"
+  },
+  "4191": {
+    "text": "da Linha da Vida",
+    "type": "suffix"
+  },
+  "4192": {
+    "text": "dos Peixes Fatais",
+    "type": "suffix"
+  },
+  "4193": {
+    "text": "da Paciência",
+    "type": "suffix"
+  },
+  "4194": {
+    "text": "do Atordoamento",
+    "type": "suffix"
+  },
+  "4195": {
+    "text": "da Pedra Azul",
+    "type": "suffix"
+  },
+  "4196": {
+    "text": "do Jellopy",
+    "type": "suffix"
+  },
+  "4197": {
+    "text": "do Sortudo",
+    "type": "suffix"
+  },
+  "4198": {
+    "text": "da Mira Verdadeira",
+    "type": "suffix"
+  },
+  "4199": {
+    "text": "do Encontrão",
+    "type": "suffix"
+  },
+  "4200": {
+    "text": "da Resistência à Poder Mágico",
+    "type": "suffix"
+  },
+  "4201": {
+    "text": "Múltiplo Atordoamento",
+    "type": "suffix"
+  },
+  "4202": {
+    "text": "Exorcismo",
+    "type": "suffix"
+  },
+  "4203": {
+    "text": "Flamejante",
+    "type": "suffix"
+  },
+  "4204": {
+    "text": "do Ganhador",
+    "type": "suffix"
+  },
+  "4205": {
+    "text": "do Cubo Azul",
+    "type": "suffix"
+  },
+  "4206": {
+    "text": "Cúbico",
+    "type": "suffix"
+  },
+  "4207": {
+    "text": "Contra o Menor",
+    "type": "suffix"
+  },
+  "4208": {
+    "text": "da Energia Plena",
+    "type": "suffix"
+  },
+  "4209": {
+    "text": "da Rachadura",
+    "type": "suffix"
+  },
+  "4210": {
+    "text": "Pressão",
+    "type": "suffix"
+  },
+  "4211": {
+    "text": "do Especialista",
+    "type": "suffix"
+  },
+  "4212": {
+    "text": "do Empurrão",
+    "type": "suffix"
+  },
+  "4213": {
+    "text": "do Silêncio",
+    "type": "suffix"
+  },
+  "4214": {
+    "text": "Canibal",
+    "type": "suffix"
+  },
+  "4215": {
+    "text": "do Alimento",
+    "type": "suffix"
+  },
+  "4216": {
+    "text": "do Sopro Gelado",
+    "type": "suffix"
+  },
+  "4217": {
+    "text": "Auto Cura",
+    "type": "suffix"
+  },
+  "4218": {
+    "text": "do Pesadelo",
+    "type": "suffix"
+  },
+  "4219": {
+    "text": "da Pedra Mágica",
+    "type": "suffix"
+  },
+  "4220": {
+    "text": "Fiel",
+    "type": "suffix"
+  },
+  "4221": {
+    "text": "do Colecionador de Insetos",
+    "type": "suffix"
+  },
+  "4222": {
+    "text": "do Sono",
+    "type": "suffix"
+  },
+  "4223": {
+    "text": "Resistente ao Atordoamento",
+    "type": "suffix"
+  },
+  "4224": {
+    "text": "do Dia Chuvoso",
+    "type": "suffix"
+  },
+  "4225": {
+    "text": "Atirador",
+    "type": "suffix"
+  },
+  "4226": {
+    "text": "Nível Alto",
+    "type": "suffix"
+  },
+  "4227": {
+    "text": "do Cheiro de Carne",
+    "type": "suffix"
+  },
+  "4228": {
+    "text": "do Dia",
+    "type": "suffix"
+  },
+  "4229": {
+    "text": "do Gerente",
+    "type": "suffix"
+  },
+  "4230": {
+    "text": "do Covarde",
+    "type": "suffix"
+  },
+  "4231": {
+    "text": "Encontrão",
+    "type": "suffix"
+  },
+  "4232": {
+    "text": "Refrescante",
+    "type": "suffix"
+  },
+  "4233": {
+    "text": "Sorte do Petit",
+    "type": "suffix"
+  },
+  "4234": {
+    "text": "do Espelho Inoxidável",
+    "type": "suffix"
+  },
+  "4235": {
+    "text": "do Anjo Corrupto",
+    "type": "suffix"
+  },
+  "4236": {
+    "text": "da Proteção",
+    "type": "suffix"
+  },
+  "4237": {
+    "text": "da Ira dos Deuses",
+    "type": "suffix"
+  },
+  "4238": {
+    "text": "do Poder Duplo",
+    "type": "suffix"
+  },
+  "4239": {
+    "text": "do Caçador Veterano",
+    "type": "suffix"
+  },
+  "4240": {
+    "text": "da Resistência à Magia",
+    "type": "suffix"
+  },
+  "4241": {
+    "text": "Duplo 7 Sortudo",
+    "type": "suffix"
+  },
+  "4242": {
+    "text": "do Apocalipse",
+    "type": "suffix"
+  },
+  "4243": {
+    "text": "da Escapada",
+    "type": "suffix"
+  },
+  "4244": {
+    "text": "do Seguidor",
+    "type": "suffix"
+  },
+  "4245": {
+    "text": "do Assassino",
+    "type": "suffix"
+  },
+  "4246": {
+    "text": "Morte",
+    "type": "suffix"
+  },
+  "4247": {
+    "text": "Peixe-Estrela",
+    "type": "suffix"
+  },
+  "4248": {
+    "text": "Cruz Brilhante",
+    "type": "suffix"
+  },
+  "4249": {
+    "text": "do Exorcista",
+    "type": "suffix"
+  },
+  "4250": {
+    "text": "Contra Grandes",
+    "type": "suffix"
+  },
+  "4251": {
+    "text": "Invasão",
+    "type": "suffix"
+  },
+  "4252": {
+    "text": "do Trevo de 4 Folhas",
+    "type": "suffix"
+  },
+  "4253": {
+    "text": "da Guarda Real",
+    "type": "suffix"
+  },
+  "4254": {
+    "text": "Contra Médios",
+    "type": "suffix"
+  },
+  "4255": {
+    "text": "Esmagador",
+    "type": "suffix"
+  },
+  "4256": {
+    "text": "Desejado",
+    "type": "suffix"
+  },
+  "4257": {
+    "text": "Alado",
+    "type": "suffix"
+  },
+  "4258": {
+    "text": "Inteligência Melhorada",
+    "type": "suffix"
+  },
+  "4259": {
+    "text": "da Natureza",
+    "type": "suffix"
+  },
+  "4260": {
+    "text": "Protetor Contra Confusão",
+    "type": "suffix"
+  },
+  "4261": {
+    "text": "Protetor Contra Cegueira",
+    "type": "suffix"
+  },
+  "4262": {
+    "text": "do Dia Nublado",
+    "type": "suffix"
+  },
+  "4263": {
+    "text": "Desejo Sangrento",
+    "type": "suffix"
+  },
+  "4264": {
+    "text": "Relâmpago",
+    "type": "suffix"
+  },
+  "4265": {
+    "text": "do Alvorecer",
+    "type": "suffix"
+  },
+  "4266": {
+    "text": "Resistência Mágica",
+    "type": "suffix"
+  },
+  "4267": {
+    "text": "do Caçador de Dragões",
+    "type": "suffix"
+  },
+  "4268": {
+    "text": "Extensor",
+    "type": "suffix"
+  },
+  "4269": {
+    "text": "do Pesadelo",
+    "type": "suffix"
+  },
+  "4270": {
+    "text": "do Veneno",
+    "type": "suffix"
+  },
+  "4271": {
+    "text": "da Pedra Amarela",
+    "type": "suffix"
+  },
+  "4272": {
+    "text": "da Rapidez",
+    "type": "suffix"
+  },
+  "4273": {
+    "text": "Concha",
+    "type": "suffix"
+  },
+  "4274": {
+    "text": "Morto-Vivo Sugador",
+    "type": "suffix"
+  },
+  "4275": {
+    "text": "do Morto-Vivo Matador",
+    "type": "suffix"
+  },
+  "4276": {
+    "text": "Crise",
+    "type": "suffix"
+  },
+  "4277": {
+    "text": "do Mestre Atirador",
+    "type": "suffix"
+  },
+  "4278": {
+    "text": "da Resistência à Magia",
+    "type": "suffix"
+  },
+  "4279": {
+    "text": "do Colecionador de Almas",
+    "type": "suffix"
+  },
+  "4280": {
+    "text": "da Benção Grandiosa",
+    "type": "suffix"
+  },
+  "4281": {
+    "text": "Trabalhador",
+    "type": "suffix"
+  },
+  "4282": {
+    "text": "da Poção",
+    "type": "suffix"
+  },
+  "4283": {
+    "text": "Lança de Mana",
+    "type": "suffix"
+  },
+  "4284": {
+    "text": "Toque Suave",
+    "type": "suffix"
+  },
+  "4285": {
+    "text": "Conjurado por Elfo",
+    "type": "suffix"
+  },
+  "4286": {
+    "text": "do Pânico",
+    "type": "suffix"
+  },
+  "4287": {
+    "text": "da Resistência à Magia",
+    "type": "suffix"
+  },
+  "4288": {
+    "text": "Nível Alto",
+    "type": "suffix"
+  },
+  "4289": {
+    "text": "Planta Sugadora",
+    "type": "suffix"
+  },
+  "4290": {
+    "text": "Reflexo",
+    "type": "suffix"
+  },
+  "4291": {
+    "text": "Kobold Fatal",
+    "type": "suffix"
+  },
+  "4292": {
+    "text": "Planta Fatal",
+    "type": "suffix"
+  },
+  "4293": {
+    "text": "Chance",
+    "type": "suffix"
+  },
+  "4294": {
+    "text": "do Astuto",
+    "type": "suffix"
+  },
+  "4295": {
+    "text": "do Apagão",
+    "type": "suffix"
+  },
+  "4296": {
+    "text": "Cobiça",
+    "type": "suffix"
+  },
+  "4297": {
+    "text": "Certeiro",
+    "type": "suffix"
+  },
+  "4298": {
+    "text": "do Caos",
+    "type": "suffix"
+  },
+  "4299": {
+    "text": "Guardião",
+    "type": "suffix"
+  },
+  "4300": {
+    "text": "da Carga Venenosa",
+    "type": "suffix"
+  },
+  "4301": {
+    "text": "do Sangramento",
+    "type": "suffix"
+  },
+  "4302": {
+    "text": "do Alto Risco",
+    "type": "suffix"
+  },
+  "4303": {
+    "text": "Místico",
+    "type": "suffix"
+  },
+  "4304": {
+    "text": "do Mestre Escudeiro",
+    "type": "suffix"
+  },
+  "4305": {
+    "text": "Explosão",
+    "type": "suffix"
+  },
+  "4306": {
+    "text": "do Rei",
+    "type": "suffix"
+  },
+  "4307": {
+    "text": "Força-Aquática Ganha",
+    "type": "suffix"
+  },
+  "4308": {
+    "text": "da Drenagem de Força",
+    "type": "suffix"
+  },
+  "4309": {
+    "text": "Cobertura Rígida",
+    "type": "suffix"
+  },
+  "4310": {
+    "text": "da Maldade Fatal",
+    "type": "suffix"
+  },
+  "4311": {
+    "text": "Contra Poder Maligno",
+    "type": "suffix"
+  },
+  "4312": {
+    "text": "da Alma",
+    "type": "suffix"
+  },
+  "4313": {
+    "text": "do Pântano",
+    "type": "suffix"
+  },
+  "4314": {
+    "text": "da Guarda Flamejante",
+    "type": "suffix"
+  },
+  "4315": {
+    "text": "da Pedra Amaldiçoada",
+    "type": "suffix"
+  },
+  "4316": {
+    "text": "Ganho da Alma Angelical",
+    "type": "suffix"
+  },
+  "4317": {
+    "text": "Aura",
+    "type": "suffix"
+  },
+  "4318": {
+    "text": "Causador de Tempestade",
+    "type": "suffix"
+  },
+  "4319": {
+    "text": "do Mestre Espadachim",
+    "type": "suffix"
+  },
+  "4320": {
+    "text": "Luz do Meteoro",
+    "type": "suffix"
+  },
+  "4321": {
+    "text": "do Polimorfo",
+    "type": "suffix"
+  },
+  "4322": {
+    "text": "do Contra-Ataque",
+    "type": "suffix"
+  },
+  "4323": {
+    "text": "Congelante",
+    "type": "suffix"
+  },
+  "4324": {
+    "text": "do Ártico",
+    "type": "suffix"
+  },
+  "4325": {
+    "text": "da Dureza",
+    "type": "suffix"
+  },
+  "4326": {
+    "text": "do Cheiro de Peixe",
+    "type": "suffix"
+  },
+  "4327": {
+    "text": "do Fluxo Mágico",
+    "type": "suffix"
+  },
+  "4328": {
+    "text": "do Hiper",
+    "type": "suffix"
+  },
+  "4329": {
+    "text": "do Ganho da Alma",
+    "type": "suffix"
+  },
+  "4330": {
+    "text": "do Imune a Maldição",
+    "type": "suffix"
+  },
+  "4331": {
+    "text": "da Evasão",
+    "type": "suffix"
+  },
+  "4332": {
+    "text": "de Hermod",
+    "type": "suffix"
+  },
+  "4333": {
+    "text": "de Jormungard",
+    "type": "suffix"
+  },
+  "4334": {
+    "text": "do Antiatirador",
+    "type": "suffix"
+  },
+  "4335": {
+    "text": "do Gnomo",
+    "type": "suffix"
+  },
+  "4336": {
+    "text": "da Vitalidade",
+    "type": "suffix"
+  },
+  "4337": {
+    "text": "da Agressão",
+    "type": "suffix"
+  },
+  "4338": {
+    "text": "da Troca de Vitalidade",
+    "type": "suffix"
+  },
+  "4339": {
+    "text": "da Muralha",
+    "type": "suffix"
+  },
+  "4340": {
+    "text": "de Hel",
+    "type": "suffix"
+  },
+  "4341": {
+    "text": "do Desarmamento",
+    "type": "suffix"
+  },
+  "4342": {
+    "text": "do Mamute",
+    "type": "suffix"
+  },
+  "4343": {
+    "text": "de Frigga",
+    "type": "suffix"
+  },
+  "4344": {
+    "text": "da Refeição",
+    "type": "suffix"
+  },
+  "4345": {
+    "text": "da Sílfide",
+    "type": "suffix"
+  },
+  "4346": {
+    "text": "da Troca de Força",
+    "type": "suffix"
+  },
+  "4347": {
+    "text": "do Pescador",
+    "type": "suffix"
+  },
+  "4348": {
+    "text": "de Fenrir",
+    "type": "suffix"
+  },
+  "4349": {
+    "text": "Antiflecha",
+    "type": "suffix"
+  },
+  "4350": {
+    "text": "da Ondina",
+    "type": "suffix"
+  },
+  "4351": {
+    "text": "da Baixa Esquiva",
+    "type": "suffix"
+  },
+  "4352": {
+    "text": "da Juventude",
+    "type": "suffix"
+  },
+  "4353": {
+    "text": "da Yggdrasil",
+    "type": "suffix"
+  },
+  "4354": {
+    "text": "da Estabilidade",
+    "type": "suffix"
+  },
+  "4355": {
+    "text": "do Açougueiro",
+    "type": "suffix"
+  },
+  "4356": {
+    "text": "da Autoridade",
+    "type": "suffix"
+  },
+  "4357": {
+    "text": "do Frenesi",
+    "type": "suffix"
+  },
+  "4358": {
+    "text": "da Apatia",
+    "type": "suffix"
+  },
+  "4359": {
+    "text": "das Sombras",
+    "type": "suffix"
+  },
+  "4360": {
+    "text": "do Mercenário",
+    "type": "suffix"
+  },
+  "4361": {
+    "text": "do Hollgrehenn",
+    "type": "suffix"
+  },
+  "4362": {
+    "text": "do Acerto",
+    "type": "suffix"
+  },
+  "4363": {
+    "text": "do Arcanjo",
+    "type": "suffix"
+  },
+  "4364": {
+    "text": "do Selo Mágico",
+    "type": "suffix"
+  },
+  "4365": {
+    "text": "da Tormenta",
+    "type": "suffix"
+  },
+  "4366": {
+    "text": "da Conjuração",
+    "type": "suffix"
+  },
+  "4367": {
+    "text": "da Pressão",
+    "type": "suffix"
+  },
+  "4368": {
+    "text": "Rápido",
+    "type": "suffix"
+  },
+  "4369": {
+    "text": "da Troca de Sorte",
+    "type": "suffix"
+  },
+  "4370": {
+    "text": "do Enfraquecimento",
+    "type": "suffix"
+  },
+  "4371": {
+    "text": "de Forseti",
+    "type": "suffix"
+  },
+  "4372": {
+    "text": "da Medicina",
+    "type": "suffix"
+  },
+  "4373": {
+    "text": "da Maldição",
+    "type": "suffix"
+  },
+  "4374": {
+    "text": "da Visão",
+    "type": "suffix"
+  },
+  "4375": {
+    "text": "do Nível Elevado",
+    "type": "suffix"
+  },
+  "4376": {
+    "text": "da Magia Plena",
+    "type": "suffix"
+  },
+  "4377": {
+    "text": "da Sobremesa",
+    "type": "suffix"
+  },
+  "4378": {
+    "text": "da Baixa Força",
+    "type": "suffix"
+  },
+  "4379": {
+    "text": "da Baixa Magia",
+    "type": "suffix"
+  },
+  "4380": {
+    "text": "da Salamandra",
+    "type": "suffix"
+  },
+  "4381": {
+    "text": "de Bragi",
+    "type": "suffix"
+  },
+  "4382": {
+    "text": "de Mímir",
+    "type": "suffix"
+  },
+  "4383": {
+    "text": "do Caos",
+    "type": "suffix"
+  },
+  "4384": {
+    "text": "do Tormento",
+    "type": "suffix"
+  },
+  "4385": {
+    "text": "da Bebida",
+    "type": "suffix"
+  },
+  "4386": {
+    "text": "do Abrigo Mágico",
+    "type": "suffix"
+  },
+  "4387": {
+    "text": "da Troca de Agilidade",
+    "type": "suffix"
+  },
+  "4388": {
+    "text": "da Alma",
+    "type": "suffix"
+  },
+  "4389": {
+    "text": "Elemental",
+    "type": "suffix"
+  },
+  "4390": {
+    "text": "do Sangramento",
+    "type": "suffix"
+  },
+  "4391": {
+    "text": "do Lanche",
+    "type": "suffix"
+  },
+  "4392": {
+    "text": "da Troca de Destreza",
+    "type": "suffix"
+  },
+  "4393": {
+    "text": "da Troca de Inteligência",
+    "type": "suffix"
+  },
+  "4394": {
+    "text": "da Punição Divina",
+    "type": "suffix"
+  },
+  "4395": {
+    "text": "do Verme",
+    "type": "suffix"
+  },
+  "4396": {
+    "text": "do Entorpecer",
+    "type": "suffix"
+  },
+  "4397": {
+    "text": "da Amnésia",
+    "type": "suffix"
+  },
+  "4398": {
+    "text": "da Escuridão",
+    "type": "suffix"
+  },
+  "4399": {
+    "text": "do Impacto",
+    "type": "suffix"
+  },
+  "4400": {
+    "text": "da Tentação",
+    "type": "suffix"
+  },
+  "4401": {
+    "text": "da Esquiva",
+    "type": "suffix"
+  },
+  "4402": {
+    "text": "da Escolha",
+    "type": "suffix"
+  },
+  "4403": {
+    "text": "da Pós-conjuração",
+    "type": "suffix"
+  },
+  "4404": {
+    "text": "da Hemorragia",
+    "type": "suffix"
+  },
+  "4405": {
+    "text": "do Reflexo",
+    "type": "suffix"
+  },
+  "4406": {
+    "text": "Cintilante",
+    "type": "suffix"
+  },
+  "4407": {
+    "text": "de Freya",
+    "type": "suffix"
+  },
+  "4408": {
+    "text": "do Abissal",
+    "type": "suffix"
+  },
+  "4409": {
+    "text": "da Histeria",
+    "type": "suffix"
+  },
+  "4410": {
+    "text": "da Demência",
+    "type": "suffix"
+  },
+  "4411": {
+    "text": "de Arta",
+    "type": "suffix"
+  },
+  "4412": {
+    "text": "de Aria",
+    "type": "suffix"
+  },
+  "4413": {
+    "text": "da Resistência",
+    "type": "suffix"
+  },
+  "4414": {
+    "text": "da Górgona",
+    "type": "suffix"
+  },
+  "4415": {
+    "text": "Gentil",
+    "type": "suffix"
+  },
+  "4416": {
+    "text": "de Yana",
+    "type": "suffix"
+  },
+  "4417": {
+    "text": "de Flaw",
+    "type": "suffix"
+  },
+  "4418": {
+    "text": "de Hail",
+    "type": "suffix"
+  },
+  "4419": {
+    "text": "do Jack Frost",
+    "type": "suffix"
+  },
+  "4420": {
+    "text": "do Conforto",
+    "type": "suffix"
+  },
+  "4421": {
+    "text": "do Chinook",
+    "type": "suffix"
+  },
+  "4422": {
+    "text": "da Maresia",
+    "type": "suffix"
+  },
+  "4423": {
+    "text": "de Sharia",
+    "type": "suffix"
+  },
+  "4424": {
+    "text": "de Pedra",
+    "type": "suffix"
+  },
+  "4425": {
+    "text": "Bestial",
+    "type": "suffix"
+  },
+  "4426": {
+    "text": "da Excelência",
+    "type": "suffix"
+  },
+  "4427": {
+    "text": "do Poder",
+    "type": "suffix"
+  },
+  "4428": {
+    "text": "do Feixe",
+    "type": "suffix"
+  },
+  "4429": {
+    "text": "do Nessus",
+    "type": "suffix"
+  },
+  "4430": {
+    "text": "Infernal",
+    "type": "suffix"
+  },
+  "4431": {
+    "text": "Ínfera",
+    "type": "suffix"
+  },
+  "4432": {
+    "text": "Vulcanizada",
+    "type": "suffix"
+  },
+  "4433": {
+    "text": "de Ignis",
+    "type": "suffix"
+  },
+  "4434": {
+    "text": "do Mineiro",
+    "type": "suffix"
+  },
+  "4435": {
+    "text": "do Ultraje",
+    "type": "suffix"
+  },
+  "4436": {
+    "text": "do Lunático",
+    "type": "suffix"
+  },
+  "4437": {
+    "text": "do Fanático",
+    "type": "suffix"
+  },
+  "4438": {
+    "text": "Intelectual",
+    "type": "suffix"
+  },
+  "4439": {
+    "text": "do Maldito",
+    "type": "suffix"
+  },
+  "4440": {
+    "text": "da Indiferença",
+    "type": "suffix"
+  },
+  "4441": {
+    "text": "do Arrogante",
+    "type": "suffix"
+  },
+  "4442": {
+    "text": "da Terra Furiosa",
+    "type": "suffix"
+  },
+  "4443": {
+    "text": "do Gelo Perfurante",
+    "type": "suffix"
+  },
+  "4444": {
+    "text": "do Fogo Eterno",
+    "type": "suffix"
+  },
+  "4445": {
+    "text": "do Vento Uivante",
+    "type": "suffix"
+  },
+  "4446": {
+    "text": "Super Fatal",
+    "type": "suffix"
+  },
+  "4447": {
+    "text": "do Envenenamento",
+    "type": "suffix"
+  },
+  "4448": {
+    "text": "do Amaldiçoado",
+    "type": "suffix"
+  },
+  "4449": {
+    "text": "do Abençoado",
+    "type": "suffix"
+  },
+  "4450": {
+    "text": "do Mestre Feiticeiro",
+    "type": "suffix"
+  },
+  "4451": {
+    "text": "do Axis",
+    "type": "suffix"
+  },
+  "4452": {
+    "text": "do Feiticeiro",
+    "type": "suffix"
+  },
+  "4453": {
+    "text": "da Violência",
+    "type": "suffix"
+  },
+  "4454": {
+    "text": "Ceifadeiro",
+    "type": "prefix"
+  },
+  "4455": {
+    "text": "Feya",
+    "type": "prefix"
+  },
+  "4456": {
+    "text": "do Arcano",
+    "type": "suffix"
+  },
+  "4457": {
+    "text": "Psíquica",
+    "type": "suffix"
+  },
+  "4458": {
+    "text": "da Ilusão",
+    "type": "suffix"
+  },
+  "4459": {
+    "text": "do Conjurador",
+    "type": "suffix"
+  },
+  "4460": {
+    "text": "do Curandeiro",
+    "type": "suffix"
+  },
+  "4461": {
+    "text": "da Forma",
+    "type": "suffix"
+  },
+  "4462": {
+    "text": "da Defesa Prima",
+    "type": "suffix"
+  },
+  "4463": {
+    "text": "do Ataque Primo",
+    "type": "suffix"
+  },
+  "4464": {
+    "text": "do Ataque Crítico",
+    "type": "suffix"
+  },
+  "4465": {
+    "text": "da Espada Leve",
+    "type": "suffix"
+  },
+  "4466": {
+    "text": "do Tiro Preciso",
+    "type": "suffix"
+  },
+  "4467": {
+    "text": "Pesado",
+    "type": "suffix"
+  },
+  "4468": {
+    "text": "Hera Venenosa",
+    "type": "suffix"
+  },
+  "4469": {
+    "text": "Antipeixe",
+    "type": "suffix"
+  },
+  "4470": {
+    "text": "Antibotanica",
+    "type": "suffix"
+  },
+  "4471": {
+    "text": "Antidragão",
+    "type": "suffix"
+  },
+  "4472": {
+    "text": "Antifera",
+    "type": "suffix"
+  },
+  "4473": {
+    "text": "Antizumbi",
+    "type": "suffix"
+  },
+  "4474": {
+    "text": "Mortal",
+    "type": "suffix"
+  },
+  "4475": {
+    "text": "Antidisforme",
+    "type": "suffix"
+  },
+  "4476": {
+    "text": "Anti-inseto",
+    "type": "suffix"
+  },
+  "4477": {
+    "text": "Antidemoniaca",
+    "type": "suffix"
+  },
+  "4478": {
+    "text": "Estranha Verdade",
+    "type": "prefix"
+  },
+  "4479": {
+    "text": "Estranha Mentira",
+    "type": "prefix"
+  },
+  "4480": {
+    "text": "da Recarga Selada",
+    "type": "suffix"
+  },
+  "4481": {
+    "text": "do Jack Frost Selado",
+    "type": "suffix"
+  },
+  "4482": {
+    "text": "da Juventude Selada",
+    "type": "suffix"
+  },
+  "4483": {
+    "text": "Espiritual Selada",
+    "type": "suffix"
+  },
+  "4484": {
+    "text": "de Jóias Seladas",
+    "type": "suffix"
+  },
+  "4485": {
+    "text": "do Abissal Selado",
+    "type": "suffix"
+  },
+  "4486": {
+    "text": "do Ventríloquo Selada",
+    "type": "suffix"
+  },
+  "4487": {
+    "text": "Infernal Selada",
+    "type": "suffix"
+  },
+  "4488": {
+    "text": "da Perdição Selada",
+    "type": "suffix"
+  },
+  "4489": {
+    "text": "do Místico Selado",
+    "type": "suffix"
+  },
+  "4490": {
+    "text": "Fugazes Selados",
+    "type": "suffix"
+  },
+  "4491": {
+    "text": "da Pressão Selada",
+    "type": "suffix"
+  },
+  "4492": {
+    "text": "do Herói Selado",
+    "type": "suffix"
+  },
+  "4494": {
+    "text": "Explosão Selada",
+    "type": "suffix"
+  },
+  "4495": {
+    "text": "da Proteção Selada",
+    "type": "suffix"
+  },
+  "4497": {
+    "text": "Causador de Tempestade Selada",
+    "type": "suffix"
+  },
+  "4498": {
+    "text": "da Magia Plena Selada",
+    "type": "suffix"
+  },
+  "4499": {
+    "text": "Desejo Sangrento Selado",
+    "type": "suffix"
+  },
+  "4500": {
+    "text": "de Espelhos Selados",
+    "type": "suffix"
+  },
+  "4501": {
+    "text": "do Arcanjo Selado",
+    "type": "suffix"
+  },
+  "4502": {
+    "text": "do Hollgrehenn Selada",
+    "type": "suffix"
+  },
+  "4503": {
+    "text": "da Visão Selada",
+    "type": "suffix"
+  },
+  "4504": {
+    "text": "de Heimdall Selada",
+    "type": "suffix"
+  },
+  "4505": {
+    "text": "da Bruxa Má",
+    "type": "suffix"
+  },
+  "4506": {
+    "text": "do Arqueiro",
+    "type": "suffix"
+  },
+  "4507": {
+    "text": "Scaraba",
+    "type": "suffix"
+  },
+  "4508": {
+    "text": "do Enlouquecido",
+    "type": "suffix"
+  },
+  "4509": {
+    "text": "Contra Insetos",
+    "type": "suffix"
+  },
+  "4510": {
+    "text": "do Blecaute",
+    "type": "suffix"
+  },
+  "4511": {
+    "text": "Silentium",
+    "type": "suffix"
+  },
+  "4512": {
+    "text": "do Noviço",
+    "type": "suffix"
+  },
+  "4513": {
+    "text": "do Gatuno",
+    "type": "suffix"
+  },
+  "4514": {
+    "text": "Exorcista",
+    "type": "suffix"
+  },
+  "4515": {
+    "text": "Flora",
+    "type": "suffix"
+  },
+  "4516": {
+    "text": "da Parede de Pedra",
+    "type": "suffix"
+  },
+  "4517": {
+    "text": "do Mago",
+    "type": "suffix"
+  },
+  "4518": {
+    "text": "em Chamas",
+    "type": "suffix"
+  },
+  "4519": {
+    "text": "Seraphim",
+    "type": "suffix"
+  },
+  "4520": {
+    "text": "do Grito",
+    "type": "suffix"
+  },
+  "4521": {
+    "text": "do Sopro Mortal",
+    "type": "suffix"
+  },
+  "4522": {
+    "text": "de Gelo",
+    "type": "suffix"
+  },
+  "4523": {
+    "text": "Aquarius",
+    "type": "suffix"
+  },
+  "4524": {
+    "text": "do Espadachim",
+    "type": "suffix"
+  },
+  "4525": {
+    "text": "da Furtividade",
+    "type": "suffix"
+  },
+  "4526": {
+    "text": "da Defesa Mágica",
+    "type": "suffix"
+  },
+  "4527": {
+    "text": "da Defesa Física",
+    "type": "suffix"
+  },
+  "4528": {
+    "text": "do Espírito",
+    "type": "suffix"
+  },
+  "4529": {
+    "text": "do Físico",
+    "type": "suffix"
+  },
+  "4530": {
+    "text": "do Mercador",
+    "type": "suffix"
+  },
+  "4531": {
+    "text": "das Maldições",
+    "type": "suffix"
+  },
+  "4532": {
+    "text": "da Corrida",
+    "type": "suffix"
+  },
+  "4533": {
+    "text": "da Cegueira",
+    "type": "suffix"
+  },
+  "4534": {
+    "text": "da Bomba D'Água",
+    "type": "suffix"
+  },
+  "4538": {
+    "text": "da Medicina Selada",
+    "type": "suffix"
+  },
+  "4539": {
+    "text": "do Arrogante Selado",
+    "type": "suffix"
+  },
+  "4545": {
+    "text": "do Bebê",
+    "type": "suffix"
+  },
+  "4556": {
+    "text": "do Feitiço Incisivo",
+    "type": "suffix"
+  },
+  "4557": {
+    "text": "dos Feitiços",
+    "type": "suffix"
+  },
+  "4559": {
+    "text": "do Inescapável",
+    "type": "suffix"
+  },
+  "4560": {
+    "text": "da Poesia",
+    "type": "suffix"
+  },
+  "4561": {
+    "text": "da Proteção Terrena",
+    "type": "suffix"
+  },
+  "4562": {
+    "text": "da Penetração",
+    "type": "suffix"
+  },
+  "4563": {
+    "text": "da Corrosão",
+    "type": "suffix"
+  },
+  "4564": {
+    "text": "da Incapacitação",
+    "type": "suffix"
+  },
+  "4565": {
+    "text": "da Cruz Suprema",
+    "type": "suffix"
+  },
+  "4566": {
+    "text": "da Boa Ventura",
+    "type": "suffix"
+  },
+  "4567": {
+    "text": "da Assombração Poeta",
+    "type": "suffix"
+  },
+  "4568": {
+    "text": "da Aparição Erudita",
+    "type": "suffix"
+  },
+  "4569": {
+    "text": "do Espírito Lutador",
+    "type": "suffix"
+  },
+  "4570": {
+    "text": "do Espectro da Gênese",
+    "type": "suffix"
+  },
+  "4571": {
+    "text": "da Alma da Desordem",
+    "type": "suffix"
+  },
+  "4572": {
+    "text": "do Fantasma Virtuoso",
+    "type": "suffix"
+  },
+  "4573": {
+    "text": "da Visão Musical",
+    "type": "suffix"
+  },
+  "4574": {
+    "text": "do Mestre das Lâminas",
+    "type": "suffix"
+  },
+  "4575": {
+    "text": "do Corte Veloz",
+    "type": "suffix"
+  },
+  "4576": {
+    "text": "Caça-Fantasmas",
+    "type": "suffix"
+  },
+  "4577": {
+    "text": "Afugenta Fantasmas",
+    "type": "suffix"
+  },
+  "4578": {
+    "text": "do Furor",
+    "type": "suffix"
+  },
+  "4579": {
+    "text": "da Devastação",
+    "type": "suffix"
+  },
+  "4580": {
+    "text": "da Perversão",
+    "type": "suffix"
+  },
+  "4581": {
+    "text": "da Higiene",
+    "type": "suffix"
+  },
+  "4582": {
+    "text": "da Energia Vital",
+    "type": "suffix"
+  },
+  "4583": {
+    "text": "da Vinha Venenosa",
+    "type": "suffix"
+  },
+  "4584": {
+    "text": "da Absorção Espiritual",
+    "type": "suffix"
+  },
+  "4585": {
+    "text": "do Atormentado",
+    "type": "suffix"
+  },
+  "4586": {
+    "text": "do Zéfiro",
+    "type": "suffix"
+  },
+  "4587": {
+    "text": "do Corte Profundo",
+    "type": "suffix"
+  },
+  "4588": {
+    "text": "da Potência",
+    "type": "suffix"
+  },
+  "4589": {
+    "text": "da Fartura",
+    "type": "suffix"
+  },
+  "4590": {
+    "text": "da Letargia",
+    "type": "suffix"
+  },
+  "4591": {
+    "text": "da Ruptura",
+    "type": "suffix"
+  },
+  "4592": {
+    "text": "Petrificante",
+    "type": "suffix"
+  },
+  "4593": {
+    "text": "do Franco-atirador",
+    "type": "suffix"
+  },
+  "4594": {
+    "text": "do Golpe de Sorte",
+    "type": "suffix"
+  },
+  "4595": {
+    "text": "do Ataque Relâmpago",
+    "type": "suffix"
+  },
+  "4596": {
+    "text": "da Perspicácia",
+    "type": "suffix"
+  },
+  "4597": {
+    "text": "Borbulhante",
+    "type": "suffix"
+  },
+  "4598": {
+    "text": "Espectral",
+    "type": "suffix"
+  },
+  "4599": {
+    "text": "Ardente",
+    "type": "suffix"
+  },
+  "4600": {
+    "text": "Brotante",
+    "type": "suffix"
+  },
+  "4601": {
+    "text": "do Amaldiçoado",
+    "type": "suffix"
+  },
+  "4602": {
+    "text": "do Assombrado",
+    "type": "suffix"
+  },
+  "4603": {
+    "text": "da Aura Maldita",
+    "type": "suffix"
+  },
+  "4604": {
+    "text": "da Aura Sombria",
+    "type": "suffix"
+  },
+  "4605": {
+    "text": "da Maldição Física",
+    "type": "suffix"
+  },
+  "4606": {
+    "text": "da Maldição Arcana",
+    "type": "suffix"
+  },
+  "4607": {
+    "text": "do Bibliotecário",
+    "type": "suffix"
+  },
+  "4608": {
+    "text": "do Cavaleiro",
+    "type": "suffix"
+  },
+  "4609": {
+    "text": "da Cavaleira",
+    "type": "suffix"
+  },
+  "4610": {
+    "text": "Invencível",
+    "type": "suffix"
+  },
+  "4624": {
+    "text": "do Alto Risco Selado",
+    "type": "suffix"
+  },
+  "4625": {
+    "text": "do Vigia",
+    "type": "suffix"
+  },
+  "4626": {
+    "text": "dos Ecos",
+    "type": "suffix"
+  },
+  "4627": {
+    "text": "Vibrante",
+    "type": "suffix"
+  },
+  "4628": {
+    "text": "do Bolor",
+    "type": "suffix"
+  },
+  "4629": {
+    "text": "da Desolação",
+    "type": "suffix"
+  },
+  "4630": {
+    "text": "da Desgraça",
+    "type": "suffix"
+  },
+  "4631": {
+    "text": "Célere",
+    "type": "suffix"
+  },
+  "4632": {
+    "text": "Voltaico",
+    "type": "suffix"
+  },
+  "4633": {
+    "text": "Super Ciclonal",
+    "type": "suffix"
+  },
+  "4634": {
+    "text": "Super Letal",
+    "type": "suffix"
+  },
+  "4635": {
+    "text": "da Fortaleza",
+    "type": "suffix"
+  },
+  "4636": {
+    "text": "da Imunidade",
+    "type": "suffix"
+  },
+  "4637": {
+    "text": "da Regeneração",
+    "type": "suffix"
+  },
+  "4638": {
+    "text": "da Agressividade",
+    "type": "suffix"
+  },
+  "4639": {
+    "text": "de Ataque",
+    "type": "suffix"
+  },
+  "4640": {
+    "text": "de Magia",
+    "type": "suffix"
+  },
+  "4641": {
+    "text": "da Coleta de Mana",
+    "type": "suffix"
+  },
+  "4642": {
+    "text": "do Escape",
+    "type": "suffix"
+  },
+  "4643": {
+    "text": "da Ofensiva",
+    "type": "suffix"
+  },
+  "4644": {
+    "text": "da Defensiva",
+    "type": "suffix"
+  },
+  "4645": {
+    "text": "da Saúde",
+    "type": "suffix"
+  },
+  "4646": {
+    "text": "do Híbrido",
+    "type": "suffix"
+  },
+  "4647": {
+    "text": "Inesquecível",
+    "type": "suffix"
+  },
+  "4648": {
+    "text": "Provocante",
+    "type": "suffix"
+  },
+  "4649": {
+    "text": "Atacante",
+    "type": "suffix"
+  },
+  "4650": {
+    "text": "Atordoante",
+    "type": "suffix"
+  },
+  "4651": {
+    "text": "do Baixo Risco",
+    "type": "suffix"
+  },
+  "4652": {
+    "text": "Abismal",
+    "type": "suffix"
+  },
+  "4653": {
+    "text": "do Predador",
+    "type": "suffix"
+  },
+  "4654": {
+    "text": "do Caça-Aberrações",
+    "type": "suffix"
+  },
+  "4655": {
+    "text": "do Caça-Zumbis",
+    "type": "suffix"
+  },
+  "4656": {
+    "text": "dos Sussurros",
+    "type": "suffix"
+  },
+  "4657": {
+    "text": "da Maldição Ancestral",
+    "type": "suffix"
+  },
+  "4658": {
+    "text": "do Arcanista",
+    "type": "suffix"
+  },
+  "4659": {
+    "text": "do Ovo Frito",
+    "type": "suffix"
+  },
+  "4660": {
+    "text": "da Rigidez",
+    "type": "suffix"
+  },
+  "4661": {
+    "text": "do Escamoso",
+    "type": "suffix"
+  },
+  "4662": {
+    "text": "do Omelete",
+    "type": "suffix"
+  },
+  "4663": {
+    "text": "do Farfalhar",
+    "type": "suffix"
+  },
+  "4664": {
+    "text": "da Grama",
+    "type": "suffix"
+  },
+  "4665": {
+    "text": "do Ferrão",
+    "type": "suffix"
+  },
+  "4666": {
+    "text": "da Doçura",
+    "type": "suffix"
+  },
+  "4667": {
+    "text": "do Faro",
+    "type": "suffix"
+  },
+  "4668": {
+    "text": "da Água Doce",
+    "type": "suffix"
+  },
+  "4669": {
+    "text": "da Ventania",
+    "type": "suffix"
+  },
+  "4670": {
+    "text": "do Fogaréu",
+    "type": "suffix"
+  },
+  "4671": {
+    "text": "da Feiticeira",
+    "type": "suffix"
+  },
+  "4672": {
+    "text": "do Shura",
+    "type": "suffix"
+  },
+  "4673": {
+    "text": "do Trovador",
+    "type": "suffix"
+  },
+  "4674": {
+    "text": "do Sicário",
+    "type": "suffix"
+  },
+  "4675": {
+    "text": "da Arcebispa",
+    "type": "suffix"
+  },
+  "4676": {
+    "text": "da Sentinela",
+    "type": "suffix"
+  },
+  "4677": {
+    "text": "do Mecânico",
+    "type": "suffix"
+  },
+  "4678": {
+    "text": "da Arcana",
+    "type": "suffix"
+  },
+  "4679": {
+    "text": "do Cavaleiro Rúnico",
+    "type": "suffix"
+  },
+  "4680": {
+    "text": "do Guardião Real",
+    "type": "suffix"
+  },
+  "4681": {
+    "text": "do Bioquímico",
+    "type": "suffix"
+  },
+  "4682": {
+    "text": "da Renegada",
+    "type": "suffix"
+  },
+  "4683": {
+    "text": "da Musa",
+    "type": "suffix"
+  },
+  "4684": {
+    "text": "das Lâminas",
+    "type": "suffix"
+  },
+  "4685": {
+    "text": "de Adoramus",
+    "type": "suffix"
+  },
+  "4686": {
+    "text": "do Meteoro",
+    "type": "suffix"
+  },
+  "4687": {
+    "text": "da Bomba",
+    "type": "suffix"
+  },
+  "4688": {
+    "text": "do Furacão",
+    "type": "suffix"
+  },
+  "4689": {
+    "text": "da Ignição",
+    "type": "suffix"
+  },
+  "4690": {
+    "text": "Inferi",
+    "type": "suffix"
+  },
+  "4691": {
+    "text": "do Tornado",
+    "type": "suffix"
+  },
+  "4692": {
+    "text": "dos Aesir",
+    "type": "suffix"
+  },
+  "4693": {
+    "text": "dos Espíritos",
+    "type": "suffix"
+  },
+  "4694": {
+    "text": "da Cópia",
+    "type": "suffix"
+  },
+  "4695": {
+    "text": "do Temporal",
+    "type": "suffix"
+  },
+  "4696": {
+    "text": "da Ressonância",
+    "type": "suffix"
+  },
+  "4697": {
+    "text": "da Sobrecarga",
+    "type": "suffix"
+  },
+  "4698": {
+    "text": "de Arremesso",
+    "type": "suffix"
+  },
+  "4699": {
+    "text": "dos Canhões",
+    "type": "suffix"
+  },
+  "4700": {
+    "text": "(FOR+1) ",
+    "type": "suffix"
+  },
+  "4701": {
+    "text": "(FOR+2) ",
+    "type": "suffix"
+  },
+  "4702": {
+    "text": "(FOR+3) ",
+    "type": "suffix"
+  },
+  "4703": {
+    "text": "(FOR+4) ",
+    "type": "suffix"
+  },
+  "4704": {
+    "text": "(FOR+5) ",
+    "type": "suffix"
+  },
+  "4705": {
+    "text": "(FOR+6) ",
+    "type": "suffix"
+  },
+  "4706": {
+    "text": "(FOR+7) ",
+    "type": "suffix"
+  },
+  "4707": {
+    "text": "(FOR+8) ",
+    "type": "suffix"
+  },
+  "4708": {
+    "text": "(FOR+9) ",
+    "type": "suffix"
+  },
+  "4709": {
+    "text": "(FOR+10) ",
+    "type": "suffix"
+  },
+  "4710": {
+    "text": "(INT+1) ",
+    "type": "suffix"
+  },
+  "4711": {
+    "text": "(INT+2) ",
+    "type": "suffix"
+  },
+  "4712": {
+    "text": "(INT+3) ",
+    "type": "suffix"
+  },
+  "4713": {
+    "text": "(INT+4) ",
+    "type": "suffix"
+  },
+  "4714": {
+    "text": "(INT+5) ",
+    "type": "suffix"
+  },
+  "4715": {
+    "text": "(INT+6) ",
+    "type": "suffix"
+  },
+  "4716": {
+    "text": "(INT+7) ",
+    "type": "suffix"
+  },
+  "4717": {
+    "text": "(INT+8) ",
+    "type": "suffix"
+  },
+  "4718": {
+    "text": "(INT+9) ",
+    "type": "suffix"
+  },
+  "4719": {
+    "text": "(INT+10) ",
+    "type": "suffix"
+  },
+  "4720": {
+    "text": "(DES+1) ",
+    "type": "suffix"
+  },
+  "4721": {
+    "text": "(DES+2) ",
+    "type": "suffix"
+  },
+  "4722": {
+    "text": "(DES+3) ",
+    "type": "suffix"
+  },
+  "4723": {
+    "text": "(DES+4) ",
+    "type": "suffix"
+  },
+  "4724": {
+    "text": "(DES+5) ",
+    "type": "suffix"
+  },
+  "4725": {
+    "text": "(DES+6) ",
+    "type": "suffix"
+  },
+  "4726": {
+    "text": "(DES+7) ",
+    "type": "suffix"
+  },
+  "4727": {
+    "text": "(DES+8) ",
+    "type": "suffix"
+  },
+  "4728": {
+    "text": "(DES+9) ",
+    "type": "suffix"
+  },
+  "4729": {
+    "text": "(DES+10) ",
+    "type": "suffix"
+  },
+  "4730": {
+    "text": "(AGI+1) ",
+    "type": "suffix"
+  },
+  "4731": {
+    "text": "(AGI+2) ",
+    "type": "suffix"
+  },
+  "4732": {
+    "text": "(AGI+3) ",
+    "type": "suffix"
+  },
+  "4733": {
+    "text": "(AGI+4) ",
+    "type": "suffix"
+  },
+  "4734": {
+    "text": "(AGI+5) ",
+    "type": "suffix"
+  },
+  "4735": {
+    "text": "(AGI+6) ",
+    "type": "suffix"
+  },
+  "4736": {
+    "text": "(AGI+7) ",
+    "type": "suffix"
+  },
+  "4737": {
+    "text": "(AGI+8) ",
+    "type": "suffix"
+  },
+  "4738": {
+    "text": "(AGI+9) ",
+    "type": "suffix"
+  },
+  "4739": {
+    "text": "(AGI+10) ",
+    "type": "suffix"
+  },
+  "4740": {
+    "text": "(VIT+1) ",
+    "type": "suffix"
+  },
+  "4741": {
+    "text": "(VIT+2) ",
+    "type": "suffix"
+  },
+  "4742": {
+    "text": "(VIT+3) ",
+    "type": "suffix"
+  },
+  "4743": {
+    "text": "(VIT+4) ",
+    "type": "suffix"
+  },
+  "4744": {
+    "text": "(VIT+5) ",
+    "type": "suffix"
+  },
+  "4745": {
+    "text": "(VIT+6) ",
+    "type": "suffix"
+  },
+  "4746": {
+    "text": "(VIT+7) ",
+    "type": "suffix"
+  },
+  "4747": {
+    "text": "(VIT+8) ",
+    "type": "suffix"
+  },
+  "4748": {
+    "text": "(VIT+9) ",
+    "type": "suffix"
+  },
+  "4749": {
+    "text": "(VIT+10) ",
+    "type": "suffix"
+  },
+  "4750": {
+    "text": "(SOR+1) ",
+    "type": "suffix"
+  },
+  "4751": {
+    "text": "(SOR+2) ",
+    "type": "suffix"
+  },
+  "4752": {
+    "text": "(SOR+3) ",
+    "type": "suffix"
+  },
+  "4753": {
+    "text": "(SOR+4) ",
+    "type": "suffix"
+  },
+  "4754": {
+    "text": "(SOR+5) ",
+    "type": "suffix"
+  },
+  "4755": {
+    "text": "(SOR+6) ",
+    "type": "suffix"
+  },
+  "4756": {
+    "text": "(SOR+7) ",
+    "type": "suffix"
+  },
+  "4757": {
+    "text": "(SOR+8) ",
+    "type": "suffix"
+  },
+  "4758": {
+    "text": "(SOR+9) ",
+    "type": "suffix"
+  },
+  "4759": {
+    "text": "(SOR+10) ",
+    "type": "suffix"
+  },
+  "4760": {
+    "text": "(ATQM+1%) ",
+    "type": "suffix"
+  },
+  "4761": {
+    "text": "(ATQM+2%) ",
+    "type": "suffix"
+  },
+  "4762": {
+    "text": "(ESQV+6) ",
+    "type": "suffix"
+  },
+  "4763": {
+    "text": "(ESQV+12) ",
+    "type": "suffix"
+  },
+  "4764": {
+    "text": "(CRI+5) ",
+    "type": "suffix"
+  },
+  "4765": {
+    "text": "(CRI+7) ",
+    "type": "suffix"
+  },
+  "4766": {
+    "text": "(ATQ+2%) ",
+    "type": "suffix"
+  },
+  "4767": {
+    "text": "(ATQ+3%) ",
+    "type": "suffix"
+  },
+  "4786": {
+    "text": "(DEFM+2) ",
+    "type": "suffix"
+  },
+  "4787": {
+    "text": "(DEFM+4) ",
+    "type": "suffix"
+  },
+  "4788": {
+    "text": "(DEFM+6) ",
+    "type": "suffix"
+  },
+  "4789": {
+    "text": "(DEFM+8) ",
+    "type": "suffix"
+  },
+  "4790": {
+    "text": "(DEFM+10) ",
+    "type": "suffix"
+  },
+  "4791": {
+    "text": "(DEF+3) ",
+    "type": "suffix"
+  },
+  "4792": {
+    "text": "(DEF+6) ",
+    "type": "suffix"
+  },
+  "4793": {
+    "text": "(DEF+9) ",
+    "type": "suffix"
+  },
+  "4794": {
+    "text": "(DEF+12) ",
+    "type": "suffix"
+  },
+  "4795": {
+    "text": "(HP+100) ",
+    "type": "suffix"
+  },
+  "4796": {
+    "text": "(HP+200) ",
+    "type": "suffix"
+  },
+  "4797": {
+    "text": "(HP+300) ",
+    "type": "suffix"
+  },
+  "4798": {
+    "text": "(HP+400) ",
+    "type": "suffix"
+  },
+  "4799": {
+    "text": "(HP+500) ",
+    "type": "suffix"
+  },
+  "4800": {
+    "text": "(SP+50) ",
+    "type": "suffix"
+  },
+  "4801": {
+    "text": "(SP+100) ",
+    "type": "suffix"
+  },
+  "4802": {
+    "text": "(SP+150) ",
+    "type": "suffix"
+  },
+  "4803": {
+    "text": "(Cura 1) ",
+    "type": "suffix"
+  },
+  "4804": {
+    "text": "(Catol 1) ",
+    "type": "suffix"
+  },
+  "4805": {
+    "text": "(AB 1) ",
+    "type": "suffix"
+  },
+  "4806": {
+    "text": "(ATQM+3%) ",
+    "type": "suffix"
+  },
+  "4807": {
+    "text": "(V.Atq+1) ",
+    "type": "suffix"
+  },
+  "4808": {
+    "text": "(EL 4) ",
+    "type": "suffix"
+  },
+  "4809": {
+    "text": "(EL 3) ",
+    "type": "suffix"
+  },
+  "4810": {
+    "text": "(EL 2) ",
+    "type": "suffix"
+  },
+  "4811": {
+    "text": "(EL 1) ",
+    "type": "suffix"
+  },
+  "4812": {
+    "text": "(PE 4) ",
+    "type": "suffix"
+  },
+  "4813": {
+    "text": "(PE 3) ",
+    "type": "suffix"
+  },
+  "4814": {
+    "text": "(PE 2) ",
+    "type": "suffix"
+  },
+  "4815": {
+    "text": "(PE 1) ",
+    "type": "suffix"
+  },
+  "4816": {
+    "text": "(PC 3) ",
+    "type": "suffix"
+  },
+  "4817": {
+    "text": "(PC 2) ",
+    "type": "suffix"
+  },
+  "4818": {
+    "text": "(PC 1) ",
+    "type": "suffix"
+  },
+  "4819": {
+    "text": "(ATQ+1%) ",
+    "type": "suffix"
+  },
+  "4820": {
+    "text": "(EL 5) ",
+    "type": "suffix"
+  },
+  "4821": {
+    "text": "(EL 6) ",
+    "type": "suffix"
+  },
+  "4822": {
+    "text": "(EL 7) ",
+    "type": "suffix"
+  },
+  "4823": {
+    "text": "(EL 8) ",
+    "type": "suffix"
+  },
+  "4824": {
+    "text": "(EL 9) ",
+    "type": "suffix"
+  },
+  "4825": {
+    "text": "(EL 10) ",
+    "type": "suffix"
+  },
+  "4826": {
+    "text": "(PE 5) ",
+    "type": "suffix"
+  },
+  "4827": {
+    "text": "(PE 6) ",
+    "type": "suffix"
+  },
+  "4828": {
+    "text": "(PE 7) ",
+    "type": "suffix"
+  },
+  "4829": {
+    "text": "(PE 8) ",
+    "type": "suffix"
+  },
+  "4830": {
+    "text": "(PE 9) ",
+    "type": "suffix"
+  },
+  "4831": {
+    "text": "(PE 10) ",
+    "type": "suffix"
+  },
+  "4832": {
+    "text": "(MA 1) ",
+    "type": "suffix"
+  },
+  "4833": {
+    "text": "(MA 2) ",
+    "type": "suffix"
+  },
+  "4834": {
+    "text": "(MA 3) ",
+    "type": "suffix"
+  },
+  "4835": {
+    "text": "(MA 4) ",
+    "type": "suffix"
+  },
+  "4836": {
+    "text": "(MA 5) ",
+    "type": "suffix"
+  },
+  "4837": {
+    "text": "(MA 6) ",
+    "type": "suffix"
+  },
+  "4838": {
+    "text": "(MA 7) ",
+    "type": "suffix"
+  },
+  "4839": {
+    "text": "(MA 8) ",
+    "type": "suffix"
+  },
+  "4840": {
+    "text": "(MA 9) ",
+    "type": "suffix"
+  },
+  "4841": {
+    "text": "(MA 10) ",
+    "type": "suffix"
+  },
+  "4842": {
+    "text": "(V.Atq+2) ",
+    "type": "suffix"
+  },
+  "4843": {
+    "text": "(PC 4) ",
+    "type": "suffix"
+  },
+  "4844": {
+    "text": "(PC 5) ",
+    "type": "suffix"
+  },
+  "4846": {
+    "text": "(AC) ",
+    "type": "suffix"
+  },
+  "4848": {
+    "text": "(RN5) ",
+    "type": "suffix"
+  },
+  "4849": {
+    "text": "(RH5) ",
+    "type": "suffix"
+  },
+  "4850": {
+    "text": "(AB 2) ",
+    "type": "suffix"
+  },
+  "4851": {
+    "text": "(AB 3) ",
+    "type": "suffix"
+  },
+  "4852": {
+    "text": "(AB 4) ",
+    "type": "suffix"
+  },
+  "4853": {
+    "text": "(S.FOR) ",
+    "type": "suffix"
+  },
+  "4854": {
+    "text": "(S.AGI) ",
+    "type": "suffix"
+  },
+  "4855": {
+    "text": "(S.VIT) ",
+    "type": "suffix"
+  },
+  "4856": {
+    "text": "(S.INT) ",
+    "type": "suffix"
+  },
+  "4857": {
+    "text": "(S.DES) ",
+    "type": "suffix"
+  },
+  "4858": {
+    "text": "(S.SOR) ",
+    "type": "suffix"
+  },
+  "4859": {
+    "text": "(ESQV+1) ",
+    "type": "suffix"
+  },
+  "4860": {
+    "text": "(ESQV+3) ",
+    "type": "suffix"
+  },
+  "4861": {
+    "text": "(HP+1%) ",
+    "type": "suffix"
+  },
+  "4862": {
+    "text": "(HP+2%) ",
+    "type": "suffix"
+  },
+  "4863": {
+    "text": "(F 1) ",
+    "type": "suffix"
+  },
+  "4864": {
+    "text": "(F 2) ",
+    "type": "suffix"
+  },
+  "4865": {
+    "text": "(F 3) ",
+    "type": "suffix"
+  },
+  "4866": {
+    "text": "(F 4) ",
+    "type": "suffix"
+  },
+  "4867": {
+    "text": "(HP+3%) ",
+    "type": "suffix"
+  },
+  "4868": {
+    "text": "(HP+4%) ",
+    "type": "suffix"
+  },
+  "4869": {
+    "text": "(AA 1) ",
+    "type": "suffix"
+  },
+  "4870": {
+    "text": "(SP+25) ",
+    "type": "suffix"
+  },
+  "4871": {
+    "text": "(SP+75) ",
+    "type": "suffix"
+  },
+  "4872": {
+    "text": "(AA 2) ",
+    "type": "suffix"
+  },
+  "4873": {
+    "text": "(AA 3) ",
+    "type": "suffix"
+  },
+  "4875": {
+    "text": "(Delírio) ",
+    "type": "suffix"
+  },
+  "4876": {
+    "text": "(Epifania) ",
+    "type": "suffix"
+  },
+  "4877": {
+    "text": "(Ânimo) ",
+    "type": "suffix"
+  },
+  "4878": {
+    "text": "(Histeria) ",
+    "type": "suffix"
+  },
+  "4879": {
+    "text": "(Instinto) ",
+    "type": "suffix"
+  },
+  "4880": {
+    "text": "(Euforia) ",
+    "type": "suffix"
+  },
+  "4881": {
+    "text": "(AA 4) ",
+    "type": "suffix"
+  },
+  "4882": {
+    "text": "(ATQ +1%) ",
+    "type": "suffix"
+  },
+  "4883": {
+    "text": "(ATQM 1) ",
+    "type": "suffix"
+  },
+  "4885": {
+    "text": "(PF 1) ",
+    "type": "suffix"
+  },
+  "4886": {
+    "text": "(PF 2) ",
+    "type": "suffix"
+  },
+  "4887": {
+    "text": "(PF 3) ",
+    "type": "suffix"
+  },
+  "4888": {
+    "text": "(PF 4) ",
+    "type": "suffix"
+  },
+  "4889": {
+    "text": "(PF 5) ",
+    "type": "suffix"
+  },
+  "4890": {
+    "text": "(DEFM+1) ",
+    "type": "suffix"
+  },
+  "4891": {
+    "text": "(DEFM+3) ",
+    "type": "suffix"
+  },
+  "4892": {
+    "text": "(DEFM+5) ",
+    "type": "suffix"
+  },
+  "4893": {
+    "text": "(DEF+15) ",
+    "type": "suffix"
+  },
+  "4894": {
+    "text": "(ATQ +4%) ",
+    "type": "suffix"
+  },
+  "4895": {
+    "text": "(ATQ +5%) ",
+    "type": "suffix"
+  },
+  "4896": {
+    "text": "(ATQM 2) ",
+    "type": "suffix"
+  },
+  "4897": {
+    "text": "(ATQM 3) ",
+    "type": "suffix"
+  },
+  "4898": {
+    "text": "(ATQM 4) ",
+    "type": "suffix"
+  },
+  "4899": {
+    "text": "(ATQM 5) ",
+    "type": "suffix"
+  },
+  "4900": {
+    "text": "(HP+5%) ",
+    "type": "suffix"
+  },
+  "4901": {
+    "text": "(DEFM+7) ",
+    "type": "suffix"
+  },
+  "4902": {
+    "text": "(DEF+18) ",
+    "type": "suffix"
+  },
+  "4903": {
+    "text": "(DEF+21) ",
+    "type": "suffix"
+  },
+  "4904": {
+    "text": "(ATQ +6%) ",
+    "type": "suffix"
+  },
+  "4905": {
+    "text": "(ATQ +7%) ",
+    "type": "suffix"
+  },
+  "4906": {
+    "text": "(ATQM 6) ",
+    "type": "suffix"
+  },
+  "4907": {
+    "text": "(ATQM 7) ",
+    "type": "suffix"
+  },
+  "4908": {
+    "text": "(E.FOR1) ",
+    "type": "suffix"
+  },
+  "4909": {
+    "text": "(E.FOR2) ",
+    "type": "suffix"
+  },
+  "4910": {
+    "text": "(E.FOR3) ",
+    "type": "suffix"
+  },
+  "4911": {
+    "text": "(E.INT1) ",
+    "type": "suffix"
+  },
+  "4912": {
+    "text": "(E.INT2) ",
+    "type": "suffix"
+  },
+  "4913": {
+    "text": "(E.INT3) ",
+    "type": "suffix"
+  },
+  "4914": {
+    "text": "(E.AGI1) ",
+    "type": "suffix"
+  },
+  "4915": {
+    "text": "(E.AGI2) ",
+    "type": "suffix"
+  },
+  "4916": {
+    "text": "(E.AGI3) ",
+    "type": "suffix"
+  },
+  "4917": {
+    "text": "(E.VIT1) ",
+    "type": "suffix"
+  },
+  "4918": {
+    "text": "(E.VIT2) ",
+    "type": "suffix"
+  },
+  "4919": {
+    "text": "(E.VIT3) ",
+    "type": "suffix"
+  },
+  "4920": {
+    "text": "(E.DES1) ",
+    "type": "suffix"
+  },
+  "4921": {
+    "text": "(E.DES2) ",
+    "type": "suffix"
+  },
+  "4922": {
+    "text": "(E.DES3) ",
+    "type": "suffix"
+  },
+  "4923": {
+    "text": "(E.SOR1) ",
+    "type": "suffix"
+  },
+  "4924": {
+    "text": "(E.SOR2) ",
+    "type": "suffix"
+  },
+  "4925": {
+    "text": "(E.SOR3) ",
+    "type": "suffix"
+  },
+  "4928": {
+    "text": "(SP + 10) ",
+    "type": "suffix"
+  },
+  "4929": {
+    "text": "(SP + 1%) ",
+    "type": "suffix"
+  },
+  "4933": {
+    "text": "(Neut 1) ",
+    "type": "suffix"
+  },
+  "4934": {
+    "text": "(Neut 2) ",
+    "type": "suffix"
+  },
+  "4935": {
+    "text": "(Neut 3) ",
+    "type": "suffix"
+  },
+  "4939": {
+    "text": "(CRIT +2) ",
+    "type": "suffix"
+  },
+  "4940": {
+    "text": "(CRIT +4) ",
+    "type": "suffix"
+  },
+  "4941": {
+    "text": "(CRIT +6) ",
+    "type": "suffix"
+  },
+  "4942": {
+    "text": "(EP +3) ",
+    "type": "suffix"
+  },
+  "4943": {
+    "text": "(EP +4) ",
+    "type": "suffix"
+  },
+  "4944": {
+    "text": "(EP +5) ",
+    "type": "suffix"
+  },
+  "4945": {
+    "text": "(E 1) ",
+    "type": "suffix"
+  },
+  "4946": {
+    "text": "(E 2) ",
+    "type": "suffix"
+  },
+  "4947": {
+    "text": "(E 3) ",
+    "type": "suffix"
+  },
+  "4948": {
+    "text": "(AH 1) ",
+    "type": "suffix"
+  },
+  "4949": {
+    "text": "(AH 2) ",
+    "type": "suffix"
+  },
+  "4950": {
+    "text": "(AH 3) ",
+    "type": "suffix"
+  },
+  "4970": {
+    "text": "(E-Fogo) ",
+    "type": "suffix"
+  },
+  "4971": {
+    "text": "(E-Água) ",
+    "type": "suffix"
+  },
+  "4972": {
+    "text": "(E-Terra) ",
+    "type": "suffix"
+  },
+  "4973": {
+    "text": "(E-Vento) ",
+    "type": "suffix"
+  },
+  "4974": {
+    "text": "(R-Fogo) ",
+    "type": "suffix"
+  },
+  "4975": {
+    "text": "(R-Água) ",
+    "type": "suffix"
+  },
+  "4976": {
+    "text": "(R-Terra) ",
+    "type": "suffix"
+  },
+  "4977": {
+    "text": "(R-Vento) ",
+    "type": "suffix"
+  },
+  "4978": {
+    "text": "(C-Corpo) ",
+    "type": "suffix"
+  },
+  "4979": {
+    "text": "(C-Alma) ",
+    "type": "suffix"
+  },
+  "4980": {
+    "text": "(C-Físico) ",
+    "type": "suffix"
+  },
+  "4981": {
+    "text": "(C-Mental) ",
+    "type": "suffix"
+  },
+  "4982": {
+    "text": "(A-FOR) ",
+    "type": "suffix"
+  },
+  "4983": {
+    "text": "(A-INT) ",
+    "type": "suffix"
+  },
+  "4984": {
+    "text": "(A-DEF) ",
+    "type": "suffix"
+  },
+  "4985": {
+    "text": "(A-ESQV) ",
+    "type": "suffix"
+  },
+  "4986": {
+    "text": "(A-ATQ) ",
+    "type": "suffix"
+  },
+  "4987": {
+    "text": "(A-ATQM) ",
+    "type": "suffix"
+  },
+  "4988": {
+    "text": "(A-HP) ",
+    "type": "suffix"
+  },
+  "4989": {
+    "text": "(A-SP) ",
+    "type": "suffix"
+  },
+  "4990": {
+    "text": "(I-Gelo) ",
+    "type": "suffix"
+  },
+  "4991": {
+    "text": "(A-VdA) ",
+    "type": "suffix"
+  },
+  "4992": {
+    "text": "(C.HP 1) ",
+    "type": "suffix"
+  },
+  "4993": {
+    "text": "(C.SP 1) ",
+    "type": "suffix"
+  },
+  "4994": {
+    "text": "(RP 1) ",
+    "type": "suffix"
+  },
+  "4995": {
+    "text": "(RP 2) ",
+    "type": "suffix"
+  },
+  "4996": {
+    "text": "(RP 3) ",
+    "type": "suffix"
+  },
+  "4997": {
+    "text": "(RL 1) ",
+    "type": "suffix"
+  },
+  "4998": {
+    "text": "(RL 2) ",
+    "type": "suffix"
+  },
+  "4999": {
+    "text": "(RL 3) ",
+    "type": "suffix"
+  },
+  "27012": {
+    "text": "da Proteção Mecânica",
+    "type": "suffix"
+  },
+  "27013": {
+    "text": "das Cápsulas",
+    "type": "suffix"
+  },
+  "27014": {
+    "text": "da Robustez",
+    "type": "suffix"
+  },
+  "27015": {
+    "text": "de Reparo",
+    "type": "suffix"
+  },
+  "27016": {
+    "text": "da Exploração",
+    "type": "suffix"
+  },
+  "27017": {
+    "text": "da Sucata",
+    "type": "suffix"
+  },
+  "27018": {
+    "text": "da Oficina",
+    "type": "suffix"
+  },
+  "27019": {
+    "text": "Industrial",
+    "type": "suffix"
+  },
+  "27020": {
+    "text": "da Anomalia",
+    "type": "suffix"
+  },
+  "27025": {
+    "text": "Real",
+    "type": "suffix"
+  },
+  "27026": {
+    "text": "Quente",
+    "type": "suffix"
+  },
+  "27027": {
+    "text": "Incandescente",
+    "type": "suffix"
+  },
+  "27028": {
+    "text": "da Queimada",
+    "type": "suffix"
+  },
+  "27029": {
+    "text": "Corta-Fogo",
+    "type": "suffix"
+  },
+  "27030": {
+    "text": "do Incêndio",
+    "type": "suffix"
+  },
+  "27081": {
+    "text": "da Lua",
+    "type": "suffix"
+  },
+  "27082": {
+    "text": "de Nove Caudas",
+    "type": "suffix"
+  },
+  "27083": {
+    "text": "do Crescimento",
+    "type": "suffix"
+  },
+  "27084": {
+    "text": "do Ressentimento",
+    "type": "suffix"
+  },
+  "27085": {
+    "text": "da Delicadeza",
+    "type": "suffix"
+  },
+  "27086": {
+    "text": "do Ciclone",
+    "type": "suffix"
+  },
+  "27087": {
+    "text": "da Verdade",
+    "type": "suffix"
+  },
+  "27088": {
+    "text": "do Aventureiro",
+    "type": "suffix"
+  },
+  "27101": {
+    "text": "dos Sonhos",
+    "type": "suffix"
+  },
+  "27102": {
+    "text": "Anti-inflamável",
+    "type": "suffix"
+  },
+  "27103": {
+    "text": "Zumbi",
+    "type": "suffix"
+  },
+  "27104": {
+    "text": "da Compaixão",
+    "type": "suffix"
+  },
+  "27105": {
+    "text": "da Promessa",
+    "type": "suffix"
+  },
+  "27110": {
+    "text": "à Prova de Balas",
+    "type": "suffix"
+  },
+  "27111": {
+    "text": "de Refugo",
+    "type": "suffix"
+  },
+  "27112": {
+    "text": "do Anteparo",
+    "type": "suffix"
+  },
+  "27113": {
+    "text": "de Cristal",
+    "type": "suffix"
+  },
+  "27114": {
+    "text": "da Firmeza",
+    "type": "suffix"
+  },
+  "27115": {
+    "text": "da Sensibilidade",
+    "type": "suffix"
+  },
+  "27116": {
+    "text": "da Dualidade",
+    "type": "suffix"
+  },
+  "27117": {
+    "text": "da Letalidade",
+    "type": "suffix"
+  },
+  "27118": {
+    "text": "das Lanças",
+    "type": "suffix"
+  },
+  "27119": {
+    "text": "da Tartaruga",
+    "type": "suffix"
+  },
+  "27120": {
+    "text": "em Raios Fúlgidos",
+    "type": "suffix"
+  },
+  "27121": {
+    "text": "do Ipiranga",
+    "type": "suffix"
+  },
+  "27122": {
+    "text": "da Pátria Amada",
+    "type": "suffix"
+  },
+  "27123": {
+    "text": "do Formoso Céu",
+    "type": "suffix"
+  },
+  "27124": {
+    "text": "dos Filhos deste Solo",
+    "type": "suffix"
+  },
+  "27125": {
+    "text": "do Brado Retumbante",
+    "type": "suffix"
+  },
+  "27126": {
+    "text": "da Fúria Folclórica",
+    "type": "suffix"
+  },
+  "27147": {
+    "text": "da Intensividade",
+    "type": "suffix"
+  },
+  "27148": {
+    "text": "Padrão",
+    "type": "suffix"
+  },
+  "27149": {
+    "text": "do Disparo",
+    "type": "suffix"
+  },
+  "27150": {
+    "text": "Quimera",
+    "type": "suffix"
+  },
+  "27151": {
+    "text": "da Malícia",
+    "type": "suffix"
+  },
+  "27152": {
+    "text": "da Indução",
+    "type": "suffix"
+  },
+  "27157": {
+    "text": "do Ecossistema",
+    "type": "suffix"
+  },
+  "27158": {
+    "text": "Anti Vento",
+    "type": "suffix"
+  },
+  "27159": {
+    "text": "do Exterminador de Demônios",
+    "type": "suffix"
+  },
+  "27160": {
+    "text": "do Intocável",
+    "type": "suffix"
+  },
+  "27161": {
+    "text": "das Forças da Natureza",
+    "type": "suffix"
+  },
+  "27162": {
+    "text": "do Pacto de Mana",
+    "type": "suffix"
+  },
+  "27163": {
+    "text": "do Invertebrado",
+    "type": "suffix"
+  },
+  "27164": {
+    "text": "da Rainha",
+    "type": "suffix"
+  },
+  "27165": {
+    "text": "Parasita",
+    "type": "suffix"
+  },
+  "27166": {
+    "text": "Termais",
+    "type": "suffix"
+  },
+  "27167": {
+    "text": "Glacial",
+    "type": "suffix"
+  },
+  "27168": {
+    "text": "do Pai",
+    "type": "suffix"
+  },
+  "27169": {
+    "text": "da Infantaria",
+    "type": "suffix"
+  },
+  "27170": {
+    "text": "do Caubói",
+    "type": "suffix"
+  },
+  "27171": {
+    "text": "do Vaqueiro",
+    "type": "suffix"
+  },
+  "27172": {
+    "text": "da Peixeira",
+    "type": "suffix"
+  },
+  "27173": {
+    "text": "do Velho-Oeste",
+    "type": "suffix"
+  },
+  "27174": {
+    "text": "do Justiceiro",
+    "type": "suffix"
+  },
+  "27175": {
+    "text": "do Facão",
+    "type": "suffix"
+  },
+  "27176": {
+    "text": "da Sujeira",
+    "type": "suffix"
+  },
+  "27177": {
+    "text": "da Nojeira",
+    "type": "suffix"
+  },
+  "27178": {
+    "text": "da Guarda Irreal",
+    "type": "suffix"
+  },
+  "27179": {
+    "text": "Acme",
+    "type": "suffix"
+  },
+  "27180": {
+    "text": "do Desarme",
+    "type": "suffix"
+  },
+  "27181": {
+    "text": "da Invasão",
+    "type": "suffix"
+  },
+  "27182": {
+    "text": "do Capitão",
+    "type": "suffix"
+  },
+  "27183": {
+    "text": "dos Gigantes",
+    "type": "suffix"
+  },
+  "27184": {
+    "text": "das Mágoas",
+    "type": "suffix"
+  },
+  "27196": {
+    "text": "de Nihil",
+    "type": "suffix"
+  },
+  "27197": {
+    "text": "de Agnes",
+    "type": "suffix"
+  },
+  "27198": {
+    "text": "de Jurgen",
+    "type": "suffix"
+  },
+  "27199": {
+    "text": "das Gêmeas",
+    "type": "suffix"
+  },
+  "27200": {
+    "text": "Autografado por Nihil",
+    "type": "suffix"
+  },
+  "27201": {
+    "text": "Autografado por Agnes",
+    "type": "suffix"
+  },
+  "27202": {
+    "text": "Autografado por Jurgen",
+    "type": "suffix"
+  },
+  "27203": {
+    "text": "Autografado por Spica",
+    "type": "suffix"
+  },
+  "27209": {
+    "text": "Scaraba Selada",
+    "type": "suffix"
+  },
+  "27211": {
+    "text": "do Ceifeiro Selado",
+    "type": "suffix"
+  },
+  "27212": {
+    "text": "de Reflexão Selada",
+    "type": "suffix"
+  },
+  "27213": {
+    "text": "da Poesia Selada",
+    "type": "suffix"
+  },
+  "27214": {
+    "text": "da Proteção Terrena Selada",
+    "type": "suffix"
+  },
+  "27215": {
+    "text": "da Penetração Selada",
+    "type": "suffix"
+  },
+  "27216": {
+    "text": "da Corrosão Selada",
+    "type": "suffix"
+  },
+  "27217": {
+    "text": "da Incapacitação Selada",
+    "type": "suffix"
+  },
+  "27218": {
+    "text": "da Cruz Suprema Selada",
+    "type": "suffix"
+  },
+  "27219": {
+    "text": "da Boa Ventura Selada",
+    "type": "suffix"
+  },
+  "27220": {
+    "text": "do Mestre das Lâminas Selada",
+    "type": "suffix"
+  },
+  "27221": {
+    "text": "Caça-Fantasmas Selada",
+    "type": "suffix"
+  },
+  "27222": {
+    "text": "do Furor Selado",
+    "type": "suffix"
+  },
+  "27224": {
+    "text": "da Perversão Selada",
+    "type": "suffix"
+  },
+  "27225": {
+    "text": "do Vigia Selada",
+    "type": "suffix"
+  },
+  "27249": {
+    "text": "de Alphard",
+    "type": "suffix"
+  },
+  "27250": {
+    "text": "do Sirius",
+    "type": "suffix"
+  },
+  "27251": {
+    "text": "do Bandido",
+    "type": "suffix"
+  },
+  "27252": {
+    "text": "do Valentão",
+    "type": "suffix"
+  },
+  "27253": {
+    "text": "da Ladra",
+    "type": "suffix"
+  },
+  "27254": {
+    "text": "da Mirzam",
+    "type": "suffix"
+  },
+  "27255": {
+    "text": "da Muliphen",
+    "type": "suffix"
+  },
+  "27256": {
+    "text": "da Wezen",
+    "type": "suffix"
+  },
+  "27257": {
+    "text": "do Wei",
+    "type": "suffix"
+  },
+  "27258": {
+    "text": "do Sargas",
+    "type": "suffix"
+  },
+  "27259": {
+    "text": "da Shaula",
+    "type": "suffix"
+  },
+  "27260": {
+    "text": "da Ahdara",
+    "type": "suffix"
+  },
+  "27261": {
+    "text": "do Procyon",
+    "type": "suffix"
+  },
+  "27262": {
+    "text": "de Atria",
+    "type": "suffix"
+  },
+  "27263": {
+    "text": "de Kanavion",
+    "type": "suffix"
+  },
+  "27264": {
+    "text": "das Trevas",
+    "type": "suffix"
+  },
+  "27265": {
+    "text": "Ocultista",
+    "type": "suffix"
+  },
+  "27286": {
+    "text": "das Cores",
+    "type": "suffix"
+  },
+  "27287": {
+    "text": "do Iluminado",
+    "type": "suffix"
+  },
+  "27288": {
+    "text": "dos Mineradores",
+    "type": "suffix"
+  },
+  "27289": {
+    "text": "Conveniente",
+    "type": "suffix"
+  },
+  "27290": {
+    "text": "de Obsidiana",
+    "type": "suffix"
+  },
+  "27291": {
+    "text": "das Juntas",
+    "type": "suffix"
+  },
+  "27292": {
+    "text": "da Estaláctica",
+    "type": "suffix"
+  },
+  "27293": {
+    "text": "Circular",
+    "type": "suffix"
+  },
+  "27294": {
+    "text": "do Alto Perigo",
+    "type": "suffix"
+  },
+  "27295": {
+    "text": "Disparante",
+    "type": "suffix"
+  },
+  "27296": {
+    "text": "da Arquearia",
+    "type": "suffix"
+  },
+  "27297": {
+    "text": "da Luta",
+    "type": "suffix"
+  },
+  "27298": {
+    "text": "do Wootan",
+    "type": "suffix"
+  },
+  "27304": {
+    "text": "da Recuperação",
+    "type": "suffix"
+  },
+  "27305": {
+    "text": "de Hela",
+    "type": "suffix"
+  },
+  "27306": {
+    "text": "do Tambor",
+    "type": "suffix"
+  },
+  "27307": {
+    "text": "de Expurgar",
+    "type": "suffix"
+  },
+  "27308": {
+    "text": "da Restauração",
+    "type": "suffix"
+  },
+  "27309": {
+    "text": "Benevolente",
+    "type": "suffix"
+  },
+  "27310": {
+    "text": "Neutral",
+    "type": "suffix"
+  },
+  "27311": {
+    "text": "Enorme",
+    "type": "suffix"
+  },
+  "27312": {
+    "text": "Perfurante",
+    "type": "suffix"
+  },
+  "27313": {
+    "text": "da Perícia",
+    "type": "suffix"
+  },
+  "27314": {
+    "text": "do Poder Animal",
+    "type": "suffix"
+  },
+  "27315": {
+    "text": "da Magia Animal",
+    "type": "suffix"
+  },
+  "27316": {
+    "text": "Antiveneno",
+    "type": "suffix"
+  },
+  "27317": {
+    "text": "Penetrante",
+    "type": "suffix"
+  },
+  "27318": {
+    "text": "do Tigre",
+    "type": "suffix"
+  },
+  "27319": {
+    "text": "Insalubre",
+    "type": "suffix"
+  },
+  "27320": {
+    "text": "do Fogo Mágico",
+    "type": "suffix"
+  },
+  "27321": {
+    "text": "de Satã",
+    "type": "suffix"
+  },
+  "27322": {
+    "text": "do Apóstolo",
+    "type": "suffix"
+  },
+  "27323": {
+    "text": "da Apóstola",
+    "type": "suffix"
+  },
+  "27324": {
+    "text": "do Frio",
+    "type": "suffix"
+  },
+  "27325": {
+    "text": "do Calor",
+    "type": "suffix"
+  },
+  "27326": {
+    "text": "da Destruição",
+    "type": "suffix"
+  },
+  "27327": {
+    "text": "do Ceifador",
+    "type": "suffix"
+  },
+  "27328": {
+    "text": "dos Caídos",
+    "type": "suffix"
+  },
+  "27330": {
+    "text": "Autografado por Kronecker",
+    "type": "suffix"
+  },
+  "27331": {
+    "text": "Heine",
+    "type": "suffix"
+  },
+  "27332": {
+    "text": "Autografado por Skia",
+    "type": "suffix"
+  },
+  "27333": {
+    "text": "Nerius",
+    "type": "suffix"
+  },
+  "27334": {
+    "text": "do Bafomé",
+    "type": "suffix"
+  },
+  "27335": {
+    "text": "do Filhote",
+    "type": "suffix"
+  },
+  "27336": {
+    "text": "da Víbora",
+    "type": "suffix"
+  },
+  "27337": {
+    "text": "da Brisa de Caça",
+    "type": "suffix"
+  },
+  "27338": {
+    "text": "da Dupla Potência",
+    "type": "suffix"
+  },
+  "27339": {
+    "text": "Fantasma",
+    "type": "suffix"
+  },
+  "27340": {
+    "text": "do Duplo Crítico",
+    "type": "suffix"
+  },
+  "27341": {
+    "text": "da Concha d'água",
+    "type": "suffix"
+  },
+  "27342": {
+    "text": "da Terra Neutra",
+    "type": "suffix"
+  },
+  "27343": {
+    "text": "dos Caóticos",
+    "type": "suffix"
+  },
+  "27346": {
+    "text": "de Muspell",
+    "type": "suffix"
+  },
+  "27347": {
+    "text": "Montanhista",
+    "type": "suffix"
+  },
+  "27348": {
+    "text": "do Nada",
+    "type": "suffix"
+  },
+  "27349": {
+    "text": "da Barreira Infernal",
+    "type": "suffix"
+  },
+  "27350": {
+    "text": "da Serpe",
+    "type": "suffix"
+  },
+  "27351": {
+    "text": "da Cocatrice",
+    "type": "suffix"
+  },
+  "27352": {
+    "text": "Dormente",
+    "type": "suffix"
+  },
+  "27353": {
+    "text": "da Barreira Diabólica",
+    "type": "suffix"
+  },
+  "27354": {
+    "text": "da Depravação",
+    "type": "suffix"
+  },
+  "27355": {
+    "text": "do Depravado",
+    "type": "suffix"
+  },
+  "27356": {
+    "text": "da Guarda Gelada",
+    "type": "suffix"
+  },
+  "27357": {
+    "text": "da Imundície",
+    "type": "suffix"
+  },
+  "27358": {
+    "text": "do Foragido",
+    "type": "suffix"
+  },
+  "27359": {
+    "text": "Surfista",
+    "type": "suffix"
+  },
+  "27360": {
+    "text": "Vulcanista",
+    "type": "suffix"
+  },
+  "27361": {
+    "text": "do Andarilho",
+    "type": "suffix"
+  },
+  "27362": {
+    "text": "da Majestade",
+    "type": "suffix"
+  },
+  "27363": {
+    "text": "Imperdoável",
+    "type": "suffix"
+  },
+  "27389": {
+    "text": "Autografado por Wolf",
+    "type": "suffix"
+  },
+  "27390": {
+    "text": "Lugenburg",
+    "type": "suffix"
+  },
+  "27391": {
+    "text": "Autografado por Poe",
+    "type": "suffix"
+  },
+  "27392": {
+    "text": "Richard",
+    "type": "suffix"
+  },
+  "27393": {
+    "text": "Autografado por Katrin",
+    "type": "suffix"
+  },
+  "27394": {
+    "text": "da Cortesia",
+    "type": "suffix"
+  },
+  "27395": {
+    "text": "Autografado por Isaac",
+    "type": "suffix"
+  },
+  "27396": {
+    "text": "Wigner",
+    "type": "suffix"
+  },
+  "27413": {
+    "text": "(PX) ",
+    "type": "suffix"
+  },
+  "27414": {
+    "text": "(PO) ",
+    "type": "suffix"
+  },
+  "27415": {
+    "text": "(PI) ",
+    "type": "suffix"
+  },
+  "27416": {
+    "text": "(PU) ",
+    "type": "suffix"
+  },
+  "29000": {
+    "text": "(RM 1) ",
+    "type": "suffix"
+  },
+  "29001": {
+    "text": "(RM 2) ",
+    "type": "suffix"
+  },
+  "29002": {
+    "text": "(RM 3) ",
+    "type": "suffix"
+  },
+  "29003": {
+    "text": "(RV 1) ",
+    "type": "suffix"
+  },
+  "29004": {
+    "text": "(RV 2) ",
+    "type": "suffix"
+  },
+  "29005": {
+    "text": "(RV 3) ",
+    "type": "suffix"
+  },
+  "29006": {
+    "text": "(RA 1) ",
+    "type": "suffix"
+  },
+  "29007": {
+    "text": "(RA 2) ",
+    "type": "suffix"
+  },
+  "29008": {
+    "text": "(RA 3) ",
+    "type": "suffix"
+  },
+  "29009": {
+    "text": "(RS 1) ",
+    "type": "suffix"
+  },
+  "29010": {
+    "text": "(RS 2) ",
+    "type": "suffix"
+  },
+  "29011": {
+    "text": "(RS 3) ",
+    "type": "suffix"
+  },
+  "29013": {
+    "text": "(C.HP 3) ",
+    "type": "suffix"
+  },
+  "29046": {
+    "text": "(Ganância) ",
+    "type": "suffix"
+  },
+  "29047": {
+    "text": "(M 1) ",
+    "type": "suffix"
+  },
+  "29052": {
+    "text": "(Graça Divina) ",
+    "type": "suffix"
+  },
+  "29061": {
+    "text": "(IP 1) ",
+    "type": "suffix"
+  },
+  "29062": {
+    "text": "(IP 2) ",
+    "type": "suffix"
+  },
+  "29063": {
+    "text": "(IP 3) ",
+    "type": "suffix"
+  },
+  "29064": {
+    "text": "(IP 4) ",
+    "type": "suffix"
+  },
+  "29065": {
+    "text": "(IP 5) ",
+    "type": "suffix"
+  },
+  "29066": {
+    "text": "(IP 6) ",
+    "type": "suffix"
+  },
+  "29067": {
+    "text": "(IP 7) ",
+    "type": "suffix"
+  },
+  "29068": {
+    "text": "(IP 8) ",
+    "type": "suffix"
+  },
+  "29069": {
+    "text": "(IP 9) ",
+    "type": "suffix"
+  },
+  "29070": {
+    "text": "(IP 10) ",
+    "type": "suffix"
+  },
+  "29071": {
+    "text": "(IV 1) ",
+    "type": "suffix"
+  },
+  "29072": {
+    "text": "(IV 2) ",
+    "type": "suffix"
+  },
+  "29073": {
+    "text": "(IV 3) ",
+    "type": "suffix"
+  },
+  "29074": {
+    "text": "(IV 4) ",
+    "type": "suffix"
+  },
+  "29075": {
+    "text": "(IV 5) ",
+    "type": "suffix"
+  },
+  "29076": {
+    "text": "(IV 6) ",
+    "type": "suffix"
+  },
+  "29077": {
+    "text": "(IV 7) ",
+    "type": "suffix"
+  },
+  "29078": {
+    "text": "(IV 8) ",
+    "type": "suffix"
+  },
+  "29079": {
+    "text": "(IV 9) ",
+    "type": "suffix"
+  },
+  "29080": {
+    "text": "(IV 10) ",
+    "type": "suffix"
+  },
+  "29081": {
+    "text": "(IT 1) ",
+    "type": "suffix"
+  },
+  "29082": {
+    "text": "(IT 2) ",
+    "type": "suffix"
+  },
+  "29083": {
+    "text": "(IT 3) ",
+    "type": "suffix"
+  },
+  "29084": {
+    "text": "(IT 4) ",
+    "type": "suffix"
+  },
+  "29085": {
+    "text": "(IT 5) ",
+    "type": "suffix"
+  },
+  "29086": {
+    "text": "(IT 6) ",
+    "type": "suffix"
+  },
+  "29087": {
+    "text": "(IT 7) ",
+    "type": "suffix"
+  },
+  "29088": {
+    "text": "(IT 8) ",
+    "type": "suffix"
+  },
+  "29089": {
+    "text": "(IT 9) ",
+    "type": "suffix"
+  },
+  "29090": {
+    "text": "(IT 10) ",
+    "type": "suffix"
+  },
+  "29091": {
+    "text": "(IM 1) ",
+    "type": "suffix"
+  },
+  "29092": {
+    "text": "(IM 2) ",
+    "type": "suffix"
+  },
+  "29093": {
+    "text": "(IM 3) ",
+    "type": "suffix"
+  },
+  "29094": {
+    "text": "(IM 4) ",
+    "type": "suffix"
+  },
+  "29095": {
+    "text": "(IM 5) ",
+    "type": "suffix"
+  },
+  "29096": {
+    "text": "(IM 6) ",
+    "type": "suffix"
+  },
+  "29097": {
+    "text": "(IM 7) ",
+    "type": "suffix"
+  },
+  "29098": {
+    "text": "(IM 8) ",
+    "type": "suffix"
+  },
+  "29099": {
+    "text": "(IM 9) ",
+    "type": "suffix"
+  },
+  "29100": {
+    "text": "(IM 10) ",
+    "type": "suffix"
+  },
+  "29101": {
+    "text": "(IR 1) ",
+    "type": "suffix"
+  },
+  "29102": {
+    "text": "(IR 2) ",
+    "type": "suffix"
+  },
+  "29103": {
+    "text": "(IR 3) ",
+    "type": "suffix"
+  },
+  "29104": {
+    "text": "(IR 4) ",
+    "type": "suffix"
+  },
+  "29105": {
+    "text": "(IR 5) ",
+    "type": "suffix"
+  },
+  "29106": {
+    "text": "(IR 6) ",
+    "type": "suffix"
+  },
+  "29107": {
+    "text": "(IR 7) ",
+    "type": "suffix"
+  },
+  "29108": {
+    "text": "(IR 8) ",
+    "type": "suffix"
+  },
+  "29109": {
+    "text": "(IR 9) ",
+    "type": "suffix"
+  },
+  "29110": {
+    "text": "(IR 10) ",
+    "type": "suffix"
+  },
+  "29111": {
+    "text": "(IA 1) ",
+    "type": "suffix"
+  },
+  "29112": {
+    "text": "(IA 2) ",
+    "type": "suffix"
+  },
+  "29113": {
+    "text": "(IA 3) ",
+    "type": "suffix"
+  },
+  "29114": {
+    "text": "(IA 4) ",
+    "type": "suffix"
+  },
+  "29115": {
+    "text": "(IA 5) ",
+    "type": "suffix"
+  },
+  "29116": {
+    "text": "(IA 6) ",
+    "type": "suffix"
+  },
+  "29117": {
+    "text": "(IA 7) ",
+    "type": "suffix"
+  },
+  "29118": {
+    "text": "(IA 8) ",
+    "type": "suffix"
+  },
+  "29119": {
+    "text": "(IA 9) ",
+    "type": "suffix"
+  },
+  "29120": {
+    "text": "(IA 10) ",
+    "type": "suffix"
+  },
+  "29121": {
+    "text": "(DJ 1) ",
+    "type": "suffix"
+  },
+  "29122": {
+    "text": "(DJ 2) ",
+    "type": "suffix"
+  },
+  "29123": {
+    "text": "(DA 1) ",
+    "type": "suffix"
+  },
+  "29124": {
+    "text": "(DA 2) ",
+    "type": "suffix"
+  },
+  "29125": {
+    "text": "(DV 1) ",
+    "type": "suffix"
+  },
+  "29126": {
+    "text": "(DV 2) ",
+    "type": "suffix"
+  },
+  "29135": {
+    "text": "(FA1) ",
+    "type": "suffix"
+  },
+  "29136": {
+    "text": "(FA2) ",
+    "type": "suffix"
+  },
+  "29137": {
+    "text": "(FA3) ",
+    "type": "suffix"
+  },
+  "29138": {
+    "text": "(FA4) ",
+    "type": "suffix"
+  },
+  "29139": {
+    "text": "(FA 5) ",
+    "type": "suffix"
+  },
+  "29147": {
+    "text": "(Ressuscitar) ",
+    "type": "suffix"
+  },
+  "29209": {
+    "text": "(C.SP 2) ",
+    "type": "suffix"
+  },
+  "29359": {
+    "text": "(M 2) ",
+    "type": "suffix"
+  },
+  "29360": {
+    "text": "(M 3) ",
+    "type": "suffix"
+  },
+  "29361": {
+    "text": "(M 4) ",
+    "type": "suffix"
+  },
+  "29445": {
+    "text": "(PA 1) ",
+    "type": "suffix"
+  },
+  "29446": {
+    "text": "(PA 2) ",
+    "type": "suffix"
+  },
+  "29447": {
+    "text": "(PA 3) ",
+    "type": "suffix"
+  },
+  "29448": {
+    "text": "(PA 4) ",
+    "type": "suffix"
+  },
+  "29449": {
+    "text": "(PA 5) ",
+    "type": "suffix"
+  },
+  "29527": {
+    "text": "(N-DEF) ",
+    "type": "suffix"
+  },
+  "29528": {
+    "text": "(N-DEFM) ",
+    "type": "suffix"
+  },
+  "29529": {
+    "text": "(S-HPR) ",
+    "type": "suffix"
+  },
+  "29530": {
+    "text": "(S-SPMax) ",
+    "type": "suffix"
+  },
+  "29531": {
+    "text": "(S-HPMax) ",
+    "type": "suffix"
+  },
+  "29532": {
+    "text": "(S-SPR) ",
+    "type": "suffix"
+  },
+  "29533": {
+    "text": "(S-Cura) ",
+    "type": "suffix"
+  },
+  "29534": {
+    "text": "(S-ATQ) ",
+    "type": "suffix"
+  },
+  "29535": {
+    "text": "(S-ATQM) ",
+    "type": "suffix"
+  },
+  "29536": {
+    "text": "(S-Tiro) ",
+    "type": "suffix"
+  },
+  "29537": {
+    "text": "(S-Rapidez) ",
+    "type": "suffix"
+  },
+  "29538": {
+    "text": "(S-Magia) ",
+    "type": "suffix"
+  },
+  "29539": {
+    "text": "(S-CRIT) ",
+    "type": "suffix"
+  },
+  "29540": {
+    "text": "(U-Pós) ",
+    "type": "suffix"
+  },
+  "29541": {
+    "text": "(U-Fixa) ",
+    "type": "suffix"
+  },
+  "29542": {
+    "text": "(U-Total) ",
+    "type": "suffix"
+  },
+  "29543": {
+    "text": "(U-Vida) ",
+    "type": "suffix"
+  },
+  "29544": {
+    "text": "(U-Alma) ",
+    "type": "suffix"
+  },
+  "29545": {
+    "text": "(U-Mental) ",
+    "type": "suffix"
+  },
+  "29546": {
+    "text": "(U-Mana) ",
+    "type": "suffix"
+  },
+  "29547": {
+    "text": "(L-Eternidade) ",
+    "type": "suffix"
+  },
+  "29548": {
+    "text": "(L-Sortilégio) ",
+    "type": "suffix"
+  },
+  "29549": {
+    "text": "(L-Astúcia) ",
+    "type": "suffix"
+  },
+  "29550": {
+    "text": "(L-Superpoder) ",
+    "type": "suffix"
+  },
+  "29551": {
+    "text": "(L-Lampejo) ",
+    "type": "suffix"
+  },
+  "29552": {
+    "text": "(L-Fortuna) ",
+    "type": "suffix"
+  },
+  "31016": {
+    "text": "da Persistência",
+    "type": "suffix"
+  },
+  "31017": {
+    "text": "da Petulância",
+    "type": "suffix"
+  },
+  "31018": {
+    "text": "da Maldição à Distância",
+    "type": "suffix"
+  },
+  "31019": {
+    "text": "da Retaliação Maldita",
+    "type": "suffix"
+  },
+  "31020": {
+    "text": "do Sacrifício Maldito",
+    "type": "suffix"
+  },
+  "31021": {
+    "text": "da Resiliência",
+    "type": "suffix"
+  },
+  "31022": {
+    "text": "do Desespero",
+    "type": "suffix"
+  },
+  "31023": {
+    "text": "dos Ferimentos Mortais",
+    "type": "suffix"
+  },
+  "31024": {
+    "text": "Impactante",
+    "type": "suffix"
+  },
+  "31025": {
+    "text": "Intoxicante",
+    "type": "suffix"
+  },
+  "31026": {
+    "text": "de Autoconjuração",
+    "type": "suffix"
+  },
+  "300127": {
+    "text": "com autógrafo de Wolf",
+    "type": "suffix"
+  },
+  "300128": {
+    "text": "de Lugenburg",
+    "type": "suffix"
+  },
+  "300129": {
+    "text": "com autógrafo de Poe",
+    "type": "suffix"
+  },
+  "300130": {
+    "text": "de Poe",
+    "type": "suffix"
+  },
+  "300307": {
+    "text": "Autografado por Meyer",
+    "type": "suffix"
+  },
+  "300308": {
+    "text": "de Meyer",
+    "type": "suffix"
+  },
+  "300309": {
+    "text": "Autografado por Helmut",
+    "type": "suffix"
+  },
+  "300310": {
+    "text": "de Helmut",
+    "type": "suffix"
+  },
+  "311910": {
+    "text": "(CM) ",
+    "type": "suffix"
+  },
+  "311911": {
+    "text": "(CN) ",
+    "type": "suffix"
+  }
+}

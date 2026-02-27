@@ -1,3 +1,161 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
+
+/* ─── Modern Vercel/Apple-style Theme Variables ────────────────────── */
+
+:root {
+  /* Light mode (Clean, airy) */
+  --ro-dark: #fafafa;
+  --ro-darker: #f4f4f5;
+  --ro-surface: #ffffff;
+  --ro-panel: rgba(255, 255, 255, 0.7);
+  --ro-border: #e4e4e7;
+  --ro-border-light: #f4f4f5;
+  --ro-muted: #71717a;
+
+  /* Vibrant Pop Colors */
+  --ro-gold: #f59e0b;
+  --ro-gold-light: #fbbf24;
+  --ro-gold-dim: #d97706;
+
+  --ro-text: #09090b;
+  --ro-text-secondary: #3f3f46;
+  --ro-text-soft: #52525b;
+
+  --ro-nav-bg: rgba(255, 255, 255, 0.65);
+  --ro-focus: #f59e0b;
+}
+
+.dark {
+  /* Ultra-modern Deep Dark (Zinc 950 base) */
+  --ro-dark: #09090b;
+  --ro-darker: #000000;
+  --ro-surface: #18181b;
+  --ro-panel: rgba(24, 24, 27, 0.6);
+  --ro-border: rgba(255, 255, 255, 0.1);
+  --ro-border-light: rgba(255, 255, 255, 0.05);
+  --ro-muted: #a1a1aa;
+
+  /* Bright Neon Gold Accent against deep black */
+  --ro-gold: #fbbf24;
+  --ro-gold-light: #fcd34d;
+  --ro-gold-dim: #d97706;
+
+  --ro-text: #ffffff;
+  --ro-text-secondary: #e4e4e7;
+  --ro-text-soft: #a1a1aa;
+
+  --ro-nav-bg: rgba(9, 9, 11, 0.7);
+  --ro-focus: #fbbf24;
+}
+
+/* ─── Base ────────────────────────────────────────────────────────── */
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--ro-scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--ro-scrollbar-thumb);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ro-scrollbar-hover);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--ro-focus);
+    outline-offset: 2px;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--ro-text);
+  }
+
+  ::selection {
+    background: var(--ro-selection-bg);
+    color: var(--ro-text);
+  }
+}
+
+/* ─── Components ──────────────────────────────────────────────────── */
+
+@layer components {
+
+  /* Modern clean glass panels */
+  .ro-panel {
+    background: var(--ro-panel);
+    border: 1px solid var(--ro-border);
+    border-radius: 1.5rem;
+    /* Extra rounded for modern look */
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  .dark .ro-panel {
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Vibrant Active Panel */
+  .ro-panel-gold {
+    background: var(--ro-panel);
+    border: 1px solid var(--ro-gold);
+    border-radius: 1.5rem;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 0 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .dark .ro-panel-gold {
+    box-shadow: 0 0 40px rgba(251, 191, 36, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Search input */
+  .search-input {
+    @apply w-full bg-ro-surface border border-ro-border rounded-xl px-4 py-3 placeholder-ro-muted focus:outline-none focus:border-ro-gold-dim transition-all duration-200;
+    color: var(--ro-text);
+  }
+
+  /* Gold divider line */
+  .ro-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ro-divider), transparent);
+  }
+
+  /* Subtle gold glow for important elements */
+  .ro-glow {
+    box-shadow:
+      0 0 15px var(--ro-glow-1),
+      0 0 40px var(--ro-glow-2);
+  }
+
+  /* Select dropdown styled */
+  .ro-select {
+    @apply bg-ro-surface border border-ro-border rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-ro-gold-dim transition-colors;
+    color: var(--ro-text);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%238a839e' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    appearance: none;
+  }
+
+  .ro-select option {
+    background: var(--ro-surface);
+    color: var(--ro-text);
+  }
+}

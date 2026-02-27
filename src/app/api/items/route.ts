@@ -1,38 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/db/prisma";
-import { ItemType } from "@prisma/client";
+import { searchItems, getItemById, findMonstersDropping } from "@/lib/db/json-database";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q")?.trim();
-  const type = searchParams.get("type") as ItemType | null;
-  const take = Math.min(parseInt(searchParams.get("limit") ?? "60"), 120);
+  const type = searchParams.get("type") || undefined;
+  const id = searchParams.get("id");
+  const limit = Math.min(parseInt(searchParams.get("limit") ?? "60"), 500);
+  const offset = parseInt(searchParams.get("offset") ?? "0");
 
-  const items = await prisma.item.findMany({
-    where: {
-      ...(q && {
-        OR: [
-          { name: { contains: q, mode: "insensitive" } },
-          { namePt: { contains: q, mode: "insensitive" } },
-        ],
-      }),
-      ...(type && { type }),
-    },
-    select: {
-      id: true,
-      name: true,
-      namePt: true,
-      type: true,
-      slots: true,
-      atk: true,
-      matk: true,
-      defense: true,
-      requiredLevel: true,
-      imageUrl: true,
-    },
-    orderBy: { name: "asc" },
-    take,
-  });
+  // Single item by ID
+  if (id) {
+    const item = getItemById(parseInt(id));
+    if (!item) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    const droppedBy = findMonstersDropping(item.id);
+    return NextResponse.json({ item, droppedBy });
+  }
 
-  return NextResponse.json({ items });
+  const location = searchParams.get("location") || undefined;
+  const job = searchParams.get("job") || undefined;
+  const { items, total } = searchItems({ query: q, type, limit, offset, location, job });
+  return NextResponse.json({ items, total });
 }

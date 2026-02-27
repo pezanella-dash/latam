@@ -24,5 +24,18 @@ services:
     depends_on:
       - postgres
 
+  zrenderer:
+    image: zhade/zrenderer:latest
+    container_name: ro_latam_zrenderer
+    user: root
+    ports:
+      - "11011:11011"
+    volumes:
+      - ./data/zrenderer.conf:/zren/zrenderer.conf
+      - ./data/zrenderer-output:/zren/output
+      - ./data/zrenderer-resources:/zren/resources
+      - ./data/zrenderer-secrets:/zren/secrets
+    restart: unless-stopped
+
 volumes:
   postgres_data:

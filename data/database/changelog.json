@@ -1,0 +1,129 @@
+[
+  {
+    "date": "2026-02-25",
+    "newItems": [
+      {
+        "id": 500,
+        "namePt": "Choko Gangjeong",
+        "nameEn": "Choko Gangjeong",
+        "type": "Healing"
+      },
+      {
+        "id": 501,
+        "namePt": "Poção Vermelha",
+        "nameEn": "Red Potion",
+        "type": "Healing"
+      },
+      {
+        "id": 502,
+        "namePt": "Poção Laranja",
+        "nameEn": "Orange Potion",
+        "type": "Healing"
+      },
+      {
+        "id": 503,
+        "namePt": "Poção Amarela",
+        "nameEn": "Yellow Potion",
+        "type": "Healing"
+      },
+      {
+        "id": 504,
+        "namePt": "Poção Branca",
+        "nameEn": "White Potion",
+        "type": "Healing"
+      },
+      {
+        "id": 505,
+        "namePt": "Poção Azul",
+        "nameEn": "Blue Potion",
+        "type": "Healing"
+      },
+      {
+        "id": 506,
+        "namePt": "Poção Verde",
+        "nameEn": "Green Potion",
+        "type": "Healing"
+      },
+      {
+        "id": 507,
+        "namePt": "Erva Vermelha",
+        "nameEn": "Red Herb",
+        "type": "Healing"
+      },
+      {
+        "id": 508,
+        "namePt": "Erva Amarela",
+        "nameEn": "Yellow Herb",
+        "type": "Healing"
+      },
+      {
+        "id": 509,
+        "namePt": "Erva Branca",
+        "nameEn": "White Herb",
+        "type": "Healing"
+      },
+      {
+        "id": 510,
+        "namePt": "Erva Azul",
+        "nameEn": "Blue Herb",
+        "type": "Healing"
+      },
+      {
+        "id": 511,
+        "namePt": "Erva Verde",
+        "nameEn": "Green Herb",
+        "type": "Healing"
+      },
+      {
+        "id": 512,
+        "namePt": "Maçã",
+        "nameEn": "Apple",
+        "type": "Healing"
+      },
+      {
+        "id": 513,
+        "namePt": "Banana",
+        "nameEn": "Banana",
+        "type": "Healing"
+      },
+      {
+        "id": 514,
+        "namePt": "Uvas",
+        "nameEn": "Grape",
+        "type": "Healing"
+      },
+      {
+        "id": 515,
+        "namePt": "Cenoura",
+        "nameEn": "Carrot",
+        "type": "Healing"
+      },
+      {
+        "id": 516,
+        "namePt": "Batata Doce",
+        "nameEn": "Potato",
+        "type": "Healing"
+      },
+      {
+        "id": 517,
+        "namePt": "Carne",
+        "nameEn": "Meat",
+        "type": "Healing"
+      },
+      {
+        "id": 518,
+        "namePt": "Mel",
+        "nameEn": "Honey",
+        "type": "Healing"
+      },
+      {
+        "id": 519,
+        "namePt": "Leite",
+        "nameEn": "Milk",
+        "type": "Healing"
+      }
+    ],
+    "changedItems": [],
+    "removedCount": 0
+  }
+]

@@ -4,3 +4,9 @@ node_modules/
 .next/
 out/
 *.tsbuildinfo
+
+# zrenderer (extracted GRF resources are large + secrets)
+data/zrenderer-resources/
+data/zrenderer-output/
+data/zrenderer-secrets/
+data/zextractor-filters.txt

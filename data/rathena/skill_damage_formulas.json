@@ -1,0 +1,359 @@
+{
+  "_meta": {
+    "source": "https://github.com/rathena/rathena/tree/master/src/map/skills",
+    "extracted": "2026-02-27",
+    "notes": [
+      "skillratio starts at 100 (=100% of ATK/MATK)",
+      "RE_LVL_DMOD(val): if BaseLv > 99, skillratio = skillratio * BaseLv / val",
+      "Weapon skills: damage = WeaponATK * skillratio / 100",
+      "Magic skills: damage = MATK * skillratio / 100",
+      "Negative HitCount means client displays N hits but server calculates as 1 damage packet"
+    ]
+  },
+
+  "SM_BASH": {
+    "name": "Bash",
+    "class": "Swordman",
+    "type": "Weapon",
+    "formula": "skillratio = 100 + 30 * skill_lv",
+    "skillratio_per_level": [130, 160, 190, 220, 250, 280, 310, 340, 370, 400],
+    "baseLv_scaling": false,
+    "hit_count": 1,
+    "element": "Weapon",
+    "special": "Hit rate bonus: +5% per level applied on final hitrate. Lv6+ with Fatal Blow: stun chance = (skill_lv - 5) * BaseLv * 10 / 5000"
+  },
+
+  "SM_MAGNUM": {
+    "name": "Magnum Break",
+    "class": "Swordman",
+    "type": "Weapon",
+    "formula": "Inner 3x3: skillratio = 100 + 20 * skill_lv; Outer 5x5: skillratio = 100 + 10 * skill_lv",
+    "skillratio_per_level_inner": [120, 140, 160, 180, 200, 220, 240, 260, 280, 300],
+    "skillratio_per_level_outer": [110, 120, 130, 140, 150, 160, 170, 180, 190, 200],
+    "baseLv_scaling": false,
+    "hit_count": 1,
+    "element": "Fire",
+    "special": "AoE splash (inner 3x3, outer 5x5). Knockback 2 cells. Grants 20% Fire property weapon buff for 10 seconds after use. Hit rate bonus: +10% per level on final hitrate."
+  },
+
+  "KN_BOWLINGBASH": {
+    "name": "Bowling Bash",
+    "class": "Knight",
+    "type": "Weapon",
+    "formula": "skillratio = 100 + 40 * skill_lv",
+    "skillratio_per_level": [140, 180, 220, 260, 300, 340, 380, 420, 460, 500],
+    "baseLv_scaling": false,
+    "hit_count": 2,
+    "element": "Weapon",
+    "special": "AoE splash area 2. Knockback varies by level (1-5 cells). In Renewal, hits all enemies in splash. In pre-renewal, uses gutter line chain bounce system."
+  },
+
+  "AC_DOUBLE": {
+    "name": "Double Strafe",
+    "class": "Archer",
+    "type": "Weapon",
+    "formula": "skillratio = 100 + 10 * (skill_lv - 1)",
+    "skillratio_per_level": [100, 110, 120, 130, 140, 150, 160, 170, 180, 190],
+    "baseLv_scaling": false,
+    "hit_count": 2,
+    "element": "Weapon",
+    "special": "Requires Bow + Arrow. 2 hits displayed and calculated. Note: skillratio is per-hit, so total = 2 * skillratio."
+  },
+
+  "AC_SHOWER": {
+    "name": "Arrow Shower",
+    "class": "Archer",
+    "type": "Weapon",
+    "formula_renewal": "skillratio = 100 + 50 + 10 * skill_lv",
+    "formula_prerenewal": "skillratio = 100 + (-25) + 5 * skill_lv",
+    "skillratio_per_level_renewal": [160, 170, 180, 190, 200, 210, 220, 230, 240, 250],
+    "baseLv_scaling": false,
+    "hit_count": 1,
+    "element": "Weapon",
+    "special": "AoE splash. Knockback 2 cells. Requires Bow + Arrow. Removes Camouflage on cast."
+  },
+
+  "SN_SHARPSHOOTING": {
+    "name": "Focused Arrow Strike / Sharp Shooting",
+    "class": "Sniper",
+    "type": "Weapon",
+    "formula_renewal": "skillratio = 300 + 300 * skill_lv; RE_LVL_DMOD(100)",
+    "formula_prerenewal": "skillratio = 100 + 100 + 50 * skill_lv",
+    "skillratio_per_level_renewal": [600, 900, 1200, 1500, 1800],
+    "skillratio_per_level_renewal_note": "Before BaseLv scaling. Final = value * BaseLv / 100 (if BaseLv > 99)",
+    "skillratio_per_level_prerenewal": [250, 300, 350, 400, 450],
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": 1,
+    "element": "Weapon",
+    "damageFlags": ["Critical"],
+    "special": "Always crits. Hits in a piercing line AoE (splash area 2, max 14 targets). Requires Bow + Arrow. Removes Camouflage on use."
+  },
+
+  "RA_ARROWSTORM": {
+    "name": "Arrow Storm",
+    "class": "Ranger",
+    "type": "Weapon",
+    "formula_normal": "skillratio = 200 + 180 * skill_lv; RE_LVL_DMOD(100)",
+    "formula_fearbreeze": "skillratio = 200 + 250 * skill_lv; RE_LVL_DMOD(100)",
+    "skillratio_per_level_normal": [380, 560, 740, 920, 1100, 1280, 1460, 1640, 1820, 2000],
+    "skillratio_per_level_fearbreeze": [450, 700, 950, 1200, 1450, 1700, 1950, 2200, 2450, 2700],
+    "skillratio_note": "Before BaseLv scaling. Final = value * BaseLv / 100 (if BaseLv > 99)",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": -3,
+    "hit_count_note": "Client shows 3 hits, server sends 1 damage packet",
+    "element": "Weapon",
+    "special": "AoE splash (area 2~4 by level). Removes Camouflage. With Fear Breeze buff active, ratio increases significantly (250 per lv vs 180). Requires Bow + 5 Arrows."
+  },
+
+  "RA_AIMEDBOLT": {
+    "name": "Aimed Bolt",
+    "class": "Ranger",
+    "type": "Weapon",
+    "formula_normal": "skillratio = 500 + 20 * skill_lv; RE_LVL_DMOD(100)",
+    "formula_fearbreeze": "skillratio = 800 + 35 * skill_lv; RE_LVL_DMOD(100)",
+    "skillratio_per_level_normal": [520, 540, 560, 580, 600, 620, 640, 660, 680, 700],
+    "skillratio_per_level_fearbreeze": [835, 870, 905, 940, 975, 1010, 1045, 1080, 1115, 1150],
+    "skillratio_note": "Before BaseLv scaling. Final = value * BaseLv / 100 (if BaseLv > 99)",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": 5,
+    "element": "Weapon",
+    "special": "5 hits. With Fear Breeze buff, base ratio jumps from 500 to 800. Requires Bow + 3 Arrows."
+  },
+
+  "RA_WUGSTRIKE": {
+    "name": "Warg Strike",
+    "class": "Ranger",
+    "type": "Weapon",
+    "formula": "skillratio = 200 * skill_lv",
+    "skillratio_per_level": [200, 400, 600, 800, 1000],
+    "baseLv_scaling": false,
+    "hit_count": 1,
+    "element": "Neutral (ignores element)",
+    "damageFlags": ["IgnoreAtkCard", "IgnoreElement", "IgnoreDefCard"],
+    "special": "Warg-summoned attack. Ignores ATK cards, element, and DEF cards. If riding Warg, moves to target before attacking. Ignores AutoGuard and Cicada."
+  },
+
+  "WM_METALICSOUND": {
+    "name": "Metallic Sound",
+    "class": "Minstrel/Wanderer",
+    "type": "Magic",
+    "formula": "skillratio = 120 * skill_lv + 60 * Lesson_Lv; RE_LVL_DMOD(100); if target has Sound Blend: skillratio += skillratio * 50 / 100",
+    "skillratio_per_level_lesson0": [120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200],
+    "skillratio_per_level_lesson5": [420, 540, 660, 780, 900, 1020, 1140, 1260, 1380, 1500],
+    "skillratio_per_level_lesson10": [720, 840, 960, 1080, 1200, 1320, 1440, 1560, 1680, 1800],
+    "skillratio_note": "Before BaseLv scaling. Lesson_Lv = level of Lesson skill (WM_LESSON). +100 bonus if target is sleeping. +50% total if target has Sound Blend debuff.",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": 2,
+    "element": "Weapon element (uses MATK)",
+    "special": "Magic damage type but uses weapon element. Drains SP from target. Removes Sound Blend on hit. +100 skillratio if target is Sleeping. Sound Blend bonus is multiplicative (+50% of total skillratio)."
+  },
+
+  "WM_REVERBERATION": {
+    "name": "Reverberation",
+    "class": "Minstrel/Wanderer",
+    "type": "Magic",
+    "formula": "skillratio = 700 + 300 * skill_lv; RE_LVL_DMOD(100); if target has Sound Blend: skillratio += skillratio * 50 / 100",
+    "formula_comment": "Comment in source: MATK [{(Skill Level x 300) + 400} x Casters Base Level / 100] %",
+    "skillratio_per_level": [1000, 1300, 1600, 1900, 2200],
+    "skillratio_note": "Before BaseLv scaling. Sound Blend bonus is multiplicative (+50% of total).",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": -10,
+    "hit_count_note": "Client shows 10 hits, server sends 1 damage packet",
+    "element": "Magic (no weapon element)",
+    "special": "Trap-type skill. AoE splash area 2. Sound Blend bonus adds +50% total damage. Requires 5 Arrows."
+  },
+
+  "WM_SEVERE_RAINSTORM": {
+    "name": "Severe Rainstorm",
+    "class": "Minstrel/Wanderer",
+    "type": "Weapon (ground unit, melee sub-skill)",
+    "formula": "skillratio = 100 + 100 * skill_lv + (DEX / 300 + AGI / 200); if Whip/Instrument equipped: skillratio += 20 * skill_lv; RE_LVL_DMOD(100)",
+    "formula_note": "Actual damage is via WM_SEVERE_RAINSTORM_MELEE sub-skill",
+    "skillratio_per_level_base": [200, 300, 400, 500, 600],
+    "skillratio_per_level_instrument": [220, 340, 460, 580, 700],
+    "skillratio_note": "Before BaseLv scaling and before DEX/AGI bonus. DEX/300 + AGI/200 is added as flat skillratio. With Instrument/Whip: +20*lv extra.",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": "1 per tick (interval 300ms, duration 3400ms = ~11 ticks)",
+    "element": "Weapon",
+    "special": "Ground-targeted AoE. Places unit on ground (range 5, interval 300ms). Duration 3400ms. Cannot switch equipment during skill. Requires Bow/Musical/Whip + 10 Arrows."
+  },
+
+  "RL_FIREDANCE": {
+    "name": "Fire Dance",
+    "class": "Rebellion",
+    "type": "Weapon",
+    "formula": "skillratio = 100 + 100 + 100 * skill_lv + Desperado_Lv * 20; RE_LVL_DMOD(100)",
+    "skillratio_per_level_desp0": [300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200],
+    "skillratio_per_level_desp10": [500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400],
+    "skillratio_note": "Before BaseLv scaling. Desperado_Lv = level of GS_DESPERADO skill, adds 20 per level.",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": 1,
+    "element": "Weapon",
+    "special": "AoE splash area 3. Requires Revolver + 3 Bullets. Desperado skill level adds +20 skillratio per level."
+  },
+
+  "RL_R_TRIP": {
+    "name": "Round Trip",
+    "class": "Rebellion",
+    "type": "Weapon",
+    "formula": "skillratio = 350 * skill_lv; RE_LVL_DMOD(100)",
+    "formula_plusatk": "RL_R_TRIP_PLUSATK: skillratio = 300 + 300 * skill_lv (no BaseLv scaling)",
+    "skillratio_per_level": [350, 700, 1050, 1400, 1750, 2100, 2450, 2800, 3150, 3500],
+    "skillratio_note": "Before BaseLv scaling.",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": 1,
+    "element": "Weapon",
+    "special": "AoE splash (area 3~6 by level). Knockback 3 cells. Requires Gatling Gun + 5 Bullets. Has a secondary bonus damage component (RL_R_TRIP_PLUSATK) with formula 300 + 300*lv."
+  },
+
+  "RL_FIRE_RAIN": {
+    "name": "Fire Rain",
+    "class": "Rebellion",
+    "type": "Weapon",
+    "formula": "skillratio = 3500 + 300 * skill_lv",
+    "skillratio_per_level": [3800, 4100, 4400, 4700, 5000],
+    "baseLv_scaling": false,
+    "hit_count": "1 per wave (skill_lv + 5 waves = 6~10 waves)",
+    "hit_count_per_level": [6, 7, 8, 9, 10],
+    "element": "Weapon",
+    "special": "Ground-targeted directional line attack. Fires (skill_lv + 5) waves in a line (80ms apart per wave). Each wave can hit targets in splash area 1. Requires Gatling Gun + 10 Bullets. 5s cooldown."
+  },
+
+  "KO_JYUMONJIKIRI": {
+    "name": "Cross Slash / Juumonji Kiri",
+    "class": "Kagerou/Oboro",
+    "type": "Weapon",
+    "formula": "skillratio = 200 * skill_lv; RE_LVL_DMOD(120); if target has Jyumonji debuff: skillratio += skill_lv * BaseLv; if caster has Kagemusya: skillratio += skillratio * Kagemusya_bonus / 100",
+    "skillratio_per_level_base": [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000],
+    "skillratio_note": "Before BaseLv scaling (divisor 120, not 100). Second hit on debuffed target adds skill_lv * BaseLv to ratio. Kagemusya further multiplies total.",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 120,
+    "hit_count": -2,
+    "hit_count_note": "Client shows 2 hits, server sends 1 damage packet",
+    "element": "Weapon",
+    "special": "Moves to target before attacking. Applies SC_JYUMONJIKIRI debuff. If target already has the debuff, bonus = skill_lv * BaseLv added to ratio. Kagemusya shadow clone buff multiplies total ratio. Range increases with level (4~7)."
+  },
+
+  "SU_PICKYPECK": {
+    "name": "Picky Peck",
+    "class": "Doram",
+    "type": "Weapon",
+    "formula": "skillratio = 100 + 100 + 100 * skill_lv; if target HP < 50%: skillratio *= 2; if Spirit of Life learned: skillratio += skillratio * (currentHP / maxHP)",
+    "skillratio_per_level_base": [300, 400, 500, 600, 700],
+    "skillratio_per_level_halved_target": [600, 800, 1000, 1200, 1400],
+    "skillratio_note": "Doubles when target HP below 50%. Spirit of Life adds bonus proportional to caster's current HP percentage.",
+    "baseLv_scaling": false,
+    "hit_count": -5,
+    "hit_count_note": "Client shows 5 hits, server sends 1 damage packet",
+    "element": "Weapon",
+    "special": "Damage doubles if target's current HP < 50% of max HP. If caster has learned SU_SPIRITOFLIFE, bonus = skillratio * (caster_currentHP / caster_maxHP) added."
+  },
+
+  "SU_LUNATICCARROTBEAT": {
+    "name": "Lunatic Carrot Beat",
+    "class": "Doram",
+    "type": "Weapon",
+    "formula": "skillratio = 100 + 100 + 100 * skill_lv; if Spirit of Life: skillratio += skillratio * (currentHP / maxHP); if BaseLv > 99: skillratio += STR; RE_LVL_DMOD(100)",
+    "skillratio_per_level_base": [300, 400, 500, 600, 700],
+    "skillratio_note": "Before BaseLv scaling. STR bonus only if BaseLv > 99. Spirit of Life adds HP% bonus. Has SU_LUNATICCARROTBEAT2 variant (same formula, adds Stun chance).",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": -3,
+    "hit_count_note": "Client shows 3 hits, server sends 1 damage packet",
+    "element": "Weapon",
+    "special": "AoE splash (area 1~3 by level). If caster BaseLv > 99, STR is added to skillratio. Spirit of Life adds HP% bonus. Variant 2 (with item) adds 20% Stun chance."
+  },
+
+  "SJ_SOLARBURST": {
+    "name": "Solar Burst",
+    "class": "Star Emperor",
+    "type": "Weapon",
+    "formula": "skillratio = 100 + 900 + 220 * skill_lv; RE_LVL_DMOD(100); if Light of Sun buff: skillratio += skillratio * LightOfSun_bonus / 100",
+    "skillratio_per_level": [1220, 1440, 1660, 1880, 2100, 2320, 2540, 2760, 2980, 3200],
+    "skillratio_note": "Before BaseLv scaling. Light of Sun buff multiplies total skillratio by its bonus percentage.",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": -3,
+    "hit_count_note": "Client shows 3 hits, server sends 1 damage packet",
+    "element": "Weapon",
+    "special": "AoE splash area 3. Requires Sun Stance. Light of Sun buff provides multiplicative damage bonus (skillratio * val2 / 100)."
+  },
+
+  "SJ_FULLMOONKICK": {
+    "name": "Full Moon Kick",
+    "class": "Star Emperor",
+    "type": "Weapon",
+    "formula": "skillratio = 100 + 1000 + 100 * skill_lv; RE_LVL_DMOD(100); if Light of Moon buff: skillratio += skillratio * LightOfMoon_bonus / 100",
+    "skillratio_per_level": [1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100],
+    "skillratio_note": "Before BaseLv scaling. Light of Moon buff multiplies total skillratio.",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": 1,
+    "element": "Weapon",
+    "special": "AoE splash area 3. Requires Moon Stance. Inflicts Blind (15 + 5*lv % chance). Light of Moon buff provides multiplicative damage bonus."
+  },
+
+  "SP_SPA": {
+    "name": "Espa",
+    "class": "Soul Reaper",
+    "type": "Magic",
+    "formula": "skillratio = 100 + 400 + 250 * skill_lv; RE_LVL_DMOD(100)",
+    "skillratio_per_level": [750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000],
+    "skillratio_note": "Before BaseLv scaling.",
+    "baseLv_scaling": true,
+    "baseLv_divisor": 100,
+    "hit_count": 1,
+    "element": "Endowed (uses endowed/converted element)",
+    "special": "Against players: if allow_es_magic_pc is disabled, stuns caster and fails. Costs 1 Soul Sphere (0 at lv10). Single target magic attack."
+  },
+
+  "MG_FIREBOLT": {
+    "name": "Fire Bolt",
+    "class": "Mage",
+    "type": "Magic",
+    "formula": "skillratio = 100 per hit (1 hit per skill level). With Flame Technic elemental: skillratio *= 5. With Spell Fist: skillratio += (bolt_lv * 100) + (spellfist_lv * 50 - 50) - 100",
+    "skillratio_base": "100% MATK per hit",
+    "hits_per_level": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "total_skillratio_per_level": [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+    "baseLv_scaling": false,
+    "hit_count_per_level": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "element": "Fire",
+    "special": "Number of hits = skill level. Each hit does 100% MATK. Total damage = MATK * skill_lv. Flame Technic Option (Elemental Spirit) multiplies ratio by 5x. Spell Fist converts to melee, changes div to 1 hit."
+  },
+
+  "MG_COLDBOLT": {
+    "name": "Cold Bolt",
+    "class": "Mage",
+    "type": "Magic",
+    "formula": "skillratio = 100 per hit (1 hit per skill level). With Cold Force elemental: skillratio *= 5. With Spell Fist: skillratio += (bolt_lv * 100) + (spellfist_lv * 50 - 50) - 100",
+    "skillratio_base": "100% MATK per hit",
+    "hits_per_level": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "total_skillratio_per_level": [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+    "baseLv_scaling": false,
+    "hit_count_per_level": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "element": "Water",
+    "special": "Number of hits = skill level. Each hit does 100% MATK. Total damage = MATK * skill_lv. Cold Force Option (Elemental Spirit) multiplies ratio by 5x. Spell Fist converts to melee."
+  },
+
+  "MG_LIGHTNINGBOLT": {
+    "name": "Lightning Bolt",
+    "class": "Mage",
+    "type": "Magic",
+    "formula": "skillratio = 100 per hit (1 hit per skill level). With Grace Breeze elemental: skillratio *= 5. With Spell Fist: skillratio += (bolt_lv * 100) + (spellfist_lv * 50 - 50) - 100",
+    "skillratio_base": "100% MATK per hit",
+    "hits_per_level": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "total_skillratio_per_level": [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+    "baseLv_scaling": false,
+    "hit_count_per_level": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "element": "Wind",
+    "special": "Number of hits = skill level. Each hit does 100% MATK. Total damage = MATK * skill_lv. Grace Breeze Option (Elemental Spirit) multiplies ratio by 5x. Spell Fist converts to melee."
+  }
+}

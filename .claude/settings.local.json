@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/User/AppData/Local/Temp/nas-calc/src/app/jobs/**)",
+      "Read(//c/Users/User/AppData/Local/Temp/nas-calc/src/app/constants/**)",
+      "Read(//c/Users/User/AppData/Local/Temp/nas-calc/src/app/constants/share-active-skills/**)",
+      "Read(//c/Users/User/projects/rathena/src/map/**)",
+      "Read(//c/Users/User/projects/rathena/db/re/**)"
+    ]
+  }
+}
