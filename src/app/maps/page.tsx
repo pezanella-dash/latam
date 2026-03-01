@@ -66,6 +66,7 @@ function MapImage({ mapId, className }: { mapId: string; className?: string }) {
       alt={mapId}
       className={className}
       loading="lazy"
+      referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
     />
   );

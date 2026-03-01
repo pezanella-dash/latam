@@ -615,10 +615,11 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     isMelee: false, canCrit: false, fixedCast: flat(500, 10), cooldown: flat(500, 10),
     spCost: levels(20, 3, 10), maxLevel: 10, jobs: ["Arch_Bishop"]
   },
-  // AB_ADORAMUS: kRO Rebalance 185/65 -> 330 + (skill_lv * 70) % MATK. Base Lv Scaling.
+  // AB_ADORAMUS: rAthena master (kRO Rebalance) -> skillratio = 300 + 250 * skill_lv. RE_LVL_DMOD(100).
+  // Confirmed on LATAM/bRO via RagnaPlace & Divine Pride: 550-2800%.
   {
     id: 2040, aegisName: "AB_ADORAMUS", namePt: "Adoramus", type: "magical", element: "holy", hitCount: 10,
-    damagePercent: [400, 470, 540, 610, 680, 750, 820, 890, 960, 1030], baseLvScaling: true,
+    damagePercent: [550, 800, 1050, 1300, 1550, 1800, 2050, 2300, 2550, 2800], baseLvScaling: true,
     isMelee: false, canCrit: false, castTime: levels(1000, 200, 10), fixedCast: flat(1000, 10),
     cooldown: flat(2500, 10), spCost: levels(20, 8, 10), maxLevel: 10, jobs: ["Arch_Bishop"]
   },

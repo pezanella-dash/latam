@@ -19,6 +19,8 @@ import {
   resolveDropsToItems,
 } from "@/lib/db/supabase";
 import combosData from "../../../data/database/combos.json";
+import monsterSpawnsData from "../../../data/database/monster-spawns.json";
+import mapsData from "../../../data/database/maps.json";
 
 // ─── Types ──────────────────────────────────────────────────────────
 
@@ -973,6 +975,9 @@ function MonsterDetail({
         <div>Walk Speed: {monster.walkSpeed ?? 0}</div>
       </div>
 
+      {/* Spawn Locations */}
+      <MonsterSpawns monsterId={monster.id} />
+
       {/* MVP Drops */}
       {mvpDrops?.length > 0 && (
         <div className="mb-4">
@@ -1027,6 +1032,71 @@ function MonsterDetail({
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// ─── Monster Spawns ─────────────────────────────────────────────────
+
+const spawnDb = monsterSpawnsData as Record<string, Array<{ mapId: string; count: number; respawnMs: number }>>;
+const mapNameLookup: Record<string, string> = {};
+for (const m of mapsData as Array<{ mapId: string; name: string }>) {
+  mapNameLookup[m.mapId] = m.name;
+}
+
+function formatRespawn(ms: number): string {
+  if (ms <= 0) return "Imediato";
+  const sec = Math.floor(ms / 1000);
+  if (sec < 60) return `${sec}s`;
+  const min = Math.floor(sec / 60);
+  if (min < 60) return `${min}min`;
+  const hrs = Math.floor(min / 60);
+  const remMin = min % 60;
+  if (remMin === 0) return `${hrs}h`;
+  return `${hrs}h${remMin}min`;
+}
+
+function mapImageUrl(mapId: string): string {
+  return `https://static.divine-pride.net/images/maps/raw/${mapId}.png`;
+}
+
+function MonsterSpawns({ monsterId }: { monsterId: number }) {
+  const spawns = spawnDb[String(monsterId)];
+  if (!spawns || spawns.length === 0) return null;
+
+  return (
+    <div className="mb-4">
+      <div className="text-[10px] uppercase tracking-widest text-ro-gold-dim mb-2 font-medium">
+        Localização ({spawns.length} {spawns.length === 1 ? "mapa" : "mapas"})
+      </div>
+      <div className="space-y-1">
+        {spawns.map((s) => (
+          <div
+            key={s.mapId}
+            className="bg-ro-surface rounded-lg px-3 py-2 text-xs flex items-center gap-2.5 border border-ro-border/50"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={mapImageUrl(s.mapId)}
+              alt=""
+              className="w-10 h-10 rounded object-cover flex-shrink-0 bg-ro-panel"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+            />
+            <div className="flex-1 min-w-0">
+              <div className="text-[var(--ro-text-secondary)] font-medium truncate">
+                {mapNameLookup[s.mapId] || s.mapId}
+              </div>
+              <div className="text-ro-muted text-[10px]">{s.mapId}</div>
+            </div>
+            <div className="text-right flex-shrink-0">
+              <div className="text-element-water font-mono font-medium">{s.count}x</div>
+              <div className="text-ro-muted text-[10px]">{formatRespawn(s.respawnMs)}</div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

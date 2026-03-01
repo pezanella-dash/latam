@@ -617,7 +617,9 @@ export function calculateDamage(input: DamageInput): DamageResult {
   const baseLvMod = calcBaseLvMod(skill, baseLevel);
 
   if (skill.type === "magical") {
-    // ── Magical Damage ──
+    // ── Magical Damage (rAthena Renewal pipeline) ──
+    // Pipeline: MATK → cardfix(APPLY_CARDFIX_RE) → skillratio → MDEF → bSkillAtk → element fix
+    // Ref: rAthena battle.cpp battle_calc_magic_attack + battle_calc_cardfix
     const statusMatk = Math.floor(baseLevel / 4) + totalInt + Math.floor(totalInt / 2) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
     const weaponMatk = input.weaponMatk + getRefineMatkBonus(input.weaponLevel, input.weaponRefine);
     const equipMatk = totalBonus.matk || 0;
@@ -626,42 +628,62 @@ export function calculateDamage(input: DamageInput): DamageResult {
     const matkMin = Math.floor((statusMatk + Math.floor(weaponMatk * 0.7) + equipMatk) * matkRate);
     const matkMax = Math.floor((statusMatk + weaponMatk + equipMatk) * matkRate);
 
-    const rawMin = Math.floor(matkMin * skillRatio / 100);
-    const rawMax = Math.floor(matkMax * skillRatio / 100);
-
-    // Magical cardfix: race/ele/size/class are ADDITIVE (rAthena battle_calc_cardfix)
-    const mCardfix = 1000 + magicBonuses.race * 10 + magicBonuses.element * 10
-                          + magicBonuses.size * 10 + magicBonuses.class * 10;
-
     // MDEF reduction: damage × (1000 + MDEF) / (1000 + MDEF × 10)
     const hardMdefReduction = effectiveHardMdef > 0
       ? (1000 + effectiveHardMdef) / (1000 + effectiveHardMdef * 10)
       : 1;
 
-    // Apply step-by-step with integer math (matching rAthena):
-    // 1. BaseLv scaling
-    let magDmgMin = Math.floor(rawMin * baseLvMod);
-    let magDmgMax = Math.floor(rawMax * baseLvMod);
-    // 2. Cardfix (additive race/ele/size/class)
-    magDmgMin = Math.floor(magDmgMin * mCardfix / 1000);
-    magDmgMax = Math.floor(magDmgMax * mCardfix / 1000);
-    // 3. bMagicAtkEle — separate multiplier
-    if (magicBonuses.magicEle > 0) {
+    // ── Step 1: Cardfix — APPLY_CARDFIX_RE (sequential, multiplicative with floor) ──
+    // rAthena Renewal order: size → race2 → ele → debuffs → atkEle → race → class
+    // Each category applied separately: damage = damage + floor(damage * bonus / 100)
+    let magDmgMin = matkMin;
+    let magDmgMax = matkMax;
+
+    // Size (bMagicAddSize)
+    if (magicBonuses.size !== 0) {
+      magDmgMin = magDmgMin + Math.floor(magDmgMin * magicBonuses.size / 100);
+      magDmgMax = magDmgMax + Math.floor(magDmgMax * magicBonuses.size / 100);
+    }
+    // Element defense (bMagicAddEle — target's defensive element)
+    if (magicBonuses.element !== 0) {
+      magDmgMin = magDmgMin + Math.floor(magDmgMin * magicBonuses.element / 100);
+      magDmgMax = magDmgMax + Math.floor(magDmgMax * magicBonuses.element / 100);
+    }
+    // Attack element (bMagicAtkEle — caster's magic element bonus, e.g. +Holy%)
+    if (magicBonuses.magicEle !== 0) {
       magDmgMin = magDmgMin + Math.floor(magDmgMin * magicBonuses.magicEle / 100);
       magDmgMax = magDmgMax + Math.floor(magDmgMax * magicBonuses.magicEle / 100);
     }
-    // 4. MDEF reduction
+    // Race (bMagicAddRace)
+    if (magicBonuses.race !== 0) {
+      magDmgMin = magDmgMin + Math.floor(magDmgMin * magicBonuses.race / 100);
+      magDmgMax = magDmgMax + Math.floor(magDmgMax * magicBonuses.race / 100);
+    }
+    // Class (bMagicAddClass — boss/normal)
+    if (magicBonuses.class !== 0) {
+      magDmgMin = magDmgMin + Math.floor(magDmgMin * magicBonuses.class / 100);
+      magDmgMax = magDmgMax + Math.floor(magDmgMax * magicBonuses.class / 100);
+    }
+
+    // ── Step 2: Skill Ratio × BaseLv scaling (RE_LVL_DMOD) ──
+    const effectiveSkillRatio = Math.floor(skillRatio * baseLvMod);
+    magDmgMin = Math.floor(magDmgMin * effectiveSkillRatio / 100);
+    magDmgMax = Math.floor(magDmgMax * effectiveSkillRatio / 100);
+
+    // ── Step 3: MDEF reduction ──
     magDmgMin = Math.floor(magDmgMin * hardMdefReduction);
     magDmgMax = Math.floor(magDmgMax * hardMdefReduction);
-    // 5. Soft MDEF subtraction
+    // Soft MDEF subtraction
     magDmgMin = Math.max(1, magDmgMin - softMdef);
     magDmgMax = Math.max(1, magDmgMax - softMdef);
-    // 6. bSkillAtk — post-DEF
+
+    // ── Step 4: bSkillAtk — post-DEF (pc_skillatk_bonus) ──
     if (skillAtkBonusCombined > 0) {
       magDmgMin = magDmgMin + Math.floor(magDmgMin * skillAtkBonusCombined / 100);
       magDmgMax = magDmgMax + Math.floor(magDmgMax * skillAtkBonusCombined / 100);
     }
-    // 7. Element table
+
+    // ── Step 5: Element table (battle_attr_fix) ──
     magDmgMin = Math.floor(magDmgMin * elementTableMod / 100);
     magDmgMax = Math.floor(magDmgMax * elementTableMod / 100);
 

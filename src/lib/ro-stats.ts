@@ -678,6 +678,16 @@ export function parseScriptBonuses(
       String(Math.min(safeEvalExpr(a), safeEvalExpr(b))));
     result = result.replace(/max\(([^,()]+),([^,()]+)\)/g, (_, a: string, b: string) =>
       String(Math.max(safeEvalExpr(a), safeEvalExpr(b))));
+    // Resolve inline ternary expressions: (COND)?TRUE:FALSE
+    // Process innermost first (no nested parens in condition), repeat for nesting
+    for (let ti = 0; ti < 20; ti++) {
+      const tm = result.match(/\(([^()?]+)\)\s*\?\s*(-?\d+(?:\s*[+\-*/]\s*\d+)*)\s*:\s*(-?\d+(?:\s*[+\-*/]\s*\d+)*)/);
+      if (!tm) break;
+      const resolved = safeEvalCondition(tm[1]) ? tm[2].trim() : tm[3].trim();
+      result = result.replace(tm[0], resolved);
+      // Clean up parenthesized numbers left by nested ternary resolution: (-3) → -3
+      result = result.replace(/\((-?\d+)\)/g, "$1");
+    }
     return result;
   }
 
@@ -1237,16 +1247,16 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   const baseAtk = Math.floor(totalStr) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
   const totalWeaponAtk = weaponAtk + (totalBonus.atk || 0);
 
-  // Base MATK from INT
-  const baseMatk = Math.floor(totalInt) + Math.floor(totalInt / 2) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
+  // Base MATK (rAthena Renewal: BaseLv/4 + INT + INT/2 + DEX/5 + LUK/3)
+  const baseMatk = Math.floor(baseLevel / 4) + Math.floor(totalInt) + Math.floor(totalInt / 2) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
   const totalWeaponMatk = weaponMatk + (totalBonus.matk || 0);
 
-  // DEF
-  const baseDef = Math.floor(totalVit / 2) + Math.floor(totalAgi / 5);
+  // DEF (Renewal: level/2 + VIT/2 + AGI/5)
+  const baseDef = Math.floor(baseLevel / 2) + Math.floor(totalVit / 2) + Math.floor(totalAgi / 5);
   const totalEquipDef = equipDef + (totalBonus.def || 0);
 
-  // MDEF
-  const baseMdef = Math.floor(totalInt / 2) + Math.floor(totalVit / 5) + Math.floor(totalDex / 5);
+  // MDEF (Renewal rAthena: INT + BaseLv/4 + VIT/5 + DEX/5)
+  const baseMdef = Math.floor(totalInt) + Math.floor(baseLevel / 4) + Math.floor(totalVit / 5) + Math.floor(totalDex / 5);
   const totalEquipMdef = equipMdef + (totalBonus.mdef || 0);
 
   // HIT
@@ -1263,10 +1273,10 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   const aspdBonus = Math.floor(totalAgi * 0.2) + Math.floor(totalDex * 0.1) + (totalBonus.aspd || 0);
   const aspd = Math.min(193, baseAspd + aspdBonus);
 
-  // HP (Renewal formula: cumulative per-level with class factor, VIT %, trans mod)
-  // baseHP = 35 + hpFactor * sum(level) + 25 * hpFactor * level
-  // Simplified: 35 + hpFactor * (level*(level+1)/2) + 25 * hpFactor * level
-  const hpBase = 35 + hpFactor * (baseLevel * (baseLevel + 1)) / 2 + 25 * hpFactor * baseLevel;
+  // HP (Renewal rAthena formula: 35 + base_level * hp_table[level] / 100)
+  // hp_table grows roughly as hpFactor * level, so:
+  // hpBase ≈ 35 + hpFactor * level² / 2  (quadratic growth from cumulative per-level)
+  const hpBase = 35 + hpFactor * (baseLevel * (baseLevel + 1)) / 2;
   const baseHp = Math.floor(hpBase * (1 + totalVit * 0.01) * transMod);
 
   // SP (Renewal formula: base + spFactor * 4 per level, INT %, trans mod)
