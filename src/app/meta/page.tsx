@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { supabase } from "@/lib/db/supabase";
+import { getSupabase } from "@/lib/db/supabase";
 
 const TIER_COLORS: Record<string, string> = {
   S: "bg-yellow-500 text-slate-900",
@@ -30,13 +30,13 @@ export default function MetaPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase
+    getSupabase()
       .from("meta_snapshots")
       .select("*")
       .order("snapshot_at", { ascending: false })
       .limit(1)
       .maybeSingle()
-      .then(({ data }) => {
+      .then(({ data }: { data: any }) => {
         if (data) {
           setTierList((data.tier_list ?? {}) as unknown as TierList);
           setPatch(data.patch ?? "—");

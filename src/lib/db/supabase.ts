@@ -7,10 +7,27 @@ import { createClient } from "@supabase/supabase-js";
 
 // ─── Client ──────────────────────────────────────────────────────────
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Lazy singleton — avoids crashing during Next.js static prerender when env vars
+// are baked into the client bundle but not available on the server render pass.
+let _client: ReturnType<typeof createClient> | null = null;
+export function getSupabase() {
+  if (!_client) {
+    if (!supabaseUrl || !supabaseAnonKey) {
+      throw new Error("Supabase env vars not set — NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY");
+    }
+    _client = createClient(supabaseUrl, supabaseAnonKey);
+  }
+  return _client;
+}
+
+// Keep a convenient export for direct Supabase queries (e.g. meta page)
+// This is safe because it's only called at runtime in the browser, not during prerender.
+export const supabase = typeof window !== "undefined"
+  ? createClient(supabaseUrl || "https://placeholder.supabase.co", supabaseAnonKey || "placeholder")
+  : (null as unknown as ReturnType<typeof createClient>);
 
 // ─── Types (same shape as json-database.ts) ─────────────────────────
 
@@ -247,7 +264,7 @@ export async function searchItems(opts: {
 }): Promise<{ items: DbItem[]; total: number }> {
   const { query, type, location, job, limit = 60, offset = 0 } = opts;
 
-  let q = supabase.from("items").select("*", { count: "exact" });
+  let q = getSupabase().from("items").select("*", { count: "exact" });
 
   if (type) {
     if (type === "Consumable") {
@@ -308,7 +325,7 @@ export async function searchMonsters(opts: {
 }): Promise<{ monsters: (Omit<DbMonster, "drops" | "mvpDrops"> & { drops?: any[]; mvpDrops?: any[] })[]; total: number }> {
   const { query, race, element, mvpOnly, limit = 60, offset = 0 } = opts;
 
-  let q = supabase.from("monsters").select("*", { count: "exact" });
+  let q = getSupabase().from("monsters").select("*", { count: "exact" });
 
   if (mvpOnly) q = q.eq("is_mvp", true);
   if (race) q = q.eq("race", race);
@@ -346,7 +363,7 @@ export async function searchSkills(opts: {
 }): Promise<{ skills: DbSkill[]; total: number }> {
   const { query, type, limit = 60, offset = 0 } = opts;
 
-  let q = supabase.from("skills").select("*", { count: "exact" });
+  let q = getSupabase().from("skills").select("*", { count: "exact" });
 
   if (type) q = q.eq("type", type);
 
@@ -377,7 +394,7 @@ export async function searchSkills(opts: {
 // ─── Single record lookups ──────────────────────────────────────────
 
 export async function getItemById(id: number): Promise<DbItem | null> {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("items")
     .select("*")
     .eq("id", id)
@@ -387,7 +404,7 @@ export async function getItemById(id: number): Promise<DbItem | null> {
 }
 
 export async function getMonsterById(id: number): Promise<DbMonster | null> {
-  const { data: row, error } = await supabase
+  const { data: row, error } = await getSupabase()
     .from("monsters")
     .select("*")
     .eq("id", id)
@@ -395,7 +412,7 @@ export async function getMonsterById(id: number): Promise<DbMonster | null> {
   if (error || !row) return null;
 
   // Fetch drops
-  const { data: drops } = await supabase
+  const { data: drops } = await getSupabase()
     .from("monster_drops")
     .select("aegis_name, rate, steal_protected, is_mvp_drop")
     .eq("monster_id", id);
@@ -424,7 +441,7 @@ export async function resolveDropsToItems(
   const aegisNames = drops.map((d) => d.aegisName);
 
   // Batch lookup aegis → id
-  const { data: mappings } = await supabase
+  const { data: mappings } = await getSupabase()
     .from("aegis_to_id")
     .select("aegis_name, item_id")
     .in("aegis_name", aegisNames);
@@ -455,7 +472,7 @@ export async function findMonstersDropping(itemId: number): Promise<Array<{ mons
   const item = await getItemById(itemId);
   if (!item) return [];
 
-  const { data: drops } = await supabase
+  const { data: drops } = await getSupabase()
     .from("monster_drops")
     .select("monster_id, rate")
     .eq("aegis_name", item.aegisName)
@@ -465,7 +482,7 @@ export async function findMonstersDropping(itemId: number): Promise<Array<{ mons
   if (!drops || drops.length === 0) return [];
 
   const monsterIds = [...new Set(drops.map((d: any) => d.monster_id))];
-  const { data: monsters } = await supabase
+  const { data: monsters } = await getSupabase()
     .from("monsters")
     .select("*")
     .in("id", monsterIds);
@@ -484,7 +501,7 @@ export async function findMonstersDropping(itemId: number): Promise<Array<{ mons
 // ─── Changelog ──────────────────────────────────────────────────────
 
 export async function getChangelog(): Promise<any[]> {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("changelog")
     .select("data")
     .order("date", { ascending: false });
