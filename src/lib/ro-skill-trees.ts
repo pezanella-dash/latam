@@ -75,3 +75,28 @@ export function skillIconUrl(skillId: number): string {
 export function getAllClassIds(): string[] {
   return Object.keys(data.chains);
 }
+
+// ─── Max Skill Points per Job Tier ─────────────────────────────────
+// Points available = max job level - 1
+
+const JOB_MAX_POINTS: Record<number, number> = {
+  0: 9,       // Novice (Job Lv 10)
+  // 1st classes (Job Lv 50)
+  1: 49, 2: 49, 3: 49, 4: 49, 5: 49, 6: 49,
+  // 2nd classes (Job Lv 50)
+  7: 49, 8: 49, 9: 49, 10: 49, 11: 49, 12: 49,
+  14: 49, 15: 49, 16: 49, 17: 49, 18: 49, 19: 49, 20: 49,
+  // Transcendent 2nd classes (Job Lv 70)
+  4008: 69, 4009: 69, 4010: 69, 4011: 69, 4012: 69, 4013: 69,
+  4015: 69, 4016: 69, 4017: 69, 4018: 69, 4019: 69, 4020: 69, 4021: 69,
+  // 3rd classes (Job Lv 70)
+  4054: 69, 4055: 69, 4056: 69, 4057: 69, 4058: 69, 4059: 69,
+  // Expanded
+  23: 98,     // Super Novice (Job Lv 99)
+  24: 49, 25: 49,
+  4046: 49, 4047: 69, 4049: 69,
+};
+
+export function getMaxSkillPoints(jobId: number): number {
+  return JOB_MAX_POINTS[jobId] || 49;
+}
