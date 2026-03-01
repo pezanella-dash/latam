@@ -259,7 +259,7 @@ function calcStatBonus(skill: SkillFormula, stats: BaseStats, bonus: EquipBonus,
 
 function calcBaseLvMod(skill: SkillFormula, baseLevel: number): number {
   if (!skill.baseLvScaling) return 1;
-  if (baseLevel <= 99) return 1;
+  if (baseLevel <= 100) return 1;  // rAthena RE_LVL_DMOD: > 100
   const divisor = skill.baseLvDivisor || 100;
   return baseLevel / divisor;
 }
@@ -269,13 +269,15 @@ function calcBaseLvMod(skill: SkillFormula, baseLevel: number): number {
 // if BaseLv > 100: damagevalue *= BaseLv / 150
 // then: damagevalue *= (90 + 10 * dragonTraining) / 100
 // NOTE: Uses CURRENT HP (sstatus->hp), not max HP!
+// RE_LVL_DMOD(150) — LATAM server uses divisor 150, NOT 100.
+// kRO 185/65 rebalance changed to /100, but LATAM has NOT applied this yet.
 
 function calcDragonBreath(input: DamageInput): number {
   const { currentHp, maxSp, skillLevel, baseLevel } = input;
   let damage = Math.floor(currentHp / 50 + maxSp / 4) * skillLevel;
-  // kRO 185/65 Balance: BaseLv modifier improved from /150 to /100.
-  if (baseLevel > 99) {
-    damage = Math.floor(damage * baseLevel / 100);
+  // RE_LVL_DMOD(150): LATAM server uses /150 divisor
+  if (baseLevel > 100) {
+    damage = Math.floor(damage * baseLevel / 150);
   }
   // Dragon Training assumed at lv5 (most builds max it): (90 + 50) / 100 = 1.4
   // TODO: Add dragonTraining level to input when available
@@ -448,26 +450,41 @@ export function calculateDamage(input: DamageInput): DamageResult {
   }
 
   // ── Dragon Breath: completely separate formula ──────────────────
+  // rAthena flow: base HP/SP damage → cardfix (additive) → bSkillAtk → bLongAtkRate → element table → DEF
   if (skill.formulaType === "dragonBreath") {
-    const baseDamage = calcDragonBreath(input);
-    const rangeMod = 1 + (totalBonus.longAtkRate || 0) / 100;
-    const raceMod = 1 + physBonuses.race / 100;
-    const eleMod = 1 + physBonuses.element / 100;
-    const sizeMod = 1 + physBonuses.size / 100;
-    const classMod = 1 + physBonuses.class / 100;
-    const skillAtkMod = 1 + skillAtkBonusCombined / 100;
-    const eleTableMod = elementTableMod / 100;
-    const totalMod = raceMod * eleMod * sizeMod * classMod * skillAtkMod * eleTableMod * rangeMod;
-    // Dragon Breath uses SimpleDefense (flat DEF subtraction, not % formula)
+    let damage = calcDragonBreath(input);
+
+    // rAthena cardfix: race/ele/size/class bonuses are ADDITIVE (not multiplicative)
+    // battle_calc_cardfix(): cardfix = 1000 + sum(bonuses*10), then damage * cardfix / 1000
+    const cardfix = 1000 + physBonuses.race * 10 + physBonuses.element * 10
+                        + physBonuses.size * 10 + physBonuses.class * 10;
+    const baseDamage = damage; // save for details
+    damage = Math.floor(damage * cardfix / 1000);
+
+    // bSkillAtk — separate ATK_ADDRATE (damage += damage * bonus / 100)
+    if (skillAtkBonusCombined > 0) {
+      damage = damage + Math.floor(damage * skillAtkBonusCombined / 100);
+    }
+
+    // bLongAtkRate — separate ATK_ADDRATE
+    const longAtkRate = totalBonus.longAtkRate || 0;
+    if (longAtkRate > 0) {
+      damage = damage + Math.floor(damage * longAtkRate / 100);
+    }
+
+    // Element table multiplier
+    damage = Math.floor(damage * elementTableMod / 100);
+
+    // DEF reduction (flat subtraction for Dragon Breath)
     const defReduction = effectiveHardDef + softDef;
-    const damage = Math.max(1, Math.floor(baseDamage * totalMod) - defReduction);
+    damage = Math.max(1, damage - defReduction);
 
     const details: DamageDetails = {
       statusAtk: baseDamage, weaponAtk: 0, equipAtk: 0,
       skillPercent: 100, baseLvScaling: baseLevel > 100 ? baseLevel / 150 : 1,
       sizePenalty: 100, raceModifier: physBonuses.race, elementModifier: physBonuses.element,
       sizeModifier: physBonuses.size, classModifier: physBonuses.class,
-      skillAtkModifier: skillAtkBonusCombined, longRangeModifier: totalBonus.longAtkRate || 0,
+      skillAtkModifier: skillAtkBonusCombined, longRangeModifier: longAtkRate,
       atkRateModifier: 0, elementTableMod,
       hardDefReduction: effectiveHardDef, softDefReduction: softDef, ignoreDefPercent: totalIgnoreDef,
     };
@@ -612,25 +629,44 @@ export function calculateDamage(input: DamageInput): DamageResult {
     const rawMin = Math.floor(matkMin * skillRatio / 100);
     const rawMax = Math.floor(matkMax * skillRatio / 100);
 
-    // Magical modifiers use bMagicAddRace/Ele/Size/Class (NOT bAddRace etc.)
-    const mRaceMod = 1 + magicBonuses.race / 100;
-    const mEleMod = 1 + magicBonuses.element / 100;
-    const mSizeMod = 1 + magicBonuses.size / 100;
-    const mClassMod = 1 + magicBonuses.class / 100;
-    const mMagicEleMod = 1 + magicBonuses.magicEle / 100;
-    const skillAtkMod = 1 + skillAtkBonusCombined / 100;
-    const eleTableMod = elementTableMod / 100;
-
-    const totalMod = mRaceMod * mEleMod * mSizeMod * mClassMod * mMagicEleMod * skillAtkMod * eleTableMod;
+    // Magical cardfix: race/ele/size/class are ADDITIVE (rAthena battle_calc_cardfix)
+    const mCardfix = 1000 + magicBonuses.race * 10 + magicBonuses.element * 10
+                          + magicBonuses.size * 10 + magicBonuses.class * 10;
 
     // MDEF reduction: damage × (1000 + MDEF) / (1000 + MDEF × 10)
     const hardMdefReduction = effectiveHardMdef > 0
       ? (1000 + effectiveHardMdef) / (1000 + effectiveHardMdef * 10)
       : 1;
 
-    // Per-hit damage (before multi-hit multiplication)
-    const perHitMin = Math.max(1, Math.floor(rawMin * baseLvMod * totalMod * hardMdefReduction) - softMdef);
-    const perHitMax = Math.max(1, Math.floor(rawMax * baseLvMod * totalMod * hardMdefReduction) - softMdef);
+    // Apply step-by-step with integer math (matching rAthena):
+    // 1. BaseLv scaling
+    let magDmgMin = Math.floor(rawMin * baseLvMod);
+    let magDmgMax = Math.floor(rawMax * baseLvMod);
+    // 2. Cardfix (additive race/ele/size/class)
+    magDmgMin = Math.floor(magDmgMin * mCardfix / 1000);
+    magDmgMax = Math.floor(magDmgMax * mCardfix / 1000);
+    // 3. bMagicAtkEle — separate multiplier
+    if (magicBonuses.magicEle > 0) {
+      magDmgMin = magDmgMin + Math.floor(magDmgMin * magicBonuses.magicEle / 100);
+      magDmgMax = magDmgMax + Math.floor(magDmgMax * magicBonuses.magicEle / 100);
+    }
+    // 4. MDEF reduction
+    magDmgMin = Math.floor(magDmgMin * hardMdefReduction);
+    magDmgMax = Math.floor(magDmgMax * hardMdefReduction);
+    // 5. Soft MDEF subtraction
+    magDmgMin = Math.max(1, magDmgMin - softMdef);
+    magDmgMax = Math.max(1, magDmgMax - softMdef);
+    // 6. bSkillAtk — post-DEF
+    if (skillAtkBonusCombined > 0) {
+      magDmgMin = magDmgMin + Math.floor(magDmgMin * skillAtkBonusCombined / 100);
+      magDmgMax = magDmgMax + Math.floor(magDmgMax * skillAtkBonusCombined / 100);
+    }
+    // 7. Element table
+    magDmgMin = Math.floor(magDmgMin * elementTableMod / 100);
+    magDmgMax = Math.floor(magDmgMax * elementTableMod / 100);
+
+    const perHitMin = magDmgMin;
+    const perHitMax = magDmgMax;
 
     // perHitDamage: bolt spells and ground ticks calculate damage separately per hit
     const hitMult = skill.perHitDamage && hitCount > 1 ? hitCount : 1;
@@ -738,20 +774,13 @@ function calcPhysicalDamage(
   const weaponAtkMaxEDP = Math.floor(weaponAtkMax * edpMult);
   const equipAtkEDP = Math.floor(equipAtk * edpMult);
 
-  // 5. Modifiers (Race, Size, Class, Element)
-  const raceMod = 1 + targetBonuses.race / 100;
-  const eleMod = 1 + targetBonuses.element / 100;
-  const sizeMod = 1 + targetBonuses.size / 100;
-  const classMod = 1 + targetBonuses.class / 100;
-
+  // 5. Range modifier
   let rangeMod = skill.isMelee ? (totalBonus.shortAtkRate || 0) : (totalBonus.longAtkRate || 0);
 
   // Cross Ripper Slasher uses long range modifiers despite isMelee flag
   if (skill.aegisName === "GC_CROSSRIPPERSLASHER") {
     rangeMod = (totalBonus.longAtkRate || 0);
   }
-
-  const rangeMultiplier = 1 + rangeMod / 100;
 
   // Raw damage = (StatusATK + WeaponATK_EDP + EquipATK_EDP) * AtkRate
   const calcRawDamage = (wAtk: number, eAtk: number) => Math.floor((statusAtk + wAtk + eAtk) * atkRate);
@@ -770,11 +799,17 @@ function calcPhysicalDamage(
   skillDmgMin += flatBonus;
   skillDmgMax += flatBonus;
 
-  // 8. Apply pre-DEF modifiers (race, size, class, range — card fix in rAthena)
-  // Element table and bSkillAtk are applied AFTER DEF per rAthena pipeline
-  const preDefMod = raceMod * sizeMod * classMod * eleMod * rangeMultiplier;
-  let damageBeforeDefMin = Math.floor(skillDmgMin * preDefMod);
-  let damageBeforeDefMax = Math.floor(skillDmgMax * preDefMod);
+  // 8. Card fix: rAthena battle_calc_cardfix() — race/ele/size/class are ADDITIVE
+  const cardfix = 1000 + targetBonuses.race * 10 + targetBonuses.element * 10
+                       + targetBonuses.size * 10 + targetBonuses.class * 10;
+  let damageBeforeDefMin = Math.floor(skillDmgMin * cardfix / 1000);
+  let damageBeforeDefMax = Math.floor(skillDmgMax * cardfix / 1000);
+
+  // Range modifier (bLongAtkRate/bShortAtkRate) — separate ATK_ADDRATE
+  if (rangeMod !== 0) {
+    damageBeforeDefMin = damageBeforeDefMin + Math.floor(damageBeforeDefMin * rangeMod / 100);
+    damageBeforeDefMax = damageBeforeDefMax + Math.floor(damageBeforeDefMax * rangeMod / 100);
+  }
 
   // 8b. Advance Katar Mastery (rAthena step 15: AFTER skill ratio, BEFORE DEF)
   // ATK_ADDRATE(wd.damage, 10 + 2 * katar_skill) — assumed max lv10 = +30%
@@ -792,10 +827,15 @@ function calcPhysicalDamage(
   let minDamageBeforeCrit = Math.max(1, Math.floor(damageBeforeDefMin * defReduction) - softDef);
   let maxDamageBeforeCrit = Math.max(1, Math.floor(damageBeforeDefMax * defReduction) - softDef);
 
-  // 10b. Post-DEF modifiers: bSkillAtk and Element Table (rAthena steps 17-18)
-  const postDefMod = (1 + skillAtkBonus / 100) * (elementTableMod / 100);
-  minDamageBeforeCrit = Math.floor(minDamageBeforeCrit * postDefMod);
-  maxDamageBeforeCrit = Math.floor(maxDamageBeforeCrit * postDefMod);
+  // 10b. Post-DEF modifiers — separate ATK_ADDRATE steps (rAthena integer math)
+  // bSkillAtk
+  if (skillAtkBonus > 0) {
+    minDamageBeforeCrit = minDamageBeforeCrit + Math.floor(minDamageBeforeCrit * skillAtkBonus / 100);
+    maxDamageBeforeCrit = maxDamageBeforeCrit + Math.floor(maxDamageBeforeCrit * skillAtkBonus / 100);
+  }
+  // Element table
+  minDamageBeforeCrit = Math.floor(minDamageBeforeCrit * elementTableMod / 100);
+  maxDamageBeforeCrit = Math.floor(maxDamageBeforeCrit * elementTableMod / 100);
 
   // Dark Claw: +150% melee damage (total 2.5x) applied after DEF
   if (skill.isMelee && input.activeBuffs?.includes("dark_claw")) {
@@ -815,8 +855,11 @@ function calcPhysicalDamage(
   const effectiveCritRate = skill.halfCritBonus ? 1 + (critAtkRate - 1) * 0.5 : critAtkRate;
 
   let baseCritDamage = Math.max(1, Math.floor(critRaw * effectiveCritRate * defReduction) - softDef);
-  // Apply post-DEF modifiers (bSkillAtk + eleTable) to crit too
-  baseCritDamage = Math.floor(baseCritDamage * postDefMod);
+  // Apply post-DEF modifiers (bSkillAtk + eleTable) to crit — same integer math
+  if (skillAtkBonus > 0) {
+    baseCritDamage = baseCritDamage + Math.floor(baseCritDamage * skillAtkBonus / 100);
+  }
+  baseCritDamage = Math.floor(baseCritDamage * elementTableMod / 100);
 
   if (skill.isMelee && input.activeBuffs?.includes("dark_claw")) {
     baseCritDamage = Math.floor(baseCritDamage * 2.5);
