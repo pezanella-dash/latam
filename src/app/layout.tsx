@@ -50,7 +50,7 @@ export default function RootLayout({
               <div className="flex items-center gap-2 group-hover:scale-105 transition-transform duration-300">
                 <div className="flex items-center justify-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/poring.png?v=2" alt="Poring" className="w-[36px] h-[36px] object-contain drop-shadow-md" />
+                  <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/poring.png?v=2`} alt="Poring" className="w-[36px] h-[36px] object-contain drop-shadow-md" />
                 </div>
                 <span className="font-black text-2xl tracking-tight text-ro-text">
                   RO <span className="text-ro-muted font-medium">LATAM</span>

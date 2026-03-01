@@ -67,7 +67,7 @@ export default function HomePage() {
         <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none z-0">
           <div
             className="absolute inset-0 bg-center bg-cover bg-no-repeat opacity-[0.10]"
-            style={{ backgroundImage: "url('/images/img1.jpg')" }}
+            style={{ backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/img1.jpg')` }}
           />
           {/* Fades layered ON TOP of the translucent image, at 100% opacity */}
           <div className="absolute inset-x-0 top-0 h-[150px] bg-gradient-to-b from-[var(--ro-bg)] to-transparent" />

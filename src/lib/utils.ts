@@ -5,22 +5,28 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// ─── Divine Pride CDN (public, no API key) ──────────────────────────
+// ─── Asset paths (basePath-aware for GitHub Pages) ──────────────────
+
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export function itemImageUrl(id: number): string {
   return `https://static.divine-pride.net/images/items/item/${id}.png`;
 }
 
 export function monsterImageUrl(id: number): string {
-  return `/sprites/monsters/${id}.png`;
+  return `${BASE}/sprites/monsters/${id}.png`;
 }
 
 export function classImageUrl(classId: string): string {
-  return `/sprites/classes/${classId}.gif`;
+  return `${BASE}/sprites/classes/${classId}.gif`;
 }
 
 export function classIconUrl(classId: string): string {
-  return `/icons/classes/${classId}.png`;
+  return `${BASE}/icons/classes/${classId}.png`;
+}
+
+export function assetUrl(path: string): string {
+  return `${BASE}${path}`;
 }
 
 // ─── RO description color parser ────────────────────────────────────
