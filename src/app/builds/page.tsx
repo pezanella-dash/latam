@@ -180,6 +180,49 @@ export default function BuildsPage() {
     persistBuilds(updated);
   }, [savedBuilds]);
 
+  // Export build as JSON file
+  const handleExportBuild = useCallback((build: SavedBuild) => {
+    const json = JSON.stringify(build, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${build.name.replace(/[^a-zA-Z0-9_-]/g, "_")}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, []);
+
+  // Import build from JSON file
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const handleImportBuild = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+  const handleFileImport = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const build = JSON.parse(ev.target?.result as string) as SavedBuild;
+        if (!build.classId || !build.name || !build.baseStats) {
+          alert("Arquivo inválido: não é uma build válida.");
+          return;
+        }
+        // Give it a new unique id to avoid collisions
+        build.id = `build_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+        build.savedAt = Date.now();
+        const updated = [build, ...savedBuilds];
+        setSavedBuilds(updated);
+        persistBuilds(updated);
+      } catch {
+        alert("Erro ao ler o arquivo. Verifique se é um JSON válido.");
+      }
+    };
+    reader.readAsText(file);
+    // Reset file input so the same file can be re-imported
+    e.target.value = "";
+  }, [savedBuilds]);
+
   // Stat point budget (always available, even before class selection)
   const totalStatPoints = getTotalStatPoints(baseLevel);
   const usedStatPoints = getTotalStatPointsUsed(baseStats);
@@ -1022,6 +1065,13 @@ export default function BuildsPage() {
                           </div>
                         </div>
                         <button
+                          onClick={(e) => { e.stopPropagation(); handleExportBuild(build); }}
+                          className="opacity-0 group-hover:opacity-100 text-ro-muted hover:text-element-water transition-all text-[10px] px-1"
+                          title="Exportar build"
+                        >
+                          ↓
+                        </button>
+                        <button
                           onClick={(e) => { e.stopPropagation(); handleDeleteBuild(build.id); }}
                           className="opacity-0 group-hover:opacity-100 text-ro-muted hover:text-red-400 transition-all text-xs px-1"
                           title="Excluir"
@@ -1034,7 +1084,20 @@ export default function BuildsPage() {
                 </div>
               )}
             </div>
-            <div className="p-3 border-t border-ro-border flex justify-end">
+            <div className="p-3 border-t border-ro-border flex justify-between">
+              <button
+                onClick={handleImportBuild}
+                className="px-3 py-1.5 text-xs rounded-lg border border-element-water/30 text-element-water hover:bg-element-water/10 transition-colors"
+              >
+                ↑ Importar .json
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".json"
+                className="hidden"
+                onChange={handleFileImport}
+              />
               <button
                 onClick={() => setShowLoadModal(false)}
                 className="px-3 py-1.5 text-xs text-ro-muted hover:text-[var(--ro-text)] transition-colors"
@@ -1225,23 +1288,11 @@ function AltQSlot({
             return (
               <div className={`flex items-center gap-0.5 mt-0.5 flex-wrap ${pushRight ? "justify-end" : ""}`}>
                 {enchants.map((ench, idx) => ench ? (
-                  <button
+                  <EnchantChip
                     key={`e${idx}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // Click on enchant = replace it (remove + open search)
-                      if (onEnchantUnequip) onEnchantUnequip(idx);
-                      if (onEnchantSearch) onEnchantSearch(idx);
-                    }}
-                    onContextMenu={(e) => {
-                      e.preventDefault(); e.stopPropagation();
-                      if (onEnchantUnequip) onEnchantUnequip(idx);
-                    }}
-                    className="px-1 py-px rounded text-[8px] leading-snug border bg-teal-950/80 border-teal-400/50 text-teal-300 hover:bg-teal-900/80 hover:border-teal-300/60 transition-colors"
-                    title={`${ench.namePt || ench.nameEn} (clique = trocar | botão direito = remover)`}
-                  >
-                    {(ench.namePt || ench.nameEn).substring(0, 12)}
-                  </button>
+                    enchant={ench}
+                    onDelete={() => { if (onEnchantUnequip) onEnchantUnequip(idx); }}
+                  />
                 ) : null)}
                 {canAdd && (
                   <button
@@ -1593,6 +1644,103 @@ function CardSearchModal({
           <button onClick={onClose} className="text-xs text-ro-muted hover:text-[var(--ro-text)]">Cancelar</button>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Enchant Chip (click = info popup, X = delete) ─────────────────────
+
+function EnchantChip({ enchant, onDelete }: { enchant: CardItem; onDelete: () => void }) {
+  const [showPopup, setShowPopup] = useState(false);
+  const chipRef = useRef<HTMLDivElement>(null);
+
+  // Close popup on outside click
+  useEffect(() => {
+    if (!showPopup) return;
+    function handleClick(e: MouseEvent) {
+      if (chipRef.current && !chipRef.current.contains(e.target as Node)) {
+        setShowPopup(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [showPopup]);
+
+  const descLines = enchant.description?.length
+    ? parseRODescription(enchant.description)
+    : [];
+
+  return (
+    <div ref={chipRef} className="relative">
+      <button
+        onClick={(e) => { e.stopPropagation(); setShowPopup(!showPopup); }}
+        className="px-1 py-px rounded text-[8px] leading-snug border bg-teal-950/80 border-teal-400/50 text-teal-300 hover:bg-teal-900/80 hover:border-teal-300/60 transition-colors"
+        title={enchant.namePt || enchant.nameEn}
+      >
+        {(enchant.namePt || enchant.nameEn).substring(0, 12)}
+      </button>
+
+      {showPopup && (
+        <div
+          className="absolute bottom-full left-0 mb-1 z-50 bg-ro-panel border border-ro-border rounded-lg shadow-xl p-3 min-w-[200px] max-w-[280px]"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header with name + delete button */}
+          <div className="flex items-start justify-between gap-2 mb-1.5">
+            <div className="flex items-center gap-1.5 min-w-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={itemImageUrl(enchant.id)}
+                alt=""
+                className="w-5 h-5 object-contain flex-shrink-0"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+              />
+              <span className="text-xs font-bold text-teal-300 truncate">
+                {enchant.namePt || enchant.nameEn}
+              </span>
+            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+                setShowPopup(false);
+              }}
+              className="flex-shrink-0 w-4 h-4 rounded flex items-center justify-center text-[10px] bg-red-900/50 border border-red-500/40 text-red-400 hover:bg-red-800/60 hover:text-red-300 transition-colors"
+              title="Remover encantamento"
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Description */}
+          {descLines.length > 0 && (
+            <div className="text-[10px] leading-relaxed">
+              {descLines.map((segments, i) => (
+                <div key={i}>
+                  {segments.map((seg, j) => (
+                    <span
+                      key={j}
+                      style={seg.color ? { color: seg.color } : undefined}
+                      className={seg.color ? undefined : "text-[var(--ro-text-soft)]"}
+                    >
+                      {seg.text}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Script fallback if no description */}
+          {descLines.length === 0 && enchant.script && (
+            <pre className="text-[10px] text-green-400/80 whitespace-pre-wrap font-mono">
+              {enchant.script}
+            </pre>
+          )}
+
+          <div className="text-[9px] text-ro-muted mt-1.5">ID: {enchant.id}</div>
+        </div>
+      )}
     </div>
   );
 }

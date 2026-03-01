@@ -18,6 +18,7 @@ import {
   findMonstersDropping,
   resolveDropsToItems,
 } from "@/lib/db/supabase";
+import combosData from "../../../data/database/combos.json";
 
 // ─── Types ──────────────────────────────────────────────────────────
 
@@ -283,7 +284,11 @@ function DatabaseContent() {
     const item = await getItemById(id);
     if (!item) return;
     const droppedBy = await findMonstersDropping(item.id);
-    setSelectedItem({ item, droppedBy });
+    // Find combos containing this item
+    const itemCombos = (combosData as any[]).filter((c) =>
+      c.allItemIds?.includes(id)
+    );
+    setSelectedItem({ item, droppedBy, combos: itemCombos });
   };
 
   const loadMonsterDetail = async (id: number) => {
@@ -450,6 +455,10 @@ function DatabaseContent() {
               setSelectedItem(null);
               setTab("monsters");
               loadMonsterDetail(id);
+            }}
+            onItemClick={(id) => {
+              setSelectedItem(null);
+              loadItemDetail(id);
             }}
           />
         </DetailModal>
@@ -676,11 +685,13 @@ function DetailModal({
 function ItemDetail({
   data,
   onMonsterClick,
+  onItemClick,
 }: {
   data: any;
   onMonsterClick: (id: number) => void;
+  onItemClick: (id: number) => void;
 }) {
-  const { item, droppedBy } = data;
+  const { item, droppedBy, combos } = data;
   if (!item) return null;
 
   const descLines = parseRODescription(item.description || []);
@@ -772,6 +783,72 @@ function ItemDetail({
           <pre className="text-xs text-ro-green whitespace-pre-wrap font-mono" style={{ color: "#4aba6e" }}>
             {item.script}
           </pre>
+        </div>
+      )}
+
+      {/* Item Combos */}
+      {combos?.length > 0 && (
+        <div className="mb-4">
+          <div className="text-[10px] uppercase tracking-widest text-ro-gold-dim mb-2 font-medium">
+            Faz Combo com
+          </div>
+          <div className="space-y-2">
+            {combos.map((combo: any, ci: number) => {
+              // Get the other items in this combo (exclude current item)
+              const otherIds = (combo.allItemIds || []).filter((id: number) => id !== item.id && id > 0);
+              const otherNames = (combo.requiredItemNames || []);
+              const bonusKeys = Object.keys(combo.baseBonuses || {});
+              const hasRefine = combo.refineBonuses?.length > 0;
+
+              return (
+                <div key={ci} className="bg-ro-surface rounded-lg p-3 border border-ro-border/50">
+                  <div className="flex flex-wrap gap-1 mb-1.5">
+                    {otherIds.map((otherId: number, oi: number) => (
+                      <button
+                        key={otherId}
+                        onClick={() => onItemClick(otherId)}
+                        className="flex items-center gap-1.5 text-xs text-element-water hover:text-ro-gold transition-colors"
+                      >
+                        <ItemImage id={otherId} className="w-5 h-5 object-contain" />
+                        <span className="underline underline-offset-2">
+                          {otherNames[oi] || `Item #${otherId}`}
+                        </span>
+                      </button>
+                    ))}
+                    {otherIds.length === 0 && otherNames.length > 0 && (
+                      <span className="text-xs text-ro-muted">{otherNames.join(", ")}</span>
+                    )}
+                  </div>
+                  {bonusKeys.length > 0 && (
+                    <div className="text-[11px] text-green-400">
+                      {bonusKeys.map((k) => {
+                        const val = combo.baseBonuses[k];
+                        if (typeof val === "object") {
+                          return Object.entries(val).map(([sk, sv]) => (
+                            <span key={sk} className="mr-2">{sk} +{sv as number}%</span>
+                          ));
+                        }
+                        return <span key={k} className="mr-2">{k} +{val}</span>;
+                      })}
+                    </div>
+                  )}
+                  {hasRefine && combo.refineBonuses.map((rb: any, ri: number) => (
+                    <div key={ri} className="text-[10px] text-ro-muted mt-0.5">
+                      {rb.condition}
+                      {Object.entries(rb.bonuses || {}).map(([bk, bv]) => {
+                        if (typeof bv === "object") {
+                          return Object.entries(bv as Record<string, number>).map(([sk, sv]) => (
+                            <span key={sk} className="text-green-400 ml-1">{sk} +{sv}%</span>
+                          ));
+                        }
+                        return <span key={bk} className="text-green-400 ml-1">{bk} +{bv as number}</span>;
+                      })}
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 

@@ -1,0 +1,5307 @@
+[
+  {
+    "mapId": "moc_prydn1",
+    "name": "Base da Pirâmide 01 - Pesadelo",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_prydn2",
+    "name": "Base da Pirâmide 02 - Pesadelo",
+    "type": "other"
+  },
+  {
+    "mapId": "gld_dun04",
+    "name": "Calabouço do Feudo de Britoniah",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gld_dun03",
+    "name": "Calabouço do Feudo das Valquírias",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gld_dun02",
+    "name": "Calabouço do Feudo de Luina",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gld_dun01",
+    "name": "Calabouço do Feudo do Bosque Celestial",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "payg_cas05",
+    "name": "Palácio da Colina[BC5]",
+    "type": "guild"
+  },
+  {
+    "mapId": "payg_cas04",
+    "name": "Palácio Escarlate[BC4]",
+    "type": "guild"
+  },
+  {
+    "mapId": "payg_cas03",
+    "name": "Palácio da Sombra[BC3]",
+    "type": "guild"
+  },
+  {
+    "mapId": "payg_cas02",
+    "name": "Palácio do Lago Sagrado[BC2]",
+    "type": "guild"
+  },
+  {
+    "mapId": "payg_cas01",
+    "name": "Palácio do Sol[BC1]",
+    "type": "guild"
+  },
+  {
+    "mapId": "pay_gld",
+    "name": "Feudo do Bosque Celestial",
+    "type": "guild"
+  },
+  {
+    "mapId": "aldeg_cas05",
+    "name": "Acrux[L5]",
+    "type": "guild"
+  },
+  {
+    "mapId": "aldeg_cas04",
+    "name": "Rigel[L4]",
+    "type": "guild"
+  },
+  {
+    "mapId": "aldeg_cas03",
+    "name": "Canopus[L3]",
+    "type": "guild"
+  },
+  {
+    "mapId": "aldeg_cas02",
+    "name": "Astrum[L2]",
+    "type": "guild"
+  },
+  {
+    "mapId": "aldeg_cas01",
+    "name": "Sirius[L1]",
+    "type": "guild"
+  },
+  {
+    "mapId": "alde_gld",
+    "name": "Feudo de Luina",
+    "type": "guild"
+  },
+  {
+    "mapId": "gefg_cas05",
+    "name": "Arima[B5]",
+    "type": "guild"
+  },
+  {
+    "mapId": "gefg_cas04",
+    "name": "Saffran[B4]",
+    "type": "guild"
+  },
+  {
+    "mapId": "gefg_cas03",
+    "name": "Ruaden[B3]",
+    "type": "guild"
+  },
+  {
+    "mapId": "gefg_cas02",
+    "name": "Trapesac[B2]",
+    "type": "guild"
+  },
+  {
+    "mapId": "gefg_cas01",
+    "name": "Arsulf[B1]",
+    "type": "guild"
+  },
+  {
+    "mapId": "prtg_cas05",
+    "name": "Gondul[V5]",
+    "type": "guild"
+  },
+  {
+    "mapId": "prtg_cas04",
+    "name": "Skoegul[V4]",
+    "type": "guild"
+  },
+  {
+    "mapId": "prtg_cas03",
+    "name": "Brynhildr[V3]",
+    "type": "guild"
+  },
+  {
+    "mapId": "prtg_cas02",
+    "name": "Hrist[V2]",
+    "type": "guild"
+  },
+  {
+    "mapId": "prtg_cas01",
+    "name": "Kriemhild[V1]",
+    "type": "guild"
+  },
+  {
+    "mapId": "prt_gld",
+    "name": "Feudo das Valquírias",
+    "type": "guild"
+  },
+  {
+    "mapId": "tur_dun01",
+    "name": "Ilha da Tartaruga",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tur_dun02",
+    "name": "Calabouço da Ilha da Tartaruga",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tur_dun03",
+    "name": "Vila das Boas Tartarugas",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tur_dun04",
+    "name": "Palácio da Ilha da Tartaruga",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tur_dun05",
+    "name": "Pântano Subterrâneo (1)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tur_dun06",
+    "name": "Pântano Subterrâneo (2)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "guild_vs3",
+    "name": "Arena do Forte",
+    "type": "other"
+  },
+  {
+    "mapId": "guild_vs2",
+    "name": "Arena do Forte",
+    "type": "other"
+  },
+  {
+    "mapId": "guild_vs1",
+    "name": "Arena do Forte",
+    "type": "other"
+  },
+  {
+    "mapId": "guild_room",
+    "name": "Área de Espera, Arena da Guilda",
+    "type": "other"
+  },
+  {
+    "mapId": "quiz_00",
+    "name": "Desafio das Perguntas",
+    "type": "other"
+  },
+  {
+    "mapId": "quiz_01",
+    "name": "Desafio das Perguntas",
+    "type": "other"
+  },
+  {
+    "mapId": "gef_fild12",
+    "name": "Floresta Kordt",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild13",
+    "name": "Feudo de Britoniah",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild14",
+    "name": "Vila dos Orcs do Oeste",
+    "type": "field"
+  },
+  {
+    "mapId": "cmd_in02",
+    "name": "Casa em Comodo (2)",
+    "type": "other"
+  },
+  {
+    "mapId": "cmd_in01",
+    "name": "Casa em Comodo (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "comodo",
+    "name": "Cidade Litorânea de Comodo",
+    "type": "town"
+  },
+  {
+    "mapId": "beach_dun",
+    "name": "Karu, a Caverna do Oeste",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "beach_dun2",
+    "name": "Ruande, a Caverna do Norte",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "beach_dun3",
+    "name": "Mao, a Caverna do Leste",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "cmd_fild01",
+    "name": "Floresta Papuchica",
+    "type": "field"
+  },
+  {
+    "mapId": "cmd_fild02",
+    "name": "Praia Kokomo",
+    "type": "field"
+  },
+  {
+    "mapId": "cmd_fild03",
+    "name": "Mangue Zenhai",
+    "type": "field"
+  },
+  {
+    "mapId": "cmd_fild04",
+    "name": "Praia Kokomo",
+    "type": "field"
+  },
+  {
+    "mapId": "cmd_fild05",
+    "name": "Limite da Floresta Papuchica",
+    "type": "field"
+  },
+  {
+    "mapId": "cmd_fild06",
+    "name": "Fortaleza de São Darmain (Oeste)",
+    "type": "field"
+  },
+  {
+    "mapId": "cmd_fild07",
+    "name": "Ilha do Farol, Pharos",
+    "type": "field"
+  },
+  {
+    "mapId": "cmd_fild08",
+    "name": "Fortaleza de São Darmain (Leste)",
+    "type": "field"
+  },
+  {
+    "mapId": "cmd_fild09",
+    "name": "Fortaleza de São Darmain (Sul)",
+    "type": "field"
+  },
+  {
+    "mapId": "xmas_in",
+    "name": "Casa em Lutie",
+    "type": "other"
+  },
+  {
+    "mapId": "xmas_dun02",
+    "name": "Sala de Construção de Brinquedos",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "xmas_dun01",
+    "name": "Depósito da Fábrica de Brinquedos",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "xmas_fild01",
+    "name": "Arredores de Lutie",
+    "type": "field"
+  },
+  {
+    "mapId": "xmas",
+    "name": "Lutie, A Cidade do Natal",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_01",
+    "name": "Monte Mjolnir (01)",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_02",
+    "name": "Monte Mjolnir (02)",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_03",
+    "name": "Monte Mjolnir (03)",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_04",
+    "name": "Monte Mjolnir (04)",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_05",
+    "name": "Monte Mjolnir (05)",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_06",
+    "name": "Monte Mjolnir (06)",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_07",
+    "name": "Monte Mjolnir (07)",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_08",
+    "name": "Monte Mjolnir (08)",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_09",
+    "name": "Monte Mjolnir (09)",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_10",
+    "name": "Monte Mjolnir (10)",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_11",
+    "name": "Monte Mjolnir (11)",
+    "type": "other"
+  },
+  {
+    "mapId": "mjolnir_12",
+    "name": "Monte Mjolnir (12)",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_fild00",
+    "name": "Arredores de Prontera (00)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild01",
+    "name": "Arredores de Prontera (01)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild02",
+    "name": "Arredores de Prontera (02)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild03",
+    "name": "Arredores de Prontera (03)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild04",
+    "name": "Arredores de Prontera (04)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild05",
+    "name": "Arredores de Prontera (05)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild06",
+    "name": "Arredores de Prontera (06)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild07",
+    "name": "Arredores de Prontera (07)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild08",
+    "name": "Arredores de Prontera (08)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild09",
+    "name": "Arredores de Prontera (09)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild10",
+    "name": "Arredores de Prontera (10)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild11",
+    "name": "Arredores de Prontera (11)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_monk",
+    "name": "Abadia de Santa Capitolina",
+    "type": "other"
+  },
+  {
+    "mapId": "gef_fild00",
+    "name": "Arredores de Geffen (00)",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild01",
+    "name": "Arredores de Geffen (01)",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild02",
+    "name": "Arredores de Geffen (02)",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild03",
+    "name": "Arredores de Geffen (03)",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild04",
+    "name": "Arredores de Geffen (04)",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild05",
+    "name": "Arredores de Geffen (05)",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild06",
+    "name": "Arredores de Geffen (06)",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild07",
+    "name": "Arredores de Geffen (07)",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild08",
+    "name": "Arredores de Geffen (08)",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild09",
+    "name": "Arredores de Geffen (09)",
+    "type": "field"
+  },
+  {
+    "mapId": "gef_fild10",
+    "name": "Arredores de Geffen (10)",
+    "type": "field"
+  },
+  {
+    "mapId": "in_orcs01",
+    "name": "Vila dos Orcs",
+    "type": "other"
+  },
+  {
+    "mapId": "gef_fild11",
+    "name": "Arredores de Geffen (11)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild01",
+    "name": "Deserto Sograt (01)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild02",
+    "name": "Deserto Sograt (02)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild03",
+    "name": "Deserto Sograt (03)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild04",
+    "name": "Deserto Sograt (04)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild05",
+    "name": "Deserto Sograt (05)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild06",
+    "name": "Deserto Sograt (06)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild07",
+    "name": "Deserto Sograt (07)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild08",
+    "name": "Deserto Sograt (08)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild09",
+    "name": "Deserto Sograt (09)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild10",
+    "name": "Deserto Sograt (10)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild11",
+    "name": "Deserto Sograt (11)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild12",
+    "name": "Deserto Sograt (12)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild13",
+    "name": "Deserto Sograt (13)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild14",
+    "name": "Deserto Sograt (14)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild15",
+    "name": "Deserto Sograt (15)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild16",
+    "name": "Deserto Sograt (16)",
+    "type": "field"
+  },
+  {
+    "mapId": "in_moc_16",
+    "name": "Guilda dos Mercenários",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_fild17",
+    "name": "Deserto Sograt (17)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild18",
+    "name": "Deserto Sograt (18)",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild19",
+    "name": "Deserto Sograt (19)",
+    "type": "field"
+  },
+  {
+    "mapId": "pay_fild01",
+    "name": "Floresta de Payon (01)",
+    "type": "field"
+  },
+  {
+    "mapId": "pay_fild02",
+    "name": "Floresta de Payon (02)",
+    "type": "field"
+  },
+  {
+    "mapId": "pay_fild03",
+    "name": "Floresta de Payon (03)",
+    "type": "field"
+  },
+  {
+    "mapId": "pay_fild04",
+    "name": "Floresta de Payon (04)",
+    "type": "field"
+  },
+  {
+    "mapId": "pay_fild05",
+    "name": "Floresta de Payon (05)",
+    "type": "field"
+  },
+  {
+    "mapId": "pay_fild06",
+    "name": "Floresta de Payon (06)",
+    "type": "field"
+  },
+  {
+    "mapId": "pay_fild07",
+    "name": "Floresta de Payon (07)",
+    "type": "field"
+  },
+  {
+    "mapId": "pay_fild08",
+    "name": "Floresta de Payon (08)",
+    "type": "field"
+  },
+  {
+    "mapId": "pay_fild09",
+    "name": "Floresta de Payon (09)",
+    "type": "field"
+  },
+  {
+    "mapId": "pay_fild10",
+    "name": "Floresta de Payon (10)",
+    "type": "field"
+  },
+  {
+    "mapId": "pay_fild11",
+    "name": "Floresta de Payon (11)",
+    "type": "field"
+  },
+  {
+    "mapId": "new_1-1",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_2-1",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_3-1",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_4-1",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_5-1",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_1-2",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_2-2",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_3-2",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_4-2",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_5-2",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_1-3",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_2-3",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_3-3",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_4-3",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_5-3",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_1-4",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_2-4",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_3-4",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_4-4",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "new_5-4",
+    "name": "Campo de Treinamento",
+    "type": "other"
+  },
+  {
+    "mapId": "anthell01",
+    "name": "Formigueiro Infernal (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "anthell02",
+    "name": "Formigueiro Infernal (2)",
+    "type": "other"
+  },
+  {
+    "mapId": "gef_dun00",
+    "name": "Calabouço de Geffen (1)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gef_dun01",
+    "name": "Calabouço de Geffen (2)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gef_dun02",
+    "name": "Geffenia (1)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gef_dun03",
+    "name": "Geffenia (2)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "iz_dun00",
+    "name": "Túnel Submarino (0)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "iz_dun01",
+    "name": "Túnel Submarino (1)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "iz_dun02",
+    "name": "Túnel Submarino (3)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "iz_dun03",
+    "name": "Túnel Submarino (4)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "iz_dun04",
+    "name": "Túnel Submarino (5)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "iz_dun05",
+    "name": "Túnel Submarino (6)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "in_sphinx1",
+    "name": "Esfinge (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "in_sphinx2",
+    "name": "Esfinge (2)",
+    "type": "other"
+  },
+  {
+    "mapId": "in_sphinx3",
+    "name": "Esfinge (3)",
+    "type": "other"
+  },
+  {
+    "mapId": "in_sphinx4",
+    "name": "Esfinge (4)",
+    "type": "other"
+  },
+  {
+    "mapId": "in_sphinx5",
+    "name": "Esfinge (5)",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_pryd01",
+    "name": "Dentro da Pirâmide (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_pryd02",
+    "name": "Dentro da Pirâmide (2)",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_pryd03",
+    "name": "Dentro da Pirâmide (3)",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_pryd04",
+    "name": "Dentro da Pirâmide (4)",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_pryd05",
+    "name": "Dentro da Pirâmide (5)",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_pryd06",
+    "name": "Dentro da Pirâmide (6)",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_prydb1",
+    "name": "Guilda dos Gatunos",
+    "type": "other"
+  },
+  {
+    "mapId": "mjo_dun01",
+    "name": "Mina Abandonada de Mjolnir (1)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "mjo_dun02",
+    "name": "Mina Abandonada de Mjolnir (2)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "mjo_dun03",
+    "name": "Mina Abandonada de Mjolnir (3)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "orcsdun01",
+    "name": "Calabouço dos Orcs (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "orcsdun02",
+    "name": "Calabouço dos Orcs (2)",
+    "type": "other"
+  },
+  {
+    "mapId": "pay_dun00",
+    "name": "Caverna de Payon (0)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "pay_dun01",
+    "name": "Caverna de Payon (1)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "pay_dun02",
+    "name": "Caverna de Payon (2)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "pay_dun03",
+    "name": "Caverna de Payon (3)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "pay_dun04",
+    "name": "Caverna de Payon (4)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "prt_maze01",
+    "name": "Labirinto da Floresta (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_maze02",
+    "name": "Labirinto da Floresta (2)",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_maze03",
+    "name": "Labirinto da Floresta (3)",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_sewb1",
+    "name": "Esgoto de Prontera (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_sewb2",
+    "name": "Esgoto de Prontera (2)",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_sewb3",
+    "name": "Esgoto de Prontera (3)",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_sewb4",
+    "name": "Esgoto de Prontera (4)",
+    "type": "other"
+  },
+  {
+    "mapId": "treasure01",
+    "name": "Navio Fantasma (1)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "treasure02",
+    "name": "Navio Fantasma (2)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "hunter_1-1",
+    "name": "Guilda dos Caçadores",
+    "type": "other"
+  },
+  {
+    "mapId": "hunter_2-1",
+    "name": "Guilda dos Caçadores",
+    "type": "other"
+  },
+  {
+    "mapId": "hunter_3-1",
+    "name": "Guilda dos Caçadores",
+    "type": "other"
+  },
+  {
+    "mapId": "in_hunter",
+    "name": "Guilda dos Caçadores",
+    "type": "other"
+  },
+  {
+    "mapId": "knight_1-1",
+    "name": "Cavalaria",
+    "type": "other"
+  },
+  {
+    "mapId": "knight_2-1",
+    "name": "Cavalaria",
+    "type": "other"
+  },
+  {
+    "mapId": "knight_3-1",
+    "name": "Cavalaria",
+    "type": "other"
+  },
+  {
+    "mapId": "priest_1-1",
+    "name": "Sanctum",
+    "type": "other"
+  },
+  {
+    "mapId": "priest_2-1",
+    "name": "Sanctum",
+    "type": "other"
+  },
+  {
+    "mapId": "priest_3-1",
+    "name": "Sanctum",
+    "type": "other"
+  },
+  {
+    "mapId": "sword_1-1",
+    "name": "Hall da Prova dos Espadachins",
+    "type": "other"
+  },
+  {
+    "mapId": "sword_2-1",
+    "name": "Hall da Prova dos Espadachins",
+    "type": "other"
+  },
+  {
+    "mapId": "sword_3-1",
+    "name": "Hall da Prova dos Espadachins",
+    "type": "other"
+  },
+  {
+    "mapId": "job_thief1",
+    "name": "Fazenda dos Cogumelos",
+    "type": "other"
+  },
+  {
+    "mapId": "wizard_1-1",
+    "name": "Escola dos Bruxos",
+    "type": "other"
+  },
+  {
+    "mapId": "wizard_2-1",
+    "name": "Escola dos Bruxos",
+    "type": "other"
+  },
+  {
+    "mapId": "wizard_3-1",
+    "name": "Escola dos Bruxos",
+    "type": "other"
+  },
+  {
+    "mapId": "force_1-1",
+    "name": "Luta Contra o Tempo",
+    "type": "other"
+  },
+  {
+    "mapId": "force_2-1",
+    "name": "Luta Contra o Tempo",
+    "type": "other"
+  },
+  {
+    "mapId": "force_3-1",
+    "name": "Luta Contra o Tempo",
+    "type": "other"
+  },
+  {
+    "mapId": "force_1-2",
+    "name": "Luta Contra o Tempo",
+    "type": "other"
+  },
+  {
+    "mapId": "force_2-2",
+    "name": "Luta Contra o Tempo",
+    "type": "other"
+  },
+  {
+    "mapId": "force_3-2",
+    "name": "Luta Contra o Tempo",
+    "type": "other"
+  },
+  {
+    "mapId": "force_1-3",
+    "name": "Luta Contra o Tempo",
+    "type": "other"
+  },
+  {
+    "mapId": "force_2-3",
+    "name": "Luta Contra o Tempo",
+    "type": "other"
+  },
+  {
+    "mapId": "force_3-3",
+    "name": "Luta Contra o Tempo",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_1-1",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_2-1",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_3-1",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_1-2",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_2-2",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_3-2",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_1-3",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_2-3",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_3-3",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_1-4",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_2-4",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "ordeal_3-4",
+    "name": "Batalha de Provação",
+    "type": "other"
+  },
+  {
+    "mapId": "alb_ship",
+    "name": "Navio de Alberta",
+    "type": "other"
+  },
+  {
+    "mapId": "alberta",
+    "name": "Alberta",
+    "type": "town"
+  },
+  {
+    "mapId": "alberta_in",
+    "name": "Casa em Alberta",
+    "type": "other"
+  },
+  {
+    "mapId": "alb2trea",
+    "name": "Ilha de Alberta",
+    "type": "other"
+  },
+  {
+    "mapId": "aldebaran",
+    "name": "Al De Baran",
+    "type": "town"
+  },
+  {
+    "mapId": "aldeba_in",
+    "name": "Dentro de Al De Baran",
+    "type": "other"
+  },
+  {
+    "mapId": "gef_tower",
+    "name": "Torre de Geffen",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "geffen",
+    "name": "Geffen",
+    "type": "town"
+  },
+  {
+    "mapId": "geffen_in",
+    "name": "Casa em Geffen",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_castle",
+    "name": "Castelo de Morroc",
+    "type": "guild"
+  },
+  {
+    "mapId": "moc_ruins",
+    "name": "Ruínas de Morroc",
+    "type": "other"
+  },
+  {
+    "mapId": "morocc",
+    "name": "Morroc",
+    "type": "town"
+  },
+  {
+    "mapId": "morocc_in",
+    "name": "Casa em Morroc",
+    "type": "other"
+  },
+  {
+    "mapId": "pay_arche",
+    "name": "Vila dos Arqueiros",
+    "type": "other"
+  },
+  {
+    "mapId": "payon",
+    "name": "Payon",
+    "type": "town"
+  },
+  {
+    "mapId": "payon_in01",
+    "name": "Casa em Payon (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "payon_in02",
+    "name": "Casa em Payon (2)",
+    "type": "other"
+  },
+  {
+    "mapId": "prontera",
+    "name": "Prontera",
+    "type": "town"
+  },
+  {
+    "mapId": "prt_in",
+    "name": "Casa em Prontera",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_castle",
+    "name": "Castelo de Prontera",
+    "type": "guild"
+  },
+  {
+    "mapId": "prt_church",
+    "name": "Catedral",
+    "type": "other"
+  },
+  {
+    "mapId": "izlude",
+    "name": "Izlude",
+    "type": "town"
+  },
+  {
+    "mapId": "izlude_in",
+    "name": "Casa em Izlude",
+    "type": "other"
+  },
+  {
+    "mapId": "izlu2dun",
+    "name": "Ilha Byalan",
+    "type": "other"
+  },
+  {
+    "mapId": "monk_in",
+    "name": "Dentro da Abadia",
+    "type": "other"
+  },
+  {
+    "mapId": "glast_01",
+    "name": "Glast Heim",
+    "type": "other"
+  },
+  {
+    "mapId": "alde_dun01",
+    "name": "Torre do Relógio (s1)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "alde_dun02",
+    "name": "Torre do Relógio (s2)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "alde_dun03",
+    "name": "Torre do Relógio (s3)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "alde_dun04",
+    "name": "Torre do Relógio (s4)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "c_tower1",
+    "name": "Torre do Relógio (1)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "c_tower2",
+    "name": "Torre do Relógio (2)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "c_tower3",
+    "name": "Torre do Relógio (3)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "c_tower4",
+    "name": "Torre do Relógio (4)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gl_cas01",
+    "name": "Glast Heim (1)",
+    "type": "guild"
+  },
+  {
+    "mapId": "gl_cas02",
+    "name": "Glast Heim (2)",
+    "type": "guild"
+  },
+  {
+    "mapId": "gl_church",
+    "name": "Abadia de Glast Heim",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_chyard",
+    "name": "Cemitério de Glast Heim",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_dun01",
+    "name": "A Mais Profunda Caverna de Glast Heim (1)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gl_dun02",
+    "name": "A Mais Profunda Caverna de Glast Heim (2)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gl_in01",
+    "name": "Casa em Glast Heim",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_knt01",
+    "name": "Cavalaria de Glast Heim (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_knt02",
+    "name": "Cavalaria de Glast Heim (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_prison",
+    "name": "Prisão Subterrânea de Glast Heim (0)",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_prison1",
+    "name": "Prisão Subterrânea de Glast Heim (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_sew01",
+    "name": "Esgoto de Glast Heim (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_sew02",
+    "name": "Esgoto de Glast Heim (2)",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_sew03",
+    "name": "Esgoto de Glast Heim (3)",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_sew04",
+    "name": "Esgoto de Glast Heim (4)",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_step",
+    "name": "Escadarias de Glast Heim",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_room",
+    "name": "PvP : Sala de Espera",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_room",
+    "name": "PvP : Sala de Espera",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_c_room",
+    "name": "PvP : Sala de Espera",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_1-1",
+    "name": "PvP : Sala Sanduíche",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_2-1",
+    "name": "PvP : Sala Sanduíche",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_3-1",
+    "name": "PvP : Sala Sanduíche",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_4-1",
+    "name": "PvP : Sala Sanduíche",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_5-1",
+    "name": "PvP : Sala Sanduíche",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_6-1",
+    "name": "PvP : Sala Sanduíche",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_7-1",
+    "name": "PvP : Sala Sanduíche",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_8-1",
+    "name": "PvP : Sala Sanduíche",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_1-2",
+    "name": "PvP : Sala Desafio Adiante",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_2-2",
+    "name": "PvP : Sala Desafio Adiante",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_3-2",
+    "name": "PvP : Sala Desafio Adiante",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_4-2",
+    "name": "PvP : Sala Desafio Adiante",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_5-2",
+    "name": "PvP : Sala Desafio Adiante",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_6-2",
+    "name": "PvP : Sala Desafio Adiante",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_7-2",
+    "name": "PvP : Sala Desafio Adiante",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_8-2",
+    "name": "PvP : Sala Desafio Adiante",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_1-3",
+    "name": "PvP : Sala Tetra",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_2-3",
+    "name": "PvP : Sala Tetra",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_3-3",
+    "name": "PvP : Sala Tetra",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_4-3",
+    "name": "PvP : Sala Tetra",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_5-3",
+    "name": "PvP : Sala Tetra",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_6-3",
+    "name": "PvP : Sala Tetra",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_7-3",
+    "name": "PvP : Sala Tetra",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_8-3",
+    "name": "PvP : Sala Tetra",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_1-4",
+    "name": "PvP : Sala Encruzilhada",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_2-4",
+    "name": "PvP : Sala Encruzilhada",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_3-4",
+    "name": "PvP : Sala Encruzilhada",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_4-4",
+    "name": "PvP : Sala Encruzilhada",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_5-4",
+    "name": "PvP : Sala Encruzilhada",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_6-4",
+    "name": "PvP : Sala Encruzilhada",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_7-4",
+    "name": "PvP : Sala Encruzilhada",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_8-4",
+    "name": "PvP : Sala Encruzilhada",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_1-5",
+    "name": "PvP : Sala Bússola",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_2-5",
+    "name": "PvP : Sala Bússola",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_3-5",
+    "name": "PvP : Sala Bússola",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_4-5",
+    "name": "PvP : Sala Bússola",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_5-5",
+    "name": "PvP : Sala Bússola",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_6-5",
+    "name": "PvP : Sala Bússola",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_7-5",
+    "name": "PvP : Sala Bússola",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_n_8-5",
+    "name": "PvP : Sala Bússola",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_1-1",
+    "name": "PvP : Sala de Prontera",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_2-1",
+    "name": "PvP : Sala de Prontera",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_3-1",
+    "name": "PvP : Sala de Prontera",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_4-1",
+    "name": "PvP : Sala de Prontera",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_5-1",
+    "name": "PvP : Sala de Prontera",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_6-1",
+    "name": "PvP : Sala de Prontera",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_7-1",
+    "name": "PvP : Sala de Prontera",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_8-1",
+    "name": "PvP : Sala de Prontera",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_1-2",
+    "name": "PvP : Sala de Izlude",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_2-2",
+    "name": "PvP : Sala de Izlude",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_3-2",
+    "name": "PvP : Sala de Izlude",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_4-2",
+    "name": "PvP : Sala de Izlude",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_5-2",
+    "name": "PvP : Sala de Izlude",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_6-2",
+    "name": "PvP : Sala de Izlude",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_7-2",
+    "name": "PvP : Sala de Izlude",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_8-2",
+    "name": "PvP : Sala de Izlude",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_1-3",
+    "name": "PvP : Sala de Payon",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_2-3",
+    "name": "PvP : Sala de Payon",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_3-3",
+    "name": "PvP : Sala de Payon",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_4-3",
+    "name": "PvP : Sala de Payon",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_5-3",
+    "name": "PvP : Sala de Payon",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_6-3",
+    "name": "PvP : Sala de Payon",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_7-3",
+    "name": "PvP : Sala de Payon",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_8-3",
+    "name": "PvP : Sala de Payon",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_1-4",
+    "name": "PvP : Sala de Alberta",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_2-4",
+    "name": "PvP : Sala de Alberta",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_3-4",
+    "name": "PvP : Sala de Alberta",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_4-4",
+    "name": "PvP : Sala de Alberta",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_5-4",
+    "name": "PvP : Sala de Alberta",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_6-4",
+    "name": "PvP : Sala de Alberta",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_7-4",
+    "name": "PvP : Sala de Alberta",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_8-4",
+    "name": "PvP : Sala de Alberta",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_1-5",
+    "name": "PvP : Sala de Morroc",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_2-5",
+    "name": "PvP : Sala de Morroc",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_3-5",
+    "name": "PvP : Sala de Morroc",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_4-5",
+    "name": "PvP : Sala de Morroc",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_5-5",
+    "name": "PvP : Sala de Morroc",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_6-5",
+    "name": "PvP : Sala de Morroc",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_7-5",
+    "name": "PvP : Sala de Morroc",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_y_8-5",
+    "name": "PvP : Sala de Morroc",
+    "type": "other"
+  },
+  {
+    "mapId": "pvp_2vs2",
+    "name": "PvP : Colisseu",
+    "type": "other"
+  },
+  {
+    "mapId": "alde_alche",
+    "name": "Guilda dos Alquimistas",
+    "type": "other"
+  },
+  {
+    "mapId": "yuno_in05",
+    "name": "Coração de Imir",
+    "type": "other"
+  },
+  {
+    "mapId": "yuno_in04",
+    "name": "Biblioteca de Juno",
+    "type": "other"
+  },
+  {
+    "mapId": "job_duncer",
+    "name": "Teatro de Comodo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "job_sage",
+    "name": "Campo de Testes (Sábios)",
+    "type": "other"
+  },
+  {
+    "mapId": "job_cru",
+    "name": "Campo de Testes (Templários)",
+    "type": "other"
+  },
+  {
+    "mapId": "job_monk",
+    "name": "Abadia de Santa Capitolina",
+    "type": "other"
+  },
+  {
+    "mapId": "monk_test",
+    "name": "Abadia de Santa Capitolina",
+    "type": "other"
+  },
+  {
+    "mapId": "in_rogue",
+    "name": "Guila dos Arruaceiros",
+    "type": "other"
+  },
+  {
+    "mapId": "mag_dun02",
+    "name": "Calabouço de Magma",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "mag_dun01",
+    "name": "Calabouço de Magma",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "yuno_fild04",
+    "name": "Planalto de Juno",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_fild03",
+    "name": "Planalto de Juno",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_fild02",
+    "name": "Arredores de Juno",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_fild01",
+    "name": "Fronteira de Aldebaran",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_in03",
+    "name": "Casa em Juno",
+    "type": "other"
+  },
+  {
+    "mapId": "yuno_in02",
+    "name": "Castelo dos Sábios",
+    "type": "other"
+  },
+  {
+    "mapId": "yuno_in01",
+    "name": "Casa em Juno",
+    "type": "other"
+  },
+  {
+    "mapId": "yuno",
+    "name": "Juno",
+    "type": "other"
+  },
+  {
+    "mapId": "job_wiz",
+    "name": "Campo de Testes (Bruxos)",
+    "type": "other"
+  },
+  {
+    "mapId": "job_prist",
+    "name": "Campo de Testes (Sacerdotes)",
+    "type": "other"
+  },
+  {
+    "mapId": "job_knt",
+    "name": "Campo de Testes (Cavaleiros)",
+    "type": "other"
+  },
+  {
+    "mapId": "job_hunte",
+    "name": "Campo de Testes (Caçadores)",
+    "type": "other"
+  },
+  {
+    "mapId": "gon_test",
+    "name": "Salão de Batalhas",
+    "type": "other"
+  },
+  {
+    "mapId": "gon_dun01",
+    "name": "Santuário de Xi Wang Mu",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gon_dun02",
+    "name": "Tabuleiro de Go",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gon_dun03",
+    "name": "Terra das Fadas",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gon_fild01",
+    "name": "Campo de Kunlun",
+    "type": "field"
+  },
+  {
+    "mapId": "gon_in",
+    "name": "Interior de Kunlun",
+    "type": "other"
+  },
+  {
+    "mapId": "gonryun",
+    "name": "Kunlun, a Ilha dos Heremitas",
+    "type": "town"
+  },
+  {
+    "mapId": "ama_test",
+    "name": "Campo de Momotaro",
+    "type": "other"
+  },
+  {
+    "mapId": "ama_dun03",
+    "name": "Templo Subterrâneo de Amatsu",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "ama_dun02",
+    "name": "Campo de Batalha da Floresta Subterrânea",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "ama_dun01",
+    "name": "Labirinto de Tatames",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "ama_fild01",
+    "name": "Campo de Amatsu",
+    "type": "field"
+  },
+  {
+    "mapId": "ama_in02",
+    "name": "Interior de TenguGak",
+    "type": "other"
+  },
+  {
+    "mapId": "ama_in01",
+    "name": "Interior de Amatsu",
+    "type": "other"
+  },
+  {
+    "mapId": "amatsu",
+    "name": "Amatsu, a terra dos Tengu",
+    "type": "town"
+  },
+  {
+    "mapId": "um_dun01",
+    "name": "Loja de Carpintaria",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "um_dun02",
+    "name": "Estrada para o Outro Mundo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "um_in",
+    "name": "Interior de Umbala",
+    "type": "other"
+  },
+  {
+    "mapId": "um_fild01",
+    "name": "Floresta de Luluka",
+    "type": "field"
+  },
+  {
+    "mapId": "um_fild02",
+    "name": "Floresta de Hoomga",
+    "type": "field"
+  },
+  {
+    "mapId": "um_fild03",
+    "name": "Pântano de Kalala",
+    "type": "field"
+  },
+  {
+    "mapId": "um_fild04",
+    "name": "Selva de Hoomga",
+    "type": "field"
+  },
+  {
+    "mapId": "umbala",
+    "name": "Aldeia da tribo Wootan, Umbala",
+    "type": "town"
+  },
+  {
+    "mapId": "payon_in03",
+    "name": "Casa em Payon",
+    "type": "other"
+  },
+  {
+    "mapId": "nif_in",
+    "name": "Interior de Nifflheim",
+    "type": "other"
+  },
+  {
+    "mapId": "yggdrasil01",
+    "name": "Fonte de Hvergelmir (Tronco de Yggdrasil)",
+    "type": "other"
+  },
+  {
+    "mapId": "nif_fild02",
+    "name": "Vale de Gyoll",
+    "type": "field"
+  },
+  {
+    "mapId": "nif_fild01",
+    "name": "Skellington, um vilarejo solitário em Nifflheim",
+    "type": "field"
+  },
+  {
+    "mapId": "niflheim",
+    "name": "Nifflheim, O reino dos mortos",
+    "type": "town"
+  },
+  {
+    "mapId": "jawaii_in",
+    "name": "Interior de Jawaii",
+    "type": "other"
+  },
+  {
+    "mapId": "jawaii",
+    "name": "Jawaii, a Ilha da Lua-de-Mel",
+    "type": "town"
+  },
+  {
+    "mapId": "lou_in02",
+    "name": "Interior de Louyang",
+    "type": "other"
+  },
+  {
+    "mapId": "lou_in01",
+    "name": "Interior de Louyang",
+    "type": "other"
+  },
+  {
+    "mapId": "lou_dun03",
+    "name": "Suei Long Gon",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "lou_dun02",
+    "name": "Interior da Tumba Real",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "lou_dun01",
+    "name": "A Tumba Real",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "lou_fild01",
+    "name": "Campos de Louyang",
+    "type": "field"
+  },
+  {
+    "mapId": "louyang",
+    "name": "Louyang, as terras altas",
+    "type": "town"
+  },
+  {
+    "mapId": "ayo_in02",
+    "name": "Interior de Ayotaya",
+    "type": "other"
+  },
+  {
+    "mapId": "ayo_in01",
+    "name": "Interior de Ayotaya",
+    "type": "other"
+  },
+  {
+    "mapId": "ayo_dun02",
+    "name": "Interior do Santuário Ancestral",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "ayo_dun01",
+    "name": "Labirinto do Santuário Ancestral",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "ayo_fild02",
+    "name": "Campos de Ayotaya",
+    "type": "field"
+  },
+  {
+    "mapId": "ayo_fild01",
+    "name": "Campos de Ayotaya",
+    "type": "field"
+  },
+  {
+    "mapId": "ayothaya",
+    "name": "Ayotaya",
+    "type": "town"
+  },
+  {
+    "mapId": "prt_are_in",
+    "name": "Sala de Espera",
+    "type": "other"
+  },
+  {
+    "mapId": "arena_room",
+    "name": "Sala de Espera",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_arena01",
+    "name": "Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_are01",
+    "name": "Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "force_4-1",
+    "name": "Luta Contra o Tempo",
+    "type": "other"
+  },
+  {
+    "mapId": "himinn",
+    "name": "Valkyrie Hall (Himinn)",
+    "type": "other"
+  },
+  {
+    "mapId": "sec_in01",
+    "name": "Interior do Valhalla",
+    "type": "other"
+  },
+  {
+    "mapId": "sec_in02",
+    "name": "Interior do Valhalla",
+    "type": "other"
+  },
+  {
+    "mapId": "sec_pri",
+    "name": "Sala da Meditação (Prisão do Valhalla)",
+    "type": "other"
+  },
+  {
+    "mapId": "valkyrie",
+    "name": "Hall das Valquírias",
+    "type": "other"
+  },
+  {
+    "mapId": "gefenia01",
+    "name": "Gefenia",
+    "type": "other"
+  },
+  {
+    "mapId": "gefenia02",
+    "name": "Gefenia",
+    "type": "other"
+  },
+  {
+    "mapId": "gefenia03",
+    "name": "Gefenia",
+    "type": "other"
+  },
+  {
+    "mapId": "gefenia04",
+    "name": "Gefenia",
+    "type": "other"
+  },
+  {
+    "mapId": "ein_dun02",
+    "name": "Calabouço da Mina",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "ein_dun01",
+    "name": "Calabouço da Mina",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "ein_fild10",
+    "name": "Campos de Einbroch",
+    "type": "field"
+  },
+  {
+    "mapId": "ein_fild09",
+    "name": "Campos de Einbroch",
+    "type": "field"
+  },
+  {
+    "mapId": "ein_fild08",
+    "name": "Campos de Einbroch",
+    "type": "field"
+  },
+  {
+    "mapId": "ein_fild07",
+    "name": "Campos de Einbroch",
+    "type": "field"
+  },
+  {
+    "mapId": "ein_fild06",
+    "name": "Campos de Einbroch",
+    "type": "field"
+  },
+  {
+    "mapId": "airplane",
+    "name": "Aeroplano",
+    "type": "other"
+  },
+  {
+    "mapId": "airport",
+    "name": "Aeroporto",
+    "type": "other"
+  },
+  {
+    "mapId": "ein_in01",
+    "name": "Interior de Einbroch",
+    "type": "other"
+  },
+  {
+    "mapId": "einbech",
+    "name": "Einbech, a vila mineradora",
+    "type": "other"
+  },
+  {
+    "mapId": "einbroch",
+    "name": "Einbroch, a cidade de ação",
+    "type": "other"
+  },
+  {
+    "mapId": "turbo_e_16",
+    "name": "Estádio Turbo Track",
+    "type": "other"
+  },
+  {
+    "mapId": "turbo_e_8",
+    "name": "Estádio Turbo Track",
+    "type": "other"
+  },
+  {
+    "mapId": "turbo_e_4",
+    "name": "Estádio Turbo Track",
+    "type": "other"
+  },
+  {
+    "mapId": "turbo_n_16",
+    "name": "Estádio Turbo Track",
+    "type": "other"
+  },
+  {
+    "mapId": "turbo_n_8",
+    "name": "Estádio Turbo Track",
+    "type": "other"
+  },
+  {
+    "mapId": "turbo_n_4",
+    "name": "Estádio Turbo Track",
+    "type": "other"
+  },
+  {
+    "mapId": "turbo_n_1",
+    "name": "Estádio Turbo Track",
+    "type": "other"
+  },
+  {
+    "mapId": "turbo_room",
+    "name": "Sala de Espera",
+    "type": "other"
+  },
+  {
+    "mapId": "yuno_fild12",
+    "name": "Controle da Fronteira",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_fild11",
+    "name": "Campos de Juno",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_fild09",
+    "name": "Acampamento dos Guardas de Schwaltzwald",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_fild08",
+    "name": "Academia de Kiel Hyre",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_fild07",
+    "name": "Desfiladeiro de El Mes (Vale do Abismo)",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_fild05",
+    "name": "Planalto de El Mes",
+    "type": "field"
+  },
+  {
+    "mapId": "que_god02",
+    "name": "Mapa da Missão",
+    "type": "other"
+  },
+  {
+    "mapId": "que_god01",
+    "name": "Mapa da Missão",
+    "type": "other"
+  },
+  {
+    "mapId": "quiz_test",
+    "name": "Salão do Desafio",
+    "type": "other"
+  },
+  {
+    "mapId": "guild_vs4",
+    "name": "championship3",
+    "type": "other"
+  },
+  {
+    "mapId": "rwc01",
+    "name": "championship4",
+    "type": "other"
+  },
+  {
+    "mapId": "rwc03",
+    "name": "championship5",
+    "type": "other"
+  },
+  {
+    "mapId": "que_job01",
+    "name": "Taverna Particular",
+    "type": "other"
+  },
+  {
+    "mapId": "abyss_01",
+    "name": "Caverna Subterrânea do Lago do Abismo",
+    "type": "other"
+  },
+  {
+    "mapId": "abyss_02",
+    "name": "Caverna Subterrânea do Lago do Abismo",
+    "type": "other"
+  },
+  {
+    "mapId": "abyss_03",
+    "name": "Caverna Subterrânea do Lago do Abismo",
+    "type": "other"
+  },
+  {
+    "mapId": "tha_t01",
+    "name": "Torre de Thanatos ° Andar Inferior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tha_t02",
+    "name": "Torre de Thanatos ° Andar Inferior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tha_t03",
+    "name": "Torre de Thanatos ° Andar Inferior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tha_t04",
+    "name": "Torre de Thanatos ° Andar Inferior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tha_t05",
+    "name": "Torre de Thanatos ° Andar Superior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tha_t06",
+    "name": "Torre de Thanatos ° Andar Superior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tha_t07",
+    "name": "Torre de Thanatos ° Andar Superior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tha_t08",
+    "name": "Torre de Thanatos ° Andar Superior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tha_t09",
+    "name": "Torre de Thanatos ° Andar Superior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tha_t10",
+    "name": "Torre de Thanatos ° Andar Superior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tha_t11",
+    "name": "Torre de Thanatos ° Andar Superior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "tha_t12",
+    "name": "Torre de Thanatos ° Andar Superior",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "thana_step",
+    "name": "Torre de Thanatos ° Andar Superior",
+    "type": "other"
+  },
+  {
+    "mapId": "thana_boss",
+    "name": "Torre de Thanatos ° Área Desconhecida",
+    "type": "other"
+  },
+  {
+    "mapId": "thana_scene01",
+    "name": "Entrada da Torre de Thanatos",
+    "type": "other"
+  },
+  {
+    "mapId": "job_soul",
+    "name": "Seu Coração",
+    "type": "other"
+  },
+  {
+    "mapId": "job_star",
+    "name": "O Sol, a Lua e as Estrelas",
+    "type": "other"
+  },
+  {
+    "mapId": "hu_fild07",
+    "name": "Campos de Hugel",
+    "type": "field"
+  },
+  {
+    "mapId": "hu_fild05",
+    "name": "O Lago do Abismo",
+    "type": "field"
+  },
+  {
+    "mapId": "hu_fild04",
+    "name": "Campos de Hugel",
+    "type": "field"
+  },
+  {
+    "mapId": "hu_fild01",
+    "name": "Torre de Thanatos",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_fild06",
+    "name": "Planalto de El Mes",
+    "type": "field"
+  },
+  {
+    "mapId": "quiz_02",
+    "name": "Arena de Perguntas",
+    "type": "other"
+  },
+  {
+    "mapId": "jupe_cave",
+    "name": "Entrada das Ruínas de Juperos",
+    "type": "other"
+  },
+  {
+    "mapId": "juperos_01",
+    "name": "Ruínas de Juperos",
+    "type": "other"
+  },
+  {
+    "mapId": "juperos_02",
+    "name": "Ruínas de Juperos",
+    "type": "other"
+  },
+  {
+    "mapId": "jupe_gate",
+    "name": "Juperos, Zona Restrita",
+    "type": "other"
+  },
+  {
+    "mapId": "jupe_area1",
+    "name": "Juperos, Zona Restrita",
+    "type": "other"
+  },
+  {
+    "mapId": "jupe_area2",
+    "name": "Juperos, Zona Restrita",
+    "type": "other"
+  },
+  {
+    "mapId": "jupe_ele",
+    "name": "Elevador de Juperos",
+    "type": "other"
+  },
+  {
+    "mapId": "jupe_ele_r",
+    "name": "Elevador de Juperos",
+    "type": "other"
+  },
+  {
+    "mapId": "jupe_core",
+    "name": "Centro de Juperos",
+    "type": "other"
+  },
+  {
+    "mapId": "lighthalzen",
+    "name": "Lighthalzen, a Cidade-Estado da Prosperidade",
+    "type": "town"
+  },
+  {
+    "mapId": "lhz_in01",
+    "name": "Sede da Corporação Rekenber",
+    "type": "other"
+  },
+  {
+    "mapId": "lhz_in02",
+    "name": "Interior de Lighthalzen",
+    "type": "other"
+  },
+  {
+    "mapId": "lhz_in03",
+    "name": "Interior de Lighthalzen",
+    "type": "other"
+  },
+  {
+    "mapId": "lhz_cube",
+    "name": "Sala Cósmica",
+    "type": "other"
+  },
+  {
+    "mapId": "lhz_que01",
+    "name": "Interior de Lighthalzen",
+    "type": "other"
+  },
+  {
+    "mapId": "lhz_airport",
+    "name": "Aeroporto de Lighthalzen",
+    "type": "other"
+  },
+  {
+    "mapId": "airplane_01",
+    "name": "Aeroplano",
+    "type": "other"
+  },
+  {
+    "mapId": "lhz_dun01",
+    "name": "Laboratório de Somatologia",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "lhz_dun02",
+    "name": "Laboratório de Somatologia",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "lhz_dun03",
+    "name": "Laboratório de Somatologia",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "lhz_fild01",
+    "name": "Campos de Lighthalzen",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_pre",
+    "name": "Sede do Governo de Schwaltzwald",
+    "type": "other"
+  },
+  {
+    "mapId": "y_airport",
+    "name": "Aeroporto de Juno",
+    "type": "other"
+  },
+  {
+    "mapId": "lhz_fild03",
+    "name": "Campos de Lighthalzen",
+    "type": "field"
+  },
+  {
+    "mapId": "lhz_fild02",
+    "name": "Campos de Lighthalzen (Vale da Morte)",
+    "type": "field"
+  },
+  {
+    "mapId": "ein_fild04",
+    "name": "Campos de Einbroch",
+    "type": "field"
+  },
+  {
+    "mapId": "ein_fild03",
+    "name": "Campos de Einbroch",
+    "type": "field"
+  },
+  {
+    "mapId": "hugel",
+    "name": "Hugel, a Vila do Jardim Fantástico",
+    "type": "town"
+  },
+  {
+    "mapId": "hu_in01",
+    "name": "Interior de Hugel",
+    "type": "other"
+  },
+  {
+    "mapId": "que_bingo",
+    "name": "Sala do Bingo",
+    "type": "other"
+  },
+  {
+    "mapId": "que_hugel",
+    "name": "Subterrâneos do Santuário de Odin",
+    "type": "other"
+  },
+  {
+    "mapId": "p_track01",
+    "name": "Arena da Corrida de Monstros",
+    "type": "other"
+  },
+  {
+    "mapId": "p_track02",
+    "name": "Arena da Corrida de Monstros",
+    "type": "other"
+  },
+  {
+    "mapId": "odin_tem01",
+    "name": "Santuário de Odin",
+    "type": "other"
+  },
+  {
+    "mapId": "odin_tem02",
+    "name": "Santuário de Odin",
+    "type": "other"
+  },
+  {
+    "mapId": "odin_tem03",
+    "name": "Santuário de Odin",
+    "type": "other"
+  },
+  {
+    "mapId": "hu_fild02",
+    "name": "Campos de Hugel",
+    "type": "field"
+  },
+  {
+    "mapId": "hu_fild03",
+    "name": "Campos de Hugel",
+    "type": "field"
+  },
+  {
+    "mapId": "hu_fild06",
+    "name": "Campos de Hugel",
+    "type": "field"
+  },
+  {
+    "mapId": "ein_fild01",
+    "name": "Campos de Einbroch",
+    "type": "field"
+  },
+  {
+    "mapId": "ein_fild02",
+    "name": "Campos de Einbroch",
+    "type": "field"
+  },
+  {
+    "mapId": "ein_fild05",
+    "name": "Campos de Einbroch",
+    "type": "field"
+  },
+  {
+    "mapId": "yuno_fild10",
+    "name": "Campos de Juno",
+    "type": "field"
+  },
+  {
+    "mapId": "kh_kiehl02",
+    "name": "Aposentos de Kiehl",
+    "type": "other"
+  },
+  {
+    "mapId": "kh_kiehl01",
+    "name": "Aposentos de Kiehl",
+    "type": "other"
+  },
+  {
+    "mapId": "kh_dun02",
+    "name": "Fábrica de Robô - Nível 2",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "kh_dun01",
+    "name": "Fábrica de Robô ?Nível 1",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "kh_mansion",
+    "name": "Mansão de Kiel Hyre",
+    "type": "other"
+  },
+  {
+    "mapId": "kh_rossi",
+    "name": "A Mansão Rosimier",
+    "type": "other"
+  },
+  {
+    "mapId": "kh_school",
+    "name": "Academia Kiel Hyre",
+    "type": "other"
+  },
+  {
+    "mapId": "kh_vila",
+    "name": "Cabana de Kiel Hyre",
+    "type": "other"
+  },
+  {
+    "mapId": "auction_01",
+    "name": "Sala de Leilão",
+    "type": "other"
+  },
+  {
+    "mapId": "auction_02",
+    "name": "Ordem dos Exploradores",
+    "type": "other"
+  },
+  {
+    "mapId": "06guild_r",
+    "name": "Arena de Batalha de Clã - Sala de Espera",
+    "type": "other"
+  },
+  {
+    "mapId": "06guild_01",
+    "name": "Arena de Batalha de Clã",
+    "type": "other"
+  },
+  {
+    "mapId": "06guild_02",
+    "name": "Arena de Batalha de Clã",
+    "type": "other"
+  },
+  {
+    "mapId": "06guild_03",
+    "name": "Arena de Batalha de Clã",
+    "type": "other"
+  },
+  {
+    "mapId": "06guild_04",
+    "name": "Arena de Batalha de Clã",
+    "type": "other"
+  },
+  {
+    "mapId": "06guild_05",
+    "name": "Arena de Batalha de Clã",
+    "type": "other"
+  },
+  {
+    "mapId": "06guild_06",
+    "name": "Arena de Batalha de Clã",
+    "type": "other"
+  },
+  {
+    "mapId": "06guild_07",
+    "name": "Arena de Batalha de Clã",
+    "type": "other"
+  },
+  {
+    "mapId": "06guild_08",
+    "name": "Arena de Batalha de Clã",
+    "type": "other"
+  },
+  {
+    "mapId": "rachel",
+    "name": "Capital de Arunafeltz, Rachel",
+    "type": "town"
+  },
+  {
+    "mapId": "ra_in01",
+    "name": "Interior de Rachel",
+    "type": "other"
+  },
+  {
+    "mapId": "ra_temple",
+    "name": "Templo de Freya - Cheshrumnir",
+    "type": "other"
+  },
+  {
+    "mapId": "ra_temin",
+    "name": "Interior do Templo",
+    "type": "other"
+  },
+  {
+    "mapId": "que_rachel",
+    "name": "Interior do Templo",
+    "type": "other"
+  },
+  {
+    "mapId": "ra_temsky",
+    "name": "Escritório da Papisa - Os Jardins Sagrados",
+    "type": "other"
+  },
+  {
+    "mapId": "ra_fild01",
+    "name": "Pradaria Audhumbla",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild02",
+    "name": "Canyon",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild03",
+    "name": "Planície de Ida",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild04",
+    "name": "Pradaria Audhumbla",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild05",
+    "name": "Pradaria Audhumbla",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild06",
+    "name": "Portus Luna",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild07",
+    "name": "Canyon",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild08",
+    "name": "Planície de Ida",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild09",
+    "name": "Pradaria Audhumbla",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild10",
+    "name": "Canyon",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild11",
+    "name": "Planície de Ida",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild12",
+    "name": "Planície de Ida",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_fild13",
+    "name": "Costa das Lágrimas",
+    "type": "field"
+  },
+  {
+    "mapId": "ra_san01",
+    "name": "Santuário",
+    "type": "other"
+  },
+  {
+    "mapId": "ra_san02",
+    "name": "Santuário",
+    "type": "other"
+  },
+  {
+    "mapId": "ra_san03",
+    "name": "Santuário",
+    "type": "other"
+  },
+  {
+    "mapId": "ra_san04",
+    "name": "Santuário",
+    "type": "other"
+  },
+  {
+    "mapId": "ra_san05",
+    "name": "Santuário",
+    "type": "other"
+  },
+  {
+    "mapId": "ice_dun01",
+    "name": "Caverna de Gelo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "ice_dun02",
+    "name": "Caverna de Gelo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "ice_dun03",
+    "name": "Caverna de Gelo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "ice_dun04",
+    "name": "Caverna de Gelo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "veins",
+    "name": "Veins",
+    "type": "town"
+  },
+  {
+    "mapId": "ve_in",
+    "name": "Interior de Veins",
+    "type": "other"
+  },
+  {
+    "mapId": "ve_in02",
+    "name": "Interior de Veins",
+    "type": "other"
+  },
+  {
+    "mapId": "ve_fild01",
+    "name": "Campo de Veins",
+    "type": "field"
+  },
+  {
+    "mapId": "ve_fild02",
+    "name": "Campo de Veins",
+    "type": "field"
+  },
+  {
+    "mapId": "ve_fild03",
+    "name": "Campo de Veins",
+    "type": "field"
+  },
+  {
+    "mapId": "ve_fild04",
+    "name": "Campo de Veins",
+    "type": "field"
+  },
+  {
+    "mapId": "ve_fild05",
+    "name": "Campo de Veins",
+    "type": "field"
+  },
+  {
+    "mapId": "ve_fild06",
+    "name": "Campo de Veins",
+    "type": "field"
+  },
+  {
+    "mapId": "ve_fild07",
+    "name": "Campo de Veins",
+    "type": "field"
+  },
+  {
+    "mapId": "thor_camp",
+    "name": "Acampamento do Vulcão de Thor",
+    "type": "other"
+  },
+  {
+    "mapId": "que_thor",
+    "name": "Vulcão de Thor",
+    "type": "other"
+  },
+  {
+    "mapId": "thor_v01",
+    "name": "Vulcão de Thor",
+    "type": "other"
+  },
+  {
+    "mapId": "thor_v02",
+    "name": "Vulcão de Thor",
+    "type": "other"
+  },
+  {
+    "mapId": "thor_v03",
+    "name": "Vulcão de Thor",
+    "type": "other"
+  },
+  {
+    "mapId": "que_qsch01",
+    "name": "Visão de Okolnir",
+    "type": "other"
+  },
+  {
+    "mapId": "que_qsch02",
+    "name": "Visão de Okolnir",
+    "type": "other"
+  },
+  {
+    "mapId": "que_qsch03",
+    "name": "Visão de Okolnir",
+    "type": "other"
+  },
+  {
+    "mapId": "que_qsch04",
+    "name": "Visão de Okolnir",
+    "type": "other"
+  },
+  {
+    "mapId": "que_qsch05",
+    "name": "Visão de Okolnir",
+    "type": "other"
+  },
+  {
+    "mapId": "que_qaru01",
+    "name": "Visão de Okolnir",
+    "type": "other"
+  },
+  {
+    "mapId": "que_qaru02",
+    "name": "Visão de Okolnir",
+    "type": "other"
+  },
+  {
+    "mapId": "que_qaru03",
+    "name": "Visão de Okolnir",
+    "type": "other"
+  },
+  {
+    "mapId": "que_qaru04",
+    "name": "Visão de Okolnir",
+    "type": "other"
+  },
+  {
+    "mapId": "que_qaru05",
+    "name": "Visão de Okolnir",
+    "type": "other"
+  },
+  {
+    "mapId": "arug_cas01",
+    "name": "Mardol",
+    "type": "guild"
+  },
+  {
+    "mapId": "arug_cas02",
+    "name": "Syr",
+    "type": "guild"
+  },
+  {
+    "mapId": "arug_cas03",
+    "name": "Horn",
+    "type": "guild"
+  },
+  {
+    "mapId": "arug_cas04",
+    "name": "Gefn",
+    "type": "guild"
+  },
+  {
+    "mapId": "arug_cas05",
+    "name": "Vanadis",
+    "type": "guild"
+  },
+  {
+    "mapId": "aru_gld",
+    "name": "Feudo de Valfreyja",
+    "type": "guild"
+  },
+  {
+    "mapId": "schg_cas01",
+    "name": "Himinn",
+    "type": "guild"
+  },
+  {
+    "mapId": "schg_cas02",
+    "name": "Andlangr",
+    "type": "guild"
+  },
+  {
+    "mapId": "schg_cas03",
+    "name": "Vidblainn",
+    "type": "guild"
+  },
+  {
+    "mapId": "schg_cas04",
+    "name": "Hljod",
+    "type": "guild"
+  },
+  {
+    "mapId": "schg_cas05",
+    "name": "Skatyrnir",
+    "type": "guild"
+  },
+  {
+    "mapId": "sch_gld",
+    "name": "Feudo de Nithafjoll",
+    "type": "guild"
+  },
+  {
+    "mapId": "bossnia_01",
+    "name": "Bossnia",
+    "type": "other"
+  },
+  {
+    "mapId": "bossnia_02",
+    "name": "Bossnia",
+    "type": "other"
+  },
+  {
+    "mapId": "bossnia_03",
+    "name": "Bossnia",
+    "type": "other"
+  },
+  {
+    "mapId": "bossnia_04",
+    "name": "Bossnia",
+    "type": "other"
+  },
+  {
+    "mapId": "itemmall",
+    "name": "Mercado",
+    "type": "other"
+  },
+  {
+    "mapId": "poring_w01",
+    "name": "Guerra Poring - Sala de Espera",
+    "type": "other"
+  },
+  {
+    "mapId": "poring_w02",
+    "name": "Guerra Poring",
+    "type": "other"
+  },
+  {
+    "mapId": "nameless_i",
+    "name": "Ilha Esquecida",
+    "type": "other"
+  },
+  {
+    "mapId": "nameless_n",
+    "name": "Ilha Esquecida",
+    "type": "town"
+  },
+  {
+    "mapId": "nameless_in",
+    "name": "Interior da Ilha Esquecida",
+    "type": "other"
+  },
+  {
+    "mapId": "abbey01",
+    "name": "Monastério",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "abbey02",
+    "name": "Monastério",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "abbey03",
+    "name": "Monastério",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "que_temsky",
+    "name": "Sala da Papisa - Jardim do Paraíso",
+    "type": "other"
+  },
+  {
+    "mapId": "z_agit",
+    "name": "Esconderijo da Gangue Z",
+    "type": "other"
+  },
+  {
+    "mapId": "moscovia",
+    "name": "Moscóvia",
+    "type": "town"
+  },
+  {
+    "mapId": "mosk_in",
+    "name": "Interior de Moscóvia",
+    "type": "other"
+  },
+  {
+    "mapId": "mosk_ship",
+    "name": "Navio",
+    "type": "other"
+  },
+  {
+    "mapId": "mosk_fild01",
+    "name": "Ilha Baleia",
+    "type": "field"
+  },
+  {
+    "mapId": "mosk_fild02",
+    "name": "Campo de Moscóvia",
+    "type": "field"
+  },
+  {
+    "mapId": "mosk_dun01",
+    "name": "Floresta Encantada 1",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "mosk_dun02",
+    "name": "Floresta Encantada 2",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "mosk_dun03",
+    "name": "Floresta Encantada 3",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "cave",
+    "name": "Caverna",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_fild20",
+    "name": "Ruptura Dimensional",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild21",
+    "name": "Ruptura Dimensional",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild22",
+    "name": "Ruptura Dimensional",
+    "type": "field"
+  },
+  {
+    "mapId": "1@cata",
+    "name": "Catacumba",
+    "type": "other"
+  },
+  {
+    "mapId": "2@cata",
+    "name": "Altar do Selo",
+    "type": "other"
+  },
+  {
+    "mapId": "e_tower",
+    "name": "Ilha Misty",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "1@tower",
+    "name": "Torre Sem Fim",
+    "type": "other"
+  },
+  {
+    "mapId": "2@tower",
+    "name": "Torre Sem Fim",
+    "type": "other"
+  },
+  {
+    "mapId": "3@tower",
+    "name": "Torre Sem Fim",
+    "type": "other"
+  },
+  {
+    "mapId": "4@tower",
+    "name": "Torre Sem Fim",
+    "type": "other"
+  },
+  {
+    "mapId": "5@tower",
+    "name": "Torre Sem Fim",
+    "type": "other"
+  },
+  {
+    "mapId": "6@tower",
+    "name": "Torre Sem Fim (Área Desconhecida)",
+    "type": "other"
+  },
+  {
+    "mapId": "bat_room",
+    "name": "Sala de Espera do Campo de Batalha",
+    "type": "town"
+  },
+  {
+    "mapId": "bat_a01",
+    "name": "Desfiladeiro Tierra",
+    "type": "other"
+  },
+  {
+    "mapId": "bat_a02",
+    "name": "Desfiladeiro Tierra",
+    "type": "other"
+  },
+  {
+    "mapId": "bat_b01",
+    "name": "Flavian",
+    "type": "other"
+  },
+  {
+    "mapId": "bat_b02",
+    "name": "Flavian",
+    "type": "other"
+  },
+  {
+    "mapId": "bat_c01",
+    "name": "Krieger von Midgard",
+    "type": "other"
+  },
+  {
+    "mapId": "bat_c02",
+    "name": "Krieger von Midgard",
+    "type": "other"
+  },
+  {
+    "mapId": "bat_c03",
+    "name": "Krieger von Midgard",
+    "type": "other"
+  },
+  {
+    "mapId": "mid_camp",
+    "name": "Acampamento da Expedição da Aliança",
+    "type": "other"
+  },
+  {
+    "mapId": "mid_campin",
+    "name": "Acampamento da Expedição da Aliança",
+    "type": "other"
+  },
+  {
+    "mapId": "man_fild01",
+    "name": "Montanhas dos Manuk",
+    "type": "field"
+  },
+  {
+    "mapId": "man_fild03",
+    "name": "Montanhas dos Manuk",
+    "type": "field"
+  },
+  {
+    "mapId": "spl_fild02",
+    "name": "Campos dos Esplendores",
+    "type": "field"
+  },
+  {
+    "mapId": "spl_fild03",
+    "name": "Campos dos Esplendores",
+    "type": "field"
+  },
+  {
+    "mapId": "moc_fild22b",
+    "name": "Fenda Dimensional",
+    "type": "field"
+  },
+  {
+    "mapId": "que_dan01",
+    "name": "Campos de Hugel",
+    "type": "other"
+  },
+  {
+    "mapId": "que_dan02",
+    "name": "Interior da Casa Abandonada de Juno",
+    "type": "other"
+  },
+  {
+    "mapId": "schg_que01",
+    "name": "Pradaria de Morestone",
+    "type": "other"
+  },
+  {
+    "mapId": "schg_dun01",
+    "name": "Calabouço Subterrâneo de Castelo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "arug_que01",
+    "name": "Pradaria de Morestone",
+    "type": "other"
+  },
+  {
+    "mapId": "arug_dun01",
+    "name": "Calabouço Subterrâneo de Castelo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "1@orcs",
+    "name": "Caverna Subterrânea de Orcs",
+    "type": "other"
+  },
+  {
+    "mapId": "2@orcs",
+    "name": "Caverna Subterrânea de Orcs",
+    "type": "other"
+  },
+  {
+    "mapId": "evt_hello",
+    "name": "Campo Morto",
+    "type": "other"
+  },
+  {
+    "mapId": "1@nyd",
+    "name": "Ninho de Nidhogg",
+    "type": "other"
+  },
+  {
+    "mapId": "2@nyd",
+    "name": "Ninho de Nidhogg",
+    "type": "other"
+  },
+  {
+    "mapId": "nyd_dun01",
+    "name": "A Grande Ferida",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "nyd_dun02",
+    "name": "A Grande Ferida",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "manuk",
+    "name": "Vila Mineradora Manuka",
+    "type": "town"
+  },
+  {
+    "mapId": "man_fild02",
+    "name": "Montanhas dos Manuk",
+    "type": "field"
+  },
+  {
+    "mapId": "man_in01",
+    "name": "Dentro da Vila Mineradora",
+    "type": "other"
+  },
+  {
+    "mapId": "splendide",
+    "name": "Base dos Esplêndidos, Esplendor",
+    "type": "town"
+  },
+  {
+    "mapId": "spl_fild01",
+    "name": "Campos dos Esplendores",
+    "type": "field"
+  },
+  {
+    "mapId": "spl_in01",
+    "name": "Dentro de Esplendor",
+    "type": "other"
+  },
+  {
+    "mapId": "spl_in02",
+    "name": "Dentro de Esplendor",
+    "type": "other"
+  },
+  {
+    "mapId": "brasilis",
+    "name": "Cidade de Brasilis",
+    "type": "town"
+  },
+  {
+    "mapId": "bra_in01",
+    "name": "Interior de Brasilis",
+    "type": "other"
+  },
+  {
+    "mapId": "bra_fild01",
+    "name": "Floresta de Brasilis",
+    "type": "field"
+  },
+  {
+    "mapId": "bra_dun01",
+    "name": "Caverna das Cataratas",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "bra_dun02",
+    "name": "Profundezas das Cataratas",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "dewata",
+    "name": "Dewata",
+    "type": "town"
+  },
+  {
+    "mapId": "dew_in01",
+    "name": "Dentro da Vila da Tribo Jaty",
+    "type": "other"
+  },
+  {
+    "mapId": "dew_fild01",
+    "name": "Campos de Dewata - Vila da tribo Jaty",
+    "type": "field"
+  },
+  {
+    "mapId": "dew_dun01",
+    "name": "Vulcão Krakatau",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "dew_dun02",
+    "name": "Caverna Istana",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "bif_fild01",
+    "name": "Floresta da Neblina - Sul de Bifröst",
+    "type": "field"
+  },
+  {
+    "mapId": "bif_fild02",
+    "name": "Floresta da Neblina - Norte de Bifröst",
+    "type": "field"
+  },
+  {
+    "mapId": "mora",
+    "name": "Mora - A Vila dos Rafflen",
+    "type": "town"
+  },
+  {
+    "mapId": "dic_in01",
+    "name": "Casa em Dicastes",
+    "type": "other"
+  },
+  {
+    "mapId": "1@mist",
+    "name": "Labirinto da Neblina",
+    "type": "other"
+  },
+  {
+    "mapId": "dicastes01",
+    "name": "El Dicastes, Cidade Capital dos Manuks",
+    "type": "town"
+  },
+  {
+    "mapId": "dicastes02",
+    "name": "Floresta Brumbeld Jorhi",
+    "type": "town"
+  },
+  {
+    "mapId": "dic_fild01",
+    "name": "Campos de El Dicastes 01",
+    "type": "field"
+  },
+  {
+    "mapId": "dic_fild02",
+    "name": "Campos de El Dicastes 02",
+    "type": "field"
+  },
+  {
+    "mapId": "dic_dun01",
+    "name": "Túnel Kamidal 01",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "dic_dun02",
+    "name": "Túnel Kamidal 02",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "dic_dun03",
+    "name": "Túnel Kamidal - Pesadelo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "malangdo",
+    "name": "Malangdo - A Ilha da Pata de Gato",
+    "type": "town"
+  },
+  {
+    "mapId": "mal_in01",
+    "name": "Interior de Malangdo",
+    "type": "other"
+  },
+  {
+    "mapId": "mal_in02",
+    "name": "Interior do navio",
+    "type": "other"
+  },
+  {
+    "mapId": "mal_dun01",
+    "name": "Área de Coral Estrelado",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "1@cash",
+    "name": "Caverna do Polvo",
+    "type": "other"
+  },
+  {
+    "mapId": "1@pump",
+    "name": "Esgotos de Malangdo",
+    "type": "other"
+  },
+  {
+    "mapId": "2@pump",
+    "name": "Esgotos de Malangdo",
+    "type": "other"
+  },
+  {
+    "mapId": "lhz_dun04",
+    "name": "Laboratório de Somatologia",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "que_lhz",
+    "name": "Laboratório de Somatologia",
+    "type": "other"
+  },
+  {
+    "mapId": "1@lhz",
+    "name": "Laboratório de Wolfchev",
+    "type": "other"
+  },
+  {
+    "mapId": "gld_dun01_2",
+    "name": "2° calabouço da Guilda",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gld_dun02_2",
+    "name": "2° calabouço da Guilda",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gld_dun03_2",
+    "name": "2° calabouço da Guilda",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gld_dun04_2",
+    "name": "2° calabouço da Guilda",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "gld2_ald",
+    "name": "Portal do Abismo: Lágrimas do Heróica",
+    "type": "other"
+  },
+  {
+    "mapId": "gld2_gef",
+    "name": "Portal do Abismo: Colina dos Mortos",
+    "type": "other"
+  },
+  {
+    "mapId": "gld2_pay",
+    "name": "Portal do Abismo: Ventos Ancestrais",
+    "type": "other"
+  },
+  {
+    "mapId": "gld2_prt",
+    "name": "Portal do Abismo: Caminho do Guerreiro",
+    "type": "other"
+  },
+  {
+    "mapId": "malaya",
+    "name": "Porto Malaya",
+    "type": "town"
+  },
+  {
+    "mapId": "ma_fild01",
+    "name": "Baryo Mahiwaga",
+    "type": "field"
+  },
+  {
+    "mapId": "ma_fild02",
+    "name": "Floresta",
+    "type": "field"
+  },
+  {
+    "mapId": "ma_scene01",
+    "name": "Lago Bakonawa",
+    "type": "other"
+  },
+  {
+    "mapId": "ma_in01",
+    "name": "Interior de Malaya",
+    "type": "other"
+  },
+  {
+    "mapId": "ma_dun01",
+    "name": "Hospital de Bangungot, 1° andar",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "1@ma_h",
+    "name": "Hospital de Bangungot, 2° andar",
+    "type": "other"
+  },
+  {
+    "mapId": "1@ma_c",
+    "name": "Caverna Buwaya",
+    "type": "other"
+  },
+  {
+    "mapId": "1@ma_b",
+    "name": "Esconderijo Bakonawa",
+    "type": "other"
+  },
+  {
+    "mapId": "ma_zif01",
+    "name": "Interior de Jeepney",
+    "type": "other"
+  },
+  {
+    "mapId": "ma_zif02",
+    "name": "Interior de Jeepney",
+    "type": "other"
+  },
+  {
+    "mapId": "ma_zif03",
+    "name": "Interior de Jeepney",
+    "type": "other"
+  },
+  {
+    "mapId": "ma_zif04",
+    "name": "Interior de Jeepney",
+    "type": "other"
+  },
+  {
+    "mapId": "ma_zif05",
+    "name": "Interior de Jeepney",
+    "type": "other"
+  },
+  {
+    "mapId": "ma_zif06",
+    "name": "Interior de Jeepney",
+    "type": "other"
+  },
+  {
+    "mapId": "ma_zif07",
+    "name": "Interior de Jeepney",
+    "type": "other"
+  },
+  {
+    "mapId": "ma_zif08",
+    "name": "Interior de Jeepney",
+    "type": "other"
+  },
+  {
+    "mapId": "ma_zif09",
+    "name": "Interior de Jeepney",
+    "type": "other"
+  },
+  {
+    "mapId": "job_ko",
+    "name": "Lugar Escondido",
+    "type": "other"
+  },
+  {
+    "mapId": "ecl_in01",
+    "name": "Praça de Eclage",
+    "type": "other"
+  },
+  {
+    "mapId": "ecl_hub01",
+    "name": "Perímetros de Eclage",
+    "type": "other"
+  },
+  {
+    "mapId": "ecl_in02",
+    "name": "Interior de Eclage 2",
+    "type": "other"
+  },
+  {
+    "mapId": "ecl_in03",
+    "name": "Interior de Eclage 3",
+    "type": "other"
+  },
+  {
+    "mapId": "ecl_in04",
+    "name": "Interior de Eclage 4",
+    "type": "other"
+  },
+  {
+    "mapId": "eclage",
+    "name": "Eclage",
+    "type": "town"
+  },
+  {
+    "mapId": "ecl_fild01",
+    "name": "Campo Florescente",
+    "type": "field"
+  },
+  {
+    "mapId": "ecl_tdun01",
+    "name": "Torre de Bifröst (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "ecl_tdun02",
+    "name": "Torre de Bifröst (2)",
+    "type": "other"
+  },
+  {
+    "mapId": "ecl_tdun03",
+    "name": "Torre de Bifröst (3)",
+    "type": "other"
+  },
+  {
+    "mapId": "ecl_tdun04",
+    "name": "Topo da Torre de Bifröst",
+    "type": "other"
+  },
+  {
+    "mapId": "te_prt_gld",
+    "name": "Gloria",
+    "type": "guild"
+  },
+  {
+    "mapId": "te_prtcas01",
+    "name": "Gaebolg",
+    "type": "other"
+  },
+  {
+    "mapId": "te_prtcas02",
+    "name": "Richard",
+    "type": "other"
+  },
+  {
+    "mapId": "te_prtcas03",
+    "name": "Wigner",
+    "type": "other"
+  },
+  {
+    "mapId": "te_prtcas04",
+    "name": "Heine",
+    "type": "other"
+  },
+  {
+    "mapId": "te_prtcas05",
+    "name": "Nerius",
+    "type": "other"
+  },
+  {
+    "mapId": "teg_dun01",
+    "name": "Calabouço da Guilda 1",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "te_alde_gld",
+    "name": "Kafra Garten",
+    "type": "guild"
+  },
+  {
+    "mapId": "te_aldecas1",
+    "name": "Sofia",
+    "type": "other"
+  },
+  {
+    "mapId": "te_aldecas2",
+    "name": "Denise",
+    "type": "other"
+  },
+  {
+    "mapId": "te_aldecas3",
+    "name": "Marianne",
+    "type": "other"
+  },
+  {
+    "mapId": "te_aldecas4",
+    "name": "Bianca",
+    "type": "other"
+  },
+  {
+    "mapId": "te_aldecas5",
+    "name": "Deborah",
+    "type": "other"
+  },
+  {
+    "mapId": "teg_dun02",
+    "name": "Calabouço da Guilda 2",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "niflxmas",
+    "name": "Evento Natalino",
+    "type": "other"
+  },
+  {
+    "mapId": "moc_para01",
+    "name": "Grupo do ?en",
+    "type": "other"
+  },
+  {
+    "mapId": "1@xm_d",
+    "name": "Fábrica do Terror",
+    "type": "other"
+  },
+  {
+    "mapId": "moro_vol",
+    "name": "Círculo de Fogo",
+    "type": "other"
+  },
+  {
+    "mapId": "moro_cav",
+    "name": "Cavena de Fogo",
+    "type": "other"
+  },
+  {
+    "mapId": "1@dth1",
+    "name": "Ilha Bios (Manhã",
+    "type": "other"
+  },
+  {
+    "mapId": "1@dth2",
+    "name": "Ilha Bios (Tarde)",
+    "type": "other"
+  },
+  {
+    "mapId": "1@dth3",
+    "name": "Ilha Bios (Noite)",
+    "type": "other"
+  },
+  {
+    "mapId": "1@rev",
+    "name": "Caverna",
+    "type": "other"
+  },
+  {
+    "mapId": "1@eom",
+    "name": "Templo do Demônio Rei",
+    "type": "other"
+  },
+  {
+    "mapId": "ver_eju",
+    "name": "Ruínas de Juperos (Oeste)",
+    "type": "other"
+  },
+  {
+    "mapId": "ver_tunn",
+    "name": "Túnel de Verus",
+    "type": "other"
+  },
+  {
+    "mapId": "verus04",
+    "name": "Centro de Verus",
+    "type": "other"
+  },
+  {
+    "mapId": "verus03",
+    "name": "Praça Central de Verus",
+    "type": "other"
+  },
+  {
+    "mapId": "1@mcd",
+    "name": "Fábrica de Charlestons",
+    "type": "other"
+  },
+  {
+    "mapId": "verus01",
+    "name": "Laboratório OPTATIO de Experimentos",
+    "type": "other"
+  },
+  {
+    "mapId": "verus02",
+    "name": "Instituto WISH de Pesquisa",
+    "type": "other"
+  },
+  {
+    "mapId": "un_bk_q",
+    "name": "Abrigo Subterrâneo",
+    "type": "other"
+  },
+  {
+    "mapId": "un_bunker",
+    "name": "Abrigo Subterrâneo",
+    "type": "other"
+  },
+  {
+    "mapId": "un_myst",
+    "name": "Túnel do Abrigo",
+    "type": "other"
+  },
+  {
+    "mapId": "1@uns",
+    "name": "Sala Final",
+    "type": "other"
+  },
+  {
+    "mapId": "1@lab",
+    "name": "Laboratório Central",
+    "type": "other"
+  },
+  {
+    "mapId": "c_tower2_",
+    "name": "Torre Distorcida (2)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "c_tower3_",
+    "name": "Torre Distorcida (3)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "brz_n",
+    "name": "Brasilis (Noite)",
+    "type": "other"
+  },
+  {
+    "mapId": "1@mir",
+    "name": "Salão de Ymir",
+    "type": "other"
+  },
+  {
+    "mapId": "2@mir",
+    "name": "Salão de Ymir",
+    "type": "other"
+  },
+  {
+    "mapId": "1@sthb",
+    "name": "Sussurro Sombrio",
+    "type": "other"
+  },
+  {
+    "mapId": "1@sthc",
+    "name": "Sala Secreta",
+    "type": "other"
+  },
+  {
+    "mapId": "1@sthd",
+    "name": "Topo da Fortaleza",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_cas",
+    "name": "Palácio de Prontera",
+    "type": "guild"
+  },
+  {
+    "mapId": "prt_cas_q",
+    "name": "Aposentos dos Nobres",
+    "type": "guild"
+  },
+  {
+    "mapId": "prt_prison",
+    "name": "Prisão de Prontera",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_lib",
+    "name": "Memorial das Famílias Reais [Presente]",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_lib_q",
+    "name": "Memorial das Famílias Reais [Passado]",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_q",
+    "name": "Prontera Destruição",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_pri00",
+    "name": "Carceragem de Prontera",
+    "type": "other"
+  },
+  {
+    "mapId": "lasagna",
+    "name": "Cidade Portuária de Lasagna",
+    "type": "town"
+  },
+  {
+    "mapId": "lasa_fild01",
+    "name": "Planícies Ravioli",
+    "type": "field"
+  },
+  {
+    "mapId": "lasa_fild02",
+    "name": "Floresta Ravioli",
+    "type": "field"
+  },
+  {
+    "mapId": "lasa_dun01",
+    "name": "Ninho do Dragão",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "lasa_dun02",
+    "name": "Ninho do Dragão",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "lasa_dun03",
+    "name": "Ninho do Dragão",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "conch_in",
+    "name": "Dentro do Conchiolina",
+    "type": "other"
+  },
+  {
+    "mapId": "lasa_in01",
+    "name": "Casa em Lasagna",
+    "type": "other"
+  },
+  {
+    "mapId": "lasa_dun_q",
+    "name": "Ninho do Dragão",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "iz_int",
+    "name": "Navio naufragado",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_int01",
+    "name": "Navio naufragado",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_int02",
+    "name": "Navio naufragado",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_int03",
+    "name": "Navio naufragado",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_int04",
+    "name": "Navio naufragado",
+    "type": "other"
+  },
+  {
+    "mapId": "int_land",
+    "name": "Ilhota",
+    "type": "other"
+  },
+  {
+    "mapId": "int_land01",
+    "name": "Ilhota",
+    "type": "other"
+  },
+  {
+    "mapId": "int_land02",
+    "name": "Ilhota",
+    "type": "other"
+  },
+  {
+    "mapId": "int_land03",
+    "name": "Ilhota",
+    "type": "other"
+  },
+  {
+    "mapId": "int_land04",
+    "name": "Ilhota",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_fild08d",
+    "name": "Arredores de Prontera (08)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild08c",
+    "name": "Arredores de Prontera (08)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild08b",
+    "name": "Arredores de Prontera (08)",
+    "type": "field"
+  },
+  {
+    "mapId": "prt_fild08a",
+    "name": "Arredores de Prontera (08)",
+    "type": "field"
+  },
+  {
+    "mapId": "iz_ac01_d",
+    "name": "Instituto do Aprendiz",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_ac02_d",
+    "name": "Instituto do Aprendiz",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_ac01_c",
+    "name": "Instituto do Aprendiz",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_ac02_c",
+    "name": "Instituto do Aprendiz",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_ac01_b",
+    "name": "Instituto do Aprendiz",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_ac02_b",
+    "name": "Instituto do Aprendiz",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_ac01_a",
+    "name": "Instituto do Aprendiz",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_ac02_a",
+    "name": "Instituto do Aprendiz",
+    "type": "other"
+  },
+  {
+    "mapId": "izlude_d",
+    "name": "Izlude",
+    "type": "town"
+  },
+  {
+    "mapId": "izlude_c",
+    "name": "Izlude",
+    "type": "town"
+  },
+  {
+    "mapId": "izlude_b",
+    "name": "Izlude",
+    "type": "town"
+  },
+  {
+    "mapId": "izlude_a",
+    "name": "Izlude",
+    "type": "town"
+  },
+  {
+    "mapId": "iz_ac01",
+    "name": "Instituto do Aprendiz",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_ac02",
+    "name": "Instituto do Aprendiz",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_ng01",
+    "name": "Escola Ninja",
+    "type": "other"
+  },
+  {
+    "mapId": "treasure_n1",
+    "name": "Navio Fantasma 01 - Pesadelo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "treasure_n2",
+    "name": "Navio Fantasma 02 - Pesadelo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "1@begi",
+    "name": "Vila dos Poring",
+    "type": "other"
+  },
+  {
+    "mapId": "lhz_dun_n",
+    "name": "Laboratório de Somatologia - Pesadelo",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "lhz_d_n2",
+    "name": "Laboratório de Somatologia - Pesadelo",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_evt_in",
+    "name": "Cabana",
+    "type": "other"
+  },
+  {
+    "mapId": "1@md_gef",
+    "name": "Túmulo do Monarca",
+    "type": "other"
+  },
+  {
+    "mapId": "1@md_pay",
+    "name": "Weekend Dungeon",
+    "type": "other"
+  },
+  {
+    "mapId": "lasa_sea",
+    "name": "Mar de Lasagna",
+    "type": "other"
+  },
+  {
+    "mapId": "1@infi",
+    "name": "Espaço Infinit",
+    "type": "other"
+  },
+  {
+    "mapId": "paramk",
+    "name": "Mercado Paralelo do Éden",
+    "type": "other"
+  },
+  {
+    "mapId": "1@gol1",
+    "name": "»ýÃ¼ ½ÇÇèµ¿",
+    "type": "other"
+  },
+  {
+    "mapId": "1@gol2",
+    "name": "½ÃÃ¼ º¸°ü¼Ò",
+    "type": "other"
+  },
+  {
+    "mapId": "ein_dun03",
+    "name": "Calabouço da Mina (3)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "odin_past",
+    "name": "Templo de Odin",
+    "type": "other"
+  },
+  {
+    "mapId": "abyss_04",
+    "name": "Caverna Subterrânea (4)",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_maison",
+    "name": "Jardim da Mansão Varmunt",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_in01",
+    "name": "Dentro da Mansão Varmunt",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_pw01",
+    "name": "Usina Mágica 1",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_pw03",
+    "name": "Usina Mágica 2",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_pw02",
+    "name": "Planta de Tratamento de Esgoto",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_bath",
+    "name": "Banho de Meditação Grande",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_2whs01",
+    "name": "Piso Superior do Depósito Tártaros",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_2whs02",
+    "name": "Piso Inferior do Depósito Tártaros",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_lost",
+    "name": "Fazenda Vale Perdido",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_lib",
+    "name": "Salão de Memórias da Biblioteca",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_go",
+    "name": "Campo de Batalha Fileira de Palmeiras",
+    "type": "other"
+  },
+  {
+    "mapId": "ba_chess",
+    "name": "Cheque-mate",
+    "type": "other"
+  },
+  {
+    "mapId": "1@lost",
+    "name": "Fazenda Esquecida",
+    "type": "other"
+  },
+  {
+    "mapId": "1@herbs",
+    "name": "Jardim de Flores Oculto",
+    "type": "other"
+  },
+  {
+    "mapId": "1@ghg",
+    "name": "Ortus Aqua",
+    "type": "other"
+  },
+  {
+    "mapId": "1@bamn",
+    "name": "Jardim ao Anoitecer",
+    "type": "other"
+  },
+  {
+    "mapId": "1@bamq",
+    "name": "Depósito de Aeroplano",
+    "type": "other"
+  },
+  {
+    "mapId": "1@ecl",
+    "name": "Eclage Interior",
+    "type": "other"
+  },
+  {
+    "mapId": "que_avan01",
+    "name": "Avant's Laboratory",
+    "type": "other"
+  },
+  {
+    "mapId": "que_house_s",
+    "name": "Weird house",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_gen01",
+    "name": "Geneticist Lab",
+    "type": "other"
+  },
+  {
+    "mapId": "s_atelier",
+    "name": "Shadow Workshop",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_arch01",
+    "name": "Waiting room for Arch Bishop Job Change",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_arch02",
+    "name": "Odin Temple",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_arch03",
+    "name": "Waiting room for Arch Bishop Job Change",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_guil01",
+    "name": "Secret Tavern",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_guil02",
+    "name": "Inside the Old Warehouse",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_guil03",
+    "name": "An isolated mansion",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_rang01",
+    "name": "Waiting room for Ranger Job Change",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_rang02",
+    "name": "Test room for Ranger Job Change",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_rune01",
+    "name": "Inside of Rune Knight Templar",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_rune02",
+    "name": "Test room for Rune Knight Job Change",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_rune03",
+    "name": "Test room for Rune Knight Job Change",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_war01",
+    "name": "Test room for Warlock Job Change",
+    "type": "other"
+  },
+  {
+    "mapId": "job3_war02",
+    "name": "Test room for Warlock Job Change",
+    "type": "other"
+  },
+  {
+    "mapId": "jupe_core2",
+    "name": "The center of Juperos",
+    "type": "other"
+  },
+  {
+    "mapId": "mosk_que",
+    "name": "Marozka's Cave",
+    "type": "other"
+  },
+  {
+    "mapId": "eque_qsch01",
+    "name": "Okolnir",
+    "type": "other"
+  },
+  {
+    "mapId": "auction_03",
+    "name": "Kafra Mail Annex",
+    "type": "other"
+  },
+  {
+    "mapId": "2007rwc_01",
+    "name": "2007 USRC Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "2007rwc_02",
+    "name": "2007 USRC Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "2007rwc_03",
+    "name": "2007 USRC Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "2007rwc_04",
+    "name": "2007 USRC Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "2007rwc_05",
+    "name": "2007 USRC Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "2007rwc_06",
+    "name": "2007 USRC Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "2007rwc_07",
+    "name": "2007 USRC Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "2007rwc_08",
+    "name": "2007 USRC Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "evt_xmas",
+    "name": "Toy Factory",
+    "type": "other"
+  },
+  {
+    "mapId": "evt_zombie",
+    "name": "Run_From_Zombies",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_dun00t",
+    "name": "Overlook Water Dungeon",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "iz_dun01t",
+    "name": "Overlook Water Dungeon",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "iz_dun02t",
+    "name": "Overlook Water Dungeon",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "iz_dun03t",
+    "name": "Overlook Water Dungeon",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "iz_dun04t",
+    "name": "Overlook Water Dungeon",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "que_god01t",
+    "name": "Quest Map",
+    "type": "other"
+  },
+  {
+    "mapId": "ayothaya_e",
+    "name": "Ayothaya Excavation Site",
+    "type": "town"
+  },
+  {
+    "mapId": "louyang_e",
+    "name": "Louyang Excavation Site",
+    "type": "town"
+  },
+  {
+    "mapId": "morocc_mem",
+    "name": "Memory of Morroc",
+    "type": "town"
+  },
+  {
+    "mapId": "payon_mem",
+    "name": "Memory of Payon",
+    "type": "town"
+  },
+  {
+    "mapId": "moc_paraup",
+    "name": "Inside of Paradise Group Building in Morroc 2nd floor",
+    "type": "other"
+  },
+  {
+    "mapId": "1@def01",
+    "name": "Wave Dungeon - forest",
+    "type": "other"
+  },
+  {
+    "mapId": "rockrdg2",
+    "name": "Kiwawa Desert",
+    "type": "other"
+  },
+  {
+    "mapId": "1@halo",
+    "name": "Halloween Festival",
+    "type": "other"
+  },
+  {
+    "mapId": "sp_rudus4",
+    "name": "Laboratory Waste Disposal Plant Rudus Floor 4",
+    "type": "other"
+  },
+  {
+    "mapId": "amicitia1",
+    "name": "Abandoned Lab Amicitia",
+    "type": "other"
+  },
+  {
+    "mapId": "amicitia2",
+    "name": "Abandoned Lab Amicitia",
+    "type": "other"
+  },
+  {
+    "mapId": "nif_dun01",
+    "name": "Nifflheim Dungeon Banquet Hall of the Dead",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "nif_dun02",
+    "name": "Nifflheim Dungeon Collapsed Opera House",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "grademk",
+    "name": "Grade-up Center",
+    "type": "other"
+  },
+  {
+    "mapId": "1@4sac",
+    "name": "Shadow Manor",
+    "type": "other"
+  },
+  {
+    "mapId": "1@4inq",
+    "name": "Monastery Basemen",
+    "type": "other"
+  },
+  {
+    "mapId": "1@4mst",
+    "name": "Juperos Core VT",
+    "type": "other"
+  },
+  {
+    "mapId": "1@4cdn",
+    "name": "Last Ordeal Phantom Cave",
+    "type": "other"
+  },
+  {
+    "mapId": "1@4igd",
+    "name": "Tourney Hall of Justice",
+    "type": "other"
+  },
+  {
+    "mapId": "1@4drk",
+    "name": "Dragon's Test",
+    "type": "other"
+  },
+  {
+    "mapId": "1@4win",
+    "name": "Deep Luluka Forest",
+    "type": "other"
+  },
+  {
+    "mapId": "1@4tro",
+    "name": "Kvasir's Chest",
+    "type": "other"
+  },
+  {
+    "mapId": "job4_tro",
+    "name": "Empty Kvasir's Chest",
+    "type": "other"
+  },
+  {
+    "mapId": "1@4mag",
+    "name": "Mana Spring",
+    "type": "other"
+  },
+  {
+    "mapId": "job4_mag",
+    "name": "Mana Spring",
+    "type": "other"
+  },
+  {
+    "mapId": "job4_bio",
+    "name": "Secret Flower Garden",
+    "type": "other"
+  },
+  {
+    "mapId": "1@gl_he",
+    "name": "Glastheim Challenge",
+    "type": "other"
+  },
+  {
+    "mapId": "1@gl_prq",
+    "name": "Fall of Glast Heim",
+    "type": "other"
+  },
+  {
+    "mapId": "vis_h01",
+    "name": "Corridor of Phantoms Floor 1",
+    "type": "other"
+  },
+  {
+    "mapId": "vis_h02",
+    "name": "Corridor of Phantoms Floor 2",
+    "type": "other"
+  },
+  {
+    "mapId": "vis_h03",
+    "name": "Corridor of Phantoms Floor 3",
+    "type": "other"
+  },
+  {
+    "mapId": "vis_h04",
+    "name": "Corridor of Phantoms Floor 4",
+    "type": "other"
+  },
+  {
+    "mapId": "2@gl_kh",
+    "name": "Old Chivalry Floor 2",
+    "type": "other"
+  },
+  {
+    "mapId": "1@gl_kh",
+    "name": "Old Chivalry Floor 1",
+    "type": "other"
+  },
+  {
+    "mapId": "x_prt",
+    "name": "Prontera of Parallell World",
+    "type": "other"
+  },
+  {
+    "mapId": "x_lhz",
+    "name": "Lighthalzen of Parallell World",
+    "type": "other"
+  },
+  {
+    "mapId": "x_ra",
+    "name": "Rachel of Parallell World",
+    "type": "other"
+  },
+  {
+    "mapId": "1@drdo",
+    "name": "Legendary Dorado",
+    "type": "other"
+  },
+  {
+    "mapId": "que_ng",
+    "name": "Unknown Area",
+    "type": "other"
+  },
+  {
+    "mapId": "1@crd",
+    "name": "Volcanic Island Korodo",
+    "type": "other"
+  },
+  {
+    "mapId": "1@tre",
+    "name": "Suspicious Shipwreck",
+    "type": "other"
+  },
+  {
+    "mapId": "1@xm_d2",
+    "name": "Horror Toy Factory",
+    "type": "other"
+  },
+  {
+    "mapId": "1@gl_k2",
+    "name": "Old Chivalry Floor 1",
+    "type": "other"
+  },
+  {
+    "mapId": "2@gl_k2",
+    "name": "Old Chivalry Floor 2",
+    "type": "other"
+  },
+  {
+    "mapId": "1@ffp",
+    "name": "Remnants Hideout",
+    "type": "other"
+  },
+  {
+    "mapId": "job_gun",
+    "name": "Shelter of Liberation",
+    "type": "other"
+  },
+  {
+    "mapId": "e_hugel",
+    "name": "Invaded Hugel",
+    "type": "other"
+  },
+  {
+    "mapId": "silk_lair",
+    "name": "Python's Lair",
+    "type": "other"
+  },
+  {
+    "mapId": "1@def02",
+    "name": "Wave Dungeon - Sky",
+    "type": "other"
+  },
+  {
+    "mapId": "1@def03",
+    "name": "Wave Dungeon - Lava",
+    "type": "other"
+  },
+  {
+    "mapId": "evt_bomb",
+    "name": "Event Labyrinth",
+    "type": "other"
+  },
+  {
+    "mapId": "te_aldecas01",
+    "name": "Leliah",
+    "type": "other"
+  },
+  {
+    "mapId": "te_aldecas02",
+    "name": "Pavianne",
+    "type": "other"
+  },
+  {
+    "mapId": "te_aldecas03",
+    "name": "Jasmine",
+    "type": "other"
+  },
+  {
+    "mapId": "te_aldecas04",
+    "name": "Roxie",
+    "type": "other"
+  },
+  {
+    "mapId": "te_aldecas05",
+    "name": "Curly Sue",
+    "type": "other"
+  },
+  {
+    "mapId": "guild_vs5",
+    "name": "Guild War Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "tra_fild",
+    "name": "Prontera Training Ground",
+    "type": "field"
+  },
+  {
+    "mapId": "1@ge_sn",
+    "name": "Geffen Night Arena",
+    "type": "other"
+  },
+  {
+    "mapId": "1@spa2",
+    "name": "Tomb of Remorse",
+    "type": "other"
+  },
+  {
+    "mapId": "1@mjo1",
+    "name": "Mjolnir Mountains Airplane Crash Site",
+    "type": "other"
+  },
+  {
+    "mapId": "1@mjo2",
+    "name": "Mjolnir Mountains Forgotten Cavity",
+    "type": "other"
+  },
+  {
+    "mapId": "1@thts",
+    "name": "Thanatos Tower",
+    "type": "other"
+  },
+  {
+    "mapId": "2@thts",
+    "name": "Angel's Warning",
+    "type": "other"
+  },
+  {
+    "mapId": "3@thts",
+    "name": "Memory of Hatred",
+    "type": "other"
+  },
+  {
+    "mapId": "4@thts",
+    "name": "Memory of Agony",
+    "type": "other"
+  },
+  {
+    "mapId": "5@thts",
+    "name": "Memory of Sorrow",
+    "type": "other"
+  },
+  {
+    "mapId": "6@thts",
+    "name": "Memory of Despair",
+    "type": "other"
+  },
+  {
+    "mapId": "7@thts",
+    "name": "Memory of Anger",
+    "type": "other"
+  },
+  {
+    "mapId": "8@thts",
+    "name": "Thanatos Tower",
+    "type": "other"
+  },
+  {
+    "mapId": "wolfvill",
+    "name": "Gray Wolf Village",
+    "type": "other"
+  },
+  {
+    "mapId": "gw_fild01",
+    "name": "Gray Wolf Forest",
+    "type": "field"
+  },
+  {
+    "mapId": "gw_fild02",
+    "name": "Gray Wolf Forest",
+    "type": "field"
+  },
+  {
+    "mapId": "oz_dun01",
+    "name": "Oz Labyrinth 1F",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "oz_dun02",
+    "name": "Oz Labyrinth 2F",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "1@oz",
+    "name": "Oz Labyrinth",
+    "type": "other"
+  },
+  {
+    "mapId": "que_thr",
+    "name": "Inside Thor Volcano",
+    "type": "other"
+  },
+  {
+    "mapId": "1@tcamp",
+    "name": "Thor Volcano Military Base",
+    "type": "other"
+  },
+  {
+    "mapId": "1@nyr",
+    "name": "Sanctuary Sessrumnir Garden",
+    "type": "other"
+  },
+  {
+    "mapId": "2@nyr",
+    "name": "Sanctuary Sessrumnir Heart Storage",
+    "type": "other"
+  },
+  {
+    "mapId": "1@adv",
+    "name": "High Priest Villa",
+    "type": "other"
+  },
+  {
+    "mapId": "1@advs",
+    "name": "Villa of Deception",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_d04_i",
+    "name": "Illusion of Underwater 1F",
+    "type": "other"
+  },
+  {
+    "mapId": "iz_d05_i",
+    "name": "Illusion of Underwater 2F",
+    "type": "other"
+  },
+  {
+    "mapId": "ant_d02_i",
+    "name": "Garden of Awareness",
+    "type": "other"
+  },
+  {
+    "mapId": "1@exnw",
+    "name": "Clana Nemieri",
+    "type": "other"
+  },
+  {
+    "mapId": "1@exsr",
+    "name": "Inner World",
+    "type": "other"
+  },
+  {
+    "mapId": "1@exds",
+    "name": "The Foot of an Unknown Mountain",
+    "type": "other"
+  },
+  {
+    "mapId": "2@exds",
+    "name": "The Foot of an Unknown Mountain",
+    "type": "other"
+  },
+  {
+    "mapId": "1@exse",
+    "name": "Eunha Celestial Branch Office",
+    "type": "other"
+  },
+  {
+    "mapId": "1@exhn",
+    "name": "Novice's Memories",
+    "type": "other"
+  },
+  {
+    "mapId": "1@exsh",
+    "name": "Deep Forest",
+    "type": "other"
+  },
+  {
+    "mapId": "clock_01",
+    "name": "Clock Tower Unknown Basement",
+    "type": "other"
+  },
+  {
+    "mapId": "bl_grass",
+    "name": "Biosphere Environment - Grass",
+    "type": "other"
+  },
+  {
+    "mapId": "bl_lava",
+    "name": "Biosphere Environment - Fire",
+    "type": "other"
+  },
+  {
+    "mapId": "bl_ice",
+    "name": "Biosphere Environment - Ice",
+    "type": "other"
+  },
+  {
+    "mapId": "bl_death",
+    "name": "Biosphere Environment - Death",
+    "type": "other"
+  },
+  {
+    "mapId": "1@ch_t",
+    "name": "Constellation Tower",
+    "type": "other"
+  },
+  {
+    "mapId": "2@ch_t",
+    "name": "Constellation Tower",
+    "type": "other"
+  },
+  {
+    "mapId": "3@ch_t",
+    "name": "Constellation Tower",
+    "type": "other"
+  },
+  {
+    "mapId": "1@ch_u",
+    "name": "Sunken Tower",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_mk",
+    "name": "Prontera Market",
+    "type": "other"
+  },
+  {
+    "mapId": "gl_cas01_",
+    "name": "Glast Heim (1)",
+    "type": "guild"
+  },
+  {
+    "mapId": "com_d02_i",
+    "name": "Ilusão de Luanda",
+    "type": "other"
+  },
+  {
+    "mapId": "1@jtb",
+    "name": "Sonho Sombrio",
+    "type": "other"
+  },
+  {
+    "mapId": "1@glast",
+    "name": "Ruínas Antigas",
+    "type": "other"
+  },
+  {
+    "mapId": "1@air1",
+    "name": "Aeroplano",
+    "type": "other"
+  },
+  {
+    "mapId": "1@air2",
+    "name": "Aeroplano",
+    "type": "other"
+  },
+  {
+    "mapId": "1@slw",
+    "name": "Laboratório Werner",
+    "type": "other"
+  },
+  {
+    "mapId": "1@swat",
+    "name": "Base Militar",
+    "type": "other"
+  },
+  {
+    "mapId": "que_swat",
+    "name": "Base Militar",
+    "type": "other"
+  },
+  {
+    "mapId": "slabw01",
+    "name": "Laboratório Clandestino",
+    "type": "other"
+  },
+  {
+    "mapId": "rebel_in",
+    "name": "Clana Nemieri",
+    "type": "other"
+  },
+  {
+    "mapId": "prt_mz03_i",
+    "name": "Ilusão do Labirinto",
+    "type": "other"
+  },
+  {
+    "mapId": "har_in01",
+    "name": "Interior de Rockridge",
+    "type": "other"
+  },
+  {
+    "mapId": "harboro1",
+    "name": "Rockridge",
+    "type": "other"
+  },
+  {
+    "mapId": "harboro2",
+    "name": "Subterrâneo de Rockridge",
+    "type": "other"
+  },
+  {
+    "mapId": "rockmi1",
+    "name": "Mina de Rockridge (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "rockmi2",
+    "name": "Mina de Rockridge (2)",
+    "type": "other"
+  },
+  {
+    "mapId": "rockrdg1",
+    "name": "Deserto Kiwawa (1)",
+    "type": "other"
+  },
+  {
+    "mapId": "mag_dun03",
+    "name": "Caverna de Magma (3)",
+    "type": "dungeon"
+  },
+  {
+    "mapId": "star_frst",
+    "name": "Bosque Meteoro",
+    "type": "other"
+  },
+  {
+    "mapId": "star_in",
+    "name": "Interior do Bosque Meteoro",
+    "type": "other"
+  },
+  {
+    "mapId": "1@soul",
+    "name": "Caminho da alma",
+    "type": "other"
+  }
+]

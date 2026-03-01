@@ -1024,7 +1024,7 @@ export function applyComboBonus(
   const itemRefines = new Map<number, number>();
 
   for (const [slotKey, item] of Object.entries(equipment)) {
-    if (!item || item._blockedBy || slotKey.startsWith("visual_")) continue;
+    if (!item || item._blockedBy) continue;
     equippedIds.add(Number(item.id));
     itemRefines.set(Number(item.id), item.refine || 0);
 
@@ -1172,39 +1172,42 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
     if (!item) continue;
     // Skip secondary slots of multi-slot items (bonuses already counted from primary slot)
     if (item._blockedBy) continue;
-    // Skip visual/costume slots (appearance only, no stat bonuses)
-    if (slotKey.startsWith("visual_")) continue;
 
-    // Base item stats
-    if (item.attack) weaponAtk += item.attack;
-    if (item.magicAttack) weaponMatk += item.magicAttack;
-    if (item.defense) equipDef += item.defense;
-    if (item.mdef) equipMdef += item.mdef;
+    const isVisual = slotKey.startsWith("visual_");
 
-    // Track main weapon (right_hand) for damage calculator
-    if (slotKey === "right_hand" && item.type === "Weapon") {
-      mainWeaponAtk = item.attack || 0;
-      mainWeaponMatk = item.magicAttack || 0;
-      mainWeaponLevel = item.weaponLevel || 1;
-      mainWeaponRefine = item.refine || 0;
-      mainWeaponSubType = item.subType;
-      mainWeaponWeight = item.weight || 0;
+    // Visual/costume slots: no base stats or refine, but enchant scripts DO apply
+    if (!isVisual) {
+      // Base item stats
+      if (item.attack) weaponAtk += item.attack;
+      if (item.magicAttack) weaponMatk += item.magicAttack;
+      if (item.defense) equipDef += item.defense;
+      if (item.mdef) equipMdef += item.mdef;
+
+      // Track main weapon (right_hand) for damage calculator
+      if (slotKey === "right_hand" && item.type === "Weapon") {
+        mainWeaponAtk = item.attack || 0;
+        mainWeaponMatk = item.magicAttack || 0;
+        mainWeaponLevel = item.weaponLevel || 1;
+        mainWeaponRefine = item.refine || 0;
+        mainWeaponSubType = item.subType;
+        mainWeaponWeight = item.weight || 0;
+      }
+
+      // Refine bonuses
+      const rb = getRefineBonus(item);
+      weaponAtk += rb.atk;
+      weaponMatk += rb.matk;
+      equipDef += rb.def;
     }
 
-    // Refine bonuses
-    const rb = getRefineBonus(item);
-    weaponAtk += rb.atk;
-    weaponMatk += rb.matk;
-    equipDef += rb.def;
-
-    // Script bonuses (item + cards + enchantments)
+    // Script bonuses (item + cards + enchantments) — applies to ALL slots including visual
     const scripts = [
-      item.script,
+      ...(isVisual ? [] : [item.script]),   // visual item base script is cosmetic only
       ...item.cards.filter(Boolean).map((c) => c!.script),
       ...(item.enchants || []).filter(Boolean).map((e) => e!.script),
     ];
     for (const scr of scripts) {
-      const sb = parseScriptBonuses(scr, item.refine, baseLevel, baseStats, mainWeaponLevel); // Pass weaponLevel for card scripts that rely on it (e.g., Alma de Eremes)
+      const sb = parseScriptBonuses(scr, item.refine, baseLevel, baseStats, mainWeaponLevel);
       mergeBonus(totalBonus, sb);
     }
   }
