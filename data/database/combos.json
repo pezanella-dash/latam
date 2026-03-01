@@ -919,10 +919,7 @@
         "minCombinedRefine": 18,
         "bonuses": {
           "addEle": {
-            "Ele_Water": 15,
-            "Ele_Wind": 15,
-            "Ele_Earth": 15,
-            "Ele_Fire": 15
+            "Ele_All": 15
           }
         }
       },
@@ -2650,7 +2647,7 @@
     ],
     "baseBonuses": {
       "addEle": {
-        "Ele_Water": 30
+        "Ele_All": 30
       }
     },
     "refineBonuses": []
@@ -7834,7 +7831,7 @@
         "condition": "A cada refino do escudo:",
         "bonuses": {
           "addEle": {
-            "Ele_Earth": 1
+            "Ele_All": 1
           }
         }
       }
@@ -8092,7 +8089,11 @@
       20902,
       22168
     ],
-    "baseBonuses": {},
+    "baseBonuses": {
+      "magicAddEle": {
+        "Ele_All": 7
+      }
+    },
     "refineBonuses": [
       {
         "condition": "Botas e Manto no refino +9 ou mais:",
@@ -8261,7 +8262,11 @@
       20934,
       22197
     ],
-    "baseBonuses": {},
+    "baseBonuses": {
+      "magicAddEle": {
+        "Ele_All": 10
+      }
+    },
     "refineBonuses": []
   },
   {
@@ -11640,7 +11645,11 @@
       {
         "condition": "Soma dos refinos 20 ou mais:",
         "minCombinedRefine": 20,
-        "bonuses": {}
+        "bonuses": {
+          "addEle": {
+            "Ele_All": 12
+          }
+        }
       }
     ]
   },
@@ -11669,7 +11678,11 @@
       {
         "condition": "Soma dos refinos 20 ou mais:",
         "minCombinedRefine": 20,
-        "bonuses": {}
+        "bonuses": {
+          "addEle": {
+            "Ele_All": 12
+          }
+        }
       }
     ]
   },
@@ -13520,7 +13533,7 @@
     "baseBonuses": {
       "atk": 15,
       "addEle": {
-        "Ele_Dark": 20
+        "Ele_All": 20
       }
     },
     "refineBonuses": []
@@ -13685,7 +13698,7 @@
     ],
     "baseBonuses": {
       "addEle": {
-        "Ele_Earth": 8
+        "Ele_All": 8
       }
     },
     "refineBonuses": []
@@ -13817,7 +13830,7 @@
     ],
     "baseBonuses": {
       "addEle": {
-        "Ele_Water": 8
+        "Ele_All": 8
       }
     },
     "refineBonuses": []
@@ -13837,7 +13850,7 @@
     ],
     "baseBonuses": {
       "addEle": {
-        "Ele_Fire": 8
+        "Ele_All": 8
       }
     },
     "refineBonuses": []
@@ -16926,7 +16939,11 @@
       29590,
       4876
     ],
-    "baseBonuses": {},
+    "baseBonuses": {
+      "magicAddEle": {
+        "Ele_All": 15
+      }
+    },
     "refineBonuses": []
   },
   {
@@ -18841,7 +18858,11 @@
       401250,
       420752
     ],
-    "baseBonuses": {},
+    "baseBonuses": {
+      "magicAddEle": {
+        "Ele_All": 5
+      }
+    },
     "refineBonuses": []
   },
   {
@@ -18966,6 +18987,9 @@
       1669
     ],
     "baseBonuses": {
+      "magicAddEle": {
+        "Ele_All": 5
+      },
       "skillAtk": {
         "AB_JUDEX": 5,
         "AB_ADORAMUS": 5
@@ -19442,7 +19466,10 @@
         "condition": "Soma dos refinos do conjunto 18 ou mais:",
         "minCombinedRefine": 18,
         "bonuses": {
-          "delayrate": -7
+          "delayrate": -7,
+          "magicAddEle": {
+            "Ele_All": 10
+          }
         }
       },
       {
@@ -19509,7 +19536,11 @@
       {
         "condition": "Armadura com refino +9 ou mais:",
         "minCombinedRefine": 9,
-        "bonuses": {}
+        "bonuses": {
+          "magicAddEle": {
+            "Ele_All": 5
+          }
+        }
       },
       {
         "condition": "Armadura com refino +11 ou mais:",
@@ -24054,7 +24085,7 @@
         "minCombinedRefine": 22,
         "bonuses": {
           "addEle": {
-            "Ele_Fire": 10
+            "Ele_All": 10
           }
         }
       }
@@ -24138,7 +24169,11 @@
       {
         "condition": "Soma dos refinos +23 ou mais:",
         "minCombinedRefine": 23,
-        "bonuses": {}
+        "bonuses": {
+          "magicAddEle": {
+            "Ele_All": 20
+          }
+        }
       }
     ]
   },
@@ -24286,7 +24321,11 @@
       {
         "condition": "Soma dos refinos 18 ou mais:",
         "minCombinedRefine": 18,
-        "bonuses": {}
+        "bonuses": {
+          "addEle": {
+            "Ele_All": 10
+          }
+        }
       },
       {
         "condition": "Soma dos refinos 23 ou mais:",
@@ -24315,12 +24354,20 @@
       {
         "condition": "Soma dos refinos 18 ou mais:",
         "minCombinedRefine": 18,
-        "bonuses": {}
+        "bonuses": {
+          "magicAddEle": {
+            "Ele_All": 10
+          }
+        }
       },
       {
         "condition": "Soma dos refinos 23 ou mais:",
         "minCombinedRefine": 23,
-        "bonuses": {}
+        "bonuses": {
+          "magicAddEle": {
+            "Ele_All": 1
+          }
+        }
       }
     ]
   },
@@ -24344,7 +24391,11 @@
       {
         "condition": "Soma dos refinos 18 ou mais:",
         "minCombinedRefine": 18,
-        "bonuses": {}
+        "bonuses": {
+          "addEle": {
+            "Ele_All": 10
+          }
+        }
       },
       {
         "condition": "Soma dos refinos 23 ou mais:",
@@ -24446,7 +24497,11 @@
       {
         "condition": "Espada com refino +10 ou mais:",
         "minCombinedRefine": 10,
-        "bonuses": {}
+        "bonuses": {
+          "magicAddEle": {
+            "Ele_All": 10
+          }
+        }
       }
     ]
   },
@@ -24645,7 +24700,11 @@
       {
         "condition": "Maça com refino +10 ou mais:",
         "minCombinedRefine": 10,
-        "bonuses": {}
+        "bonuses": {
+          "magicAddEle": {
+            "Ele_All": 10
+          }
+        }
       }
     ]
   },
@@ -24943,7 +25002,11 @@
       22059,
       20756
     ],
-    "baseBonuses": {},
+    "baseBonuses": {
+      "magicAddEle": {
+        "Ele_All": 2
+      }
+    },
     "refineBonuses": []
   },
   {
@@ -24996,7 +25059,11 @@
       480083,
       470070
     ],
-    "baseBonuses": {},
+    "baseBonuses": {
+      "magicAddEle": {
+        "Ele_All": 5
+      }
+    },
     "refineBonuses": []
   },
   {
@@ -25210,7 +25277,11 @@
       490159,
       19241
     ],
-    "baseBonuses": {},
+    "baseBonuses": {
+      "magicAddEle": {
+        "Ele_All": 5
+      }
+    },
     "refineBonuses": [
       {
         "condition": "Capa com refino +7 ou mais:",
@@ -25220,7 +25291,11 @@
       {
         "condition": "Capa com refino +9 ou mais:",
         "minCombinedRefine": 9,
-        "bonuses": {}
+        "bonuses": {
+          "magicAddEle": {
+            "Ele_All": 5
+          }
+        }
       }
     ]
   },
@@ -25466,6 +25541,9 @@
       2027
     ],
     "baseBonuses": {
+      "magicAddEle": {
+        "Ele_All": 2
+      },
       "skillAtk": {
         "_PT_Tetra Vortex": 10
       }
@@ -25810,7 +25888,11 @@
       {
         "condition": "Soma dos refinos do conjunto 18 ou mais:",
         "minCombinedRefine": 18,
-        "bonuses": {}
+        "bonuses": {
+          "magicAddEle": {
+            "Ele_All": 15
+          }
+        }
       },
       {
         "condition": "Soma dos refinos do conjunto 22 ou mais:",
@@ -26608,7 +26690,7 @@
         "minCombinedRefine": 22,
         "bonuses": {
           "addEle": {
-            "Ele_Water": 15
+            "Ele_All": 15
           }
         }
       }
@@ -26818,7 +26900,7 @@
         "minCombinedRefine": 22,
         "bonuses": {
           "addEle": {
-            "Ele_Water": 15
+            "Ele_All": 15
           }
         }
       }

@@ -127,7 +127,7 @@ DATABASE_URL="postgresql://postgres:password@localhost:5432/ro_latam"
 ANTHROPIC_API_KEY="sk-ant-..."
 DIVINE_PRIDE_API_KEY="your-key-from-divine-pride-forum-profile"
 NEXTAUTH_SECRET="..."
-NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_URL="http://localhost:3003"
 ```
 
 ## Data Freshness Strategy

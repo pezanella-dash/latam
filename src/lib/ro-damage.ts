@@ -19,16 +19,18 @@ export interface DamageInput {
   weaponLevel: number;     // 1-5 (0 = no weapon / bare fist)
   weaponRefine: number;    // +0 to +20
   weaponSubType?: string;  // Dagger, 1hSword, 2hSword, etc.
+  weaponWeight?: number;   // weapon weight (for Spiral Pierce formula)
   weaponElement: string;   // element of attack (weapon element or skill override)
   aspd: number;            // final ASPD for DPS calc
   // HP/SP — needed for Dragon Breath, Tiger Cannon, Gates of Hell
   maxHp: number;
   currentHp: number;       // Dragon Breath uses currentHP, Gates of Hell uses (max-current)
   maxSp: number;
-  currentSp: number;       // Gates of Hell uses currentSP
+  currentSp?: number;       // Gates of Hell uses currentSP
   skill: SkillFormula;
   skillLevel: number;
   monster: MonsterTarget;
+  activeBuffs?: string[];
 }
 
 export interface MonsterTarget {
@@ -95,25 +97,25 @@ const ELE_NAMES = [
 // prettier-ignore
 const ELEMENT_TABLE: number[][][] = [
   // Neutral attacking
-  [[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100],[ 90, 70, 50,  0],[100,100,100,100]],
+  [[100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [90, 70, 50, 0], [100, 100, 100, 100]],
   // Water attacking
-  [[100,100,100,100],[ 25,  0,  0,  0],[100,100,100,100],[150,175,200,200],[ 90, 80, 70, 60],[150,150,125,125],[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100]],
+  [[100, 100, 100, 100], [25, 0, 0, 0], [100, 100, 100, 100], [150, 175, 200, 200], [90, 80, 70, 60], [150, 150, 125, 125], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100]],
   // Earth attacking
-  [[100,100,100,100],[100,100,100,100],[ 25,  0,  0,  0],[ 90, 80, 70, 60],[150,175,200,200],[150,150,125,125],[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100]],
+  [[100, 100, 100, 100], [100, 100, 100, 100], [25, 0, 0, 0], [90, 80, 70, 60], [150, 175, 200, 200], [150, 150, 125, 125], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100]],
   // Fire attacking
-  [[100,100,100,100],[ 90, 80, 70, 60],[150,175,200,200],[ 25,  0,  0,  0],[100,100,100,100],[150,150,125,125],[100,100,100,100],[100,100,100,100],[100,100,100,100],[125,150,175,200]],
+  [[100, 100, 100, 100], [90, 80, 70, 60], [150, 175, 200, 200], [25, 0, 0, 0], [100, 100, 100, 100], [150, 150, 125, 125], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [125, 150, 175, 200]],
   // Wind attacking
-  [[100,100,100,100],[150,175,200,200],[ 90, 80, 70, 60],[100,100,100,100],[ 25,  0,  0,  0],[150,150,125,125],[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100]],
+  [[100, 100, 100, 100], [150, 175, 200, 200], [90, 80, 70, 60], [100, 100, 100, 100], [25, 0, 0, 0], [150, 150, 125, 125], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100]],
   // Poison attacking
-  [[100,100,100,100],[150,150,125,125],[150,150,125,125],[150,150,125,125],[150,150,125,125],[  0,  0,  0,  0],[ 75, 75, 50, 50],[ 75, 75, 50, 50],[ 75, 75, 50, 50],[ 75, 50, 25,  0]],
+  [[100, 100, 100, 100], [150, 150, 125, 125], [150, 150, 125, 125], [150, 150, 125, 125], [150, 150, 125, 125], [0, 0, 0, 0], [75, 75, 50, 50], [75, 75, 50, 50], [75, 75, 50, 50], [75, 50, 25, 0]],
   // Holy attacking
-  [[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100],[ 75, 75, 50, 50],[  0,  0,  0,  0],[125,150,175,200],[100,100,100,100],[125,150,175,200]],
+  [[100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [75, 75, 50, 50], [0, 0, 0, 0], [125, 150, 175, 200], [100, 100, 100, 100], [125, 150, 175, 200]],
   // Dark/Shadow attacking
-  [[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100],[ 75, 75, 50, 50],[125,150,175,200],[  0,  0,  0,  0],[100,100,100,100],[  0,  0,  0,  0]],
+  [[100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [75, 75, 50, 50], [125, 150, 175, 200], [0, 0, 0, 0], [100, 100, 100, 100], [0, 0, 0, 0]],
   // Ghost attacking
-  [[ 90, 70, 50,  0],[100,100,100,100],[100,100,100,100],[100,100,100,100],[100,100,100,100],[ 75, 75, 50, 50],[ 90, 80, 70, 60],[ 90, 80, 70, 60],[125,150,175,200],[100,125,150,175]],
+  [[90, 70, 50, 0], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [75, 75, 50, 50], [90, 80, 70, 60], [90, 80, 70, 60], [125, 150, 175, 200], [100, 125, 150, 175]],
   // Undead attacking
-  [[100,100,100,100],[100,100,100,100],[100,100,100,100],[ 90, 80, 70, 60],[100,100,100,100],[ 75, 50, 25,  0],[125,150,175,200],[  0,  0,  0,  0],[100,125,150,175],[  0,  0,  0,  0]],
+  [[100, 100, 100, 100], [100, 100, 100, 100], [100, 100, 100, 100], [90, 80, 70, 60], [100, 100, 100, 100], [75, 50, 25, 0], [125, 150, 175, 200], [0, 0, 0, 0], [100, 125, 150, 175], [0, 0, 0, 0]],
 ];
 
 function getElementMultiplier(atkElement: string, defElement: string, defLevel: number): number {
@@ -127,31 +129,31 @@ function getElementMultiplier(atkElement: string, defElement: string, defLevel: 
 // ─── Size Penalty (weapon type → target size) ───────────────────────
 
 const SIZE_PENALTY: Record<string, [number, number, number]> = {
-  Fist:     [100, 100,  75],
-  Dagger:   [100,  75,  50],
-  "1hSword":[75, 100,  75],
-  "2hSword":[75,  75, 100],
-  "1hSpear":[75,  75, 100],
-  "2hSpear":[75,  75, 100],
-  "1hAxe":  [50,  75, 100],
-  "2hAxe":  [50,  75, 100],
-  Mace:     [75, 100, 100],
+  Fist: [100, 100, 75],
+  Dagger: [100, 75, 50],
+  "1hSword": [75, 100, 75],
+  "2hSword": [75, 75, 100],
+  "1hSpear": [75, 75, 100],
+  "2hSpear": [75, 75, 100],
+  "1hAxe": [50, 75, 100],
+  "2hAxe": [50, 75, 100],
+  Mace: [75, 100, 100],
   "2hMace": [100, 100, 100],
-  Staff:    [100, 100, 100],
-  "2hStaff":[100, 100, 100],
-  Knuckle:  [100, 100,  75],
-  Musical:  [75, 100,  75],
-  Whip:     [75, 100,  50],
-  Book:     [100, 100,  50],
-  Katar:    [75, 100,  75],
-  Bow:      [100, 100,  75],
+  Staff: [100, 100, 100],
+  "2hStaff": [100, 100, 100],
+  Knuckle: [100, 100, 75],
+  Musical: [75, 100, 75],
+  Whip: [75, 100, 50],
+  Book: [100, 100, 50],
+  Katar: [75, 100, 75],
+  Bow: [100, 100, 75],
   Revolver: [100, 100, 100],
-  Rifle:    [100, 100, 100],
-  Gatling:  [100, 100, 100],
-  Shotgun:  [100, 100, 100],
-  Grenade:  [100, 100, 100],
-  Huuma:    [75, 100, 100],
-  Shuriken: [75,  75, 100],
+  Rifle: [100, 100, 100],
+  Gatling: [100, 100, 100],
+  Shotgun: [100, 100, 100],
+  Grenade: [100, 100, 100],
+  Huuma: [75, 100, 100],
+  Shuriken: [75, 75, 100],
 };
 
 function getSizePenalty(weaponType: string | undefined, targetSize: string): number {
@@ -167,11 +169,11 @@ function getSizePenalty(weaponType: string | undefined, targetSize: string): num
 // ─── Refine ATK Bonus ───────────────────────────────────────────────
 
 const REFINE_TABLE: Record<number, Record<number, { bonus: number; over: number; high: number }>> = {
-  1: { 1:{bonus:2,over:0,high:0},2:{bonus:4,over:0,high:0},3:{bonus:6,over:0,high:0},4:{bonus:8,over:0,high:0},5:{bonus:10,over:0,high:0},6:{bonus:12,over:0,high:0},7:{bonus:14,over:0,high:0},8:{bonus:16,over:2,high:0},9:{bonus:18,over:4,high:0},10:{bonus:20,over:6,high:0},11:{bonus:22,over:8,high:0},12:{bonus:24,over:10,high:0},13:{bonus:26,over:12,high:0},14:{bonus:28,over:14,high:0},15:{bonus:30,over:16,high:0},16:{bonus:32,over:18,high:16},17:{bonus:34,over:20,high:17},18:{bonus:36,over:22,high:18},19:{bonus:38,over:24,high:19},20:{bonus:40,over:26,high:20} },
-  2: { 1:{bonus:3,over:0,high:0},2:{bonus:6,over:0,high:0},3:{bonus:9,over:0,high:0},4:{bonus:12,over:0,high:0},5:{bonus:15,over:0,high:0},6:{bonus:18,over:0,high:0},7:{bonus:21,over:5,high:0},8:{bonus:24,over:10,high:0},9:{bonus:27,over:15,high:0},10:{bonus:30,over:20,high:0},11:{bonus:33,over:25,high:0},12:{bonus:36,over:30,high:0},13:{bonus:39,over:35,high:0},14:{bonus:42,over:40,high:0},15:{bonus:45,over:45,high:0},16:{bonus:48,over:50,high:32},17:{bonus:51,over:55,high:34},18:{bonus:54,over:60,high:36},19:{bonus:57,over:65,high:38},20:{bonus:60,over:70,high:40} },
-  3: { 1:{bonus:5,over:0,high:0},2:{bonus:10,over:0,high:0},3:{bonus:15,over:0,high:0},4:{bonus:20,over:0,high:0},5:{bonus:25,over:0,high:0},6:{bonus:30,over:8,high:0},7:{bonus:35,over:16,high:0},8:{bonus:40,over:24,high:0},9:{bonus:45,over:32,high:0},10:{bonus:50,over:40,high:0},11:{bonus:55,over:48,high:0},12:{bonus:60,over:56,high:0},13:{bonus:65,over:64,high:0},14:{bonus:70,over:72,high:0},15:{bonus:75,over:80,high:0},16:{bonus:80,over:88,high:32},17:{bonus:85,over:96,high:34},18:{bonus:90,over:104,high:36},19:{bonus:95,over:112,high:38},20:{bonus:100,over:120,high:40} },
-  4: { 1:{bonus:7,over:0,high:0},2:{bonus:14,over:0,high:0},3:{bonus:21,over:0,high:0},4:{bonus:28,over:0,high:0},5:{bonus:35,over:14,high:0},6:{bonus:42,over:28,high:0},7:{bonus:49,over:42,high:0},8:{bonus:56,over:56,high:0},9:{bonus:63,over:70,high:0},10:{bonus:70,over:84,high:0},11:{bonus:77,over:98,high:0},12:{bonus:84,over:112,high:0},13:{bonus:91,over:126,high:0},14:{bonus:98,over:140,high:0},15:{bonus:105,over:154,high:0},16:{bonus:112,over:168,high:48},17:{bonus:119,over:182,high:51},18:{bonus:126,over:196,high:54},19:{bonus:133,over:210,high:57},20:{bonus:140,over:224,high:60} },
-  5: { 1:{bonus:8,over:0,high:0},2:{bonus:16,over:0,high:0},3:{bonus:24,over:0,high:0},4:{bonus:32,over:0,high:0},5:{bonus:40,over:0,high:0},6:{bonus:48,over:0,high:0},7:{bonus:56,over:0,high:0},8:{bonus:64,over:0,high:0},9:{bonus:72,over:0,high:0},10:{bonus:80,over:0,high:0},11:{bonus:88,over:0,high:0},12:{bonus:96,over:0,high:0},13:{bonus:104,over:0,high:0},14:{bonus:112,over:0,high:0},15:{bonus:120,over:0,high:0},16:{bonus:128,over:0,high:0},17:{bonus:136,over:0,high:0},18:{bonus:144,over:0,high:0},19:{bonus:152,over:0,high:0},20:{bonus:160,over:0,high:0} },
+  1: { 1: { bonus: 2, over: 0, high: 0 }, 2: { bonus: 4, over: 0, high: 0 }, 3: { bonus: 6, over: 0, high: 0 }, 4: { bonus: 8, over: 0, high: 0 }, 5: { bonus: 10, over: 0, high: 0 }, 6: { bonus: 12, over: 0, high: 0 }, 7: { bonus: 14, over: 0, high: 0 }, 8: { bonus: 16, over: 2, high: 0 }, 9: { bonus: 18, over: 4, high: 0 }, 10: { bonus: 20, over: 6, high: 0 }, 11: { bonus: 22, over: 8, high: 0 }, 12: { bonus: 24, over: 10, high: 0 }, 13: { bonus: 26, over: 12, high: 0 }, 14: { bonus: 28, over: 14, high: 0 }, 15: { bonus: 30, over: 16, high: 0 }, 16: { bonus: 32, over: 18, high: 16 }, 17: { bonus: 34, over: 20, high: 17 }, 18: { bonus: 36, over: 22, high: 18 }, 19: { bonus: 38, over: 24, high: 19 }, 20: { bonus: 40, over: 26, high: 20 } },
+  2: { 1: { bonus: 3, over: 0, high: 0 }, 2: { bonus: 6, over: 0, high: 0 }, 3: { bonus: 9, over: 0, high: 0 }, 4: { bonus: 12, over: 0, high: 0 }, 5: { bonus: 15, over: 0, high: 0 }, 6: { bonus: 18, over: 0, high: 0 }, 7: { bonus: 21, over: 5, high: 0 }, 8: { bonus: 24, over: 10, high: 0 }, 9: { bonus: 27, over: 15, high: 0 }, 10: { bonus: 30, over: 20, high: 0 }, 11: { bonus: 33, over: 25, high: 0 }, 12: { bonus: 36, over: 30, high: 0 }, 13: { bonus: 39, over: 35, high: 0 }, 14: { bonus: 42, over: 40, high: 0 }, 15: { bonus: 45, over: 45, high: 0 }, 16: { bonus: 48, over: 50, high: 32 }, 17: { bonus: 51, over: 55, high: 34 }, 18: { bonus: 54, over: 60, high: 36 }, 19: { bonus: 57, over: 65, high: 38 }, 20: { bonus: 60, over: 70, high: 40 } },
+  3: { 1: { bonus: 5, over: 0, high: 0 }, 2: { bonus: 10, over: 0, high: 0 }, 3: { bonus: 15, over: 0, high: 0 }, 4: { bonus: 20, over: 0, high: 0 }, 5: { bonus: 25, over: 0, high: 0 }, 6: { bonus: 30, over: 8, high: 0 }, 7: { bonus: 35, over: 16, high: 0 }, 8: { bonus: 40, over: 24, high: 0 }, 9: { bonus: 45, over: 32, high: 0 }, 10: { bonus: 50, over: 40, high: 0 }, 11: { bonus: 55, over: 48, high: 0 }, 12: { bonus: 60, over: 56, high: 0 }, 13: { bonus: 65, over: 64, high: 0 }, 14: { bonus: 70, over: 72, high: 0 }, 15: { bonus: 75, over: 80, high: 0 }, 16: { bonus: 80, over: 88, high: 32 }, 17: { bonus: 85, over: 96, high: 34 }, 18: { bonus: 90, over: 104, high: 36 }, 19: { bonus: 95, over: 112, high: 38 }, 20: { bonus: 100, over: 120, high: 40 } },
+  4: { 1: { bonus: 7, over: 0, high: 0 }, 2: { bonus: 14, over: 0, high: 0 }, 3: { bonus: 21, over: 0, high: 0 }, 4: { bonus: 28, over: 0, high: 0 }, 5: { bonus: 35, over: 14, high: 0 }, 6: { bonus: 42, over: 28, high: 0 }, 7: { bonus: 49, over: 42, high: 0 }, 8: { bonus: 56, over: 56, high: 0 }, 9: { bonus: 63, over: 70, high: 0 }, 10: { bonus: 70, over: 84, high: 0 }, 11: { bonus: 77, over: 98, high: 0 }, 12: { bonus: 84, over: 112, high: 0 }, 13: { bonus: 91, over: 126, high: 0 }, 14: { bonus: 98, over: 140, high: 0 }, 15: { bonus: 105, over: 154, high: 0 }, 16: { bonus: 112, over: 168, high: 48 }, 17: { bonus: 119, over: 182, high: 51 }, 18: { bonus: 126, over: 196, high: 54 }, 19: { bonus: 133, over: 210, high: 57 }, 20: { bonus: 140, over: 224, high: 60 } },
+  5: { 1: { bonus: 8, over: 0, high: 0 }, 2: { bonus: 16, over: 0, high: 0 }, 3: { bonus: 24, over: 0, high: 0 }, 4: { bonus: 32, over: 0, high: 0 }, 5: { bonus: 40, over: 0, high: 0 }, 6: { bonus: 48, over: 0, high: 0 }, 7: { bonus: 56, over: 0, high: 0 }, 8: { bonus: 64, over: 0, high: 0 }, 9: { bonus: 72, over: 0, high: 0 }, 10: { bonus: 80, over: 0, high: 0 }, 11: { bonus: 88, over: 0, high: 0 }, 12: { bonus: 96, over: 0, high: 0 }, 13: { bonus: 104, over: 0, high: 0 }, 14: { bonus: 112, over: 0, high: 0 }, 15: { bonus: 120, over: 0, high: 0 }, 16: { bonus: 128, over: 0, high: 0 }, 17: { bonus: 136, over: 0, high: 0 }, 18: { bonus: 144, over: 0, high: 0 }, 19: { bonus: 152, over: 0, high: 0 }, 20: { bonus: 160, over: 0, high: 0 } },
 };
 
 function getRefineAtkParts(weaponLevel: number, refine: number): { fixed: number; overMax: number } {
@@ -180,7 +182,9 @@ function getRefineAtkParts(weaponLevel: number, refine: number): { fixed: number
   if (!table) return { fixed: 0, overMax: 0 };
   const entry = table[Math.min(refine, 20)];
   if (!entry) return { fixed: 0, overMax: 0 };
-  return { fixed: entry.bonus + entry.high, overMax: entry.over };
+  // 'high' bonus only applies to items with enchant grade > 0 (getenchantgrade())
+  // LATAM server has no grade enchant system, so high is always 0
+  return { fixed: entry.bonus, overMax: entry.over };
 }
 
 function getRefineMatkBonus(weaponLevel: number, refine: number): number {
@@ -189,12 +193,13 @@ function getRefineMatkBonus(weaponLevel: number, refine: number): number {
   if (!table) return 0;
   const entry = table[Math.min(refine, 20)];
   if (!entry) return 0;
-  return entry.bonus + entry.high;
+  // No enchant grade on LATAM — exclude 'high' column
+  return entry.bonus;
 }
 
 // ─── Bonus helpers ──────────────────────────────────────────────────
 
-function sumBonusForTarget(
+function sumPhysBonusForTarget(
   bonus: EquipBonus,
   monster: MonsterTarget,
 ): { race: number; element: number; size: number; class: number } {
@@ -203,6 +208,21 @@ function sumBonusForTarget(
   const size = (bonus.addSize?.[monster.size] || 0) + (bonus.addSize?.Size_All || 0);
   const cls = (bonus.addClass?.[monster.class] || 0) + (bonus.addClass?.Class_All || 0);
   return { race, element, size, class: cls };
+}
+
+function sumMagicBonusForTarget(
+  bonus: EquipBonus,
+  monster: MonsterTarget,
+  atkElement: string,
+): { race: number; element: number; size: number; class: number; magicEle: number } {
+  // Magical damage uses bMagicAddRace/Ele/Size/Class, NOT bAddRace etc.
+  const race = (bonus.magicAddRace?.[monster.race] || 0) + (bonus.magicAddRace?.RC_All || 0);
+  const element = (bonus.magicAddEle?.[monster.element] || 0) + (bonus.magicAddEle?.Ele_All || 0);
+  const size = (bonus.magicAddSize?.[monster.size] || 0) + (bonus.magicAddSize?.Size_All || 0);
+  const cls = (bonus.magicAddClass?.[monster.class] || 0) + (bonus.magicAddClass?.Class_All || 0);
+  // bMagicAtkEle — bonus % for magic of this element type
+  const magicEle = (bonus.magicAtkEle?.[atkElement] || 0) + (bonus.magicAtkEle?.Ele_All || 0);
+  return { race, element, size, class: cls, magicEle };
 }
 
 // ─── Stat Scaling ───────────────────────────────────────────────────
@@ -253,8 +273,9 @@ function calcBaseLvMod(skill: SkillFormula, baseLevel: number): number {
 function calcDragonBreath(input: DamageInput): number {
   const { currentHp, maxSp, skillLevel, baseLevel } = input;
   let damage = Math.floor(currentHp / 50 + maxSp / 4) * skillLevel;
-  if (baseLevel > 100) {
-    damage = Math.floor(damage * baseLevel / 150);
+  // kRO 185/65 Balance: BaseLv modifier improved from /150 to /100.
+  if (baseLevel > 99) {
+    damage = Math.floor(damage * baseLevel / 100);
   }
   // Dragon Training assumed at lv5 (most builds max it): (90 + 50) / 100 = 1.4
   // TODO: Add dragonTraining level to input when available
@@ -312,7 +333,7 @@ function calcGatesOfHellBonus(input: DamageInput, isCombo: boolean): number {
   if (isCombo) {
     return hpDiff + Math.floor(maxSp * (1 + skillLevel * 4 / 10)) + baseLevel * 40;
   }
-  return hpDiff + Math.floor(currentSp * (1 + skillLevel * 2 / 10)) + baseLevel * 10;
+  return hpDiff + Math.floor((currentSp || 0) * (1 + skillLevel * 2 / 10)) + baseLevel * 10;
 }
 
 // ─── Special Formula: Acid Demonstration (Renewal) ──────────────────
@@ -342,10 +363,24 @@ export function calculateDamage(input: DamageInput): DamageResult {
   const totalDex = baseStats.dex + bonusDex;
   const totalLuk = baseStats.luk + bonusLuk;
 
-  const hitCount = getHitCount(skill, skillLevel);
+  let hitCount = getHitCount(skill, skillLevel);
+
+  // KN_PIERCE: hit count depends on target size (1/2/3 for small/medium/large)
+  if (skill.sizeHitCount) {
+    switch (monster.size) {
+      case "Size_Small": hitCount = 1; break;
+      case "Size_Medium": hitCount = 2; break;
+      case "Size_Large": hitCount = 3; break;
+    }
+  }
 
   // Determine attack element
+  // Priority: skill override > bAtkEle (endow/converter) > weapon base element
   let atkElement = input.weaponElement || "Ele_Neutral";
+  // Equipment/endow element override (bAtkEle)
+  if (totalBonus.atkEle) {
+    atkElement = totalBonus.atkEle;
+  }
   if (skill.element !== "weapon") {
     atkElement = "Ele_" + skill.element.charAt(0).toUpperCase() + skill.element.slice(1);
     const eleMap: Record<string, string> = {
@@ -358,8 +393,19 @@ export function calculateDamage(input: DamageInput): DamageResult {
   }
 
   const elementTableMod = getElementMultiplier(atkElement, monster.element, monster.elementLevel);
-  const targetBonuses = sumBonusForTarget(totalBonus, monster);
-  const skillAtkBonus = totalBonus.skillAtk?.[skill.aegisName] || 0;
+  const physBonuses = sumPhysBonusForTarget(totalBonus, monster);
+  const magicBonuses = sumMagicBonusForTarget(totalBonus, monster, atkElement);
+
+  // Skill ATK bonus: check the exact skill name first, then any aliases
+  let skillAtkBonus = totalBonus.skillAtk?.[skill.aegisName] || 0;
+
+  // Some cards reference parent skills — check aliases
+  // e.g. Alma de Eremes boosts GC_CROSSIMPACT, and also GC_CROSSRIPPERSLASHER via hotfix in ro-stats
+  if (skill.aegisName === "WM_SEVERE_RAINSTORM") {
+    skillAtkBonus += totalBonus.skillAtk?.["WM_SEVERE_RAINSTORM_MELEE"] || 0;
+  }
+
+  const skillAtkBonusCombined = skillAtkBonus;
 
   // DEF calculations (Renewal)
   const hardDef = monster.defense;
@@ -367,29 +413,50 @@ export function calculateDamage(input: DamageInput): DamageResult {
   const hardMdef = monster.magicDefense;
   const softMdef = Math.floor((monster.level + monster.stats.int) / 4);
 
-  // Ignore DEF from skill + equipment
+  // Ignore DEF from skill + equipment (race-based + class-based)
   const skillIgnoreDef = skill.ignoreDefPercent || 0;
-  const equipIgnoreDef = (totalBonus.ignoreDefRaceRate?.[monster.race] || 0)
+  const equipIgnoreDefByRace = (totalBonus.ignoreDefRaceRate?.[monster.race] || 0)
     + (totalBonus.ignoreDefRaceRate?.RC_All || 0);
-  const equipIgnoreMdef = (totalBonus.ignoreMdefRaceRate?.[monster.race] || 0)
+  const equipIgnoreDefByClass = (totalBonus.ignoreDefClassRate?.[monster.class] || 0)
+    + (totalBonus.ignoreDefClassRate?.Class_All || 0);
+  const equipIgnoreMdefByRace = (totalBonus.ignoreMdefRaceRate?.[monster.race] || 0)
     + (totalBonus.ignoreMdefRaceRate?.RC_All || 0);
-  const totalIgnoreDef = Math.min(100, skillIgnoreDef + equipIgnoreDef);
-  const totalIgnoreMdef = Math.min(100, skillIgnoreDef + equipIgnoreMdef);
+  const equipIgnoreMdefByClass = (totalBonus.ignoreMdefClassRate?.[monster.class] || 0)
+    + (totalBonus.ignoreMdefClassRate?.Class_All || 0);
+  const totalIgnoreDef = Math.min(100, skillIgnoreDef + equipIgnoreDefByRace + equipIgnoreDefByClass);
+  const totalIgnoreMdef = Math.min(100, skillIgnoreDef + equipIgnoreMdefByRace + equipIgnoreMdefByClass);
   const effectiveHardDef = Math.floor(hardDef * (100 - totalIgnoreDef) / 100);
   const effectiveHardMdef = Math.floor(hardMdef * (100 - totalIgnoreMdef) / 100);
 
-  // Modifier calculations (shared across most formulas)
-  const raceMod = 1 + targetBonuses.race / 100;
-  const eleMod = 1 + targetBonuses.element / 100;
-  const sizeMod = 1 + targetBonuses.size / 100;
-  const classMod = 1 + targetBonuses.class / 100;
-  const skillAtkMod = 1 + skillAtkBonus / 100;
-  const eleTableMod = elementTableMod / 100;
+  // ─── EDP (Enchant Deadly Poison) — rAthena Renewal formula ───
+  // battle_attack_sc_bonus() in battle.cpp:
+  //   ATK_RATE(weaponAtk, 250 + edp_lv * 30)  → 4.0× at level 5
+  //   ATK_RATE(equipAtk,  250 + edp_lv * 30)  → 4.0× at level 5
+  // Same multiplier for both weapon and equip ATK.
+  // Excluded skills: no EDP bonus at all (list from rAthena switch statement)
+  const hasEdp = input.activeBuffs?.includes("edp") ?? false;
+  const edpLevel = 5; // Assume max level EDP
+  let edpMult = 1.0;
+  if (hasEdp && skill.type === "physical") {
+    const edpExcluded = [
+      "TF_SPRINKLESAND", "AS_SPLASHER", "ASC_METEORASSAULT",
+      "AS_GRIMTOOTH", "AS_VENOMKNIFE",
+    ];
+    if (!edpExcluded.includes(skill.aegisName)) {
+      edpMult = (250 + edpLevel * 30) / 100;  // 4.0× at lv5
+    }
+  }
 
   // ── Dragon Breath: completely separate formula ──────────────────
   if (skill.formulaType === "dragonBreath") {
     const baseDamage = calcDragonBreath(input);
     const rangeMod = 1 + (totalBonus.longAtkRate || 0) / 100;
+    const raceMod = 1 + physBonuses.race / 100;
+    const eleMod = 1 + physBonuses.element / 100;
+    const sizeMod = 1 + physBonuses.size / 100;
+    const classMod = 1 + physBonuses.class / 100;
+    const skillAtkMod = 1 + skillAtkBonusCombined / 100;
+    const eleTableMod = elementTableMod / 100;
     const totalMod = raceMod * eleMod * sizeMod * classMod * skillAtkMod * eleTableMod * rangeMod;
     // Dragon Breath uses SimpleDefense (flat DEF subtraction, not % formula)
     const defReduction = effectiveHardDef + softDef;
@@ -398,9 +465,9 @@ export function calculateDamage(input: DamageInput): DamageResult {
     const details: DamageDetails = {
       statusAtk: baseDamage, weaponAtk: 0, equipAtk: 0,
       skillPercent: 100, baseLvScaling: baseLevel > 100 ? baseLevel / 150 : 1,
-      sizePenalty: 100, raceModifier: targetBonuses.race, elementModifier: targetBonuses.element,
-      sizeModifier: targetBonuses.size, classModifier: targetBonuses.class,
-      skillAtkModifier: skillAtkBonus, longRangeModifier: totalBonus.longAtkRate || 0,
+      sizePenalty: 100, raceModifier: physBonuses.race, elementModifier: physBonuses.element,
+      sizeModifier: physBonuses.size, classModifier: physBonuses.class,
+      skillAtkModifier: skillAtkBonusCombined, longRangeModifier: totalBonus.longAtkRate || 0,
       atkRateModifier: 0, elementTableMod,
       hardDefReduction: effectiveHardDef, softDefReduction: softDef, ignoreDefPercent: totalIgnoreDef,
     };
@@ -415,43 +482,122 @@ export function calculateDamage(input: DamageInput): DamageResult {
 
   // ── Tiger Cannon: HP/SP as skillratio applied to ATK ────────────
   if (skill.formulaType === "tigerCannon") {
-    // Tiger Cannon uses standard ATK calculation with a special skillratio
-    const isCombo = false; // TODO: Add combo state input
+    const isCombo = true; // Assumes combo (Fallen Empire → Tiger Cannon)
     const tcRatio = calcTigerCannonRatio(input, isCombo);
     const tcFlat = calcTigerCannonFlat(input, isCombo);
-    // Uses ATK but with tcRatio as the skillratio
     return calcPhysicalDamage(input, tcRatio, tcFlat, effectiveHardDef, softDef,
-      targetBonuses, skillAtkBonus, elementTableMod, totalIgnoreDef);
+      physBonuses, skillAtkBonusCombined, elementTableMod, totalIgnoreDef, edpMult);
   }
 
   // ── Gates of Hell: ATK-based + flat HP/SP bonus ─────────────────
   if (skill.formulaType === "gatesOfHell") {
-    const isCombo = false; // TODO: Add combo state input
-    const baseRatio = getDamagePercent(skill, skillLevel);
+    const isCombo = true; // Assumes combo (Fallen Empire → Gates of Hell)
+    // Combo: 800 * skill_lv; Normal: 500 * skill_lv (from skill DB damagePercent)
+    const baseRatio = isCombo ? 800 * skillLevel : getDamagePercent(skill, skillLevel);
     const baseLvMod = calcBaseLvMod(skill, baseLevel);
     const finalRatio = Math.floor(baseRatio * baseLvMod);
+    // Flat bonus: (MaxHP - CurHP) + SP portion + BaseLv portion
+    // NOTE: currentHp = maxHp from UI, so HP sacrifice = 0 (user needs to account for HP loss)
     const gohFlat = calcGatesOfHellBonus(input, isCombo);
     return calcPhysicalDamage(input, finalRatio, gohFlat, effectiveHardDef, softDef,
-      targetBonuses, skillAtkBonus, elementTableMod, totalIgnoreDef);
+      physBonuses, skillAtkBonusCombined, elementTableMod, totalIgnoreDef, edpMult);
   }
 
   // ── Acid Demonstration: special ratio using caster INT + target VIT ──
   if (skill.formulaType === "acidBomb") {
     const acidRatio = calcAcidBombRatio(input);
-    // Acid Demo has no BaseLv scaling, and uses SimpleDefense
     return calcPhysicalDamage(input, acidRatio, 0, effectiveHardDef, softDef,
-      targetBonuses, skillAtkBonus, elementTableMod, totalIgnoreDef);
+      physBonuses, skillAtkBonusCombined, elementTableMod, totalIgnoreDef, edpMult);
+  }
+
+  // ── Ignition Break: 1.5x damage if attacking with Fire element ────
+  if (skill.formulaType === "ignitionBreak") {
+    let ibRatio = getDamagePercent(skill, skillLevel);
+    if (atkElement === "Ele_Fire") {
+      ibRatio = Math.floor(ibRatio * 1.5);
+    }
+    const baseLvMod = calcBaseLvMod(skill, baseLevel);
+    const finalRatio = Math.floor(ibRatio * baseLvMod);
+    return calcPhysicalDamage(input, finalRatio, 0, effectiveHardDef, softDef,
+      physBonuses, skillAtkBonusCombined, elementTableMod, totalIgnoreDef, edpMult);
+  }
+
+  // ── Asura Strike: ATK * (8 + SP/10) + 250 + (150*skillLevel) ────
+  if (skill.formulaType === "asuraStrike") {
+    const spFactor = 8 + (input.maxSp / 10);
+    const asuraFlat = 250 + (150 * skillLevel);
+    const finalRatio = Math.floor(100 * spFactor);
+    return calcPhysicalDamage(input, finalRatio, asuraFlat, effectiveHardDef, softDef,
+      physBonuses, skillAtkBonusCombined, elementTableMod, totalIgnoreDef, edpMult);
+  }
+
+  // ── Spiral Pierce: weight-based calculation ────
+  if (skill.formulaType === "spiralPierce") {
+    const weaponWeight = input.weaponWeight || 0;
+    let spiralRatio = getDamagePercent(skill, skillLevel);
+    spiralRatio += Math.floor(weaponWeight * 0.8 / 10 * 50);
+    return calcPhysicalDamage(input, spiralRatio, 0, effectiveHardDef, softDef,
+      physBonuses, skillAtkBonusCombined, elementTableMod, totalIgnoreDef, edpMult);
   }
 
   // ── Standard skill calculation ──────────────────────────────────
-  // Get base skillratio + stat bonus
   let skillRatio = getDamagePercent(skill, skillLevel);
   skillRatio += calcStatBonus(skill, baseStats, totalBonus, skillLevel);
-  const baseLvMod = calcBaseLvMod(skill, baseLevel);
 
-  let minDamage: number;
-  let maxDamage: number;
-  let critDamage: number;
+  // Injetar fórmulas complexas dependentes de INT/DEX ou buffs assumidos no nível máximo
+  if (skill.formulaType === "diamondDust") {
+    // Diamond Dust (kRO Balance): 200 * skill_lv * (INT / 10) base modifier (Simplified since we don't have baseRatio yet)
+    // Real rAthena: src/map/battle.cpp -> skillratio += 2*INT + 300(Endow) + INT*skill_lv;
+    skillRatio += 2 * totalInt + 1500 + totalInt * skillLevel;
+  } else if (skill.formulaType === "earthGrave") {
+    // Earth Grave: similar to Diamond Dust
+    skillRatio += 2 * totalInt + 1500 + totalInt * skillLevel;
+  } else if (skill.formulaType === "varetyrSpear") {
+    // Varetyr Spear: (2*INT + 1500 + INT*skill_lv/2) / 3
+    skillRatio += Math.floor((2 * totalInt + 1500 + Math.floor(totalInt * skillLevel / 2)) / 3);
+  } else if (skill.formulaType === "cartCannon") {
+    // Cart Cannon kRO Rebalance 185/65: damage = ((250 * skill_lv) + ((20 * skill_lv) * CartRemodeling))% ATK.
+    // The base 350*lv (assuming Cart Remodeling Lv 5) is already inside ro-skill-formulas damagePercent array.
+    // We only need to add the doubled INT factor: + INT * 2.
+    skillRatio += Math.floor(totalInt * 2);
+  } else if (skill.formulaType === "feintBomb") {
+    // Feint Bomb (SC_FEINTBOMB) kRO: skillratio = (DEX / 2) * (JobLv / 10) * skill_lv
+    // Base skillRatio from ro-skill-formulas is already 200*skillLv, so we just add the stat part
+    // Assuming JobLv 60 for 3rd class max
+    skillRatio += Math.floor((totalDex / 2) * 6 * skillLevel);
+  } else if (skill.formulaType === "acidBomb") {
+    // Acid Bomb (CR_ACIDDEMONSTRATION) kRO Rebalance 185/65:
+    // Regular physical damage, 200 * skill_lv % ATK (handled by base).
+    // Plus INT and target VIT modifiers.
+    // targetVit = monster.stats.vit. Caster INT = totalInt.
+    skillRatio += totalInt + monster.stats.vit;
+  }
+
+  // Warlock kRO 185/65 Balance: Jack Frost deals (1200 + 600 * skill_lv)% MATK against targets inside Frost Status (Frost Misty applied)
+  // We assume the target is under Frost Mist debuff for absolute DPS calculations.
+  if (skill.aegisName === "WL_JACKFROST") {
+    // Base ratio from ro-skill-formulas is 1300/1600/1900/2200/2500 -> 1000 + 300 * lv
+    // Frost Debuff bumps it to -> 1200 + 600 * lv 
+    // Diff to apply on top: 200 + 300 * lv
+    skillRatio += (200 + 300 * skillLevel);
+  }
+
+  // Minstrel / Wanderer kRO 185/65 Balance: Voice Lessons increases damage for Reverberation and Great Echo
+  // We assume Voice Lessons is maxed out at Level 10 for absolute DPS calculations.
+  if (skill.aegisName === "WM_REVERBERATION" || skill.aegisName === "WA_GREAT_ECHO") {
+    // VoiceLessons Level 10 gives additional modifiers to skill ratios.
+    // E.g., Great Echo = Base Damage + (VoiceLessons * 100)% + (BaseLv/100) scaling
+    // Reverberation = Base Damage + (VoiceLessons * 50)% + (BaseLv/100) scaling
+    const voiceLessonsLv = 10;
+    if (skill.aegisName === "WA_GREAT_ECHO") skillRatio += (voiceLessonsLv * 100);
+    if (skill.aegisName === "WM_REVERBERATION") skillRatio += (voiceLessonsLv * 50);
+  }
+
+  if (skill.aegisName === "SR_KNUCKLEARROW" && monster.class === "Class_Boss") {
+    skillRatio += 100 * skillLevel;
+  }
+
+  const baseLvMod = calcBaseLvMod(skill, baseLevel);
 
   if (skill.type === "magical") {
     // ── Magical Damage ──
@@ -466,24 +612,39 @@ export function calculateDamage(input: DamageInput): DamageResult {
     const rawMin = Math.floor(matkMin * skillRatio / 100);
     const rawMax = Math.floor(matkMax * skillRatio / 100);
 
-    const totalMod = raceMod * eleMod * sizeMod * classMod * skillAtkMod * eleTableMod;
+    // Magical modifiers use bMagicAddRace/Ele/Size/Class (NOT bAddRace etc.)
+    const mRaceMod = 1 + magicBonuses.race / 100;
+    const mEleMod = 1 + magicBonuses.element / 100;
+    const mSizeMod = 1 + magicBonuses.size / 100;
+    const mClassMod = 1 + magicBonuses.class / 100;
+    const mMagicEleMod = 1 + magicBonuses.magicEle / 100;
+    const skillAtkMod = 1 + skillAtkBonusCombined / 100;
+    const eleTableMod = elementTableMod / 100;
+
+    const totalMod = mRaceMod * mEleMod * mSizeMod * mClassMod * mMagicEleMod * skillAtkMod * eleTableMod;
 
     // MDEF reduction: damage × (1000 + MDEF) / (1000 + MDEF × 10)
     const hardMdefReduction = effectiveHardMdef > 0
       ? (1000 + effectiveHardMdef) / (1000 + effectiveHardMdef * 10)
       : 1;
 
-    minDamage = Math.max(1, Math.floor(rawMin * baseLvMod * totalMod * hardMdefReduction) - softMdef);
-    maxDamage = Math.max(1, Math.floor(rawMax * baseLvMod * totalMod * hardMdefReduction) - softMdef);
-    critDamage = maxDamage;
+    // Per-hit damage (before multi-hit multiplication)
+    const perHitMin = Math.max(1, Math.floor(rawMin * baseLvMod * totalMod * hardMdefReduction) - softMdef);
+    const perHitMax = Math.max(1, Math.floor(rawMax * baseLvMod * totalMod * hardMdefReduction) - softMdef);
+
+    // perHitDamage: bolt spells and ground ticks calculate damage separately per hit
+    const hitMult = skill.perHitDamage && hitCount > 1 ? hitCount : 1;
+    const minDamage = perHitMin * hitMult;
+    const maxDamage = perHitMax * hitMult;
+    const critDamage = maxDamage;
 
     const details: DamageDetails = {
       statusAtk: statusMatk, weaponAtk: weaponMatk, equipAtk: equipMatk,
       skillPercent: skillRatio, baseLvScaling: baseLvMod,
-      sizePenalty: 100, raceModifier: targetBonuses.race, elementModifier: targetBonuses.element,
-      sizeModifier: targetBonuses.size, classModifier: targetBonuses.class,
-      skillAtkModifier: skillAtkBonus, longRangeModifier: 0,
-      atkRateModifier: totalBonus.matkRate || 0, elementTableMod,
+      sizePenalty: 100, raceModifier: magicBonuses.race, elementModifier: magicBonuses.element,
+      sizeModifier: magicBonuses.size, classModifier: magicBonuses.class,
+      skillAtkModifier: skillAtkBonusCombined, longRangeModifier: magicBonuses.magicEle,
+      atkRateModifier: totalBonus.matkRate || 0, elementTableMod: elementTableMod,
       hardDefReduction: effectiveHardMdef, softDefReduction: softMdef, ignoreDefPercent: totalIgnoreMdef,
     };
 
@@ -498,8 +659,14 @@ export function calculateDamage(input: DamageInput): DamageResult {
     };
   } else {
     // ── Physical Damage (standard ATK-based) ──
-    return calcPhysicalDamage(input, Math.floor(skillRatio * baseLvMod), 0,
-      effectiveHardDef, softDef, targetBonuses, skillAtkBonus, elementTableMod, totalIgnoreDef);
+    let finalSkillRatio = Math.floor(skillRatio * baseLvMod);
+    // postBaseLvFlat: flat ratio added AFTER RE_LVL_DMOD (e.g. CRS spin stacks)
+    if (skill.postBaseLvFlat) {
+      finalSkillRatio += skill.postBaseLvFlat;
+    }
+
+    return calcPhysicalDamage(input, finalSkillRatio, 0,
+      effectiveHardDef, softDef, physBonuses, skillAtkBonusCombined, elementTableMod, totalIgnoreDef, edpMult);
   }
 }
 
@@ -515,83 +682,151 @@ function calcPhysicalDamage(
   skillAtkBonus: number,
   elementTableMod: number,
   totalIgnoreDef: number,
+  edpMult: number = 1.0,  // EDP multiplier for weapon+equip ATK (4.0× at lv5)
 ): DamageResult {
   const { skill, skillLevel, baseLevel, baseStats, totalBonus, monster } = input;
-  const hitCount = getHitCount(skill, skillLevel);
-  const bonusStr = totalBonus.str || 0;
-  const bonusDex = totalBonus.dex || 0;
-  const bonusLuk = totalBonus.luk || 0;
+  let hitCount = getHitCount(skill, skillLevel);
+  // KN_PIERCE: size-based hit count
+  if (skill.sizeHitCount) {
+    switch (monster.size) {
+      case "Size_Small": hitCount = 1; break;
+      case "Size_Medium": hitCount = 2; break;
+      case "Size_Large": hitCount = 3; break;
+    }
+  }
+
+  const bonusStr = (totalBonus.str || 0);
+  const bonusDex = (totalBonus.dex || 0);
+  const bonusLuk = (totalBonus.luk || 0);
   const totalStr = baseStats.str + bonusStr;
   const totalDex = baseStats.dex + bonusDex;
   const totalLuk = baseStats.luk + bonusLuk;
 
-  // Status ATK
+  // 1. Status ATK (Base Stats only, never affected by Weapon Size or EDP)
   const isRangedWeapon = ["Bow", "Revolver", "Rifle", "Gatling", "Shotgun", "Grenade", "Musical", "Whip"].includes(input.weaponSubType || "");
   const statusAtk = isRangedWeapon
     ? Math.floor(baseLevel / 4) + Math.floor(totalStr / 5) + totalDex + Math.floor(totalLuk / 3)
     : Math.floor(baseLevel / 4) + totalStr + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
 
-  // Weapon ATK with stat modifier
+  // 2. Weapon ATK with stat scaling
   const wpnMultiplierStat = isRangedWeapon ? totalDex : totalStr;
   const weaponBaseModified = Math.floor(input.weaponAtk * (1 + wpnMultiplierStat / 200));
 
-  // Size penalty (weapon ATK only)
-  const sizePenalty = getSizePenalty(input.weaponSubType, monster.size);
-  const weaponAtkAfterSize = Math.floor(weaponBaseModified * sizePenalty / 100);
+  // weaponAtkRate: Overthrust (+25%), Overthrust Max (+100%), Spear Dynamo (+25%)
+  const weaponAtkRateMod = 1 + (totalBonus.weaponAtkRate || 0) / 100;
+  const weaponBaseWithOT = Math.floor(weaponBaseModified * weaponAtkRateMod);
 
-  // Refine ATK
+  // Size penalty (only affects Weapon ATK)
+  const sizePenalty = input.totalBonus.noSizeFix ? 100 : getSizePenalty(input.weaponSubType, monster.size);
+  const weaponAtkAfterSize = Math.floor(weaponBaseWithOT * sizePenalty / 100);
+
+  // Refine ATK (Flat bonus added to Weapon ATK variance)
   const refineParts = getRefineAtkParts(input.weaponLevel, input.weaponRefine);
 
-  // Equipment ATK
-  const equipAtk = totalBonus.atk || 0;
-  const atkRate = 1 + (totalBonus.atkRate || 0) / 100;
-
-  // Range modifier
-  const rangeMod = skill.isMelee
-    ? (totalBonus.shortAtkRate || 0)
-    : (totalBonus.longAtkRate || 0);
-  const rangeMultiplier = 1 + rangeMod / 100;
-
-  // ATK variance
-  const weaponAtkMin = Math.floor(weaponAtkAfterSize * 0.80) + refineParts.fixed;
+  // Weapon ATK = base after size + refine bonus
+  const weaponAtkMin = weaponAtkAfterSize + refineParts.fixed;
   const weaponAtkMax = weaponAtkAfterSize + refineParts.fixed + refineParts.overMax;
 
-  const totalAtkMin = Math.floor((statusAtk + weaponAtkMin + equipAtk) * atkRate);
-  const totalAtkMax = Math.floor((statusAtk + weaponAtkMax + equipAtk) * atkRate);
+  // 3. Equipment ATK (Cards, Gear, Buffs - FLAT values)
+  const equipAtk = (totalBonus.atk || 0);
+  const atkRate = 1 + (totalBonus.atkRate || 0) / 100;
 
-  // Apply skill ratio
-  const rawMin = Math.floor(totalAtkMin * finalSkillRatio / 100);
-  const rawMax = Math.floor(totalAtkMax * finalSkillRatio / 100);
+  // 4. EDP: Same multiplier for weapon and equip ATK (rAthena Renewal)
+  // ATK_RATE(weaponAtk, 250 + edp_lv * 30) → 4.0× at lv5
+  // ATK_RATE(equipAtk,  250 + edp_lv * 30) → 4.0× at lv5
+  const weaponAtkMinEDP = Math.floor(weaponAtkMin * edpMult);
+  const weaponAtkMaxEDP = Math.floor(weaponAtkMax * edpMult);
+  const equipAtkEDP = Math.floor(equipAtk * edpMult);
 
-  // Damage modifiers
+  // 5. Modifiers (Race, Size, Class, Element)
   const raceMod = 1 + targetBonuses.race / 100;
   const eleMod = 1 + targetBonuses.element / 100;
   const sizeMod = 1 + targetBonuses.size / 100;
   const classMod = 1 + targetBonuses.class / 100;
-  const skillAtkMod = 1 + skillAtkBonus / 100;
-  const eleTableMod = elementTableMod / 100;
 
-  const totalMod = raceMod * eleMod * sizeMod * classMod * skillAtkMod * eleTableMod * rangeMultiplier;
+  let rangeMod = skill.isMelee ? (totalBonus.shortAtkRate || 0) : (totalBonus.longAtkRate || 0);
 
-  // DEF reduction: damage × (4000 + DEF) / (4000 + DEF × 10)
-  const hardDefReduction = effectiveHardDef > 0
+  // Cross Ripper Slasher uses long range modifiers despite isMelee flag
+  if (skill.aegisName === "GC_CROSSRIPPERSLASHER") {
+    rangeMod = (totalBonus.longAtkRate || 0);
+  }
+
+  const rangeMultiplier = 1 + rangeMod / 100;
+
+  // Raw damage = (StatusATK + WeaponATK_EDP + EquipATK_EDP) * AtkRate
+  const calcRawDamage = (wAtk: number, eAtk: number) => Math.floor((statusAtk + wAtk + eAtk) * atkRate);
+
+  // Weapon variance: skills always use max weapon ATK, only normal attacks have 80-100% variance
+  const varianceMod = skill.aegisName === "NORMAL_ATTACK" ? 0.8 : 1;
+
+  const rawMin = calcRawDamage(Math.floor(weaponAtkMinEDP * varianceMod), equipAtkEDP);
+  const rawMax = calcRawDamage(weaponAtkMaxEDP, equipAtkEDP);
+
+  // 6. Apply final skill ratio
+  let skillDmgMin = Math.floor(rawMin * (finalSkillRatio / 100));
+  let skillDmgMax = Math.floor(rawMax * (finalSkillRatio / 100));
+
+  // 7. Flat Damage Bonuses (Tiger Cannon, Gates of Hell) AFTER skill ratio
+  skillDmgMin += flatBonus;
+  skillDmgMax += flatBonus;
+
+  // 8. Apply pre-DEF modifiers (race, size, class, range — card fix in rAthena)
+  // Element table and bSkillAtk are applied AFTER DEF per rAthena pipeline
+  const preDefMod = raceMod * sizeMod * classMod * eleMod * rangeMultiplier;
+  let damageBeforeDefMin = Math.floor(skillDmgMin * preDefMod);
+  let damageBeforeDefMax = Math.floor(skillDmgMax * preDefMod);
+
+  // 8b. Advance Katar Mastery (rAthena step 15: AFTER skill ratio, BEFORE DEF)
+  // ATK_ADDRATE(wd.damage, 10 + 2 * katar_skill) — assumed max lv10 = +30%
+  if (input.weaponSubType === "Katar") {
+    damageBeforeDefMin = Math.floor(damageBeforeDefMin * 130 / 100);
+    damageBeforeDefMax = Math.floor(damageBeforeDefMax * 130 / 100);
+  }
+
+  // 9. Hard DEF reduction: Renewal formula
+  const defReduction = effectiveHardDef > 0
     ? (4000 + effectiveHardDef) / (4000 + effectiveHardDef * 10)
     : 1;
 
-  const minDamage = Math.max(1, Math.floor(rawMin * totalMod * hardDefReduction) - softDef + flatBonus);
-  const maxDamage = Math.max(1, Math.floor(rawMax * totalMod * hardDefReduction) - softDef + flatBonus);
+  // 10. Final Damage (subtract soft DEF)
+  let minDamageBeforeCrit = Math.max(1, Math.floor(damageBeforeDefMin * defReduction) - softDef);
+  let maxDamageBeforeCrit = Math.max(1, Math.floor(damageBeforeDefMax * defReduction) - softDef);
 
-  // Critical damage: max ATK × 1.4
-  const critRaw = Math.floor(totalAtkMax * finalSkillRatio / 100);
+  // 10b. Post-DEF modifiers: bSkillAtk and Element Table (rAthena steps 17-18)
+  const postDefMod = (1 + skillAtkBonus / 100) * (elementTableMod / 100);
+  minDamageBeforeCrit = Math.floor(minDamageBeforeCrit * postDefMod);
+  maxDamageBeforeCrit = Math.floor(maxDamageBeforeCrit * postDefMod);
+
+  // Dark Claw: +150% melee damage (total 2.5x) applied after DEF
+  if (skill.isMelee && input.activeBuffs?.includes("dark_claw")) {
+    minDamageBeforeCrit = Math.floor(minDamageBeforeCrit * 2.5);
+    maxDamageBeforeCrit = Math.floor(maxDamageBeforeCrit * 2.5);
+  }
+
+  // perHitDamage: bolt/ground-tick skills calculate damage separately per hit
+  const hitMult = skill.perHitDamage && hitCount > 1 ? hitCount : 1;
+  const minDamage = Math.max(1, minDamageBeforeCrit) * hitMult;
+  const maxDamage = Math.max(1, maxDamageBeforeCrit) * hitMult;
+
+  // 11. Critical damage: max variance * 1.4 baseline + AKM + post-DEF mods
+  let critRaw = Math.floor(damageBeforeDefMax * 1.4);
+
   const critAtkRate = 1 + (totalBonus.critAtkRate || 0) / 100;
   const effectiveCritRate = skill.halfCritBonus ? 1 + (critAtkRate - 1) * 0.5 : critAtkRate;
-  const critDamage = skill.canCrit
-    ? Math.max(1, Math.floor(critRaw * 1.4 * effectiveCritRate * totalMod * hardDefReduction) - softDef + flatBonus)
-    : maxDamage;
+
+  let baseCritDamage = Math.max(1, Math.floor(critRaw * effectiveCritRate * defReduction) - softDef);
+  // Apply post-DEF modifiers (bSkillAtk + eleTable) to crit too
+  baseCritDamage = Math.floor(baseCritDamage * postDefMod);
+
+  if (skill.isMelee && input.activeBuffs?.includes("dark_claw")) {
+    baseCritDamage = Math.floor(baseCritDamage * 2.5);
+  }
+
+  const critDamage = skill.canCrit ? baseCritDamage * hitMult : maxDamage;
 
   const details: DamageDetails = {
     statusAtk,
-    weaponAtk: weaponAtkAfterSize + refineParts.fixed + Math.floor(refineParts.overMax / 2),
+    weaponAtk: Math.floor((weaponAtkMin + weaponAtkMax) / 2),
     equipAtk,
     skillPercent: finalSkillRatio,
     baseLvScaling: skill.baseLvScaling ? calcBaseLvMod(skill, baseLevel) : 1,
@@ -643,6 +878,10 @@ function getCastCycle(
 
   let fixCast = skill.fixedCast?.[idx] || 0;
   if (fixCast > 0) {
+    // Flat fixed cast reduction (bFixedCast) — e.g. Temporal DEX Boots -500ms
+    const flatFixedReduction = bonus.fixedCast || 0;
+    fixCast = Math.max(0, fixCast + flatFixedReduction); // flatFixedReduction is negative
+    // Percentage fixed cast reduction (bFixedCastrate) — e.g. -50%
     const fixCastRate = 1 + (bonus.fixedCastrate || 0) / 100;
     fixCast = Math.max(0, Math.floor(fixCast * fixCastRate));
   }

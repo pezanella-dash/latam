@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { itemImageUrl, monsterImageUrl } from "@/lib/utils";
 import { Search, X, Swords, Skull, Sparkles, ChevronRight } from "lucide-react";
+import { searchItems, searchMonsters } from "@/lib/db/supabase";
 
 interface QuickItem {
   id: number;
@@ -37,15 +38,11 @@ export default function HomePage() {
     }
     const t = setTimeout(async () => {
       const [iRes, mRes] = await Promise.all([
-        fetch(`/api/items?q=${encodeURIComponent(query)}&limit=10`).then((r) =>
-          r.json()
-        ),
-        fetch(`/api/monsters?q=${encodeURIComponent(query)}&limit=8`).then(
-          (r) => r.json()
-        ),
+        searchItems({ query, limit: 10 }),
+        searchMonsters({ query, limit: 8 }),
       ]);
-      setItems(iRes.items || []);
-      setMonsters(mRes.monsters || []);
+      setItems((iRes.items || []) as QuickItem[]);
+      setMonsters((mRes.monsters || []) as QuickMonster[]);
       setOpen(true);
     }, 200);
     return () => clearTimeout(t);

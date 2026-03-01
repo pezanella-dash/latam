@@ -9,6 +9,15 @@ import {
   formatDropRate,
   dropRateColor,
 } from "@/lib/utils";
+import {
+  searchItems,
+  searchMonsters,
+  searchSkills,
+  getItemById,
+  getMonsterById,
+  findMonstersDropping,
+  resolveDropsToItems,
+} from "@/lib/db/supabase";
 
 // ─── Types ──────────────────────────────────────────────────────────
 
@@ -202,23 +211,14 @@ function DatabaseContent() {
     router.replace(str ? `/database?${str}` : "/database", { scroll: false });
   }, [tab, query, filter, filter2, mvpOnly, router]);
 
-  const buildUrl = useCallback((offset: number) => {
-    const params = new URLSearchParams();
-    if (query) params.set("q", query);
-    params.set("limit", String(PAGE_SIZE));
-    params.set("offset", String(offset));
-
+  // Fetch from Supabase with given offset
+  const fetchData = useCallback(async (offset: number) => {
     if (tab === "items") {
-      if (filter) params.set("type", filter);
-      return `/api/items?${params}`;
+      return searchItems({ query: query || undefined, type: filter || undefined, limit: PAGE_SIZE, offset });
     } else if (tab === "monsters") {
-      if (filter) params.set("race", filter);
-      if (filter2) params.set("element", filter2);
-      if (mvpOnly) params.set("mvp", "true");
-      return `/api/monsters?${params}`;
+      return searchMonsters({ query: query || undefined, race: filter || undefined, element: filter2 || undefined, mvpOnly, limit: PAGE_SIZE, offset });
     } else {
-      if (filter) params.set("type", filter);
-      return `/api/skills?${params}`;
+      return searchSkills({ query: query || undefined, type: filter || undefined, limit: PAGE_SIZE, offset });
     }
   }, [query, tab, filter, filter2, mvpOnly]);
 
@@ -226,29 +226,28 @@ function DatabaseContent() {
   const search = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(buildUrl(0));
-      const data = await res.json();
-      setResults(data.items || data.monsters || data.skills || []);
+      const data = await fetchData(0);
+      const list = ("items" in data ? data.items : "monsters" in data ? data.monsters : (data as any).skills) || [];
+      setResults(list);
       setTotal(data.total || 0);
     } finally {
       setLoading(false);
     }
-  }, [buildUrl]);
+  }, [fetchData]);
 
   // Load more (appends results)
   const loadMore = useCallback(async () => {
     if (loadingMore || !hasMore) return;
     setLoadingMore(true);
     try {
-      const res = await fetch(buildUrl(results.length));
-      const data = await res.json();
-      const newItems = data.items || data.monsters || data.skills || [];
-      setResults((prev) => [...prev, ...newItems]);
+      const data = await fetchData(results.length);
+      const list = ("items" in data ? data.items : "monsters" in data ? data.monsters : (data as any).skills) || [];
+      setResults((prev) => [...prev, ...list]);
       setTotal(data.total || 0);
     } finally {
       setLoadingMore(false);
     }
-  }, [buildUrl, results.length, loadingMore, hasMore]);
+  }, [fetchData, results.length, loadingMore, hasMore]);
 
   // Debounced initial search
   useEffect(() => {
@@ -281,15 +280,18 @@ function DatabaseContent() {
   }, [tab]);
 
   const loadItemDetail = async (id: number) => {
-    const res = await fetch(`/api/items?id=${id}`);
-    const data = await res.json();
-    setSelectedItem(data);
+    const item = await getItemById(id);
+    if (!item) return;
+    const droppedBy = await findMonstersDropping(item.id);
+    setSelectedItem({ item, droppedBy });
   };
 
   const loadMonsterDetail = async (id: number) => {
-    const res = await fetch(`/api/monsters?id=${id}`);
-    const data = await res.json();
-    setSelectedMonster(data);
+    const monster = await getMonsterById(id);
+    if (!monster) return;
+    const drops = await resolveDropsToItems(monster.drops || []);
+    const mvpDrops = await resolveDropsToItems(monster.mvpDrops || []);
+    setSelectedMonster({ monster, drops, mvpDrops });
   };
 
   return (

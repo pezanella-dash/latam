@@ -98,8 +98,8 @@
   .ro-panel {
     background: var(--ro-panel);
     border: 1px solid var(--ro-border);
-    border-radius: 1.5rem;
-    /* Extra rounded for modern look */
+    border-radius: 0.75rem;
+    /* Sleeker edge for modern look */
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
@@ -113,7 +113,7 @@
   .ro-panel-gold {
     background: var(--ro-panel);
     border: 1px solid var(--ro-gold);
-    border-radius: 1.5rem;
+    border-radius: 0.75rem;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     box-shadow: 0 0 40px rgba(245, 158, 11, 0.15);
@@ -125,7 +125,7 @@
 
   /* Search input */
   .search-input {
-    @apply w-full bg-ro-surface border border-ro-border rounded-xl px-4 py-3 placeholder-ro-muted focus:outline-none focus:border-ro-gold-dim transition-all duration-200;
+    @apply w-full bg-ro-surface border border-ro-border rounded-lg px-4 py-3 placeholder-ro-muted focus:outline-none focus:border-ro-gold-dim transition-all duration-200;
     color: var(--ro-text);
   }
 
@@ -144,7 +144,7 @@
 
   /* Select dropdown styled */
   .ro-select {
-    @apply bg-ro-surface border border-ro-border rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-ro-gold-dim transition-colors;
+    @apply bg-ro-surface border border-ro-border rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-ro-gold-dim transition-colors;
     color: var(--ro-text);
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%238a839e' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
     background-position: right 0.5rem center;

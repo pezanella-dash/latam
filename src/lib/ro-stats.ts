@@ -36,28 +36,58 @@ export interface EquipBonus {
   aspdRate?: number;
   variableCastrate?: number;
   fixedCastrate?: number;
+  fixedCast?: number;          // flat fixed cast reduction (ms) — bFixedCast
   delayrate?: number;
   perfectDodge?: number;
   // patk/smatk for 4th jobs
   patk?: number;
   smatk?: number;
+  // 4th job trait stats
+  pow?: number;
+  sta?: number;
+  wis?: number;
+  spl?: number;
+  con?: number;
+  crt?: number;
+  hplus?: number;
+  res?: number;
+  mres?: number;
+  crate?: number;
   // Healing
   healPower?: number;
-  // Race/element modifiers (bonus2)
+  // Weapon element override
+  atkEle?: string;             // bAtkEle — changes weapon element (e.g., "Ele_Fire")
+  // Size penalty bypass
+  noSizeFix?: boolean;         // bNoSizeFix — ignore size penalty on weapon
+  // Physical modifiers (bonus2)
   subRace?: Record<string, number>;     // damage reduction from race
   subEle?: Record<string, number>;      // damage reduction from element
-  addRace?: Record<string, number>;     // extra damage to race
-  addEle?: Record<string, number>;      // extra damage to element
-  addSize?: Record<string, number>;     // extra damage to size
-  addClass?: Record<string, number>;    // extra damage to class (boss/normal)
+  subSize?: Record<string, number>;     // damage reduction from size
+  addRace?: Record<string, number>;     // extra physical damage to race
+  addEle?: Record<string, number>;      // extra physical damage to element
+  addSize?: Record<string, number>;     // extra physical damage to size
+  addClass?: Record<string, number>;    // extra physical damage to class (boss/normal)
   subClass?: Record<string, number>;    // damage reduction from class
+  // Magical modifiers (bonus2) — separate from physical!
+  magicAddRace?: Record<string, number>;   // bonus2 bMagicAddRace — magic damage vs race
+  magicAddEle?: Record<string, number>;    // bonus2 bMagicAddEle — magic damage vs element
+  magicAddSize?: Record<string, number>;   // bonus2 bMagicAddSize — magic damage vs size
+  magicAddClass?: Record<string, number>;  // bonus2 bMagicAddClass — magic damage vs class
+  magicAtkEle?: Record<string, number>;    // bonus2 bMagicAtkEle — magic damage OF element type %
   // Skill-specific modifiers (bonus2 with quoted skill name)
   skillAtk?: Record<string, number>;    // bonus2 bSkillAtk,"SKILL",N
   skillCooldown?: Record<string, number>; // bonus2 bSkillCooldown,"SKILL",N
   skillUseSP?: Record<string, number>;  // bonus2 bSkillUseSP,"SKILL",N
-  // DEF/MDEF ignore by race (bonus2 bIgnoreDefRaceRate, RC_X, N;)
+  // DEF/MDEF ignore by race/class
   ignoreDefRaceRate?: Record<string, number>;
   ignoreMdefRaceRate?: Record<string, number>;
+  ignoreDefClassRate?: Record<string, number>;
+  ignoreMdefClassRate?: Record<string, number>;
+  // Misc damage modifiers
+  nonCritAtkRate?: number;     // bNonCritAtkRate — physical damage modifier (non-crit)
+  weaponAtkRate?: number;      // bWeaponAtkRate — weapon ATK modifier %
+  perfectHitRate?: number;     // bPerfectHitAddRate — perfect hit rate
+  criticalAddRace?: Record<string, number>; // bonus2 bCriticalAddRace
 }
 
 // ─── Race / Element / Size labels ────────────────────────────────────
@@ -120,15 +150,15 @@ const SKILL_LABELS: Record<string, string> = {
 export function formatSpecialBonus(
   type: "race" | "element" | "size" | "class",
   key: string,
-  value: number,
+  _value: number,
   prefix: string,
 ): string {
   const labels = type === "race" ? RACE_LABELS
     : type === "element" ? ELEMENT_LABELS
-    : type === "size" ? SIZE_LABELS
-    : CLASS_LABELS;
+      : type === "size" ? SIZE_LABELS
+        : CLASS_LABELS;
   const label = labels[key] || key;
-  return `${prefix} ${label} ${value > 0 ? "+" : ""}${value}%`;
+  return `${prefix} ${label}`;
 }
 
 export interface DerivedStats {
@@ -156,7 +186,7 @@ export interface DerivedStats {
   delayrate: number;
   perfectDodge: number;
   // Special bonuses (race/element/size)
-  specialBonuses: { label: string; value: number }[];
+  specialBonuses: { label: string; value: number; invertColor?: boolean }[];
   // For damage calculator
   totalBonus: EquipBonus;
   weaponAtk: number;
@@ -164,11 +194,16 @@ export interface DerivedStats {
   weaponLevel: number;
   weaponRefine: number;
   weaponSubType?: string;
+  weaponWeight: number;     // weapon weight (for Spiral Pierce formula)
   // Active item combos/sets
   activeCombos: string[];
+  // Active buff IDs (for special damage formulas like EDP, Dark Claw)
+  activeBuffs: string[];
 }
 
 // ─── Equipment slots ─────────────────────────────────────────────────
+
+import { applyActiveBuffs } from "./ro-buffs";
 
 export type EquipSlot =
   | "head_top"
@@ -234,6 +269,7 @@ export interface EquippedItem {
   enchants: (CardItem | null)[];  // enchantments (items with empty locations)
   weaponLevel?: number;
   armorLevel?: number;
+  weight?: number;          // item weight (for Spiral Pierce formula)
   locations: string[];
   jobs: string[];
   classNum: number;         // sprite view ID for zrenderer (headgear/garment)
@@ -278,7 +314,7 @@ export function getCompatibleSlots(locations: string[]): EquipSlot[] {
 }
 
 // Primary slot mapping for search: multi-slot locations only show in their primary slot
-// (e.g. Both_Hand shows when searching right_hand, NOT left_hand)
+// (e.g. Both_Hand shows when searching right_hand, not shield)
 const LOCATION_SEARCH_SLOT: Record<string, EquipSlot[]> = {
   ...LOCATION_TO_SLOT,
   Both_Hand: ["right_hand"],      // 2h weapons only in weapon search, not shield
@@ -319,12 +355,40 @@ export function getLocationFilters(slot: EquipSlot): string[] {
  * For multi-slot items (Both_Hand, Head_Low+Head_Mid masks, etc.) returns all slots.
  * For search purposes use getCompatibleSlots() instead — this is for equip/unequip logic.
  */
-export function getAllOccupiedSlots(locations: string[]): EquipSlot[] {
+export function getAllOccupiedSlots(locations: string[], currentSlot?: EquipSlot): EquipSlot[] {
   const slots = new Set<EquipSlot>();
+
+  // Special case: Accessories that specify both Right and Left can be equipped in EITHER slot,
+  // they do not occupy BOTH slots simultaneously.
+  const isGenericAccessory = (locations.includes("Right_Accessory") && locations.includes("Left_Accessory")) || locations.includes("Both_Accessory") || locations.includes("Accessory");
+  const isGenericShadowAccessory = locations.includes("Shadow_Right_Accessory") && locations.includes("Shadow_Left_Accessory");
+
   for (const loc of locations) {
+    if ((isGenericAccessory || loc === "Both_Accessory" || loc === "Accessory") && (loc === "Right_Accessory" || loc === "Left_Accessory" || loc === "Both_Accessory" || loc === "Accessory")) {
+      // If we know the slot it's being equipped to, only occupy that slot
+      if (currentSlot === "accessory1" || currentSlot === "accessory2") {
+        slots.add(currentSlot);
+      }
+      continue;
+    }
+
+    if (isGenericShadowAccessory && (loc === "Shadow_Right_Accessory" || loc === "Shadow_Left_Accessory")) {
+      if (currentSlot === "shadow_earring" || currentSlot === "shadow_pendant") {
+        slots.add(currentSlot);
+      }
+      continue;
+    }
+
     const mapped = LOCATION_TO_SLOT[loc];
     if (mapped) mapped.forEach((s) => slots.add(s));
   }
+
+  // Safety fallback: if an item has unrecognized locations but was explicitly placed in a slot,
+  // ensure it at least occupies that slot so it can be unequipped later.
+  if (slots.size === 0 && currentSlot) {
+    slots.add(currentSlot);
+  }
+
   return Array.from(slots);
 }
 
@@ -428,32 +492,12 @@ function safeEvalCondition(condition: string): boolean {
   }
 }
 
-/**
- * Flatten if/else blocks by evaluating conditions (must be fully numeric).
- * Processes innermost blocks first to handle nesting.
- */
-function evaluateIfBlocks(code: string): string {
-  let result = code;
-  let changed = true;
-  let safety = 20;
-  while (changed && safety-- > 0) {
-    changed = false;
-    // Match innermost if blocks (no nested braces in body)
-    result = result.replace(
-      /if\s*\(\s*([^()]+?)\s*\)\s*\{([^{}]*)\}/g,
-      (_match, condition: string, body: string) => {
-        changed = true;
-        return safeEvalCondition(condition) ? body : "";
-      }
-    );
-  }
-  return result;
-}
+// evaluateIfBlocks is no longer needed — replaced by single-pass interpreter in parseScriptBonuses
 
 // ─── Script bonus parser ─────────────────────────────────────────────
 
 // Keys here MUST only refer to number fields of EquipBonus
-type NumericBonusKey = Exclude<keyof EquipBonus, "subRace" | "subEle" | "addRace" | "addEle" | "addSize" | "addClass" | "subClass" | "skillAtk" | "skillCooldown" | "skillUseSP" | "ignoreDefRaceRate" | "ignoreMdefRaceRate">;
+type NumericBonusKey = Exclude<keyof EquipBonus, "subRace" | "subEle" | "subSize" | "addRace" | "addEle" | "addSize" | "addClass" | "subClass" | "magicAddRace" | "magicAddEle" | "magicAddSize" | "magicAddClass" | "magicAtkEle" | "skillAtk" | "skillCooldown" | "skillUseSP" | "ignoreDefRaceRate" | "ignoreMdefRaceRate" | "ignoreDefClassRate" | "ignoreMdefClassRate" | "criticalAddRace" | "atkEle" | "noSizeFix">;
 const BONUS_MAP: Record<string, NumericBonusKey> = {
   bStr: "str",
   bAgi: "agi",
@@ -462,6 +506,8 @@ const BONUS_MAP: Record<string, NumericBonusKey> = {
   bDex: "dex",
   bLuk: "luk",
   bBaseAtk: "atk",
+  bAtk: "atk",
+  bAtk2: "atk",
   bMatk: "matk",
   bDef: "def",
   bMdef: "mdef",
@@ -484,21 +530,47 @@ const BONUS_MAP: Record<string, NumericBonusKey> = {
   bAspdRate: "aspdRate",
   bVariableCastrate: "variableCastrate",
   bFixedCastrate: "fixedCastrate",
+  bFixedCast: "fixedCast",
+  bVariableCast: "variableCastrate",
   bDelayrate: "delayrate",
   bPAtk: "patk",
   bSMatk: "smatk",
   bHealPower: "healPower",
+  bHealPower2: "healPower",
+  bHealpower2: "healPower",
+  // 4th job traits
+  bPow: "pow",
+  bSta: "sta",
+  bWis: "wis",
+  bSpl: "spl",
+  bCon: "con",
+  bCrt: "crt",
+  bHPlus: "hplus",
+  bRes: "res",
+  bMRes: "mres",
+  bCRate: "crate",
+  // Misc
+  bNonCritAtkRate: "nonCritAtkRate",
+  bWeaponAtkRate: "weaponAtkRate",
+  bPerfectHitAddRate: "perfectHitRate",
+  bPerfectHitRate: "perfectHitRate",
+  bCriticalLong: "crit",
 };
 
 /**
  * Parse bonus statements from RO item script.
- * Handles: arithmetic expressions, if/else conditionals, bAllStats, nested ifs.
+ * Handles: arithmetic expressions, if/else conditionals, bAllStats, nested ifs,
+ * multi-var dependencies, bonus2/bonus3 with all known types.
+ *
+ * CRITICAL: Variables are resolved LINE-BY-LINE in order, because later vars
+ * can depend on earlier vars (e.g., .@bonus = 3*(.@str/10)).
  */
 export function parseScriptBonuses(
   script: string | undefined,
   refineLevel: number = 0,
   baseLevel: number = 200,
   baseStats?: BaseStats,
+  weaponLevel: number = 1,
 ): EquipBonus {
   if (!script) return {};
   const bonus: EquipBonus = {};
@@ -515,87 +587,267 @@ export function parseScriptBonuses(
     .replace(/BaseLevel/g, String(baseLevel))
     .replace(/JobLevel/g, "70")
     .replace(/getrefine\(\)/g, String(refineLevel))
-    // readparam(bStat) — substitute with actual base stats
+    .replace(/getenchantgrade\(\)/g, "0")
     .replace(/readparam\(bStr\)/g, pStr)
     .replace(/readparam\(bAgi\)/g, pAgi)
     .replace(/readparam\(bVit\)/g, pVit)
     .replace(/readparam\(bInt\)/g, pInt)
     .replace(/readparam\(bDex\)/g, pDex)
     .replace(/readparam\(bLuk\)/g, pLuk)
-    // getskilllv("SKILL") — assume max invested (10)
+    .replace(/readparam\(bPow\)/g, "1")
+    .replace(/readparam\(bSta\)/g, "1")
+    .replace(/readparam\(bWis\)/g, "1")
+    .replace(/readparam\(bSpl\)/g, "1")
+    .replace(/readparam\(bCon\)/g, "1")
+    .replace(/readparam\(bCrt\)/g, "1")
     .replace(/getskilllv\([^)]*\)/g, "10")
-    // max(a,b) — simple 2-arg max
-    .replace(/max\((\d+),(\d+)\)/g, (_m, a, b) => String(Math.max(Number(a), Number(b))));
+    .replace(/getequipweaponlv\([^)]*\)/g, String(weaponLevel));
+  // min/max are handled inside the interpreter's subVars after variable substitution
 
-  // Step 2: Parse simple variable assignments (.@var = EXPR;)
+  // Step 1.5: Strip `autobonus` blocks so we don't grant temporary autocast effects as permanent static stats
+  processed = processed.replace(/autobonus[23]?\s*(?:"|')\{[\s\S]*?\}(?:"|').*?;/g, "");
+
+  // Step 2: Single-pass interpreter with if-stack
+  // This correctly handles variable assignments inside if blocks (the old 3-pass
+  // approach broke because it substituted variable names with values BEFORE evaluating
+  // ifs, turning ".@bonus = 3*(.@str/10)" into "39 = 40" which was meaningless).
+
+  // 2a: Tokenize into statements, splitting on newlines, semicolons, and braces
+  const rawStmts: string[] = [];
+  for (const rawLine of processed.split("\n")) {
+    let rem = rawLine;
+    while (rem.length > 0) {
+      const idx = rem.search(/[{};]/);
+      if (idx === -1) {
+        const t = rem.trim();
+        if (t) rawStmts.push(t);
+        break;
+      }
+      const before = rem.substring(0, idx).trim();
+      if (before) rawStmts.push(before);
+      const ch = rem[idx];
+      if (ch !== ";") rawStmts.push(ch); // push { or }, skip ;
+      rem = rem.substring(idx + 1);
+    }
+  }
+
+  // 2b: Merge "}" + "else" / "else if(...)" into single tokens for clean handling
+  const tokens: string[] = [];
+  for (let i = 0; i < rawStmts.length; i++) {
+    if (rawStmts[i] === "}" && i + 1 < rawStmts.length) {
+      const next = rawStmts[i + 1].trim();
+      if (next === "else" || /^else\s+if\s*\(/.test(next)) {
+        tokens.push("} " + next);
+        i++; // skip merged token
+        continue;
+      }
+    }
+    tokens.push(rawStmts[i]);
+  }
+
+  // 2c: Interpreter state
+  interface IfFrame {
+    active: boolean;       // is this branch currently active?
+    branchTaken: boolean;  // has ANY branch in this if/else chain been taken?
+    parentActive: boolean; // was the scope above this if active?
+    braceless: boolean;    // true if this if has no braces — only applies to the NEXT statement
+  }
   const vars: Record<string, number> = {};
-  const varInitRegex = /(\.\@\w+)\s*=\s*([^;+=]+);/g;
-  let m;
-  while ((m = varInitRegex.exec(processed)) !== null) {
-    vars[m[1]] = safeEvalExpr(m[2]);
+  const ifStack: IfFrame[] = [];
+  const outputLines: string[] = [];
+
+  function isActive(): boolean {
+    return ifStack.length === 0 || ifStack[ifStack.length - 1].active;
   }
 
-  // Step 3: Replace known variable references so conditions become numeric
+  // Pop all braceless if frames after a statement is processed
+  function popBracelessFrames(): void {
+    while (ifStack.length > 0 && ifStack[ifStack.length - 1].braceless) {
+      ifStack.pop();
+    }
+  }
+
+  function subVars(text: string): string {
+    let result = text;
+    for (const [name, val] of Object.entries(vars)) {
+      const esc = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      result = result.replace(new RegExp(esc + "(?!\\w)", "g"), String(val));
+    }
+    // Evaluate min/max after variable substitution
+    result = result.replace(/min\(([^,()]+),([^,()]+)\)/g, (_, a: string, b: string) =>
+      String(Math.min(safeEvalExpr(a), safeEvalExpr(b))));
+    result = result.replace(/max\(([^,()]+),([^,()]+)\)/g, (_, a: string, b: string) =>
+      String(Math.max(safeEvalExpr(a), safeEvalExpr(b))));
+    return result;
+  }
+
+  // 2d: Process tokens
+  for (let ti = 0; ti < tokens.length; ti++) {
+    const token = tokens[ti];
+
+    // Opening brace — mark the top if frame as NOT braceless (it has braces)
+    if (token === "{") {
+      if (ifStack.length > 0) ifStack[ifStack.length - 1].braceless = false;
+      continue;
+    }
+
+    // Closing brace — pop if frame
+    if (token === "}") {
+      if (ifStack.length > 0) ifStack.pop();
+      continue;
+    }
+
+    // "} else {" — transition to else branch
+    if (token === "} else") {
+      if (ifStack.length > 0) {
+        const frame = ifStack[ifStack.length - 1];
+        if (frame.branchTaken) {
+          frame.active = false; // a branch was already taken
+        } else {
+          frame.active = frame.parentActive; // else is active if parent was active
+          frame.branchTaken = true;
+        }
+      }
+      continue;
+    }
+
+    // "} else if (cond)" — transition to else-if branch
+    const elseIfMatch = token.match(/^\}\s*else\s+if\s*\((.+)\)$/);
+    if (elseIfMatch) {
+      if (ifStack.length > 0) {
+        const frame = ifStack[ifStack.length - 1];
+        if (frame.branchTaken || !frame.parentActive) {
+          frame.active = false; // previous branch taken or parent inactive
+        } else {
+          const condStr = subVars(elseIfMatch[1]);
+          const result = safeEvalCondition(condStr);
+          frame.active = result;
+          if (result) frame.branchTaken = true;
+        }
+      }
+      continue;
+    }
+
+    // "if (cond)" — push new if frame (braceless by default; set to false if "{" follows)
+    const ifMatch = token.match(/^if\s*\((.+)\)$/);
+    if (ifMatch) {
+      const parentActive = isActive();
+      if (!parentActive) {
+        ifStack.push({ active: false, branchTaken: false, parentActive: false, braceless: true });
+      } else {
+        const condStr = subVars(ifMatch[1]);
+        const result = safeEvalCondition(condStr);
+        ifStack.push({ active: result, branchTaken: result, parentActive: true, braceless: true });
+      }
+      continue;
+    }
+
+    // Skip everything in inactive blocks — but still pop braceless frames
+    if (!isActive()) {
+      // This is a statement inside an inactive block. If it's a braceless if, pop it.
+      popBracelessFrames();
+      continue;
+    }
+
+    // Variable assignment — match BEFORE full substitution to preserve var name on LHS
+    const varOpMatch = token.match(/^(\.\@\w+)\s*(\+=|-=|=)\s*(.+)$/);
+    if (varOpMatch) {
+      const varName = varOpMatch[1];
+      const op = varOpMatch[2];
+      const rhs = subVars(varOpMatch[3]);
+      const value = safeEvalExpr(rhs);
+      if (op === "+=") vars[varName] = (vars[varName] || 0) + value;
+      else if (op === "-=") vars[varName] = (vars[varName] || 0) - value;
+      else vars[varName] = value;
+      popBracelessFrames(); // braceless if: this was the single statement
+      continue; // consume assignment, don't add to output
+    }
+
+    // Non-assignment statement — substitute vars and add to output for bonus parsing
+    // Append semicolon since the tokenizer strips them
+    outputLines.push(subVars(token) + ";");
+    popBracelessFrames(); // braceless if: this was the single statement
+  }
+
+  // Rebuild processed from interpreter output
+  processed = outputLines.join("\n");
+  // Final pass for any remaining variable references
   for (const [name, val] of Object.entries(vars)) {
-    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    processed = processed.replace(new RegExp(escaped + "(?!\\w)", "g"), String(val));
+    const esc = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    processed = processed.replace(new RegExp(esc + "(?!\\w)", "g"), String(val));
   }
 
-  // Step 4: Evaluate if/else blocks (handles nesting via innermost-first)
-  processed = evaluateIfBlocks(processed);
-
-  // Step 5: Re-parse variable assignments from surviving code (handles += in if bodies)
-  const vars2: Record<string, number> = {};
-  const reInitRegex = /(\.\@\w+)\s*=\s*([^;+=]+);/g;
-  while ((m = reInitRegex.exec(processed)) !== null) {
-    vars2[m[1]] = safeEvalExpr(m[2]);
-  }
-  const addRegex = /(\.\@\w+)\s*\+=\s*([^;]+);/g;
-  while ((m = addRegex.exec(processed)) !== null) {
-    vars2[m[1]] = (vars2[m[1]] || 0) + safeEvalExpr(m[2]);
-  }
-  for (const [name, val] of Object.entries(vars2)) {
-    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    processed = processed.replace(new RegExp(escaped + "(?!\\w)", "g"), String(val));
-  }
-
-  // Step 6: Parse bAllStats (adds to all 6 base stats)
+  // Step 5: Parse bAllStats (adds to all 6 base stats)
   const allStatsRegex = /bonus\s+bAllStats\s*,\s*([^;,]+)\s*;/g;
   let match;
   while ((match = allStatsRegex.exec(processed)) !== null) {
     const value = safeEvalExpr(match[1]);
+    if (isNaN(value)) continue;
     for (const stat of ["str", "agi", "vit", "int", "dex", "luk"] as NumericBonusKey[]) {
       bonus[stat] = (bonus[stat] || 0) + value;
     }
   }
 
-  // Step 7: Parse bonus bXXX, EXPR;  (expression-aware)
+  // bAllTraitStats (adds to all 6 trait stats: pow, sta, wis, spl, con, crt)
+  const allTraitRegex = /bonus\s+bAllTraitStats\s*,\s*([^;,]+)\s*;/g;
+  while ((match = allTraitRegex.exec(processed)) !== null) {
+    const value = safeEvalExpr(match[1]);
+    if (isNaN(value)) continue;
+    for (const stat of ["pow", "sta", "wis", "spl", "con", "crt"] as NumericBonusKey[]) {
+      bonus[stat] = (bonus[stat] || 0) + value;
+    }
+  }
+
+  // Step 6: Parse simple bonus bXXX, EXPR;
   const bonusRegex = /\bbonus\s+(b\w+)\s*(?:,\s*([^;,]+))?\s*;/g;
   while ((match = bonusRegex.exec(processed)) !== null) {
     const bonusName = match[1];
-    if (bonusName === "bAllStats") continue; // already handled above
+    if (bonusName === "bAllStats" || bonusName === "bAllTraitStats") continue;
+
+    // Special: bNoSizeFix has no value — it's a flag
+    if (bonusName === "bNoSizeFix") {
+      bonus.noSizeFix = true;
+      continue;
+    }
+
+    // Special: bAtkEle,Ele_X; — weapon element override
+    if (bonusName === "bAtkEle") {
+      if (match[2]) bonus.atkEle = match[2].trim();
+      continue;
+    }
+
+    // Special: bDefEle — skip (armor element, not relevant for damage output)
+    if (bonusName === "bDefEle") continue;
+
     const value = match[2] ? safeEvalExpr(match[2]) : 1;
+    if (isNaN(value)) continue;
     const key = BONUS_MAP[bonusName];
     if (key) {
       bonus[key] = (bonus[key] || 0) + value;
     }
   }
 
-  // Step 8: Parse bonus2 with identifier params: bonus2 bXXX, TYPE, EXPR;
+  // Step 7: Parse bonus2 with identifier params: bonus2 bXXX, TYPE, EXPR;
   const bonus2Regex = /bonus2\s+(b\w+)\s*,\s*(\w+)\s*,\s*([^;]+)\s*;/g;
   while ((match = bonus2Regex.exec(processed)) !== null) {
     const bonusName = match[1];
     const param = match[2];
     const value = safeEvalExpr(match[3]);
+    if (isNaN(value)) continue;
 
     switch (bonusName) {
       case "bSubRace":
+      case "bSubRace2":
         bonus.subRace = bonus.subRace || {};
         bonus.subRace[param] = (bonus.subRace[param] || 0) + value;
         break;
       case "bSubEle":
         bonus.subEle = bonus.subEle || {};
         bonus.subEle[param] = (bonus.subEle[param] || 0) + value;
+        break;
+      case "bSubSize":
+        bonus.subSize = bonus.subSize || {};
+        bonus.subSize[param] = (bonus.subSize[param] || 0) + value;
         break;
       case "bAddRace":
       case "bAddRace2":
@@ -618,6 +870,29 @@ export function parseScriptBonuses(
         bonus.subClass = bonus.subClass || {};
         bonus.subClass[param] = (bonus.subClass[param] || 0) + value;
         break;
+      // Magical damage modifiers — SEPARATE from physical!
+      case "bMagicAddRace":
+      case "bMagicAddRace2":
+        bonus.magicAddRace = bonus.magicAddRace || {};
+        bonus.magicAddRace[param] = (bonus.magicAddRace[param] || 0) + value;
+        break;
+      case "bMagicAddEle":
+        bonus.magicAddEle = bonus.magicAddEle || {};
+        bonus.magicAddEle[param] = (bonus.magicAddEle[param] || 0) + value;
+        break;
+      case "bMagicAddSize":
+        bonus.magicAddSize = bonus.magicAddSize || {};
+        bonus.magicAddSize[param] = (bonus.magicAddSize[param] || 0) + value;
+        break;
+      case "bMagicAddClass":
+        bonus.magicAddClass = bonus.magicAddClass || {};
+        bonus.magicAddClass[param] = (bonus.magicAddClass[param] || 0) + value;
+        break;
+      case "bMagicAtkEle":
+        bonus.magicAtkEle = bonus.magicAtkEle || {};
+        bonus.magicAtkEle[param] = (bonus.magicAtkEle[param] || 0) + value;
+        break;
+      // DEF/MDEF ignore
       case "bIgnoreDefRaceRate":
         bonus.ignoreDefRaceRate = bonus.ignoreDefRaceRate || {};
         bonus.ignoreDefRaceRate[param] = (bonus.ignoreDefRaceRate[param] || 0) + value;
@@ -626,24 +901,54 @@ export function parseScriptBonuses(
         bonus.ignoreMdefRaceRate = bonus.ignoreMdefRaceRate || {};
         bonus.ignoreMdefRaceRate[param] = (bonus.ignoreMdefRaceRate[param] || 0) + value;
         break;
+      case "bIgnoreDefClassRate":
+      case "bIgnoreDefRace":  // legacy name
+        bonus.ignoreDefClassRate = bonus.ignoreDefClassRate || {};
+        bonus.ignoreDefClassRate[param] = (bonus.ignoreDefClassRate[param] || 0) + value;
+        break;
+      case "bIgnoreMdefClassRate":
+      case "bIgnoreMDefClassRate":
+        bonus.ignoreMdefClassRate = bonus.ignoreMdefClassRate || {};
+        bonus.ignoreMdefClassRate[param] = (bonus.ignoreMdefClassRate[param] || 0) + value;
+        break;
+      // Critical add by race
+      case "bCriticalAddRace":
+        bonus.criticalAddRace = bonus.criticalAddRace || {};
+        bonus.criticalAddRace[param] = (bonus.criticalAddRace[param] || 0) + value;
+        break;
+      // Per-skill cast rate (bonus2 bVariableCastrate, SKILL, N; — different from global bVariableCastrate!)
+      // We ignore per-skill cast for now as it only affects specific skills
+      case "bVariableCastrate":
+      case "bFixedCastrate":
+        // per-skill cast rate: bonus2 bVariableCastrate, SKILL_ID, N;
+        // Skip: too complex to track per-skill. The global bVariableCastrate is handled in bonus1.
+        break;
       default: {
         const key = BONUS_MAP[bonusName];
-        if (key) bonus[key] = (bonus[key] || 0) + value;
+        if (key) {
+          bonus[key] = (bonus[key] || 0) + value;
+        }
       }
     }
   }
 
-  // Step 9: Parse bonus2 with quoted params: bonus2 bSkillAtk,"SKILL",EXPR;
+  // Step 8: Parse bonus2 with quoted params: bonus2 bSkillAtk,"SKILL",EXPR;
   const bonus2QuotedRegex = /bonus2\s+(b\w+)\s*,\s*"([^"]+)"\s*,\s*([^;]+)\s*;/g;
   while ((match = bonus2QuotedRegex.exec(processed)) !== null) {
     const bonusName = match[1];
     const param = match[2];
     const value = safeEvalExpr(match[3]);
+    if (isNaN(value)) continue;
 
     switch (bonusName) {
       case "bSkillAtk":
         bonus.skillAtk = bonus.skillAtk || {};
         bonus.skillAtk[param] = (bonus.skillAtk[param] || 0) + value;
+
+        // Latam DB Hotfix: True Eremes Guile buff targets GC_CROSSIMPACT but mathematically buffs GC_CROSSRIPPERSLASHER
+        if (param === "GC_CROSSIMPACT") {
+          bonus.skillAtk["GC_CROSSRIPPERSLASHER"] = (bonus.skillAtk["GC_CROSSRIPPERSLASHER"] || 0) + value;
+        }
         break;
       case "bSkillCooldown":
         bonus.skillCooldown = bonus.skillCooldown || {};
@@ -653,6 +958,10 @@ export function parseScriptBonuses(
       case "bSkillUseSPrate":
         bonus.skillUseSP = bonus.skillUseSP || {};
         bonus.skillUseSP[param] = (bonus.skillUseSP[param] || 0) + value;
+        break;
+      case "bSkillVariableCast":
+      case "bSkillFixedCast":
+        // Per-skill cast changes — skip for now
         break;
       default: {
         const key = BONUS_MAP[bonusName];
@@ -680,17 +989,10 @@ interface ComboJsonEntry {
 
 // Load combo data from JSON (generated by scripts/extract-combos.ts)
 // Uses require() because the file is outside src/ directory
-let _combosCache: ComboJsonEntry[] | null = null;
+import combosData from "../../data/database/combos.json";
+
 function getCombos(): ComboJsonEntry[] {
-  if (!_combosCache) {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      _combosCache = require("../../../data/database/combos.json") as ComboJsonEntry[];
-    } catch {
-      _combosCache = [];
-    }
-  }
-  return _combosCache;
+  return combosData as ComboJsonEntry[];
 }
 
 // Helper to merge EquipBonus into totalBonus
@@ -723,33 +1025,70 @@ export function applyComboBonus(
 
   for (const [slotKey, item] of Object.entries(equipment)) {
     if (!item || item._blockedBy || slotKey.startsWith("visual_")) continue;
-    equippedIds.add(item.id);
-    itemRefines.set(item.id, item.refine || 0);
+    equippedIds.add(Number(item.id));
+    itemRefines.set(Number(item.id), item.refine || 0);
+
+    // Also consider cards and enchantments for combos!
+    if (item.cards) {
+      for (const card of item.cards) {
+        if (card) equippedIds.add(Number(card.id));
+      }
+    }
+    if (item.enchants) {
+      for (const enchant of item.enchants) {
+        if (enchant) equippedIds.add(Number(enchant.id));
+      }
+    }
   }
 
   const activeCombos: string[] = [];
   const combos = getCombos();
 
   for (const combo of combos) {
+    // If the combo has unresolved item IDs (-1), it can never be fully equipped.
+    // We must skip it, otherwise it might falsely trigger if only the source item is equipped.
+    if (combo.requiredItemIds.some(id => id <= 0)) continue;
+
     // All items in the combo must be equipped
-    const allPresent = combo.allItemIds.every(id => id > 0 && equippedIds.has(id));
+    const allPresent = combo.allItemIds.every(id => id > 0 && equippedIds.has(Number(id)));
+
     if (!allPresent) continue;
+
+    // Determine the combined refine scale for dynamic bonuses
+    const combinedRefine = combo.allItemIds.reduce((sum, id) => sum + (itemRefines.get(id) || 0), 0);
 
     // Build display name
     const comboName = `${combo.sourceItemName} + ${combo.requiredItemNames.join(" + ")}`;
     activeCombos.push(comboName);
 
+    // Helper to evaluate dynamic bonuses
+    const processDynamic = (bonuses: Partial<EquipBonus> & Record<string, any>) => {
+      const b = { ...bonuses };
+      if (b.critAtkRate_PerCombinedRefine) {
+        b.critAtkRate = (b.critAtkRate || 0) + (b.critAtkRate_PerCombinedRefine * combinedRefine);
+        delete b.critAtkRate_PerCombinedRefine;
+      }
+      if (b.matkRate_PerCombinedRefine) {
+        b.matkRate = (b.matkRate || 0) + (b.matkRate_PerCombinedRefine * combinedRefine);
+        delete b.matkRate_PerCombinedRefine;
+      }
+      if (b.atkRate_PerCombinedRefine) {
+        b.atkRate = (b.atkRate || 0) + (b.atkRate_PerCombinedRefine * combinedRefine);
+        delete b.atkRate_PerCombinedRefine;
+      }
+      return b;
+    };
+
     // Apply base combo bonuses
     if (Object.keys(combo.baseBonuses).length > 0) {
-      mergeBonus(totalBonus, combo.baseBonuses);
+      mergeBonus(totalBonus, processDynamic(combo.baseBonuses));
     }
 
     // Apply refine-gated bonuses
     for (const rb of combo.refineBonuses) {
       if (rb.minCombinedRefine && Object.keys(rb.bonuses).length > 0) {
-        const combinedRefine = combo.allItemIds.reduce((sum, id) => sum + (itemRefines.get(id) || 0), 0);
         if (combinedRefine >= rb.minCombinedRefine) {
-          mergeBonus(totalBonus, rb.bonuses);
+          mergeBonus(totalBonus, processDynamic(rb.bonuses));
         }
       }
     }
@@ -807,10 +1146,11 @@ export interface BuildConfig {
   hpFactor: number;   // class HP multiplier (from RoClass)
   spFactor: number;   // class SP multiplier (from RoClass)
   isTrans: boolean;   // transcendent/3rd class gets 1.25× HP/SP
+  activeBuffs?: string[]; // Array of Buff IDs from ro-buffs
 }
 
 export function calculateDerivedStats(build: BuildConfig): DerivedStats {
-  const { baseLevel, baseStats, equipment, hpFactor = 1, spFactor = 1, isTrans = true } = build;
+  const { baseLevel, baseStats, equipment, hpFactor = 1, spFactor = 1, isTrans = true, activeBuffs = [] } = build;
   const s = baseStats;
   const transMod = isTrans ? 1.25 : 1.0;
 
@@ -826,6 +1166,7 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   let mainWeaponLevel = 0;
   let mainWeaponRefine = 0;
   let mainWeaponSubType: string | undefined;
+  let mainWeaponWeight = 0;
 
   for (const [slotKey, item] of Object.entries(equipment)) {
     if (!item) continue;
@@ -847,6 +1188,7 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
       mainWeaponLevel = item.weaponLevel || 1;
       mainWeaponRefine = item.refine || 0;
       mainWeaponSubType = item.subType;
+      mainWeaponWeight = item.weight || 0;
     }
 
     // Refine bonuses
@@ -862,25 +1204,18 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
       ...(item.enchants || []).filter(Boolean).map((e) => e!.script),
     ];
     for (const scr of scripts) {
-      const sb = parseScriptBonuses(scr, item.refine, baseLevel, baseStats);
-      for (const [k, v] of Object.entries(sb)) {
-        const key = k as keyof EquipBonus;
-        if (typeof v === "object" && v !== null) {
-          const existing = (totalBonus[key] || {}) as Record<string, number>;
-          for (const [rk, rv] of Object.entries(v as Record<string, number>)) {
-            existing[rk] = (existing[rk] || 0) + rv;
-          }
-          (totalBonus as Record<string, unknown>)[key] = existing;
-        } else {
-          (totalBonus as Record<string, unknown>)[key] = ((totalBonus[key] as number) || 0) + (v as number);
-        }
-      }
+      const sb = parseScriptBonuses(scr, item.refine, baseLevel, baseStats, mainWeaponLevel); // Pass weaponLevel for card scripts that rely on it (e.g., Alma de Eremes)
+      mergeBonus(totalBonus, sb);
     }
   }
 
   // Apply item combo/set bonuses (e.g., Temporal FOR Set)
   const activeCombos = applyComboBonus(equipment, totalBonus);
 
+  // Apply Consumables/Buffs
+  applyActiveBuffs(activeBuffs, totalBonus, baseStats, baseLevel);
+
+  // Apply base stat modifiers
   const bonusStr = totalBonus.str || 0;
   const bonusAgi = totalBonus.agi || 0;
   const bonusVit = totalBonus.vit || 0;
@@ -941,33 +1276,71 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   const spRate = 1 + (totalBonus.maxSpRate || 0) / 100;
 
   // Build special bonuses list
-  const specialBonuses: { label: string; value: number }[] = [];
+  const specialBonuses: { label: string; value: number; invertColor?: boolean }[] = [];
 
   const addSpecials = (
     record: Record<string, number> | undefined,
     type: "race" | "element" | "size" | "class",
     prefix: string,
+    invertColor?: boolean,
   ) => {
     if (!record) return;
     for (const [key, val] of Object.entries(record)) {
       if (val !== 0) {
+        let finalPrefix = prefix;
+        let finalVal = val;
+        let finalColor = invertColor;
+
+        // If it's a resistance penalty (e.g. -20% resist), rebrand it as "Dano Recebido"
+        if (prefix === "Resist." && val < 0) {
+          finalPrefix = "Dano Recebido de";
+          finalVal = Math.abs(val);
+          // We want it to be red since taking more damage is bad.
+          // Since invertColor handles "isGood = invertColor ? val < 0 : val > 0"
+          // If finalVal is positive (20), value > 0.
+          // If invertColor is true, isGood = val < 0 => False (Red).
+          // So we set invertColor to true.
+          finalColor = true;
+        }
+
         specialBonuses.push({
-          label: formatSpecialBonus(type, key, val, prefix),
-          value: val,
+          label: formatSpecialBonus(type, key, finalVal, finalPrefix),
+          value: finalVal,
+          invertColor: finalColor,
         });
       }
     }
   };
 
+  // Physical damage modifiers
+  addSpecials(totalBonus.addRace, "race", "Dano Físico vs");
+  addSpecials(totalBonus.addEle, "element", "Dano Físico vs");
+  addSpecials(totalBonus.addSize, "size", "Dano Físico vs");
+  addSpecials(totalBonus.addClass, "class", "Dano Físico vs");
+
+  // Magical damage modifiers
+  addSpecials(totalBonus.magicAddRace, "race", "Dano Mágico vs");
+  addSpecials(totalBonus.magicAddEle, "element", "Dano Mágico vs");
+  addSpecials(totalBonus.magicAddSize, "size", "Dano Mágico vs");
+  addSpecials(totalBonus.magicAddClass, "class", "Dano Mágico vs");
+
+  // Magic element damage
+  if (totalBonus.magicAtkEle) {
+    for (const [key, val] of Object.entries(totalBonus.magicAtkEle)) {
+      if (val !== 0) {
+        const eleLabel = ELEMENT_LABELS[key] || key;
+        specialBonuses.push({ label: `Magia ${eleLabel} +${val}%`, value: val });
+      }
+    }
+  }
+
+  // Resistances — positive values mean damage REDUCTION which is GOOD for the player
   addSpecials(totalBonus.subRace, "race", "Resist.");
   addSpecials(totalBonus.subEle, "element", "Resist.");
+  addSpecials(totalBonus.subSize, "size", "Resist.");
   addSpecials(totalBonus.subClass, "class", "Resist.");
-  addSpecials(totalBonus.addRace, "race", "Dano vs");
-  addSpecials(totalBonus.addEle, "element", "Dano vs");
-  addSpecials(totalBonus.addSize, "size", "Dano vs");
-  addSpecials(totalBonus.addClass, "class", "Dano vs");
 
-  // DEF/MDEF ignore by race
+  // DEF/MDEF ignore by race/class
   if (totalBonus.ignoreDefRaceRate) {
     for (const [key, val] of Object.entries(totalBonus.ignoreDefRaceRate)) {
       if (val !== 0) {
@@ -984,10 +1357,29 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
       }
     }
   }
+  if (totalBonus.ignoreDefClassRate) {
+    for (const [key, val] of Object.entries(totalBonus.ignoreDefClassRate)) {
+      if (val !== 0) {
+        const classLabel = CLASS_LABELS[key] || key;
+        specialBonuses.push({ label: `DEF ignorada ${classLabel} ${val}%`, value: val });
+      }
+    }
+  }
 
   // Heal power
   if (totalBonus.healPower) {
     specialBonuses.push({ label: `Cura +${totalBonus.healPower}%`, value: totalBonus.healPower });
+  }
+
+  // Weapon element override
+  if (totalBonus.atkEle) {
+    const eleLabel = ELEMENT_LABELS[totalBonus.atkEle] || totalBonus.atkEle;
+    specialBonuses.push({ label: `Elemento da Arma: ${eleLabel}`, value: 0 });
+  }
+
+  // No size penalty
+  if (totalBonus.noSizeFix) {
+    specialBonuses.push({ label: "Ignora Penalidade de Tamanho", value: 0 });
   }
 
   // Skill-specific bonuses
@@ -1046,7 +1438,9 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
     weaponLevel: mainWeaponLevel,
     weaponRefine: mainWeaponRefine,
     weaponSubType: mainWeaponSubType,
+    weaponWeight: mainWeaponWeight,
     activeCombos,
+    activeBuffs,
   };
 }
 
@@ -1054,14 +1448,12 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
 
 /**
  * Cost in stat points to raise a stat from `currentValue` to `currentValue + 1`.
+ * rAthena formula: pc_need_status_point = 1 + (val + 9) / 10
+ * Same formula for ALL stat values (no special case at 100+).
  */
 export function getStatCost(currentValue: number): number {
   if (currentValue < 1) return 0;
-  if (currentValue < 100) {
-    return Math.floor((currentValue - 1) / 10) + 2;
-  }
-  // Stats 100+: expensive (3rd job only)
-  return 4 * Math.floor((currentValue - 100) / 5) + 16;
+  return 1 + Math.floor((currentValue + 9) / 10);
 }
 
 /**
@@ -1088,18 +1480,13 @@ export function getTotalStatPointsUsed(stats: BaseStats): number {
 
 /**
  * Total stat points available at a given base level.
+ * rAthena formula: pc_gets_status_point = (level + 14) / 5 per level.
  * Includes the 48 starting points + level-up gains.
  */
 export function getTotalStatPoints(baseLevel: number): number {
   let total = 48; // starting stat points at level 1
   for (let lv = 2; lv <= baseLevel; lv++) {
-    if (lv <= 99) {
-      total += Math.floor(lv / 5) + 3;
-    } else if (lv <= 150) {
-      total += Math.floor(lv / 10) + 13;
-    } else {
-      total += Math.floor((lv - 150) / 7) + 28;
-    }
+    total += Math.floor((lv + 14) / 5);
   }
   return total;
 }

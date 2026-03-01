@@ -1,12 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
+  trailingSlash: true,
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "static.divine-pride.net",
-      },
-    ],
+    unoptimized: true,
   },
 };
 

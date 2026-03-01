@@ -22,6 +22,10 @@ const aegisToId = new Map<string, number>();
 for (const item of items) {
   if (item.namePt) nameToId.set(item.namePt.toLowerCase(), item.id);
   if (item.nameEn) nameToId.set(item.nameEn.toLowerCase(), item.id);
+  // Important: some combo descriptions use [Card Name] or just the name. 
+  // We need to match exactly.
+  if (item.namePt) nameToId.set(item.namePt.toLowerCase().replace(/ carta$/i, ""), item.id);
+
   if (item.aegisName) aegisToId.set(item.aegisName.toLowerCase(), item.id);
 }
 
@@ -77,9 +81,14 @@ interface ParsedBonus {
   addClass?: Record<string, number>;
   subRace?: Record<string, number>;
   subEle?: Record<string, number>;
+  magicAddEle?: Record<string, number>;
   skillAtk?: Record<string, number>;
   ignoreDefRaceRate?: Record<string, number>;
   ignoreMdefRaceRate?: Record<string, number>;
+  // Dynamic/Special variables (like per combined refine)
+  critAtkRate_PerCombinedRefine?: number;
+  matkRate_PerCombinedRefine?: number;
+  atkRate_PerCombinedRefine?: number;
   // Unparseable bonus lines (for debugging)
   _unparsed?: string[];
 }
@@ -200,6 +209,7 @@ const ELE_PT: Record<string, string> = {
   "Fogo": "Ele_Fire", "Vento": "Ele_Wind", "Veneno": "Ele_Poison",
   "Sagrado": "Ele_Holy", "Sombrio": "Ele_Dark", "Fantasma": "Ele_Ghost",
   "Morto-Vivo": "Ele_Undead",
+  "todas as propriedades": "Ele_All", "todas propriedades": "Ele_All",
 };
 
 function parseBonusLine(line: string, bonus: ParsedBonus): boolean {
@@ -207,6 +217,21 @@ function parseBonusLine(line: string, bonus: ParsedBonus): boolean {
   if (!clean || clean.startsWith("---")) return false;
 
   let m: RegExpMatchArray | null;
+
+  // Dynamic Combo Refine Modifiers (e.g., Jetpack + Exoesqueleto)
+  if ((m = clean.match(/Dano (cr[ií]tico) \+(\d+)%?(?: por refino| a cada refino)? da capa e da armadura/i))) {
+    bonus.critAtkRate_PerCombinedRefine = (bonus.critAtkRate_PerCombinedRefine || 0) + parseInt(m[2]);
+    return true;
+  }
+  if ((m = clean.match(/Dano m[aá]gico de todas as propriedades \+(\d+)%?(?: por refino| a cada refino)? da capa e da armadura/i))) {
+    bonus.matkRate_PerCombinedRefine = (bonus.matkRate_PerCombinedRefine || 0) + parseInt(m[1]);
+    return true;
+  }
+  // Dano fisico de todas as propriedades
+  if ((m = clean.match(/Dano f[ií]sico de(?: contra)? todas as propriedades \+(\d+)%?(?: por refino| a cada refino)? da capa e da armadura/i))) {
+    bonus.atkRate_PerCombinedRefine = (bonus.atkRate_PerCombinedRefine || 0) + parseInt(m[1]);
+    return true;
+  }
 
   // ATQ +N (flat ATK)
   if ((m = clean.match(/^ATQ\s*\+(\d+)/i))) {
@@ -358,15 +383,36 @@ function parseBonusLine(line: string, bonus: ParsedBonus): boolean {
   }
 
   // Dano físico contra propriedade X +N%
-  if ((m = clean.match(/Dano (?:f[ií]sico|m[aá]gico)? ?contra (?:oponentes de )?propriedade (\w+)\s*\+(\d+)%/i))) {
-    const eleName = m[1];
+  if ((m = clean.match(/Dano (?:f[ií]sico|m[aá]gico)? ?contra (?:oponentes de )?propriedades?\s+(.+?)\s*\+(\d+)%/i))) {
+    const eleName = m[1].toLowerCase().replace("todas as propriedades", "todas as propriedades"); // normalize
     const value = parseInt(m[2]);
-    const eleKey = ELE_PT[eleName];
-    if (eleKey) {
+    const eleKey = ELE_PT[eleName] || ELE_PT["todas as propriedades"];
+    if (eleKey || eleName.includes("todas as propriedades")) {
       bonus.addEle = bonus.addEle || {};
-      bonus.addEle[eleKey] = (bonus.addEle[eleKey] || 0) + value;
+      bonus.addEle[eleKey || "Ele_All"] = (bonus.addEle[eleKey || "Ele_All"] || 0) + value;
       return true;
     }
+  }
+
+  // Dano mágico de todas as propriedades +N%
+  if ((m = clean.match(/Dano m[aá]gico de todas as propriedades\s*\+(\d+)%/i))) {
+    bonus.magicAddEle = bonus.magicAddEle || {};
+    bonus.magicAddEle["Ele_All"] = (bonus.magicAddEle["Ele_All"] || 0) + parseInt(m[1]);
+    return true;
+  }
+
+  // Dano mágico contra todas as propriedades +N%
+  if ((m = clean.match(/Dano m[aá]gico contra todas as propriedades\s*\+(\d+)%/i))) {
+    bonus.magicAddEle = bonus.magicAddEle || {};
+    bonus.magicAddEle["Ele_All"] = (bonus.magicAddEle["Ele_All"] || 0) + parseInt(m[1]);
+    return true;
+  }
+
+  // Dano físico contra todas as propriedades +N%
+  if ((m = clean.match(/Dano f[ií]sico contra todas as propriedades\s*\+(\d+)%/i))) {
+    bonus.addEle = bonus.addEle || {};
+    bonus.addEle["Ele_All"] = (bonus.addEle["Ele_All"] || 0) + parseInt(m[1]);
+    return true;
   }
 
   // Helper: split element names from Portuguese text
@@ -391,12 +437,12 @@ function parseBonusLine(line: string, bonus: ParsedBonus): boolean {
     if (found) return true;
   }
   // Dano (físico/mágico) contra oponentes de propriedade X +N%
-  if ((m = clean.match(/Dano (?:f[ií]sico|m[aá]gico)?\s*contra (?:oponentes de )?propriedade (.+?)\s*\+(\d+)%/i))) {
+  if ((m = clean.match(/Dano (?:f[ií]sico|m[aá]gico)?\s*contra (?:oponentes de )?propriedades?\s+(.+?)\s*\+(\d+)%/i))) {
     const eleNames = splitEleNames(m[1]);
     const value = parseInt(m[2]);
     let found = false;
     for (const eleName of eleNames) {
-      const eleKey = ELE_PT[eleName];
+      const eleKey = ELE_PT[eleName] || (eleName.includes("todas") ? "Ele_All" : undefined);
       if (eleKey) {
         bonus.addEle = bonus.addEle || {};
         bonus.addEle[eleKey] = (bonus.addEle[eleKey] || 0) + value;
@@ -480,10 +526,10 @@ function parseBonusLine(line: string, bonus: ParsedBonus): boolean {
   if ((m = clean.match(/^Dano m[aá]gico\s*-(\d+)%/i))) {
     bonus.matkRate = (bonus.matkRate || 0) - parseInt(m[1]); return true;
   }
-  // Dano físico contra oponentes de tamanho X +N%
+  // Dano lógico contra tamanhos - added "todos os"
   if ((m = clean.match(/Dano f[ií]sico contra (?:oponentes de )?tamanho\s+(.+?)\s*\+(\d+)%/i))) {
-    const sizeMap: Record<string, string> = { pequeno: "Size_Small", "médio": "Size_Medium", "medio": "Size_Medium", grande: "Size_Large" };
-    const sizeKey = sizeMap[m[1].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")];
+    const sizeMap: Record<string, string> = { pequeno: "Size_Small", "médio": "Size_Medium", "medio": "Size_Medium", grande: "Size_Large", "todos os": "Size_All", "todos": "Size_All" };
+    const sizeKey = sizeMap[m[1].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim()];
     if (sizeKey) {
       bonus.addSize = bonus.addSize || {};
       bonus.addSize[sizeKey] = (bonus.addSize[sizeKey] || 0) + parseInt(m[2]);

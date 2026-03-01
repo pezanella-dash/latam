@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { itemImageUrl } from "@/lib/utils";
+import { getChangelog } from "@/lib/db/supabase";
 
 interface ChangelogEntry {
   date: string;
@@ -30,10 +31,9 @@ export default function NovidadesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/changelog")
-      .then((r) => r.json())
+    getChangelog()
       .then((data) => {
-        setEntries(data.entries || []);
+        setEntries(data || []);
         setLoading(false);
       })
       .catch(() => setLoading(false));

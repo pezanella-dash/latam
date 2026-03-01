@@ -1,5 +1,8 @@
-import { prisma } from "@/lib/db/prisma";
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { supabase } from "@/lib/db/supabase";
 
 const TIER_COLORS: Record<string, string> = {
   S: "bg-yellow-500 text-slate-900",
@@ -20,15 +23,28 @@ interface TierList {
   };
 }
 
-export const revalidate = 3600;
+export default function MetaPage() {
+  const [tierList, setTierList] = useState<TierList>({});
+  const [patch, setPatch] = useState("—");
+  const [changes, setChanges] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export default async function MetaPage() {
-  const snapshot = await prisma.metaSnapshot.findFirst({
-    orderBy: { snapshotAt: "desc" },
-  });
-
-  const tierList = (snapshot?.tierList ?? {}) as unknown as TierList;
-  const patch = snapshot?.patch ?? "—";
+  useEffect(() => {
+    supabase
+      .from("meta_snapshots")
+      .select("*")
+      .order("snapshot_at", { ascending: false })
+      .limit(1)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          setTierList((data.tier_list ?? {}) as unknown as TierList);
+          setPatch(data.patch ?? "—");
+          setChanges(data.changes ?? null);
+        }
+        setLoading(false);
+      });
+  }, []);
 
   // Group by tier
   const byTier: Record<string, Array<{ classId: string; role: string; notes?: string }>> = {};
@@ -41,6 +57,14 @@ export default async function MetaPage() {
   }
 
   const tierOrder = ["S", "A", "B", "C", "D"];
+
+  if (loading) {
+    return (
+      <main className="max-w-3xl mx-auto px-4 py-10">
+        <div className="h-8 bg-ro-panel rounded w-48 animate-pulse mb-6" />
+      </main>
+    );
+  }
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-10">
@@ -55,10 +79,10 @@ export default async function MetaPage() {
         </span>
       </div>
 
-      {snapshot?.changes && (
+      {changes && (
         <div className="mb-8 p-4 bg-slate-800 border border-slate-600 rounded-lg text-sm text-slate-300">
           <span className="font-semibold text-white">Últimas mudanças: </span>
-          {snapshot.changes}
+          {changes}
         </div>
       )}
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { itemImageUrl, classIconUrl, parseRODescription } from "@/lib/utils";
+import { searchItems } from "@/lib/db/supabase";
 import CharacterPreview, { type RenderParams } from "@/components/build/CharacterPreview";
 import {
   RO_CLASSES,
@@ -26,6 +27,8 @@ import {
   type BuildConfig,
 } from "@/lib/ro-stats";
 import DamageCalculator from "@/components/build/DamageCalculator";
+import BuffSelectorModal from "@/components/build/BuffSelectorModal";
+import { BUFFS, getBuff } from "@/lib/ro-buffs";
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -43,6 +46,7 @@ interface SearchItem {
   refineable?: boolean;
   weaponLevel?: number;
   armorLevel?: number;
+  weight?: number;
   equipLevelMin?: number;
   locations: string[];
   jobs: string[];
@@ -105,6 +109,8 @@ export default function BuildsPage() {
   const [jobLevel, setJobLevel] = useState(70);
   const [baseStats, setBaseStats] = useState<BaseStats>({ ...DEFAULT_STATS });
   const [equipment, setEquipment] = useState<Partial<Record<EquipSlot, EquippedItem | null>>>({});
+  const [activeBuffs, setActiveBuffs] = useState<string[]>([]);
+  const [showBuffModal, setShowBuffModal] = useState(false);
   const [searchSlot, setSearchSlot] = useState<EquipSlot | null>(null);
   const [cardSearch, setCardSearch] = useState<{ equipSlot: EquipSlot; cardIndex: number } | null>(null);
   const [enchantSearch, setEnchantSearch] = useState<{ equipSlot: EquipSlot; enchantIndex: number } | null>(null);
@@ -210,14 +216,14 @@ export default function BuildsPage() {
       script: item.script, refineable: item.refineable,
       refine, slots: item.slots, cards: Array(item.slots).fill(null),
       enchants: [null, null, null, null],  // 4 enchantment slots
-      weaponLevel: item.weaponLevel, armorLevel: item.armorLevel,
+      weaponLevel: item.weaponLevel, armorLevel: item.armorLevel, weight: item.weight,
       locations: item.locations, jobs: item.jobs,
       classNum: item.classNum || 0,
       description: item.description,
     };
 
     // Multi-slot items: fill all occupied slots
-    const allSlots = getAllOccupiedSlots(item.locations);
+    const allSlots = getAllOccupiedSlots(item.locations, slot);
     setEquipment((prev) => {
       const next = { ...prev };
 
@@ -225,7 +231,7 @@ export default function BuildsPage() {
       // 1) If the primary slot currently has an item, clear its secondary slots too
       const existing = next[slot];
       if (existing && !existing._blockedBy) {
-        const oldSlots = getAllOccupiedSlots(existing.locations);
+        const oldSlots = getAllOccupiedSlots(existing.locations, slot);
         for (const s of oldSlots) {
           if (s !== slot) next[s] = null;
         }
@@ -236,7 +242,7 @@ export default function BuildsPage() {
         if (target?._blockedBy && target._blockedBy !== slot) {
           const primary = next[target._blockedBy];
           if (primary) {
-            const oldSlots = getAllOccupiedSlots(primary.locations);
+            const oldSlots = getAllOccupiedSlots(primary.locations, target._blockedBy);
             for (const os of oldSlots) next[os] = null;
           }
         }
@@ -267,13 +273,13 @@ export default function BuildsPage() {
         const primary = next[primarySlot];
         if (primary) {
           // Clear all slots occupied by the primary item
-          const allSlots = getAllOccupiedSlots(primary.locations);
+          const allSlots = getAllOccupiedSlots(primary.locations, primarySlot);
           for (const s of allSlots) next[s] = null;
         }
         next[slot] = null;
       } else {
         // This is a primary slot — clear all secondary slots too
-        const allSlots = getAllOccupiedSlots(item.locations);
+        const allSlots = getAllOccupiedSlots(item.locations, slot);
         for (const s of allSlots) next[s] = null;
       }
       return next;
@@ -456,10 +462,14 @@ export default function BuildsPage() {
 
   // ─── Build editor ──────────────────────────────────────────────
   const buildConfig: BuildConfig = {
-    baseLevel, jobLevel, baseStats, equipment,
-    hpFactor: selectedClass.hpFactor,
-    spFactor: selectedClass.spFactor,
-    isTrans: selectedClass.tier === "trans" || selectedClass.tier === "third",
+    baseLevel,
+    jobLevel,
+    baseStats,
+    equipment,
+    activeBuffs, // Added activeBuffs
+    hpFactor: selectedClass?.hpFactor || 1,
+    spFactor: selectedClass?.spFactor || 1,
+    isTrans: selectedClass?.tier === "trans" || selectedClass?.tier === "third",
   };
   const derivedStats = calculateDerivedStats(buildConfig);
   const groupColor = CLASS_GROUPS[selectedClass.group].color;
@@ -522,172 +532,182 @@ export default function BuildsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-4">
-        {/* ══════════ LEFT: Equipment Window (ALT+Q) ══════════ */}
-        <div className="ro-panel overflow-hidden" style={{ border: `1px solid ${groupColor}30` }}>
-          {/* Window title bar — like the game */}
-          <div className="flex items-center gap-0 border-b border-ro-border" style={{ background: `${groupColor}08` }}>
-            <span className="px-3 py-1.5 text-[11px] font-semibold border-r border-ro-border/30" style={{ color: groupColor }}>
-              Equipamentos
-            </span>
-            <button
-              onClick={() => setActiveTab("altq")}
-              className={`px-3 py-1.5 text-[10px] transition-colors ${activeTab === "altq" ? "text-ro-gold border-b-2 border-ro-gold font-medium" : "text-ro-muted hover:text-[var(--ro-text)]"}`}
-            >
-              ALT+Q
-            </button>
-            <button
-              onClick={() => setActiveTab("altx")}
-              className={`px-3 py-1.5 text-[10px] transition-colors ${activeTab === "altx" ? "text-ro-gold border-b-2 border-ro-gold font-medium" : "text-ro-muted hover:text-[var(--ro-text)]"}`}
-            >
-              ALT+X
-            </button>
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-4 items-start">
+        {/* ══════════ LEFT: Equipment Window + Calculator ══════════ */}
+        <div className="flex flex-col gap-4">
+          <div className="ro-panel overflow-hidden" style={{ border: `1px solid ${groupColor}30` }}>
+            {/* Window title bar — like the game */}
+            <div className="flex items-center gap-0 border-b border-ro-border" style={{ background: `${groupColor}08` }}>
+              <span className="px-3 py-1.5 text-[11px] font-semibold border-r border-ro-border/30" style={{ color: groupColor }}>
+                Equipamentos
+              </span>
+              <button
+                onClick={() => setActiveTab("altq")}
+                className={`px-3 py-1.5 text-[10px] transition-colors ${activeTab === "altq" ? "text-ro-gold border-b-2 border-ro-gold font-medium" : "text-ro-muted hover:text-[var(--ro-text)]"}`}
+              >
+                ALT+Q
+              </button>
+              <button
+                onClick={() => setActiveTab("altx")}
+                className={`px-3 py-1.5 text-[10px] transition-colors ${activeTab === "altx" ? "text-ro-gold border-b-2 border-ro-gold font-medium" : "text-ro-muted hover:text-[var(--ro-text)]"}`}
+              >
+                ALT+X
+              </button>
+            </div>
+
+            {activeTab === "altq" && (
+              <>
+                {/* ALT+Q body: row-based grid — left slot | sprite | right slot per row */}
+                <div className="grid items-stretch overflow-x-auto" style={{ gridTemplateColumns: 'minmax(120px, 1fr) minmax(200px, 220px) minmax(120px, 1fr)', minHeight: 380 }}>
+                  {/* Character sprite preview — center, spans all rows */}
+                  <div style={{ gridColumn: 2, gridRow: '1 / 6' }} className="flex items-center justify-center">
+                    {renderParams && (
+                      <CharacterPreview
+                        params={renderParams}
+
+                        onParamsChange={(partial) => {
+                          // If jobId changes from costume selector, store as costumeJobId
+                          if (partial.jobId !== undefined) {
+                            const isDefault = partial.jobId === selectedClass?.zrendererJobId;
+                            setPreviewState((prev) => ({ ...prev, ...partial, costumeJobId: isDefault ? 0 : partial.jobId! }));
+                          } else {
+                            setPreviewState((prev) => ({ ...prev, ...partial }));
+                          }
+                        }}
+                        width={200}
+                        height={280}
+                        showControls
+                      />
+                    )}
+                  </div>
+                  {/* Left slots — content pushed right (near character) */}
+                  {LEFT_SLOTS.map((slotId, i) => (
+                    <div key={slotId} style={{ gridColumn: 1, gridRow: i + 1 }}
+                      className={`flex items-center pl-2 pr-1 ${i % 2 === 1 ? 'bg-[var(--ro-stripe)]' : ''} ${i < 4 ? 'border-b border-[var(--ro-stripe-border)]' : ''}`}>
+                      <AltQSlot
+                        slotId={slotId}
+                        equipment={equipment}
+                        align="right"
+                        onSearch={() => setSearchSlot(slotId)}
+                        onUnequip={() => handleUnequip(slotId)}
+                        onRefineChange={(r) => handleRefineChange(slotId, r)}
+                        onCardSearch={(idx) => setCardSearch({ equipSlot: slotId, cardIndex: idx })}
+                        onCardUnequip={(idx) => handleCardUnequip(slotId, idx)}
+                        onEnchantSearch={(idx) => setEnchantSearch({ equipSlot: slotId, enchantIndex: idx })}
+                        onEnchantUnequip={(idx) => handleEnchantUnequip(slotId, idx)}
+                        onItemClick={handleItemTooltip}
+                      />
+                    </div>
+                  ))}
+                  {/* Right slots — content pushed left (near character) */}
+                  {RIGHT_SLOTS.map((slotId, i) => (
+                    <div key={slotId} style={{ gridColumn: 3, gridRow: i + 1 }}
+                      className={`flex items-center justify-start pr-2 pl-1 ${i % 2 === 1 ? 'bg-[var(--ro-stripe)]' : ''} ${i < 4 ? 'border-b border-[var(--ro-stripe-border)]' : ''}`}>
+                      <AltQSlot
+                        slotId={slotId}
+                        equipment={equipment}
+                        align="left"
+                        onSearch={() => setSearchSlot(slotId)}
+                        onUnequip={() => handleUnequip(slotId)}
+                        onRefineChange={(r) => handleRefineChange(slotId, r)}
+                        onCardSearch={(idx) => setCardSearch({ equipSlot: slotId, cardIndex: idx })}
+                        onCardUnequip={(idx) => handleCardUnequip(slotId, idx)}
+                        onEnchantSearch={(idx) => setEnchantSearch({ equipSlot: slotId, enchantIndex: idx })}
+                        onEnchantUnequip={(idx) => handleEnchantUnequip(slotId, idx)}
+                        onItemClick={handleItemTooltip}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+            {activeTab === "altx" && (
+              <>
+                {/* ALT+X body: row-based grid — visual + shadow slots */}
+                <div className="grid items-stretch overflow-x-auto" style={{ gridTemplateColumns: 'minmax(120px, 1fr) minmax(200px, 220px) minmax(120px, 1fr)', minHeight: 380 }}>
+                  {/* Character sprite preview — center, spans all rows */}
+                  <div style={{ gridColumn: 2, gridRow: '1 / 6' }} className="flex items-center justify-center">
+                    {renderParams && (
+                      <CharacterPreview
+                        params={renderParams}
+
+                        onParamsChange={(partial) => {
+                          // If jobId changes from costume selector, store as costumeJobId
+                          if (partial.jobId !== undefined) {
+                            const isDefault = partial.jobId === selectedClass?.zrendererJobId;
+                            setPreviewState((prev) => ({ ...prev, ...partial, costumeJobId: isDefault ? 0 : partial.jobId! }));
+                          } else {
+                            setPreviewState((prev) => ({ ...prev, ...partial }));
+                          }
+                        }}
+                        width={200}
+                        height={280}
+                        showControls
+                      />
+                    )}
+                  </div>
+                  {/* Left slots — content pushed right (near character) */}
+                  {LEFT_ALTX.map((slotId, i) => (
+                    <div key={slotId} style={{ gridColumn: 1, gridRow: i + 1 }}
+                      className={`flex items-center pl-2 pr-1 ${i % 2 === 1 ? 'bg-[var(--ro-stripe)]' : ''} ${i < 4 ? 'border-b border-[var(--ro-stripe-border)]' : ''}`}>
+                      <AltQSlot
+                        slotId={slotId}
+                        equipment={equipment}
+                        align="right"
+                        onSearch={() => setSearchSlot(slotId)}
+                        onUnequip={() => handleUnequip(slotId)}
+                        onRefineChange={(r) => handleRefineChange(slotId, r)}
+                        {...(!slotId.startsWith("visual_") ? {
+                          onCardSearch: (idx: number) => setCardSearch({ equipSlot: slotId, cardIndex: idx }),
+                          onCardUnequip: (idx: number) => handleCardUnequip(slotId, idx),
+                        } : {})}
+                        onEnchantSearch={(idx: number) => setEnchantSearch({ equipSlot: slotId, enchantIndex: idx })}
+                        onEnchantUnequip={(idx: number) => handleEnchantUnequip(slotId, idx)}
+                        onItemClick={handleItemTooltip}
+                      />
+                    </div>
+                  ))}
+                  {/* Right slots */}
+                  {RIGHT_ALTX.map((slotId, i) => (
+                    <div key={slotId} style={{ gridColumn: 3, gridRow: i + 1 }}
+                      className={`flex items-center pr-2 pl-1 ${i % 2 === 1 ? 'bg-[var(--ro-stripe)]' : ''} ${i < 4 ? 'border-b border-[var(--ro-stripe-border)]' : ''}`}>
+                      <AltQSlot
+                        slotId={slotId}
+                        equipment={equipment}
+                        align="left"
+                        onSearch={() => setSearchSlot(slotId)}
+                        onUnequip={() => handleUnequip(slotId)}
+                        onRefineChange={(r) => handleRefineChange(slotId, r)}
+                        {...(!slotId.startsWith("visual_") ? {
+                          onCardSearch: (idx: number) => setCardSearch({ equipSlot: slotId, cardIndex: idx }),
+                          onCardUnequip: (idx: number) => handleCardUnequip(slotId, idx),
+                        } : {})}
+                        onEnchantSearch={(idx: number) => setEnchantSearch({ equipSlot: slotId, enchantIndex: idx })}
+                        onEnchantUnequip={(idx: number) => handleEnchantUnequip(slotId, idx)}
+                        onItemClick={handleItemTooltip}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Bottom bar */}
+            <div className="border-t border-ro-border/30 px-3 py-1.5 flex items-center justify-between">
+              <label className="flex items-center gap-1.5 text-[10px] text-ro-muted cursor-pointer select-none">
+                <input type="checkbox" defaultChecked className="w-3 h-3 accent-ro-gold" />
+                Exibir Equip
+              </label>
+            </div>
           </div>
 
-          {activeTab === "altq" && (
-            <>
-              {/* ALT+Q body: row-based grid — left slot | sprite | right slot per row */}
-              <div className="grid items-stretch" style={{ gridTemplateColumns: '1fr 220px 1fr', gridTemplateRows: 'repeat(5, auto)', minHeight: 380 }}>
-                {/* Character sprite preview — center, spans all rows */}
-                <div style={{ gridColumn: 2, gridRow: '1 / 6' }} className="flex items-center justify-center">
-                  {renderParams && (
-                    <CharacterPreview
-                      params={renderParams}
+          {/* ─── Damage Calculator ────────────────────────────────────── */}
+          <DamageCalculator
+            buildConfig={buildConfig}
+            derivedStats={derivedStats}
+            selectedClass={selectedClass}
+          />
 
-                      onParamsChange={(partial) => {
-                        // If jobId changes from costume selector, store as costumeJobId
-                        if (partial.jobId !== undefined) {
-                          const isDefault = partial.jobId === selectedClass?.zrendererJobId;
-                          setPreviewState((prev) => ({ ...prev, ...partial, costumeJobId: isDefault ? 0 : partial.jobId! }));
-                        } else {
-                          setPreviewState((prev) => ({ ...prev, ...partial }));
-                        }
-                      }}
-                      width={200}
-                      height={280}
-                      showControls
-                    />
-                  )}
-                </div>
-                {/* Left slots — content pushed right (near character) */}
-                {LEFT_SLOTS.map((slotId, i) => (
-                  <div key={slotId} style={{ gridColumn: 1, gridRow: i + 1 }}
-                    className={`flex items-center pl-2 pr-1 ${i % 2 === 1 ? 'bg-[var(--ro-stripe)]' : ''} ${i < 4 ? 'border-b border-[var(--ro-stripe-border)]' : ''}`}>
-                    <AltQSlot
-                      slotId={slotId}
-                      equipment={equipment}
-                      align="right"
-                      onSearch={() => setSearchSlot(slotId)}
-                      onUnequip={() => handleUnequip(slotId)}
-                      onRefineChange={(r) => handleRefineChange(slotId, r)}
-                      onCardSearch={(idx) => setCardSearch({ equipSlot: slotId, cardIndex: idx })}
-                      onCardUnequip={(idx) => handleCardUnequip(slotId, idx)}
-                      onEnchantSearch={(idx) => setEnchantSearch({ equipSlot: slotId, enchantIndex: idx })}
-                      onEnchantUnequip={(idx) => handleEnchantUnequip(slotId, idx)}
-                      onItemClick={handleItemTooltip}
-                    />
-                  </div>
-                ))}
-                {/* Right slots — content pushed left (near character) */}
-                {RIGHT_SLOTS.map((slotId, i) => (
-                  <div key={slotId} style={{ gridColumn: 3, gridRow: i + 1 }}
-                    className={`flex items-center justify-start pr-2 pl-1 ${i % 2 === 1 ? 'bg-[var(--ro-stripe)]' : ''} ${i < 4 ? 'border-b border-[var(--ro-stripe-border)]' : ''}`}>
-                    <AltQSlot
-                      slotId={slotId}
-                      equipment={equipment}
-                      align="left"
-                      onSearch={() => setSearchSlot(slotId)}
-                      onUnequip={() => handleUnequip(slotId)}
-                      onRefineChange={(r) => handleRefineChange(slotId, r)}
-                      onCardSearch={(idx) => setCardSearch({ equipSlot: slotId, cardIndex: idx })}
-                      onCardUnequip={(idx) => handleCardUnequip(slotId, idx)}
-                      onEnchantSearch={(idx) => setEnchantSearch({ equipSlot: slotId, enchantIndex: idx })}
-                      onEnchantUnequip={(idx) => handleEnchantUnequip(slotId, idx)}
-                      onItemClick={handleItemTooltip}
-                    />
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-          {activeTab === "altx" && (
-            <>
-              {/* ALT+X body: row-based grid — visual + shadow slots */}
-              <div className="grid items-stretch" style={{ gridTemplateColumns: '1fr 220px 1fr', gridTemplateRows: 'repeat(5, auto)', minHeight: 380 }}>
-                {/* Character sprite preview — center, spans all rows */}
-                <div style={{ gridColumn: 2, gridRow: '1 / 6' }} className="flex items-center justify-center">
-                  {renderParams && (
-                    <CharacterPreview
-                      params={renderParams}
-
-                      onParamsChange={(partial) => {
-                        // If jobId changes from costume selector, store as costumeJobId
-                        if (partial.jobId !== undefined) {
-                          const isDefault = partial.jobId === selectedClass?.zrendererJobId;
-                          setPreviewState((prev) => ({ ...prev, ...partial, costumeJobId: isDefault ? 0 : partial.jobId! }));
-                        } else {
-                          setPreviewState((prev) => ({ ...prev, ...partial }));
-                        }
-                      }}
-                      width={200}
-                      height={280}
-                      showControls
-                    />
-                  )}
-                </div>
-                {/* Left slots — content pushed right (near character) */}
-                {LEFT_ALTX.map((slotId, i) => (
-                  <div key={slotId} style={{ gridColumn: 1, gridRow: i + 1 }}
-                    className={`flex items-center pl-2 pr-1 ${i % 2 === 1 ? 'bg-[var(--ro-stripe)]' : ''} ${i < 4 ? 'border-b border-[var(--ro-stripe-border)]' : ''}`}>
-                    <AltQSlot
-                      slotId={slotId}
-                      equipment={equipment}
-                      align="right"
-                      onSearch={() => setSearchSlot(slotId)}
-                      onUnequip={() => handleUnequip(slotId)}
-                      onRefineChange={(r) => handleRefineChange(slotId, r)}
-                      {...(!slotId.startsWith("visual_") ? {
-                        onCardSearch: (idx: number) => setCardSearch({ equipSlot: slotId, cardIndex: idx }),
-                        onCardUnequip: (idx: number) => handleCardUnequip(slotId, idx),
-                      } : {})}
-                      onEnchantSearch={(idx: number) => setEnchantSearch({ equipSlot: slotId, enchantIndex: idx })}
-                      onEnchantUnequip={(idx: number) => handleEnchantUnequip(slotId, idx)}
-                      onItemClick={handleItemTooltip}
-                    />
-                  </div>
-                ))}
-                {/* Right slots */}
-                {RIGHT_ALTX.map((slotId, i) => (
-                  <div key={slotId} style={{ gridColumn: 3, gridRow: i + 1 }}
-                    className={`flex items-center pr-2 pl-1 ${i % 2 === 1 ? 'bg-[var(--ro-stripe)]' : ''} ${i < 4 ? 'border-b border-[var(--ro-stripe-border)]' : ''}`}>
-                    <AltQSlot
-                      slotId={slotId}
-                      equipment={equipment}
-                      align="left"
-                      onSearch={() => setSearchSlot(slotId)}
-                      onUnequip={() => handleUnequip(slotId)}
-                      onRefineChange={(r) => handleRefineChange(slotId, r)}
-                      {...(!slotId.startsWith("visual_") ? {
-                        onCardSearch: (idx: number) => setCardSearch({ equipSlot: slotId, cardIndex: idx }),
-                        onCardUnequip: (idx: number) => handleCardUnequip(slotId, idx),
-                      } : {})}
-                      onEnchantSearch={(idx: number) => setEnchantSearch({ equipSlot: slotId, enchantIndex: idx })}
-                      onEnchantUnequip={(idx: number) => handleEnchantUnequip(slotId, idx)}
-                      onItemClick={handleItemTooltip}
-                    />
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* Bottom bar */}
-          <div className="border-t border-ro-border/30 px-3 py-1.5 flex items-center justify-between">
-            <label className="flex items-center gap-1.5 text-[10px] text-ro-muted cursor-pointer select-none">
-              <input type="checkbox" defaultChecked className="w-3 h-3 accent-ro-gold" />
-              Exibir Equip
-            </label>
-          </div>
         </div>
 
         {/* ══════════ RIGHT: Stats + Bonus ══════════ */}
@@ -744,8 +764,8 @@ export default function BuildsPage() {
                           }}
                           disabled={!canIncrease}
                           className={`w-4 h-4 rounded-sm text-[9px] font-bold flex items-center justify-center transition-colors ${canIncrease
-                              ? "bg-[#5b9bd5]/20 border border-[#5b9bd5]/50 text-[#7cb9e8] hover:bg-[#5b9bd5]/40 cursor-pointer"
-                              : "bg-ro-surface/30 border border-ro-border/20 text-ro-muted/20 cursor-default"
+                            ? "bg-[#5b9bd5]/20 border border-[#5b9bd5]/50 text-[#7cb9e8] hover:bg-[#5b9bd5]/40 cursor-pointer"
+                            : "bg-ro-surface/30 border border-ro-border/20 text-ro-muted/20 cursor-default"
                             }`}
                           title={`+1 (custo: ${cost} pts)`}
                         >
@@ -786,9 +806,9 @@ export default function BuildsPage() {
               <BonusRow label="Short Range%" value={derivedStats.shortAtkRate} />
               <BonusRow label="Crit DMG%" value={derivedStats.critAtkRate} />
               <BonusRow label="ASPD%" value={derivedStats.aspdRate} />
-              <BonusRow label="V. Cast%" value={derivedStats.variableCastrate} />
-              <BonusRow label="F. Cast%" value={derivedStats.fixedCastrate} />
-              <BonusRow label="After Cast%" value={derivedStats.delayrate} />
+              <BonusRow label="V. Cast%" value={derivedStats.variableCastrate} invertColor />
+              <BonusRow label="F. Cast%" value={derivedStats.fixedCastrate} invertColor />
+              <BonusRow label="After Cast%" value={derivedStats.delayrate} invertColor />
               <BonusRow label="Perfect Dodge" value={derivedStats.perfectDodge} />
             </div>
           </div>
@@ -810,29 +830,85 @@ export default function BuildsPage() {
             <div className="ro-panel p-3">
               <div className="text-[10px] uppercase tracking-widest text-ro-gold-dim mb-2 font-semibold">Resistências &amp; Dano</div>
               <div className="grid grid-cols-1 gap-y-0.5 text-[11px]">
-                {derivedStats.specialBonuses.map((sb, i) => (
-                  <div key={i} className="flex justify-between">
-                    <span className="text-ro-muted">{sb.label}</span>
-                    <span className={`font-mono font-medium ${sb.value > 0 ? "text-green-400" : "text-red-400"}`}>
-                      {sb.value > 0 ? `+${sb.value}%` : `${sb.value}%`}
-                    </span>
-                  </div>
-                ))}
+                {derivedStats.specialBonuses.map((sb, i) => {
+                  // For resistance stats, negative values are GOOD (less damage taken)
+                  const isGood = sb.invertColor ? sb.value < 0 : sb.value > 0;
+                  return (
+                    <div key={i} className="flex justify-between">
+                      <span className="text-ro-muted">{sb.label}</span>
+                      {sb.value !== 0 ? (
+                        <span className={`font-mono font-medium ${isGood ? "text-green-400" : "text-red-400"}`}>
+                          {sb.value > 0 ? `+${sb.value}%` : `${sb.value}%`}
+                        </span>
+                      ) : (
+                        <span className="font-mono font-medium text-green-400">&#10003;</span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
 
+          {/* ─── Buffs Bar ────────────────────────────────────────────── */}
+          <div className="ro-panel p-3">
+            <div className="flex items-center justify-between mb-2">
+              <div className="text-[10px] uppercase tracking-widest text-ro-gold-dim font-semibold">Buffs & Consumíveis</div>
+              <button
+                onClick={() => setShowBuffModal(true)}
+                className="flex items-center justify-center w-5 h-5 rounded bg-ro-surface border border-ro-border hover:border-ro-gold-dim hover:text-ro-gold transition-colors text-ro-muted title-tooltip"
+                title="Adicionar Buff/Consumível"
+              >
+                <span className="text-sm leading-none font-medium">+</span>
+              </button>
+            </div>
+
+            <div className="flex flex-wrap gap-1.5">
+              {activeBuffs.length === 0 ? (
+                <span className="text-[10px] text-ro-muted italic">Nenhum buff ativo.</span>
+              ) : (
+                activeBuffs.map((buffId) => {
+                  const buff = getBuff(buffId);
+                  if (!buff) return null;
+                  return (
+                    <button
+                      key={buffId}
+                      onClick={() => setActiveBuffs(prev => prev.filter(b => b !== buffId))}
+                      className="relative group shrink-0"
+                      title={`Remover ${buff.name}`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={buff.iconUrl}
+                        alt={buff.name}
+                        className="w-7 h-7 rounded-sm border border-[var(--ro-border)] hover:border-ro-gold shadow-sm object-contain transition-all group-hover:scale-[0.98]"
+                      />
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span className="text-white text-[8px] font-bold leading-none">&times;</span>
+                      </div>
+                    </button>
+                  );
+                })
+              )}
+            </div>
+          </div>
+
         </div>
       </div>
 
-      {/* ─── Damage Calculator ────────────────────────────────────── */}
-      <DamageCalculator
-        buildConfig={buildConfig}
-        derivedStats={derivedStats}
-        selectedClass={selectedClass}
-      />
-
       {/* ─── Item Search Modal ────────────────────────────────────── */}
+      {showBuffModal && (
+        <BuffSelectorModal
+          activeBuffIds={activeBuffs}
+          onToggleBuff={(buffId) => {
+            setActiveBuffs((prev) =>
+              prev.includes(buffId) ? prev.filter(id => id !== buffId) : [...prev, buffId]
+            );
+          }}
+          onClose={() => setShowBuffModal(false)}
+        />
+      )}
+
       {searchSlot && (
         <ItemSearchModal
           slot={searchSlot}
@@ -1033,7 +1109,7 @@ function AltQSlot({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={itemImageUrl(equipped.id)} alt="" className="w-6 h-6 object-contain flex-shrink-0 grayscale"
             onError={(e) => { (e.target as HTMLImageElement).style.visibility = "hidden"; }} />
-          <span className="text-[10px] text-ro-muted/60 truncate leading-tight">
+          <span className="text-[10px] text-ro-muted/60 leading-tight break-words line-clamp-2">
             {equipped.namePt || equipped.nameEn}
           </span>
         </div>
@@ -1072,7 +1148,7 @@ function AltQSlot({
           onError={(e) => { (e.target as HTMLImageElement).style.visibility = "hidden"; }} />
         <div className={`min-w-0 flex-1 ${pushRight ? "text-right" : ""}`}>
           {/* Equipment name with card affix (Bi/Tri/Quad for duplicates) */}
-          <span className="text-[11px] text-[var(--ro-text)] leading-tight block truncate">
+          <span className="text-[11px] text-[var(--ro-text)] leading-tight block break-words line-clamp-2">
             {equipped.refine > 0 && <span className="text-ro-gold">+{equipped.refine} </span>}
             {equipped.namePt || equipped.nameEn}
             {(() => {
@@ -1119,8 +1195,8 @@ function AltQSlot({
                     if (card && onCardUnequip) onCardUnequip(idx);
                   }}
                   className={`px-1 py-px rounded text-[9px] leading-snug border transition-colors ${card
-                      ? "bg-purple-950/80 border-purple-400/50 text-purple-300 hover:bg-purple-900/80 hover:border-purple-300/60"
-                      : "bg-ro-darker/80 border-ro-border/50 text-ro-muted/60 hover:border-purple-500/40 hover:text-purple-400/80"
+                    ? "bg-purple-950/80 border-purple-400/50 text-purple-300 hover:bg-purple-900/80 hover:border-purple-300/60"
+                    : "bg-ro-darker/80 border-ro-border/50 text-ro-muted/60 hover:border-purple-500/40 hover:text-purple-400/80"
                     }`}
                   title={card ? `${card.namePt || card.nameEn} (clique = ver | botão direito = remover)` : "Adicionar carta"}
                 >
@@ -1214,17 +1290,19 @@ function AltQSlot({
 }
 
 
-function BonusRow({ label, value }: { label: string; value: number }) {
+function BonusRow({ label, value, invertColor }: { label: string; value: number; invertColor?: boolean }) {
   if (value === 0) return (
     <div className="flex justify-between">
       <span className="text-ro-muted/40">{label}</span>
       <span className="font-mono text-ro-muted/30">0</span>
     </div>
   );
+  // For reduction stats (cast time, delay), negative values are GOOD (green)
+  const isGood = invertColor ? value < 0 : value > 0;
   return (
     <div className="flex justify-between">
       <span className="text-ro-muted">{label}</span>
-      <span className={`font-mono font-medium ${value > 0 ? "text-green-400" : "text-red-400"}`}>
+      <span className={`font-mono font-medium ${isGood ? "text-green-400" : "text-red-400"}`}>
         {value > 0 ? `+${value}%` : `${value}%`}
       </span>
     </div>
@@ -1313,16 +1391,10 @@ function ItemSearchModal({
     let cancelled = false;
     const t = setTimeout(async () => {
       setLoading(true);
-      const params = new URLSearchParams();
-      params.set("q", query);
-      params.set("location", locationStr);
-      params.set("job", jobStr);
-      params.set("limit", "60");
       try {
-        const res = await fetch(`/api/items?${params}`);
+        const data = await searchItems({ query, location: locationStr, job: jobStr, limit: 60 });
         if (cancelled) return;
-        const data = await res.json();
-        let items: SearchItem[] = data.items || [];
+        let items: SearchItem[] = (data.items || []) as SearchItem[];
         // Only show equippable items — exclude cards, consumables, etc.
         const equipTypes = new Set(["Armor", "Weapon", "ShadowGear", "Shadowgear"]);
         items = items.filter((i) => equipTypes.has(i.type || ""));
@@ -1448,10 +1520,9 @@ function CardSearchModal({
     if (q.length < 2) { setResults([]); setTotal(0); setLoading(false); return; }
     setLoading(true);
     try {
-      const res = await fetch(`/api/items?q=${encodeURIComponent(q)}&type=Card&limit=80`);
-      const data = await res.json();
+      const data = await searchItems({ query: q, type: "Card", limit: 80 });
       // Filter cards by compatibility with the equipment slot
-      const all: CardResult[] = data.items || [];
+      const all: CardResult[] = (data.items || []) as CardResult[];
       const compatible = all.filter((c) => isCardCompatibleWithSlot(c.locations, equipSlot));
       setResults(compatible);
       setTotal(compatible.length);
@@ -1545,9 +1616,8 @@ function EnchantSearchModal({
     if (q.length < 2) { setResults([]); setTotal(0); setLoading(false); return; }
     setLoading(true);
     try {
-      const res = await fetch(`/api/items?q=${encodeURIComponent(q)}&type=Card&limit=80`);
-      const data = await res.json();
-      const all: CardResult[] = data.items || [];
+      const data = await searchItems({ query: q, type: "Card", limit: 80 });
+      const all: CardResult[] = (data.items || []) as CardResult[];
       const enchants = all.filter((c: CardResult) => !c.locations || c.locations.length === 0);
       setResults(enchants);
       setTotal(enchants.length);

@@ -98,9 +98,14 @@ export default function CharacterPreview({
       if (p.weapon) body.weapon = p.weapon;
       if (p.shield) body.shield = p.shield;
 
-      const res = await fetch("/api/render", {
+      // Call VisualRag API directly (no server proxy needed)
+      const RENDER_URL = process.env.NEXT_PUBLIC_ZRENDERER_URL || "https://visualrag-api.ragnarok.wiki";
+      const RENDER_TOKEN = process.env.NEXT_PUBLIC_ZRENDERER_TOKEN || "";
+      const renderEndpoint = `${RENDER_URL}/render?downloadimage&accesstoken=${RENDER_TOKEN}`;
+
+      const res = await fetch(renderEndpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/vnd.api+json" },
         body: JSON.stringify(body),
         signal: controller.signal,
       });

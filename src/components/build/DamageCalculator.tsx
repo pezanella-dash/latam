@@ -5,6 +5,7 @@ import type { RoClass } from "@/lib/ro-classes";
 import type { BaseStats, EquipBonus, BuildConfig, DerivedStats } from "@/lib/ro-stats";
 import { getSkillsForJobs, type SkillFormula, getHitCount, getDamagePercent } from "@/lib/ro-skill-formulas";
 import { calculateDamage, formatDamage, formatDps, type MonsterTarget, type DamageResult } from "@/lib/ro-damage";
+import { searchMonsters } from "@/lib/db/supabase";
 
 interface DamageCalculatorProps {
   buildConfig: BuildConfig;
@@ -71,7 +72,18 @@ function getSkillIconUrl(id: number): string {
 
 // ─── Component ──────────────────────────────────────────────────────
 
-export default function DamageCalculator({ buildConfig, derivedStats, selectedClass }: DamageCalculatorProps) {
+// Mapping weapon elements to their corresponding Endow spell / item icons
+const ELEMENT_ICONS: Record<string, string> = {
+  Ele_Fire: "https://static.divine-pride.net/images/skill/280.png",
+  Ele_Water: "https://static.divine-pride.net/images/skill/281.png",
+  Ele_Wind: "https://static.divine-pride.net/images/skill/282.png",
+  Ele_Earth: "https://static.divine-pride.net/images/skill/283.png",
+  Ele_Poison: "https://static.divine-pride.net/images/skill/137.png",
+  Ele_Holy: "https://static.divine-pride.net/images/skill/68.png",
+  Ele_Dark: "https://static.divine-pride.net/images/items/item/3143.png", // Cursed Water
+};
+
+export default function DamageCalculator({ derivedStats, buildConfig, selectedClass }: DamageCalculatorProps) {
   const [monster, setMonster] = useState<MonsterSearchResult | null>(null);
   const [monsterQuery, setMonsterQuery] = useState("");
   const [monsterResults, setMonsterResults] = useState<MonsterSearchResult[]>([]);
@@ -108,11 +120,8 @@ export default function DamageCalculator({ buildConfig, derivedStats, selectedCl
     }
     const t = setTimeout(async () => {
       try {
-        const res = await fetch(`/api/monsters?q=${encodeURIComponent(monsterQuery)}&limit=12`);
-        if (res.ok) {
-          const data = await res.json();
-          setMonsterResults(data.monsters || []);
-        }
+        const { monsters } = await searchMonsters({ query: monsterQuery, limit: 12 });
+        setMonsterResults(monsters as MonsterSearchResult[]);
       } catch { /* ignore */ }
     }, 250);
     return () => clearTimeout(t);
@@ -161,16 +170,17 @@ export default function DamageCalculator({ buildConfig, derivedStats, selectedCl
       weaponLevel: derivedStats.weaponLevel,
       weaponRefine: derivedStats.weaponRefine,
       weaponSubType: derivedStats.weaponSubType,
+      weaponWeight: derivedStats.weaponWeight,
       weaponElement: weaponElement,
       aspd: derivedStats.aspd,
-      // HP/SP for special formulas (Dragon Breath, Tiger Cannon, Gates of Hell)
       maxHp: derivedStats.maxHp,
-      currentHp: derivedStats.maxHp,   // assume full HP by default
+      currentHp: derivedStats.maxHp,
       maxSp: derivedStats.maxSp,
-      currentSp: derivedStats.maxSp,   // assume full SP by default
+      currentSp: derivedStats.maxSp,
       skill: selectedSkill,
       skillLevel,
       monster: target,
+      activeBuffs: buildConfig.activeBuffs || [],
     });
 
     setDamageResult(result);
@@ -301,23 +311,29 @@ export default function DamageCalculator({ buildConfig, derivedStats, selectedCl
               </div>
               <div className="flex items-center gap-1.5">
                 <label className="text-[10px] text-ro-muted">Elem.</label>
-                <select
-                  value={weaponElement}
-                  onChange={(e) => setWeaponElement(e.target.value)}
-                  className="bg-ro-surface border border-ro-border rounded px-2 py-1 text-xs focus:outline-none focus:border-ro-gold-dim transition-colors appearance-none"
-                  style={{ color: "var(--ro-text)" }}
-                >
-                  {Object.entries(ELE_PT).map(([key, label]) => (
-                    <option key={key} value={key}>{label}</option>
-                  ))}
-                </select>
+                <div className="flex items-center gap-1 bg-ro-surface border border-ro-border rounded px-1.5 py-0.5">
+                  {ELEMENT_ICONS[weaponElement] && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={ELEMENT_ICONS[weaponElement]} alt="" className="w-4 h-4 rounded-sm object-contain shrink-0" />
+                  )}
+                  <select
+                    value={weaponElement}
+                    onChange={(e) => setWeaponElement(e.target.value)}
+                    className="bg-transparent text-xs focus:outline-none appearance-none"
+                    style={{ color: "var(--ro-text)" }}
+                  >
+                    {Object.entries(ELE_PT).map(([key, label]) => (
+                      <option key={key} value={key} className="bg-ro-panel">{label}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <span className="text-[10px] text-ro-muted">
                 {selectedSkill.type === "physical" ? "Físico" : selectedSkill.type === "magical" ? "Mágico" : "Misto"}
                 {" | "}
                 {selectedSkill.formulaType === "dragonBreath" ? "HP/SP" :
-                 selectedSkill.formulaType === "tigerCannon" ? "HP/SP" :
-                 `${getDamagePercent(selectedSkill, skillLevel)}% ATK`}
+                  selectedSkill.formulaType === "tigerCannon" ? "HP/SP" :
+                    `${getDamagePercent(selectedSkill, skillLevel)}% ATK`}
                 {selectedSkill.formulaType === "gatesOfHell" ? " +HP/SP" : ""}
                 {" | "}
                 {getHitCount(selectedSkill, skillLevel)} hit{getHitCount(selectedSkill, skillLevel) > 1 ? "s" : ""}
@@ -384,17 +400,24 @@ export default function DamageCalculator({ buildConfig, derivedStats, selectedCl
           </button>
 
           {showDetails && (
-            <div className="mt-2 text-[10px] grid grid-cols-2 gap-x-4 gap-y-0.5 text-ro-muted">
+            <div className="mt-2 text-[10px] grid grid-cols-2 gap-x-4 gap-y-1 text-ro-muted bg-ro-panel/30 p-3 rounded-lg border border-ro-border/50">
+
+              <div className="col-span-2 text-ro-gold font-bold border-b border-ro-border/50 pb-1 mb-1 flex items-center gap-2">
+                ATK Bruto
+              </div>
               <DetailRow label="Status ATK/MATK" value={damageResult.details.statusAtk} />
               <DetailRow label="Weapon ATK/MATK" value={damageResult.details.weaponAtk} />
               <DetailRow label="Equip ATK/MATK" value={damageResult.details.equipAtk} />
-              <DetailRow label="Skill %" value={`${damageResult.details.skillPercent}%`} />
-              {damageResult.details.baseLvScaling !== 1 && (
-                <DetailRow label="BaseLv Scaling" value={`×${damageResult.details.baseLvScaling.toFixed(2)}`} positive />
-              )}
               {damageResult.details.sizePenalty < 100 && (
-                <DetailRow label="Size Penalty" value={`${damageResult.details.sizePenalty}%`} negative />
+                <DetailRow label="Penal. Tamanho Arma" value={`${damageResult.details.sizePenalty}%`} negative />
               )}
+              {damageResult.details.atkRateModifier !== 0 && (
+                <DetailRow label="ATK/MATK Rate" value={`+${damageResult.details.atkRateModifier}%`} positive />
+              )}
+
+              <div className="col-span-2 text-ro-gold font-bold border-b border-ro-border/50 pb-1 mt-2 mb-1">
+                Multiplicadores Raciais/Físicos
+              </div>
               {damageResult.details.raceModifier !== 0 && (
                 <DetailRow label="vs Raça" value={`+${damageResult.details.raceModifier}%`} positive />
               )}
@@ -407,20 +430,32 @@ export default function DamageCalculator({ buildConfig, derivedStats, selectedCl
               {damageResult.details.classModifier !== 0 && (
                 <DetailRow label="vs Classe" value={`+${damageResult.details.classModifier}%`} positive />
               )}
+              {damageResult.details.raceModifier === 0 && damageResult.details.elementModifier === 0 && damageResult.details.sizeModifier === 0 && damageResult.details.classModifier === 0 && (
+                <div className="col-span-2 text-ro-muted italic">Nenhum bônus ativo</div>
+              )}
+
+              <div className="col-span-2 text-ro-gold font-bold border-b border-ro-border/50 pb-1 mt-2 mb-1">
+                Skill & Range
+              </div>
+              <DetailRow label="Skill % Base" value={`${damageResult.details.skillPercent}%`} />
+              {damageResult.details.baseLvScaling !== 1 && (
+                <DetailRow label="BaseLv Scaling" value={`×${damageResult.details.baseLvScaling.toFixed(2)}`} positive />
+              )}
               {damageResult.details.skillAtkModifier !== 0 && (
-                <DetailRow label="bSkillAtk" value={`+${damageResult.details.skillAtkModifier}%`} positive />
+                <DetailRow label="Skill bAdd" value={`+${damageResult.details.skillAtkModifier}%`} positive />
               )}
               {damageResult.details.longRangeModifier !== 0 && (
-                <DetailRow label={selectedSkill?.isMelee ? "Short Range%" : "Long Range%"} value={`+${damageResult.details.longRangeModifier}%`} positive />
-              )}
-              {damageResult.details.atkRateModifier !== 0 && (
-                <DetailRow label="ATK/MATK Rate" value={`+${damageResult.details.atkRateModifier}%`} positive />
+                <DetailRow label={selectedSkill?.isMelee ? "Curta Distância" : "Longa Distância"} value={`+${damageResult.details.longRangeModifier}%`} positive />
               )}
               <DetailRow label="Tabela Elemental" value={`${damageResult.details.elementTableMod}%`} />
+
+              <div className="col-span-2 text-ro-gold font-bold border-b border-ro-border/50 pb-1 mt-2 mb-1">
+                Reduções Defensivas Alvo
+              </div>
               {damageResult.details.ignoreDefPercent > 0 && (
-                <DetailRow label="DEF Ignorada" value={`${damageResult.details.ignoreDefPercent}%`} positive />
+                <DetailRow label="Ignora DEF/MDEF" value={`${damageResult.details.ignoreDefPercent}%`} positive />
               )}
-              <DetailRow label="Hard DEF/MDEF" value={damageResult.details.hardDefReduction} negative />
+              <DetailRow label="Hard DEF/MDEF" value={`Reduz ${(100 - (damageResult.details.hardDefReduction * 100)).toFixed(1)}%`} negative />
               <DetailRow label="Soft DEF/MDEF" value={`-${damageResult.details.softDefReduction}`} negative />
             </div>
           )}
@@ -444,9 +479,8 @@ function DmgBox({ label, value, highlight, crit }: { label: string; value: numbe
     <div className="bg-ro-panel/50 rounded-lg px-3 py-2">
       <div className="text-[9px] text-ro-muted uppercase">{label}</div>
       <div
-        className={`text-sm font-mono font-bold ${
-          crit ? "text-red-400" : highlight ? "text-ro-gold" : ""
-        }`}
+        className={`text-sm font-mono font-bold ${crit ? "text-red-400" : highlight ? "text-ro-gold" : ""
+          }`}
         style={!crit && !highlight ? { color: "var(--ro-text)" } : undefined}
       >
         {formatDamage(value)}
