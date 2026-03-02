@@ -345,7 +345,7 @@ export const SKILL_FORMULAS: SkillFormula[] = [
   {
     id: 2022, aegisName: "GC_CROSSIMPACT", namePt: "Lâminas Retalhadoras", type: "physical", element: "weapon", hitCount: 7,
     damagePercent: [1550, 1700, 1850, 2000, 2150], baseLvScaling: true, baseLvDivisor: 100,
-    isMelee: true, canCrit: true, halfCritBonus: true, fixedCast: flat(500, 5), cooldown: flat(700, 5),
+    isMelee: true, canCrit: true, fixedCast: flat(500, 5), cooldown: flat(700, 5),
     spCost: flat(40, 5), maxLevel: 5, jobs: ["Guillotine_Cross"]
   },
   // GC_ROLLINGCUTTER: kRO Rebalance 185/65 -> 50 + (80 * skill_lv)% ATK. Base Lv Scaling.

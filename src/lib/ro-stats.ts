@@ -88,6 +88,30 @@ export interface EquipBonus {
   weaponAtkRate?: number;      // bWeaponAtkRate — weapon ATK modifier %
   perfectHitRate?: number;     // bPerfectHitAddRate — perfect hit rate
   criticalAddRace?: Record<string, number>; // bonus2 bCriticalAddRace
+  // Damage received reduction (previously missing)
+  shortSubRate?: number;       // bShortSubRate — reduce melee damage received %
+  longSubRate?: number;        // bLongSubRate — reduce ranged damage received %
+  longAtkDef?: number;         // bLongAtkDef — flat ranged damage reduction
+  defRate?: number;            // bDefRate — DEF % multiplier bonus
+  mdefRate?: number;           // bMdefRate — MDEF % multiplier bonus
+  critRate?: number;           // bCriticalRate — CRIT % multiplier
+  // SP mechanics
+  spCostRate?: number;         // bUseSPrate — SP cost % modifier (negative = cheaper)
+  hpRecovRate?: number;        // bHPrecovRate — natural HP regen rate %
+  spRecovRate?: number;        // bSPrecovRate — natural SP regen rate %
+  // On-hit/on-kill gains
+  spGain?: number;             // bSPGainValue — SP gained on physical hit
+  hpGain?: number;             // bHPGainValue — HP gained on physical hit
+  magicSpGain?: number;        // bMagicSPGainValue — SP gained on magic hit
+  magicHpGain?: number;        // bMagicHPGainValue — HP gained on magic hit
+  // Reflect
+  shortWeaponReflect?: number; // bShortWeaponDamageReturn — melee reflect %
+  magicReflect?: number;       // bMagicDamageReturn — magic reflect %
+  reduceDmgReturn?: number;    // bReduceDamageReturn — reduces damage taken from reflect
+  // Skill-specific damage reduction & weapon type damage
+  subSkill?: Record<string, number>;         // bonus2 bSubSkill,"SKILL",N — reduce damage from skill
+  weaponDamageRate?: Record<string, number>; // bonus2 bWeaponDamageRate,W_TYPE,N — bonus by weapon type
+  statusResist?: Record<string, number>;     // bonus2 bResEff,Eff_X,N — status resist (0–10000)
 }
 
 // ─── Race / Element / Size labels ────────────────────────────────────
@@ -497,7 +521,7 @@ function safeEvalCondition(condition: string): boolean {
 // ─── Script bonus parser ─────────────────────────────────────────────
 
 // Keys here MUST only refer to number fields of EquipBonus
-type NumericBonusKey = Exclude<keyof EquipBonus, "subRace" | "subEle" | "subSize" | "addRace" | "addEle" | "addSize" | "addClass" | "subClass" | "magicAddRace" | "magicAddEle" | "magicAddSize" | "magicAddClass" | "magicAtkEle" | "skillAtk" | "skillCooldown" | "skillUseSP" | "ignoreDefRaceRate" | "ignoreMdefRaceRate" | "ignoreDefClassRate" | "ignoreMdefClassRate" | "criticalAddRace" | "atkEle" | "noSizeFix">;
+type NumericBonusKey = Exclude<keyof EquipBonus, "subRace" | "subEle" | "subSize" | "addRace" | "addEle" | "addSize" | "addClass" | "subClass" | "magicAddRace" | "magicAddEle" | "magicAddSize" | "magicAddClass" | "magicAtkEle" | "skillAtk" | "skillCooldown" | "skillUseSP" | "ignoreDefRaceRate" | "ignoreMdefRaceRate" | "ignoreDefClassRate" | "ignoreMdefClassRate" | "criticalAddRace" | "atkEle" | "noSizeFix" | "subSkill" | "weaponDamageRate" | "statusResist">;
 const BONUS_MAP: Record<string, NumericBonusKey> = {
   bStr: "str",
   bAgi: "agi",
@@ -508,6 +532,7 @@ const BONUS_MAP: Record<string, NumericBonusKey> = {
   bBaseAtk: "atk",
   bAtk: "atk",
   bAtk2: "atk",
+  bFixAtk: "atk",
   bMatk: "matk",
   bDef: "def",
   bMdef: "mdef",
@@ -555,6 +580,28 @@ const BONUS_MAP: Record<string, NumericBonusKey> = {
   bPerfectHitAddRate: "perfectHitRate",
   bPerfectHitRate: "perfectHitRate",
   bCriticalLong: "crit",
+  // Damage received modifiers
+  bShortSubRate: "shortSubRate",
+  bLongSubRate: "longSubRate",
+  bLongAtkDef: "longAtkDef",
+  bDefRate: "defRate",
+  bMdefRate: "mdefRate",
+  bCriticalRate: "critRate",
+  // SP/HP mechanics
+  bUseSPrate: "spCostRate",
+  bHPrecovRate: "hpRecovRate",
+  bSPrecovRate: "spRecovRate",
+  // On-hit/kill gains
+  bSPGainValue: "spGain",
+  bHPGainValue: "hpGain",
+  bLongSPGainValue: "spGain",
+  bLongHPGainValue: "hpGain",
+  bMagicSPGainValue: "magicSpGain",
+  bMagicHPGainValue: "magicHpGain",
+  // Reflect
+  bShortWeaponDamageReturn: "shortWeaponReflect",
+  bMagicDamageReturn: "magicReflect",
+  bReduceDamageReturn: "reduceDmgReturn",
 };
 
 /**
@@ -565,12 +612,33 @@ const BONUS_MAP: Record<string, NumericBonusKey> = {
  * CRITICAL: Variables are resolved LINE-BY-LINE in order, because later vars
  * can depend on earlier vars (e.g., .@bonus = 3*(.@str/10)).
  */
+// EQI constant → EquipSlot mapping for getequiprefinerycnt()
+const EQI_TO_SLOT: Record<string, EquipSlot> = {
+  EQI_HAND_R: "right_hand",
+  EQI_HAND_L: "left_hand",
+  EQI_ARMOR: "armor",
+  EQI_HEAD_TOP: "head_top",
+  EQI_HEAD_MID: "head_mid",
+  EQI_HEAD_LOW: "head_low",
+  EQI_GARMENT: "garment",
+  EQI_SHOES: "shoes",
+  EQI_ACC_L: "accessory2",
+  EQI_ACC_R: "accessory1",
+  EQI_SHADOW_ARMOR: "shadow_armor",
+  EQI_SHADOW_WEAPON: "shadow_weapon",
+  EQI_SHADOW_SHIELD: "shadow_shield",
+  EQI_SHADOW_SHOES: "shadow_shoes",
+  EQI_SHADOW_ACC_R: "shadow_earring",
+  EQI_SHADOW_ACC_L: "shadow_pendant",
+};
+
 export function parseScriptBonuses(
   script: string | undefined,
   refineLevel: number = 0,
   baseLevel: number = 200,
   baseStats?: BaseStats,
   weaponLevel: number = 1,
+  slotRefines?: Partial<Record<EquipSlot, number>>,
 ): EquipBonus {
   if (!script) return {};
   const bonus: EquipBonus = {};
@@ -601,7 +669,14 @@ export function parseScriptBonuses(
     .replace(/readparam\(bCon\)/g, "1")
     .replace(/readparam\(bCrt\)/g, "1")
     .replace(/getskilllv\([^)]*\)/g, "10")
-    .replace(/getequipweaponlv\([^)]*\)/g, String(weaponLevel));
+    .replace(/getequipweaponlv\([^)]*\)/g, String(weaponLevel))
+    // getequiprefinerycnt(EQI_X) → refine of that slot (0 if unknown/not equipped)
+    .replace(/getequiprefinerycnt\(\s*(\w+)\s*\)/g, (_full, eqi: string) => {
+      if (!slotRefines) return String(refineLevel); // fallback: own refine
+      const slot = EQI_TO_SLOT[eqi];
+      if (!slot) return "0";
+      return String(slotRefines[slot] ?? 0);
+    });
   // min/max are handled inside the interpreter's subVars after variable substitution
 
   // Step 1.5: Strip `autobonus` blocks so we don't grant temporary autocast effects as permanent static stats
@@ -829,6 +904,41 @@ export function parseScriptBonuses(
     // Special: bDefEle — skip (armor element, not relevant for damage output)
     if (bonusName === "bDefEle") continue;
 
+    // Special: bAgiVit,N — adds N to both AGI and VIT
+    if (bonusName === "bAgiVit") {
+      const v = match[2] ? safeEvalExpr(match[2]) : 1;
+      if (!isNaN(v)) {
+        bonus.agi = (bonus.agi || 0) + v;
+        bonus.vit = (bonus.vit || 0) + v;
+      }
+      continue;
+    }
+
+    // Special: bIgnoreDefRace,RC_X; — 100% DEF ignore for that race (bonus1 form)
+    if (bonusName === "bIgnoreDefRace" && match[2] && /^[A-Z_]+$/.test(match[2].trim())) {
+      bonus.ignoreDefRaceRate = bonus.ignoreDefRaceRate || {};
+      bonus.ignoreDefRaceRate[match[2].trim()] = 100;
+      continue;
+    }
+    // Special: bIgnoreMDefRace,RC_X; — 100% MDEF ignore for that race (bonus1 form)
+    if (bonusName === "bIgnoreMDefRace" && match[2] && /^[A-Z_]+$/.test(match[2].trim())) {
+      bonus.ignoreMdefRaceRate = bonus.ignoreMdefRaceRate || {};
+      bonus.ignoreMdefRaceRate[match[2].trim()] = 100;
+      continue;
+    }
+    // Special: bIgnoreDefClass,Class_X; — 100% DEF ignore for that class (bonus1 form)
+    if (bonusName === "bIgnoreDefClass" && match[2] && /^[A-Z_]+$/.test(match[2].trim())) {
+      bonus.ignoreDefClassRate = bonus.ignoreDefClassRate || {};
+      bonus.ignoreDefClassRate[match[2].trim()] = 100;
+      continue;
+    }
+    // Special: bIgnoreMDefClass,Class_X; — 100% MDEF ignore for that class (bonus1 form)
+    if (bonusName === "bIgnoreMDefClass" && match[2] && /^[A-Z_]+$/.test(match[2].trim())) {
+      bonus.ignoreMdefClassRate = bonus.ignoreMdefClassRate || {};
+      bonus.ignoreMdefClassRate[match[2].trim()] = 100;
+      continue;
+    }
+
     const value = match[2] ? safeEvalExpr(match[2]) : 1;
     if (isNaN(value)) continue;
     const key = BONUS_MAP[bonusName];
@@ -926,6 +1036,21 @@ export function parseScriptBonuses(
         bonus.criticalAddRace = bonus.criticalAddRace || {};
         bonus.criticalAddRace[param] = (bonus.criticalAddRace[param] || 0) + value;
         break;
+      // Status resistance: bonus2 bResEff,Eff_X,N; (0–10000 scale)
+      case "bResEff":
+        bonus.statusResist = bonus.statusResist || {};
+        bonus.statusResist[param] = (bonus.statusResist[param] || 0) + value;
+        break;
+      // Weapon type damage bonus: bonus2 bWeaponDamageRate,W_TYPE,N;
+      case "bWeaponDamageRate":
+        bonus.weaponDamageRate = bonus.weaponDamageRate || {};
+        bonus.weaponDamageRate[param] = (bonus.weaponDamageRate[param] || 0) + value;
+        break;
+      // Skill damage reduction: bonus2 bSubSkill,SKILL_ID,N; (identifier form)
+      case "bSubSkill":
+        bonus.subSkill = bonus.subSkill || {};
+        bonus.subSkill[param] = (bonus.subSkill[param] || 0) + value;
+        break;
       // Per-skill cast rate (bonus2 bVariableCastrate, SKILL, N; — different from global bVariableCastrate!)
       // We ignore per-skill cast for now as it only affects specific skills
       case "bVariableCastrate":
@@ -973,6 +1098,11 @@ export function parseScriptBonuses(
       case "bSkillFixedCast":
         // Per-skill cast changes — skip for now
         break;
+      // Skill damage reduction: bonus2 bSubSkill,"SKILL_NAME",N; (quoted form)
+      case "bSubSkill":
+        bonus.subSkill = bonus.subSkill || {};
+        bonus.subSkill[param] = (bonus.subSkill[param] || 0) + value;
+        break;
       default: {
         const key = BONUS_MAP[bonusName];
         if (key) bonus[key] = (bonus[key] || 0) + value;
@@ -994,7 +1124,15 @@ interface ComboJsonEntry {
   requiredItemIds: number[];
   allItemIds: number[];
   baseBonuses: Partial<EquipBonus>;
-  refineBonuses: { condition: string; minCombinedRefine?: number; bonuses: Partial<EquipBonus> }[];
+  refineBonuses: {
+    condition: string;
+    minCombinedRefine?: number;
+    /** Only present when minCombinedRefine is absent (per-refine scaling):
+     *  "combined" = multiply by sum of all item refines in combo
+     *  "source"   = multiply by source item's refine only */
+    refineScaleMode?: "combined" | "source";
+    bonuses: Partial<EquipBonus>;
+  }[];
 }
 
 // Load combo data from JSON (generated by scripts/extract-combos.ts)
@@ -1096,10 +1234,36 @@ export function applyComboBonus(
 
     // Apply refine-gated bonuses
     for (const rb of combo.refineBonuses) {
-      if (rb.minCombinedRefine && Object.keys(rb.bonuses).length > 0) {
+      if (Object.keys(rb.bonuses).length === 0) continue;
+
+      if (rb.minCombinedRefine != null) {
+        // Threshold bonus: apply flat once when combined refine meets the minimum
         if (combinedRefine >= rb.minCombinedRefine) {
           mergeBonus(totalBonus, processDynamic(rb.bonuses));
         }
+      } else if (rb.refineScaleMode) {
+        // Per-refine scaling bonus ("A cada refino...")
+        const sourceRefine = itemRefines.get(Number(combo.sourceItemId)) || 0;
+        const scale = rb.refineScaleMode === "combined" ? combinedRefine : sourceRefine;
+        if (scale <= 0) continue;
+
+        // Cap: "até o 30" → limit scale to 30
+        const effectiveScale = rb.condition?.includes("até o 30") ? Math.min(scale, 30) : scale;
+
+        // Multiply every stat in the bonus by effectiveScale
+        const scaledBonuses: Partial<EquipBonus> = {};
+        for (const [k, v] of Object.entries(rb.bonuses)) {
+          if (typeof v === "number") {
+            (scaledBonuses as Record<string, unknown>)[k] = v * effectiveScale;
+          } else if (typeof v === "object" && v !== null) {
+            const scaled: Record<string, number> = {};
+            for (const [rk, rv] of Object.entries(v as Record<string, number>)) {
+              scaled[rk] = rv * effectiveScale;
+            }
+            (scaledBonuses as Record<string, unknown>)[k] = scaled;
+          }
+        }
+        mergeBonus(totalBonus, processDynamic(scaledBonuses));
       }
     }
   }
@@ -1157,6 +1321,8 @@ export interface BuildConfig {
   spFactor: number;   // class SP multiplier (from RoClass)
   isTrans: boolean;   // transcendent/3rd class gets 1.25× HP/SP
   activeBuffs?: string[]; // Array of Buff IDs from ro-buffs
+  /** Cumulative job stat bonuses at max job level (rAthena db/re/job_stats.yml) */
+  jobBonus?: { str?: number; agi?: number; vit?: number; int?: number; dex?: number; luk?: number };
 }
 
 export function calculateDerivedStats(build: BuildConfig): DerivedStats {
@@ -1177,6 +1343,14 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   let mainWeaponRefine = 0;
   let mainWeaponSubType: string | undefined;
   let mainWeaponWeight = 0;
+
+  // Pre-collect slot refines for getequiprefinerycnt() support
+  const slotRefines: Partial<Record<EquipSlot, number>> = {};
+  for (const [slotKey, item] of Object.entries(equipment)) {
+    if (item && !item._blockedBy) {
+      slotRefines[slotKey as EquipSlot] = item.refine || 0;
+    }
+  }
 
   for (const [slotKey, item] of Object.entries(equipment)) {
     if (!item) continue;
@@ -1217,7 +1391,7 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
       ...(item.enchants || []).filter(Boolean).map((e) => e!.script),
     ];
     for (const scr of scripts) {
-      const sb = parseScriptBonuses(scr, item.refine, baseLevel, baseStats, mainWeaponLevel);
+      const sb = parseScriptBonuses(scr, item.refine, baseLevel, baseStats, mainWeaponLevel, slotRefines);
       mergeBonus(totalBonus, sb);
     }
   }
@@ -1236,12 +1410,13 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   const bonusDex = totalBonus.dex || 0;
   const bonusLuk = totalBonus.luk || 0;
 
-  const totalStr = s.str + bonusStr;
-  const totalAgi = s.agi + bonusAgi;
-  const totalVit = s.vit + bonusVit;
-  const totalInt = s.int + bonusInt;
-  const totalDex = s.dex + bonusDex;
-  const totalLuk = s.luk + bonusLuk;
+  const jb = build.jobBonus || {};
+  const totalStr = s.str + bonusStr + (jb.str || 0);
+  const totalAgi = s.agi + bonusAgi + (jb.agi || 0);
+  const totalVit = s.vit + bonusVit + (jb.vit || 0);
+  const totalInt = s.int + bonusInt + (jb.int || 0);
+  const totalDex = s.dex + bonusDex + (jb.dex || 0);
+  const totalLuk = s.luk + bonusLuk + (jb.luk || 0);
 
   // Base ATK from STR
   const baseAtk = Math.floor(totalStr) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
@@ -1420,6 +1595,100 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
       }
     }
   }
+
+  // Damage received modifiers
+  if (totalBonus.shortSubRate) specialBonuses.push({ label: `Reduz Dano Corpo-a-Corpo ${totalBonus.shortSubRate}%`, value: totalBonus.shortSubRate });
+  if (totalBonus.longSubRate) specialBonuses.push({ label: `Reduz Dano Longa Distância ${totalBonus.longSubRate}%`, value: totalBonus.longSubRate });
+  if (totalBonus.longAtkDef) specialBonuses.push({ label: `Redução Dano Ranged ${totalBonus.longAtkDef}`, value: totalBonus.longAtkDef });
+  if (totalBonus.defRate) specialBonuses.push({ label: `Bônus DEF ${totalBonus.defRate}%`, value: totalBonus.defRate });
+  if (totalBonus.mdefRate) specialBonuses.push({ label: `Bônus MDEF ${totalBonus.mdefRate}%`, value: totalBonus.mdefRate });
+  if (totalBonus.critRate) specialBonuses.push({ label: `Multiplicador CRIT ${totalBonus.critRate}%`, value: totalBonus.critRate });
+
+  // SP/HP mechanics
+  if (totalBonus.spCostRate) specialBonuses.push({ label: `Custo SP ${totalBonus.spCostRate > 0 ? "+" : ""}${totalBonus.spCostRate}%`, value: totalBonus.spCostRate, invertColor: true });
+  if (totalBonus.hpRecovRate) specialBonuses.push({ label: `Reg. Natural HP +${totalBonus.hpRecovRate}%`, value: totalBonus.hpRecovRate });
+  if (totalBonus.spRecovRate) specialBonuses.push({ label: `Reg. Natural SP +${totalBonus.spRecovRate}%`, value: totalBonus.spRecovRate });
+
+  // On-hit/kill gains
+  if (totalBonus.spGain) specialBonuses.push({ label: `SP por Acerto Físico +${totalBonus.spGain}`, value: totalBonus.spGain });
+  if (totalBonus.hpGain) specialBonuses.push({ label: `HP por Acerto Físico +${totalBonus.hpGain}`, value: totalBonus.hpGain });
+  if (totalBonus.magicSpGain) specialBonuses.push({ label: `SP por Acerto Mágico +${totalBonus.magicSpGain}`, value: totalBonus.magicSpGain });
+  if (totalBonus.magicHpGain) specialBonuses.push({ label: `HP por Acerto Mágico +${totalBonus.magicHpGain}`, value: totalBonus.magicHpGain });
+
+  // Reflect
+  if (totalBonus.shortWeaponReflect) specialBonuses.push({ label: `Refletir Dano Corpo-a-Corpo ${totalBonus.shortWeaponReflect}%`, value: totalBonus.shortWeaponReflect });
+  if (totalBonus.magicReflect) specialBonuses.push({ label: `Refletir Dano Mágico ${totalBonus.magicReflect}%`, value: totalBonus.magicReflect });
+  if (totalBonus.reduceDmgReturn) specialBonuses.push({ label: `Reduz Dano Refletido ${totalBonus.reduceDmgReturn}%`, value: totalBonus.reduceDmgReturn });
+
+  // Critical add by race
+  if (totalBonus.criticalAddRace) {
+    for (const [key, val] of Object.entries(totalBonus.criticalAddRace)) {
+      if (val !== 0) {
+        const raceLabel = RACE_LABELS[key] || key;
+        specialBonuses.push({ label: `CRIT vs ${raceLabel} +${val}`, value: val });
+      }
+    }
+  }
+
+  // MDEF ignore by class
+  if (totalBonus.ignoreMdefClassRate) {
+    for (const [key, val] of Object.entries(totalBonus.ignoreMdefClassRate)) {
+      if (val !== 0) {
+        const classLabel = CLASS_LABELS[key] || key;
+        specialBonuses.push({ label: `MDEF ignorada ${classLabel} ${val}%`, value: val });
+      }
+    }
+  }
+
+  // Skill damage reduction
+  if (totalBonus.subSkill) {
+    for (const [skill, val] of Object.entries(totalBonus.subSkill)) {
+      if (val !== 0) {
+        const skillName = SKILL_LABELS[skill] || skill.replace(/_/g, " ");
+        specialBonuses.push({ label: `Resist. ${skillName} ${val}%`, value: val });
+      }
+    }
+  }
+
+  // Weapon type damage bonus
+  if (totalBonus.weaponDamageRate) {
+    const W_TYPE_LABELS: Record<string, string> = {
+      W_FIST: "Punho", W_DAGGER: "Adaga", W_1HSWORD: "Espada 1M", W_2HSWORD: "Espada 2M",
+      W_1HSPEAR: "Lança 1M", W_2HSPEAR: "Lança 2M", W_1HAXE: "Machado 1M", W_2HAXE: "Machado 2M",
+      W_MACE: "Maça", W_2HMACE: "Maça 2M", W_STAFF: "Cajado", W_BOW: "Arco",
+      W_KNUCKLE: "Soco-Inglês", W_MUSICAL: "Instrumento", W_WHIP: "Chicote",
+      W_BOOK: "Livro", W_KATAR: "Katar", W_REVOLVER: "Revólver", W_RIFLE: "Rifle",
+      W_GATLING: "Metralhadora", W_SHOTGUN: "Espingarda", W_GRENADE: "Lança-Granadas",
+      W_HUUMA: "Shuriken", W_2HSTAFF: "Cajado 2M", W_SHIELD: "Escudo",
+    };
+    for (const [wtype, val] of Object.entries(totalBonus.weaponDamageRate)) {
+      if (val !== 0) {
+        const wtypeLabel = W_TYPE_LABELS[wtype] || wtype;
+        specialBonuses.push({ label: `Dano com ${wtypeLabel} +${val}%`, value: val });
+      }
+    }
+  }
+
+  // Status resistance (0–10000 scale, divide by 100 for %)
+  if (totalBonus.statusResist) {
+    const EFF_LABELS: Record<string, string> = {
+      Eff_Stun: "Atordoamento", Eff_Poison: "Veneno", Eff_Freeze: "Congelamento",
+      Eff_Curse: "Maldição", Eff_Silence: "Silêncio", Eff_Confusion: "Confusão",
+      Eff_Blind: "Cegueira", Eff_Sleep: "Sono", Eff_Stone: "Petrificação",
+      Eff_Bleeding: "Sangramento", Eff_DPoison: "Veneno Mortal", Eff_Fear: "Medo",
+      Eff_Burning: "Queimadura", Eff_Freezing: "Congelação", Eff_Crystallized: "Cristalizado",
+    };
+    for (const [eff, val] of Object.entries(totalBonus.statusResist)) {
+      if (val !== 0) {
+        const effLabel = EFF_LABELS[eff] || eff.replace("Eff_", "");
+        specialBonuses.push({ label: `Resist. ${effLabel} +${(val / 100).toFixed(0)}%`, value: val / 100 });
+      }
+    }
+  }
+
+  // Flat ATK/MATK bonus from bAtk / bBaseAtk / bMatk (part of weaponAtk display but shown separately)
+  if (totalBonus.atk) specialBonuses.push({ label: `ATQ Equip +${totalBonus.atk}`, value: totalBonus.atk });
+  if (totalBonus.matk) specialBonuses.push({ label: `MATQ Equip +${totalBonus.matk}`, value: totalBonus.matk });
 
   return {
     atk: `${baseAtk} + ${totalWeaponAtk}`,

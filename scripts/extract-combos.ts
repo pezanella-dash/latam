@@ -628,8 +628,27 @@ interface ComboBlock {
   requiredItemNames: string[];
   requiredItemIds: number[];
   baseBonuses: ParsedBonus;
-  refineBonuses: { condition: string; minRefine?: number; bonuses: ParsedBonus }[];
+  refineBonuses: { condition: string; minRefine?: number; refineScaleMode?: "combined" | "source"; bonuses: ParsedBonus }[];
   rawLines: string[];
+}
+
+/**
+ * Determine how a per-refine condition scales.
+ * "combined" = multiply by sum of all item refines in combo
+ * "source"   = multiply by source item's refine only
+ */
+function determineRefineScaleMode(condition: string): "combined" | "source" {
+  const c = condition.toLowerCase();
+  // "A cada refino de cada peça..." → each piece contributes → combined
+  if (c.includes("cada peça") || c.includes("das peças") || c.includes("de cada arma")) {
+    return "combined";
+  }
+  // Plain "A cada refino:" without specifying a piece → combined
+  if (c.match(/^a cada refino\s*:?\s*$/)) {
+    return "combined";
+  }
+  // Specific item reference → scale by source item's refine
+  return "source";
 }
 
 function extractCombos(item: any): ComboBlock[] {
@@ -697,7 +716,8 @@ function extractCombos(item: any): ComboBlock[] {
       }
       // "A cada refino" patterns
       if (clean.match(/A cada refino/i)) {
-        currentRefineBlock = { condition: clean, bonuses: {} };
+        const scaleMode = determineRefineScaleMode(clean);
+        currentRefineBlock = { condition: clean, refineScaleMode: scaleMode, bonuses: {} };
         refineBonuses.push(currentRefineBlock);
         i++;
         continue;
@@ -830,6 +850,7 @@ const output = dedupedCombos.map(c => ({
   refineBonuses: c.refineBonuses.map(rb => ({
     condition: rb.condition,
     minCombinedRefine: rb.minRefine,
+    ...(rb.minRefine == null && rb.refineScaleMode ? { refineScaleMode: rb.refineScaleMode } : {}),
     bonuses: cleanBonus(rb.bonuses),
   })),
 }));

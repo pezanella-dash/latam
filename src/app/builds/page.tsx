@@ -509,10 +509,11 @@ export default function BuildsPage() {
     jobLevel,
     baseStats,
     equipment,
-    activeBuffs, // Added activeBuffs
+    activeBuffs,
     hpFactor: selectedClass?.hpFactor || 1,
     spFactor: selectedClass?.spFactor || 1,
     isTrans: selectedClass?.tier === "trans" || selectedClass?.tier === "third",
+    jobBonus: selectedClass?.jobBonus,
   };
   const derivedStats = calculateDerivedStats(buildConfig);
   const groupColor = CLASS_GROUPS[selectedClass.group].color;
@@ -1651,29 +1652,67 @@ function CardSearchModal({
 // ─── Enchant Chip (click = info popup, X = delete) ─────────────────────
 
 function EnchantChip({ enchant, onDelete }: { enchant: CardItem; onDelete: () => void }) {
-  const [showPopup, setShowPopup] = useState(false);
-  const chipRef = useRef<HTMLDivElement>(null);
+  const [popupRect, setPopupRect] = useState<DOMRect | null>(null);
+  const [popupPos, setPopupPos] = useState<{ top: number; left: number } | null>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
 
-  // Close popup on outside click
+  // Compute fixed position after popup mounts
   useEffect(() => {
-    if (!showPopup) return;
+    if (!popupRect || !popupRef.current) return;
+    const el = popupRef.current;
+    const pw = el.offsetWidth;
+    const ph = el.offsetHeight;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    // Try above the chip, aligned to its left
+    let left = popupRect.left;
+    let top = popupRect.top - ph - 6;
+
+    // If overflows right, shift left
+    if (left + pw > vw - 8) left = vw - pw - 8;
+    // If overflows above, show below
+    if (top < 8) top = popupRect.bottom + 6;
+    // Clamp
+    left = Math.max(8, left);
+    top = Math.max(8, Math.min(top, vh - ph - 8));
+
+    setPopupPos({ top, left });
+  }, [popupRect]);
+
+  // Close popup on outside click or Escape
+  useEffect(() => {
+    if (!popupRect) return;
     function handleClick(e: MouseEvent) {
-      if (chipRef.current && !chipRef.current.contains(e.target as Node)) {
-        setShowPopup(false);
+      if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
+        setPopupRect(null); setPopupPos(null);
       }
     }
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") { setPopupRect(null); setPopupPos(null); }
+    }
     document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, [showPopup]);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [popupRect]);
 
   const descLines = enchant.description?.length
     ? parseRODescription(enchant.description)
     : [];
 
+  const showPopup = !!popupRect;
+
   return (
-    <div ref={chipRef} className="relative">
+    <div className="relative">
       <button
-        onClick={(e) => { e.stopPropagation(); setShowPopup(!showPopup); }}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (showPopup) { setPopupRect(null); setPopupPos(null); }
+          else setPopupRect(e.currentTarget.getBoundingClientRect());
+        }}
         className="px-1 py-px rounded text-[8px] leading-snug border bg-teal-950/80 border-teal-400/50 text-teal-300 hover:bg-teal-900/80 hover:border-teal-300/60 transition-colors"
         title={enchant.namePt || enchant.nameEn}
       >
@@ -1681,10 +1720,15 @@ function EnchantChip({ enchant, onDelete }: { enchant: CardItem; onDelete: () =>
       </button>
 
       {showPopup && (
-        <div
-          className="absolute bottom-full left-0 mb-1 z-50 bg-ro-panel border border-ro-border rounded-lg shadow-xl p-3 min-w-[200px] max-w-[280px]"
-          onClick={(e) => e.stopPropagation()}
-        >
+        <>
+          {/* Invisible backdrop to catch outside clicks */}
+          <div className="fixed inset-0 z-[58]" onClick={() => { setPopupRect(null); setPopupPos(null); }} />
+          <div
+            ref={popupRef}
+            className="fixed z-[59] bg-ro-panel border border-ro-border rounded-lg shadow-xl p-3 min-w-[200px] max-w-[280px]"
+            style={popupPos ? { top: popupPos.top, left: popupPos.left } : { top: (popupRect?.top ?? 0) - 200, left: popupRect?.left ?? 0, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
+          >
           {/* Header with name + delete button */}
           <div className="flex items-start justify-between gap-2 mb-1.5">
             <div className="flex items-center gap-1.5 min-w-0">
@@ -1703,7 +1747,7 @@ function EnchantChip({ enchant, onDelete }: { enchant: CardItem; onDelete: () =>
               onClick={(e) => {
                 e.stopPropagation();
                 onDelete();
-                setShowPopup(false);
+                setPopupRect(null); setPopupPos(null);
               }}
               className="flex-shrink-0 w-4 h-4 rounded flex items-center justify-center text-[10px] bg-red-900/50 border border-red-500/40 text-red-400 hover:bg-red-800/60 hover:text-red-300 transition-colors"
               title="Remover encantamento"
@@ -1740,6 +1784,7 @@ function EnchantChip({ enchant, onDelete }: { enchant: CardItem; onDelete: () =>
 
           <div className="text-[9px] text-ro-muted mt-1.5">ID: {enchant.id}</div>
         </div>
+        </>
       )}
     </div>
   );
