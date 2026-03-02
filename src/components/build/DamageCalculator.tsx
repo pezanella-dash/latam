@@ -165,6 +165,7 @@ export default function DamageCalculator({ derivedStats, buildConfig, selectedCl
       baseLevel: buildConfig.baseLevel,
       baseStats: buildConfig.baseStats,
       totalBonus: derivedStats.totalBonus,
+      jobBonus: buildConfig.jobBonus,
       weaponAtk: derivedStats.weaponAtk,
       weaponMatk: derivedStats.weaponMatk,
       weaponLevel: derivedStats.weaponLevel,
@@ -383,11 +384,14 @@ export default function DamageCalculator({ derivedStats, buildConfig, selectedCl
             <div className="text-[10px] text-ro-muted mb-2">
               Kills em{" "}
               <span className="text-ro-gold font-mono font-bold">
-                {Math.ceil(monster.hp / Math.max(1, damageResult.totalAvg))}
+                {Math.ceil(monster.hp / Math.max(1, damageResult.totalExpected))}
               </span>
-              {" "}casts ({Math.ceil(monster.hp / Math.max(1, damageResult.totalAvg)) * damageResult.hitCount} hits)
+              {" "}casts ({Math.ceil(monster.hp / Math.max(1, damageResult.totalExpected)) * damageResult.hitCount} hits)
+              {damageResult.critChance > 0 && (
+                <span className="text-red-400"> (CRIT {Math.round(damageResult.critChance * 100)}%)</span>
+              )}
               {" | "}
-              Tempo: {((Math.ceil(monster.hp / Math.max(1, damageResult.totalAvg)) * damageResult.castCycle) / 1000).toFixed(1)}s
+              Tempo: {((Math.ceil(monster.hp / Math.max(1, damageResult.totalExpected)) * damageResult.castCycle) / 1000).toFixed(1)}s
             </div>
           )}
 

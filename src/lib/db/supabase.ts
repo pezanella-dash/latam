@@ -403,6 +403,17 @@ export async function getItemById(id: number): Promise<DbItem | null> {
   return rowToItem(data);
 }
 
+/** Batch-fetch scripts for multiple item IDs. Returns a map of id → script string. */
+export async function getItemScriptsByIds(ids: number[]): Promise<Map<number, string | undefined>> {
+  if (ids.length === 0) return new Map();
+  const { data, error } = await getSupabase()
+    .from("items")
+    .select("id, script")
+    .in("id", ids);
+  if (error || !data) return new Map();
+  return new Map(data.map((row: any) => [row.id as number, (row.script ?? undefined) as string | undefined]));
+}
+
 export async function getMonsterById(id: number): Promise<DbMonster | null> {
   const { data: row, error } = await getSupabase()
     .from("monsters")

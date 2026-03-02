@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { itemImageUrl, classIconUrl, parseRODescription } from "@/lib/utils";
-import { searchItems } from "@/lib/db/supabase";
+import { searchItems, getItemScriptsByIds } from "@/lib/db/supabase";
 import CharacterPreview, { type RenderParams } from "@/components/build/CharacterPreview";
 import {
   RO_CLASSES,
@@ -141,6 +141,50 @@ export default function BuildsPage() {
     setSavedBuilds(loadSavedBuilds());
   }, []);
 
+  // Re-hydrate card/enchant scripts that may be missing in builds loaded from localStorage.
+  // Older saves may not have stored the `script` field on card/enchant items.
+  useEffect(() => {
+    const missingIds: number[] = [];
+    for (const item of Object.values(equipment)) {
+      if (!item) continue;
+      for (const c of item.cards) {
+        if (c && c.script === undefined) missingIds.push(c.id);
+      }
+      for (const e of (item.enchants || [])) {
+        if (e && e.script === undefined) missingIds.push(e.id);
+      }
+    }
+    if (missingIds.length === 0) return;
+    const unique = [...new Set(missingIds)];
+    getItemScriptsByIds(unique).then((scriptMap) => {
+      if (scriptMap.size === 0) return;
+      setEquipment((prev) => {
+        let changed = false;
+        const next: typeof prev = {};
+        for (const [slot, item] of Object.entries(prev) as [string, EquippedItem | null | undefined][]) {
+          if (!item) { next[slot as EquipSlot] = item ?? null; continue; }
+          const newCards = item.cards.map((c) => {
+            if (c && c.script === undefined && scriptMap.has(c.id)) {
+              const s = scriptMap.get(c.id);
+              if (s) { changed = true; return { ...c, script: s }; }
+            }
+            return c;
+          });
+          const newEnchants = (item.enchants || []).map((e) => {
+            if (e && e.script === undefined && scriptMap.has(e.id)) {
+              const s = scriptMap.get(e.id);
+              if (s) { changed = true; return { ...e, script: s }; }
+            }
+            return e;
+          });
+          next[slot as EquipSlot] = changed ? { ...item, cards: newCards, enchants: newEnchants } : item;
+        }
+        return changed ? next : prev;
+      });
+    }).catch(() => {/* ignore network errors */});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [equipment]);
+
   const handleSaveBuild = useCallback(() => {
     if (!selectedClass || !saveName.trim()) return;
     const build: SavedBuild = {
@@ -170,6 +214,7 @@ export default function BuildsPage() {
     setJobLevel(build.jobLevel);
     setBaseStats({ ...build.baseStats });
     setEquipment(build.equipment);
+    setActiveBuffs([]);
     setPreviewState(build.previewState);
     setShowLoadModal(false);
   }, []);
@@ -882,7 +927,9 @@ export default function BuildsPage() {
                       <span className="text-ro-muted">{sb.label}</span>
                       {sb.value !== 0 ? (
                         <span className={`font-mono font-medium ${isGood ? "text-green-400" : "text-red-400"}`}>
-                          {sb.value > 0 ? `+${sb.value}%` : `${sb.value}%`}
+                          {sb.isFlat
+                            ? (sb.value > 0 ? `+${sb.value}` : `${sb.value}`)
+                            : (sb.value > 0 ? `+${sb.value}%` : `${sb.value}%`)}
                         </span>
                       ) : (
                         <span className="font-mono font-medium text-green-400">&#10003;</span>

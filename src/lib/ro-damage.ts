@@ -31,6 +31,8 @@ export interface DamageInput {
   skillLevel: number;
   monster: MonsterTarget;
   activeBuffs?: string[];
+  /** Job stat bonuses (added on top of raw allocated baseStats) */
+  jobBonus?: { str?: number; agi?: number; vit?: number; int?: number; dex?: number; luk?: number };
 }
 
 export interface MonsterTarget {
@@ -59,6 +61,11 @@ export interface DamageResult {
   totalMax: number;
   totalAvg: number;
   totalCrit: number;
+  /** Expected average damage accounting for effective crit chance vs monster LUK.
+   *  For non-crit skills, equals totalAvg. */
+  totalExpected: number;
+  /** Effective crit chance (0–1) used for totalExpected calculation. */
+  critChance: number;
   dps: number;
   castCycle: number;     // total time for one cast cycle (ms)
   details: DamageDetails;
@@ -228,14 +235,14 @@ function sumMagicBonusForTarget(
 // ─── Stat Scaling ───────────────────────────────────────────────────
 // Some skills add stats to their skillratio (e.g., +INT, +AGI*3, +VIT*2)
 
-function calcStatBonus(skill: SkillFormula, stats: BaseStats, bonus: EquipBonus, skillLevel: number): number {
+function calcStatBonus(skill: SkillFormula, stats: BaseStats, bonus: EquipBonus, skillLevel: number, jb?: DamageInput["jobBonus"]): number {
   if (!skill.statScaling) return 0;
-  const totalStr = stats.str + (bonus.str || 0);
-  const totalAgi = stats.agi + (bonus.agi || 0);
-  const totalVit = stats.vit + (bonus.vit || 0);
-  const totalInt = stats.int + (bonus.int || 0);
-  const totalDex = stats.dex + (bonus.dex || 0);
-  const totalLuk = stats.luk + (bonus.luk || 0);
+  const totalStr = stats.str + (bonus.str || 0) + (jb?.str || 0);
+  const totalAgi = stats.agi + (bonus.agi || 0) + (jb?.agi || 0);
+  const totalVit = stats.vit + (bonus.vit || 0) + (jb?.vit || 0);
+  const totalInt = stats.int + (bonus.int || 0) + (jb?.int || 0);
+  const totalDex = stats.dex + (bonus.dex || 0) + (jb?.dex || 0);
+  const totalLuk = stats.luk + (bonus.luk || 0) + (jb?.luk || 0);
 
   let statAdd = 0;
   if (skill.statScaling.str) statAdd += Math.floor(totalStr * skill.statScaling.str);
@@ -345,8 +352,8 @@ function calcGatesOfHellBonus(input: DamageInput, isCombo: boolean): number {
 // NO BaseLv scaling. Standard physical damage with this ratio.
 
 function calcAcidBombRatio(input: DamageInput): number {
-  const { skillLevel, baseStats, totalBonus, monster } = input;
-  const casterInt = baseStats.int + (totalBonus.int || 0);
+  const { skillLevel, baseStats, totalBonus, monster, jobBonus: jb } = input;
+  const casterInt = baseStats.int + (totalBonus.int || 0) + (jb?.int || 0);
   const targetVit = monster.stats.vit;
   return 200 * skillLevel + casterInt + targetVit;
 }
@@ -354,16 +361,16 @@ function calcAcidBombRatio(input: DamageInput): number {
 // ─── Main Damage Calculation ────────────────────────────────────────
 
 export function calculateDamage(input: DamageInput): DamageResult {
-  const { skill, skillLevel, monster, baseLevel, baseStats, totalBonus } = input;
+  const { skill, skillLevel, monster, baseLevel, baseStats, totalBonus, jobBonus: jb } = input;
   const bonusStr = totalBonus.str || 0;
   const bonusInt = totalBonus.int || 0;
   const bonusDex = totalBonus.dex || 0;
   const bonusLuk = totalBonus.luk || 0;
 
-  const totalStr = baseStats.str + bonusStr;
-  const totalInt = baseStats.int + bonusInt;
-  const totalDex = baseStats.dex + bonusDex;
-  const totalLuk = baseStats.luk + bonusLuk;
+  const totalStr = baseStats.str + bonusStr + (jb?.str || 0);
+  const totalInt = baseStats.int + bonusInt + (jb?.int || 0);
+  const totalDex = baseStats.dex + bonusDex + (jb?.dex || 0);
+  const totalLuk = baseStats.luk + bonusLuk + (jb?.luk || 0);
 
   let hitCount = getHitCount(skill, skillLevel);
 
@@ -493,6 +500,7 @@ export function calculateDamage(input: DamageInput): DamageResult {
     return {
       minDamage: damage, maxDamage: damage, avgDamage: damage, critDamage: damage,
       hitCount, totalMin: damage, totalMax: damage, totalAvg: damage, totalCrit: damage,
+      totalExpected: damage, critChance: 0,
       dps, castCycle, details,
     };
   }
@@ -559,7 +567,7 @@ export function calculateDamage(input: DamageInput): DamageResult {
 
   // ── Standard skill calculation ──────────────────────────────────
   let skillRatio = getDamagePercent(skill, skillLevel);
-  skillRatio += calcStatBonus(skill, baseStats, totalBonus, skillLevel);
+  skillRatio += calcStatBonus(skill, baseStats, totalBonus, skillLevel, jb);
 
   // Injetar fórmulas complexas dependentes de INT/DEX ou buffs assumidos no nível máximo
   if (skill.formulaType === "diamondDust") {
@@ -713,6 +721,7 @@ export function calculateDamage(input: DamageInput): DamageResult {
     return {
       minDamage, maxDamage, avgDamage, critDamage,
       hitCount, totalMin: minDamage, totalMax: maxDamage, totalAvg: avgDamage, totalCrit: critDamage,
+      totalExpected: avgDamage, critChance: 0,
       dps, castCycle, details,
     };
   } else {
@@ -742,7 +751,7 @@ function calcPhysicalDamage(
   totalIgnoreDef: number,
   edpMult: number = 1.0,  // EDP multiplier for weapon+equip ATK (4.0× at lv5)
 ): DamageResult {
-  const { skill, skillLevel, baseLevel, baseStats, totalBonus, monster } = input;
+  const { skill, skillLevel, baseLevel, baseStats, totalBonus, monster, jobBonus: jb } = input;
   let hitCount = getHitCount(skill, skillLevel);
   // KN_PIERCE: size-based hit count
   if (skill.sizeHitCount) {
@@ -756,9 +765,9 @@ function calcPhysicalDamage(
   const bonusStr = (totalBonus.str || 0);
   const bonusDex = (totalBonus.dex || 0);
   const bonusLuk = (totalBonus.luk || 0);
-  const totalStr = baseStats.str + bonusStr;
-  const totalDex = baseStats.dex + bonusDex;
-  const totalLuk = baseStats.luk + bonusLuk;
+  const totalStr = baseStats.str + bonusStr + (jb?.str || 0);
+  const totalDex = baseStats.dex + bonusDex + (jb?.dex || 0);
+  const totalLuk = baseStats.luk + bonusLuk + (jb?.luk || 0);
 
   // 1. Status ATK (Base Stats only, never affected by Weapon Size or EDP)
   const isRangedWeapon = ["Bow", "Revolver", "Rifle", "Gatling", "Shotgun", "Grenade", "Musical", "Whip"].includes(input.weaponSubType || "");
@@ -913,9 +922,26 @@ function calcPhysicalDamage(
   const castCycle = getCastCycle(skill, skillLevel, totalBonus, input.aspd);
   const dps = castCycle > 0 ? Math.floor(avgDamage / (castCycle / 1000)) : 0;
 
+  // Effective crit chance vs this monster (for kill counter expected damage)
+  let critChance = 0;
+  if (skill.canCrit) {
+    const playerCrit = 1 + Math.floor(totalLuk * 0.3) + (totalBonus.crit || 0);
+    const isKatar = input.weaponSubType === "Katar";
+    // Katar doubles crit rate; halfCritBonus skills halve it
+    const rawCrit = isKatar ? playerCrit * 2 : playerCrit;
+    const skillCritMod = skill.halfCritBonus ? 0.5 : 1.0;
+    const monsterLukPenalty = Math.floor(monster.stats.luk / 25);
+    const effectiveCrit = Math.round(rawCrit * skillCritMod) - monsterLukPenalty;
+    critChance = Math.max(0, Math.min(100, effectiveCrit)) / 100;
+  }
+  const totalExpected = skill.canCrit && critChance > 0
+    ? Math.floor(critChance * critDamage + (1 - critChance) * avgDamage)
+    : avgDamage;
+
   return {
     minDamage, maxDamage, avgDamage, critDamage,
     hitCount, totalMin: minDamage, totalMax: maxDamage, totalAvg: avgDamage, totalCrit: critDamage,
+    totalExpected, critChance,
     dps, castCycle, details,
   };
 }

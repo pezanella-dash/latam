@@ -210,7 +210,7 @@ export interface DerivedStats {
   delayrate: number;
   perfectDodge: number;
   // Special bonuses (race/element/size)
-  specialBonuses: { label: string; value: number; invertColor?: boolean }[];
+  specialBonuses: { label: string; value: number; invertColor?: boolean; isFlat?: boolean }[];
   // For damage calculator
   totalBonus: EquipBonus;
   weaponAtk: number;
@@ -1466,7 +1466,7 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   const spRate = 1 + (totalBonus.maxSpRate || 0) / 100;
 
   // Build special bonuses list
-  const specialBonuses: { label: string; value: number; invertColor?: boolean }[] = [];
+  const specialBonuses: { label: string; value: number; invertColor?: boolean; isFlat?: boolean }[] = [];
 
   const addSpecials = (
     record: Record<string, number> | undefined,
@@ -1689,8 +1689,8 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   }
 
   // Flat ATK/MATK bonus from bAtk / bBaseAtk / bMatk (part of weaponAtk display but shown separately)
-  if (totalBonus.atk) specialBonuses.push({ label: `ATQ Equip +${totalBonus.atk}`, value: totalBonus.atk });
-  if (totalBonus.matk) specialBonuses.push({ label: `MATQ Equip +${totalBonus.matk}`, value: totalBonus.matk });
+  if (totalBonus.atk) specialBonuses.push({ label: `ATQ Equip +${totalBonus.atk}`, value: totalBonus.atk, isFlat: true });
+  if (totalBonus.matk) specialBonuses.push({ label: `MATQ Equip +${totalBonus.matk}`, value: totalBonus.matk, isFlat: true });
 
   return {
     atk: `${baseAtk} + ${totalWeaponAtk}`,
