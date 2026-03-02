@@ -1410,12 +1410,15 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   const bonusDex = totalBonus.dex || 0;
   const bonusLuk = totalBonus.luk || 0;
 
-  const totalStr = s.str + bonusStr;
-  const totalAgi = s.agi + bonusAgi;
-  const totalVit = s.vit + bonusVit;
-  const totalInt = s.int + bonusInt;
-  const totalDex = s.dex + bonusDex;
-  const totalLuk = s.luk + bonusLuk;
+  // Job bonus (cumulative at max job level, added on top of raw allocated stats)
+  const jb = build.jobBonus || {};
+
+  const totalStr = s.str + bonusStr + (jb.str || 0);
+  const totalAgi = s.agi + bonusAgi + (jb.agi || 0);
+  const totalVit = s.vit + bonusVit + (jb.vit || 0);
+  const totalInt = s.int + bonusInt + (jb.int || 0);
+  const totalDex = s.dex + bonusDex + (jb.dex || 0);
+  const totalLuk = s.luk + bonusLuk + (jb.luk || 0);
 
   // Base ATK from STR
   const baseAtk = Math.floor(totalStr) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
@@ -1698,7 +1701,14 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
     flee,
     crit,
     aspd,
-    statBonuses: { str: bonusStr, agi: bonusAgi, vit: bonusVit, int: bonusInt, dex: bonusDex, luk: bonusLuk },
+    statBonuses: {
+      str: bonusStr + (jb.str || 0),
+      agi: bonusAgi + (jb.agi || 0),
+      vit: bonusVit + (jb.vit || 0),
+      int: bonusInt + (jb.int || 0),
+      dex: bonusDex + (jb.dex || 0),
+      luk: bonusLuk + (jb.luk || 0),
+    },
     maxHp: Math.floor((baseHp + hpBonus) * hpRate),
     maxSp: Math.floor((baseSp + spBonus) * spRate),
     atkRate: totalBonus.atkRate || 0,
@@ -1761,13 +1771,23 @@ export function getTotalStatPointsUsed(stats: BaseStats): number {
 
 /**
  * Total stat points available at a given base level.
- * rAthena formula: pc_gets_status_point = (level + 14) / 5 per level.
+ * Renewal formula from rAthena db/re/statpoint.yml:
+ * - lv ≤ 100: floor((lv + 14) / 5)
+ * - 101 ≤ lv ≤ 150: floor((lv - 101) / 10) + 23
+ * - lv > 150: floor((lv - 151) / 7) + 28
  * Includes the 48 starting points + level-up gains.
+ * Verified: level 185 → 3595, level 200 → 4099.
  */
 export function getTotalStatPoints(baseLevel: number): number {
   let total = 48; // starting stat points at level 1
   for (let lv = 2; lv <= baseLevel; lv++) {
-    total += Math.floor((lv + 14) / 5);
+    if (lv <= 100) {
+      total += Math.floor((lv + 14) / 5);
+    } else if (lv <= 150) {
+      total += Math.floor((lv - 101) / 10) + 23;
+    } else {
+      total += Math.floor((lv - 151) / 7) + 28;
+    }
   }
   return total;
 }
