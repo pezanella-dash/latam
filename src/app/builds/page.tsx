@@ -106,7 +106,7 @@ function persistBuilds(builds: SavedBuild[]) {
 export default function BuildsPage() {
   const [selectedClass, setSelectedClass] = useState<RoClass | null>(null);
   const [baseLevel, setBaseLevel] = useState(185);
-  const [jobLevel, setJobLevel] = useState(70);
+  const [jobLevel, setJobLevel] = useState(65);
   const [baseStats, setBaseStats] = useState<BaseStats>({ ...DEFAULT_STATS });
   const [equipment, setEquipment] = useState<Partial<Record<EquipSlot, EquippedItem | null>>>({});
   const [activeBuffs, setActiveBuffs] = useState<string[]>([]);
@@ -566,11 +566,11 @@ export default function BuildsPage() {
         </div>
         <div className="flex items-center gap-3 text-xs text-ro-muted">
           <label>Base Lv
-            <input type="number" value={baseLevel} onChange={(e) => setBaseLevel(Math.max(1, Math.min(250, parseInt(e.target.value) || 1)))}
+            <input type="number" value={baseLevel} onChange={(e) => setBaseLevel(Math.max(1, Math.min(185, parseInt(e.target.value) || 1)))}
               className="ml-1 w-14 bg-ro-surface border border-ro-border rounded px-2 py-1 text-xs text-[var(--ro-text)] text-center" />
           </label>
           <label>Job Lv
-            <input type="number" value={jobLevel} onChange={(e) => setJobLevel(Math.max(1, Math.min(70, parseInt(e.target.value) || 1)))}
+            <input type="number" value={jobLevel} onChange={(e) => setJobLevel(Math.max(1, Math.min(65, parseInt(e.target.value) || 1)))}
               className="ml-1 w-12 bg-ro-surface border border-ro-border rounded px-2 py-1 text-xs text-[var(--ro-text)] text-center" />
           </label>
         </div>

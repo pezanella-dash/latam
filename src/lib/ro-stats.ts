@@ -1410,13 +1410,12 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   const bonusDex = totalBonus.dex || 0;
   const bonusLuk = totalBonus.luk || 0;
 
-  const jb = build.jobBonus || {};
-  const totalStr = s.str + bonusStr + (jb.str || 0);
-  const totalAgi = s.agi + bonusAgi + (jb.agi || 0);
-  const totalVit = s.vit + bonusVit + (jb.vit || 0);
-  const totalInt = s.int + bonusInt + (jb.int || 0);
-  const totalDex = s.dex + bonusDex + (jb.dex || 0);
-  const totalLuk = s.luk + bonusLuk + (jb.luk || 0);
+  const totalStr = s.str + bonusStr;
+  const totalAgi = s.agi + bonusAgi;
+  const totalVit = s.vit + bonusVit;
+  const totalInt = s.int + bonusInt;
+  const totalDex = s.dex + bonusDex;
+  const totalLuk = s.luk + bonusLuk;
 
   // Base ATK from STR
   const baseAtk = Math.floor(totalStr) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
