@@ -445,9 +445,7 @@ export default function DamageCalculator({ derivedStats, buildConfig, selectedCl
               {damageResult.details.baseLvScaling !== 1 && (
                 <DetailRow label="BaseLv Scaling" value={`×${damageResult.details.baseLvScaling.toFixed(2)}`} positive />
               )}
-              {damageResult.details.skillAtkModifier !== 0 && (
-                <DetailRow label="Skill bAdd" value={`+${damageResult.details.skillAtkModifier}%`} positive />
-              )}
+              <DetailRow label="Skill bAdd (bSkillAtk)" value={damageResult.details.skillAtkModifier !== 0 ? `+${damageResult.details.skillAtkModifier}%` : "0% (cartas/encants?)"} positive={damageResult.details.skillAtkModifier !== 0} />
               {damageResult.details.longRangeModifier !== 0 && (
                 <DetailRow label={selectedSkill?.isMelee ? "Curta Distância" : "Longa Distância"} value={`+${damageResult.details.longRangeModifier}%`} positive />
               )}

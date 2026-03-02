@@ -615,8 +615,10 @@ export const SKILL_FORMULAS: SkillFormula[] = [
   },
   // AB_ADORAMUS: rAthena master (kRO Rebalance) -> skillratio = 300 + 250 * skill_lv. RE_LVL_DMOD(100).
   // Confirmed on LATAM/bRO via RagnaPlace & Divine Pride: 550-2800%.
+  // 10 hits, each hit is a SEPARATE full calculation (same as bolt spells) — not one calc split across hits.
   {
     id: 2040, aegisName: "AB_ADORAMUS", namePt: "Adoramus", type: "magical", element: "holy", hitCount: 10,
+    perHitDamage: true,  // each of 10 hits is a separate skillRatio calculation (rAthena bolt behavior)
     damagePercent: [550, 800, 1050, 1300, 1550, 1800, 2050, 2300, 2550, 2800], baseLvScaling: true,
     isMelee: false, canCrit: false, castTime: levels(1000, 200, 10), fixedCast: flat(1000, 10),
     cooldown: flat(2500, 10), spCost: levels(20, 8, 10), maxLevel: 10, jobs: ["Arch_Bishop"]
