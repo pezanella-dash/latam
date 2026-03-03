@@ -458,12 +458,12 @@ export function calculateDamage(input: DamageInput): DamageResult {
   if (skill.formulaType === "dragonBreath") {
     let damage = calcDragonBreath(input, skill.element);
 
-    // rAthena cardfix: race/ele/size/class bonuses are ADDITIVE (not multiplicative)
-    // battle_calc_cardfix(): cardfix = 1000 + sum(bonuses*10), then damage * cardfix / 1000
-    const cardfix = 1000 + physBonuses.race * 10 + physBonuses.element * 10
-                        + physBonuses.size * 10 + physBonuses.class * 10;
+    // rAthena cardfix: APPLY_CARDFIX_RE — sequential multiplicative (each applied separately)
     const baseDamage = damage; // save for details
-    damage = Math.floor(damage * cardfix / 1000);
+    if (physBonuses.size !== 0)    damage = damage + Math.floor(damage * physBonuses.size / 100);
+    if (physBonuses.element !== 0) damage = damage + Math.floor(damage * physBonuses.element / 100);
+    if (physBonuses.race !== 0)    damage = damage + Math.floor(damage * physBonuses.race / 100);
+    if (physBonuses.class !== 0)   damage = damage + Math.floor(damage * physBonuses.class / 100);
 
     // bSkillAtk — separate ATK_ADDRATE (damage += damage * bonus / 100)
     if (skillAtkBonusCombined > 0) {
@@ -622,27 +622,45 @@ export function calculateDamage(input: DamageInput): DamageResult {
   const baseLvMod = calcBaseLvMod(skill, baseLevel);
 
   if (skill.type === "magical") {
-    // ── Magical Damage (rAthena Renewal pipeline) ──
-    // Pipeline: MATK → cardfix(APPLY_CARDFIX_RE) → skillratio → MDEF → bSkillAtk → element fix
-    // Ref: rAthena battle.cpp battle_calc_magic_attack + battle_calc_cardfix
-    const statusMatk = Math.floor(baseLevel / 4) + totalInt + Math.floor(totalInt / 2) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
+    // ── Magical Damage (rAthena Renewal pipeline — corrected) ──
+    // Corrected pipeline per rAthena battle.cpp + irowiki:
+    //   MATK (statusMin/Max variance) × matkRate → skillratio × baseLvMod
+    //   → cardfix (APPLY_CARDFIX_RE: size→ele→magicEle→race→class)
+    //   → hard MDEF → soft MDEF → bSkillAtk → element table
+    // Ref: irowiki.org/wiki/MATK, rAthena battle.cpp battle_calc_magic_attack
+
+    // Status MATK has variance between min and max (irowiki Renewal formula):
+    //   min: BaseLv/4 + INT + floor(INT/2)  + DEX/5 + LUK/3
+    //   max: BaseLv/4 + INT + floor(INT/5)² + DEX/5 + LUK/3
+    // At INT=120: min adds 60 (INT/2), max adds 576 (24²) — huge range at high INT!
+    const statusMatkMin = Math.floor(baseLevel / 4) + totalInt + Math.floor(totalInt / 2) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
+    const intDiv5 = Math.floor(totalInt / 5);
+    const statusMatkMax = Math.floor(baseLevel / 4) + totalInt + (intDiv5 * intDiv5) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
+
     const weaponMatk = input.weaponMatk + getRefineMatkBonus(input.weaponLevel, input.weaponRefine);
     const equipMatk = totalBonus.matk || 0;
+    // bMatkRate: MATK% from equipment — applied to total (status+weapon+equip) MATK
     const matkRate = 1 + (totalBonus.matkRate || 0) / 100;
 
-    const matkMin = Math.floor((statusMatk + Math.floor(weaponMatk * 0.7) + equipMatk) * matkRate);
-    const matkMax = Math.floor((statusMatk + weaponMatk + equipMatk) * matkRate);
+    // Weapon MATK also has variance: 70%–100% of weapon MATK (rolled per hit)
+    const matkMin = Math.floor((statusMatkMin + Math.floor(weaponMatk * 0.7) + equipMatk) * matkRate);
+    const matkMax = Math.floor((statusMatkMax + weaponMatk + equipMatk) * matkRate);
 
-    // MDEF reduction: damage × (1000 + MDEF) / (1000 + MDEF × 10)
+    // Hard MDEF: damage × (1000 + MDEF) / (1000 + MDEF × 10)
+    // Constant is 1000 for pre-4th-job MDEF (NOT 2000 — that's MRES for 4th job content)
     const hardMdefReduction = effectiveHardMdef > 0
       ? (1000 + effectiveHardMdef) / (1000 + effectiveHardMdef * 10)
       : 1;
 
-    // ── Step 1: Cardfix — APPLY_CARDFIX_RE (sequential, multiplicative with floor) ──
-    // rAthena Renewal order: size → race2 → ele → debuffs → atkEle → race → class
-    // Each category applied separately: damage = damage + floor(damage * bonus / 100)
-    let magDmgMin = matkMin;
-    let magDmgMax = matkMax;
+    // ── Step 1: Skill Ratio × BaseLv scaling (RE_LVL_DMOD) ──
+    // Applied BEFORE cardfix (corrected order per rAthena battle_calc_magic_attack)
+    const effectiveSkillRatio = Math.floor(skillRatio * baseLvMod);
+    let magDmgMin = Math.floor(matkMin * effectiveSkillRatio / 100);
+    let magDmgMax = Math.floor(matkMax * effectiveSkillRatio / 100);
+
+    // ── Step 2: Cardfix — APPLY_CARDFIX_RE (sequential multiplicative with floor) ──
+    // rAthena order: size → ele (target def element) → magicEle (skill/atk element) → race → class
+    // Each category: damage = damage + floor(damage * bonus / 100)
 
     // Size (bMagicAddSize)
     if (magicBonuses.size !== 0) {
@@ -670,19 +688,14 @@ export function calculateDamage(input: DamageInput): DamageResult {
       magDmgMax = magDmgMax + Math.floor(magDmgMax * magicBonuses.class / 100);
     }
 
-    // ── Step 2: Skill Ratio × BaseLv scaling (RE_LVL_DMOD) ──
-    const effectiveSkillRatio = Math.floor(skillRatio * baseLvMod);
-    magDmgMin = Math.floor(magDmgMin * effectiveSkillRatio / 100);
-    magDmgMax = Math.floor(magDmgMax * effectiveSkillRatio / 100);
-
-    // ── Step 3: MDEF reduction ──
+    // ── Step 3: Hard MDEF reduction ──
     magDmgMin = Math.floor(magDmgMin * hardMdefReduction);
     magDmgMax = Math.floor(magDmgMax * hardMdefReduction);
-    // Soft MDEF subtraction
+    // Soft MDEF: flat subtraction after hard MDEF
     magDmgMin = Math.max(1, magDmgMin - softMdef);
     magDmgMax = Math.max(1, magDmgMax - softMdef);
 
-    // ── Step 4: bSkillAtk — post-DEF (pc_skillatk_bonus) ──
+    // ── Step 4: bSkillAtk — final skill-specific bonus (pc_skillatk_bonus) ──
     if (skillAtkBonusCombined > 0) {
       magDmgMin = magDmgMin + Math.floor(magDmgMin * skillAtkBonusCombined / 100);
       magDmgMax = magDmgMax + Math.floor(magDmgMax * skillAtkBonusCombined / 100);
@@ -702,7 +715,8 @@ export function calculateDamage(input: DamageInput): DamageResult {
     const critDamage = maxDamage;
 
     const details: DamageDetails = {
-      statusAtk: statusMatk, weaponAtk: weaponMatk, equipAtk: equipMatk,
+      statusAtk: Math.floor((statusMatkMin + statusMatkMax) / 2),
+      weaponAtk: weaponMatk, equipAtk: equipMatk,
       skillPercent: skillRatio, baseLvScaling: baseLvMod,
       sizePenalty: 100, raceModifier: magicBonuses.race, elementModifier: magicBonuses.element,
       sizeModifier: magicBonuses.size, classModifier: magicBonuses.class,
@@ -827,11 +841,27 @@ function calcPhysicalDamage(
   skillDmgMin += flatBonus;
   skillDmgMax += flatBonus;
 
-  // 8. Card fix: rAthena battle_calc_cardfix() — race/ele/size/class are ADDITIVE
-  const cardfix = 1000 + targetBonuses.race * 10 + targetBonuses.element * 10
-                       + targetBonuses.size * 10 + targetBonuses.class * 10;
-  let damageBeforeDefMin = Math.floor(skillDmgMin * cardfix / 1000);
-  let damageBeforeDefMax = Math.floor(skillDmgMax * cardfix / 1000);
+  // 8. Card fix: rAthena battle_calc_cardfix() — APPLY_CARDFIX_RE (sequential multiplicative)
+  // Each bonus applied separately: damage = damage + floor(damage * bonus / 100)
+  // rAthena Renewal order: size → element → race → class
+  let damageBeforeDefMin = skillDmgMin;
+  let damageBeforeDefMax = skillDmgMax;
+  if (targetBonuses.size !== 0) {
+    damageBeforeDefMin = damageBeforeDefMin + Math.floor(damageBeforeDefMin * targetBonuses.size / 100);
+    damageBeforeDefMax = damageBeforeDefMax + Math.floor(damageBeforeDefMax * targetBonuses.size / 100);
+  }
+  if (targetBonuses.element !== 0) {
+    damageBeforeDefMin = damageBeforeDefMin + Math.floor(damageBeforeDefMin * targetBonuses.element / 100);
+    damageBeforeDefMax = damageBeforeDefMax + Math.floor(damageBeforeDefMax * targetBonuses.element / 100);
+  }
+  if (targetBonuses.race !== 0) {
+    damageBeforeDefMin = damageBeforeDefMin + Math.floor(damageBeforeDefMin * targetBonuses.race / 100);
+    damageBeforeDefMax = damageBeforeDefMax + Math.floor(damageBeforeDefMax * targetBonuses.race / 100);
+  }
+  if (targetBonuses.class !== 0) {
+    damageBeforeDefMin = damageBeforeDefMin + Math.floor(damageBeforeDefMin * targetBonuses.class / 100);
+    damageBeforeDefMax = damageBeforeDefMax + Math.floor(damageBeforeDefMax * targetBonuses.class / 100);
+  }
 
   // Range modifier (bLongAtkRate/bShortAtkRate) — separate ATK_ADDRATE
   if (rangeMod !== 0) {
