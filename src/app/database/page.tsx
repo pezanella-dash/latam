@@ -18,6 +18,7 @@ import {
   getMonsterById,
   findMonstersDropping,
   resolveDropsToItems,
+  getSupabase,
 } from "@/lib/db/supabase";
 import combosData from "../../../data/database/combos.json";
 import monsterSpawnsData from "../../../data/database/monster-spawns.json";
@@ -84,7 +85,7 @@ interface SkillResult {
   targetType: string;
 }
 
-type Tab = "items" | "monsters" | "skills";
+type Tab = "items" | "monsters" | "skills" | "maps";
 
 // ─── Constants ──────────────────────────────────────────────────────
 
@@ -118,6 +119,30 @@ const ELEMENTS = [
   "Poison", "Holy", "Dark", "Ghost", "Undead",
 ];
 const SKILL_TYPES = ["Weapon", "Magic", "Misc"];
+
+// ─── Map constants ───────────────────────────────────────────────────
+
+const MAP_TYPE_LABELS: Record<string, string> = {
+  all: "Todos", town: "Cidades", field: "Campos",
+  dungeon: "Masmorras", guild: "Feudo", other: "Outros",
+};
+const MAP_TYPES = ["all", "town", "field", "dungeon", "guild", "other"] as const;
+const MAP_TYPE_BADGE: Record<string, string> = {
+  town: "bg-element-holy/10 border-element-holy/20 text-element-holy",
+  field: "bg-element-wind/10 border-element-wind/20 text-element-wind",
+  dungeon: "bg-element-fire/10 border-element-fire/20 text-element-fire",
+  guild: "bg-ro-gold/10 border-ro-gold/20 text-ro-gold",
+  other: "bg-ro-surface border-ro-border text-ro-muted",
+};
+
+// Inverted spawn index: mapId → [{monsterId, count, respawnMs}]
+const mapToMonsters: Record<string, Array<{ monsterId: number; count: number; respawnMs: number }>> = {};
+for (const [mobId, locs] of Object.entries(monsterSpawnsData as Record<string, Array<{ mapId: string; count: number; respawnMs: number }>>)) {
+  for (const loc of locs) {
+    if (!mapToMonsters[loc.mapId]) mapToMonsters[loc.mapId] = [];
+    mapToMonsters[loc.mapId].push({ monsterId: parseInt(mobId), count: loc.count, respawnMs: loc.respawnMs });
+  }
+}
 
 const ELEMENT_COLORS: Record<string, string> = {
   Neutral: "text-slate-300",
@@ -197,6 +222,9 @@ function DatabaseContent() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [selectedMonster, setSelectedMonster] = useState<any>(null);
+  const [selectedMap, setSelectedMap] = useState<any>(null);
+  const [mapQuery, setMapQuery] = useState("");
+  const [mapTypeFilter, setMapTypeFilter] = useState("all");
 
   const sentinelRef = useRef<HTMLDivElement>(null);
   const hasMore = results.length < total;
@@ -281,6 +309,16 @@ function DatabaseContent() {
     setMvpOnly(false);
     setSelectedItem(null);
     setSelectedMonster(null);
+    setSelectedMap(null);
+    // Auto-open map from URL param
+    if (tab === "maps") {
+      const mapId = searchParams.get("mapId");
+      if (mapId) {
+        const found = (mapsData as any[]).find((m) => m.mapId === mapId);
+        if (found) loadMapDetail(found);
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab]);
 
   const loadItemDetail = async (id: number) => {
@@ -302,6 +340,26 @@ function DatabaseContent() {
     setSelectedMonster({ monster, drops, mvpDrops });
   };
 
+  const loadMapDetail = async (mapEntry: { mapId: string; name: string; type: string }) => {
+    const spawns = (mapToMonsters[mapEntry.mapId] || [])
+      .slice()
+      .sort((a, b) => b.count - a.count);
+    if (spawns.length === 0) {
+      setSelectedMap({ map: mapEntry, monsters: [] });
+      return;
+    }
+    const monsterIds = spawns.map((s) => s.monsterId);
+    const { data } = await getSupabase()
+      .from("monsters")
+      .select("id, name, name_pt, is_mvp, level, race, element, element_level")
+      .in("id", monsterIds);
+    const monsterMap = new Map((data || []).map((m: any) => [m.id, m]));
+    setSelectedMap({
+      map: mapEntry,
+      monsters: spawns.map((s) => ({ ...s, monsterData: monsterMap.get(s.monsterId) || null })),
+    });
+  };
+
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
       {/* Header */}
@@ -311,7 +369,8 @@ function DatabaseContent() {
           {tab === "items" && "29.916 itens"}
           {tab === "monsters" && "2.675 monstros (193 MVPs)"}
           {tab === "skills" && "1.635 skills"}
-          {total > 0 && ` \u00b7 ${total} resultados`}
+          {tab === "maps" && `${(mapsData as any[]).length} mapas`}
+          {tab !== "maps" && total > 0 && ` \u00b7 ${total} resultados`}
         </p>
       </div>
 
@@ -321,6 +380,7 @@ function DatabaseContent() {
           ["items", "Itens"],
           ["monsters", "Monstros"],
           ["skills", "Skills"],
+          ["maps", "Mapas"],
         ] as [Tab, string][]).map(([key, label]) => (
           <button
             key={key}
@@ -353,15 +413,17 @@ function DatabaseContent() {
                 ? "Buscar item (nome, ID)..."
                 : tab === "monsters"
                   ? "Buscar monstro (nome, ID)..."
-                  : "Buscar skill (nome, ID)..."
+                  : tab === "maps"
+                    ? "Buscar mapa (nome, ID)..."
+                    : "Buscar skill (nome, ID)..."
             }
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            value={tab === "maps" ? mapQuery : query}
+            onChange={(e) => tab === "maps" ? setMapQuery(e.target.value) : setQuery(e.target.value)}
             className="search-input pl-11 py-2.5"
           />
-          {query && (
+          {(tab === "maps" ? mapQuery : query) && (
             <button
-              onClick={() => setQuery("")}
+              onClick={() => tab === "maps" ? setMapQuery("") : setQuery("")}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-ro-muted hover:text-[var(--ro-text)] transition-colors"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -430,6 +492,24 @@ function DatabaseContent() {
             ))}
           </select>
         )}
+
+        {tab === "maps" && (
+          <div className="flex gap-1 bg-ro-surface rounded-xl p-1 border border-ro-border">
+            {MAP_TYPES.map((t) => (
+              <button
+                key={t}
+                onClick={() => setMapTypeFilter(t)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  mapTypeFilter === t
+                    ? "bg-ro-gold text-ro-darker shadow"
+                    : "text-ro-muted hover:text-[var(--ro-text)] hover:bg-ro-panel"
+                }`}
+              >
+                {MAP_TYPE_LABELS[t]}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Loading skeleton */}
@@ -475,6 +555,19 @@ function DatabaseContent() {
               setSelectedMonster(null);
               setTab("items");
               loadItemDetail(id);
+            }}
+          />
+        </DetailModal>
+      )}
+
+      {selectedMap && (
+        <DetailModal onClose={() => setSelectedMap(null)}>
+          <MapDetail
+            data={selectedMap}
+            onMonsterClick={(id) => {
+              setSelectedMap(null);
+              setTab("monsters");
+              loadMonsterDetail(id);
             }}
           />
         </DetailModal>
@@ -588,8 +681,60 @@ function DatabaseContent() {
         </div>
       )}
 
+      {/* ─── Maps Grid ──────────────────────────────────────────────── */}
+      {tab === "maps" && (() => {
+        const q = mapQuery.toLowerCase().trim();
+        const filtered = (mapsData as any[]).filter((m) => {
+          const typeOk = mapTypeFilter === "all" || m.type === mapTypeFilter;
+          const queryOk = !q || m.name.toLowerCase().includes(q) || m.mapId.toLowerCase().includes(q);
+          return typeOk && queryOk;
+        });
+        return (
+          <>
+            {filtered.length === 0 ? (
+              <div className="text-center py-20">
+                <div className="text-4xl mb-4 opacity-20">🗺️</div>
+                <p className="text-ro-muted">Nenhum mapa encontrado.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                {filtered.map((map) => (
+                  <button
+                    key={map.mapId}
+                    onClick={() => loadMapDetail(map)}
+                    className="glass-card overflow-hidden text-left transition-all hover:border-ro-gold/30 group"
+                  >
+                    <div className="aspect-square bg-ro-surface relative">
+                      <MapThumb mapId={map.mapId} />
+                      <div className="absolute top-1.5 right-1.5">
+                        <span className={`px-1.5 py-0.5 rounded text-[9px] font-medium border ${MAP_TYPE_BADGE[map.type] || MAP_TYPE_BADGE.other}`}>
+                          {MAP_TYPE_LABELS[map.type] || map.type}
+                        </span>
+                      </div>
+                      {mapToMonsters[map.mapId]?.length > 0 && (
+                        <div className="absolute bottom-1.5 left-1.5">
+                          <span className="px-1.5 py-0.5 rounded text-[9px] font-medium border bg-ro-darker/80 border-ro-border text-ro-muted">
+                            {mapToMonsters[map.mapId].length} mob{mapToMonsters[map.mapId].length > 1 ? "s" : ""}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-2">
+                      <div className="text-xs font-medium text-[var(--ro-text)] truncate group-hover:text-ro-gold transition-colors">
+                        {map.name}
+                      </div>
+                      <div className="text-[10px] text-ro-muted truncate">{map.mapId}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </>
+        );
+      })()}
+
       {/* ─── Infinite scroll sentinel + loading more ────────────────── */}
-      {!loading && hasMore && (
+      {!loading && hasMore && tab !== "maps" && (
         <div ref={sentinelRef} className="flex justify-center py-8">
           {loadingMore ? (
             <div className="flex items-center gap-2 text-ro-muted text-sm">
@@ -612,7 +757,7 @@ function DatabaseContent() {
         </div>
       )}
 
-      {!loading && results.length === 0 && (
+      {!loading && tab !== "maps" && results.length === 0 && (
         <div className="text-center py-20">
           <div className="text-4xl mb-4 opacity-20">🔍</div>
           <p className="text-ro-muted">
@@ -1074,7 +1219,7 @@ function MonsterSpawns({ monsterId }: { monsterId: number }) {
         {spawns.map((s) => (
           <Link
             key={s.mapId}
-            href={`/maps?mapId=${s.mapId}`}
+            href={`/database?tab=maps&mapId=${s.mapId}`}
             className="bg-ro-surface rounded-lg px-3 py-2 text-xs flex items-center gap-2.5 border border-ro-border/50 hover:border-ro-gold/40 hover:bg-ro-panel transition-colors cursor-pointer"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -1099,6 +1244,102 @@ function MonsterSpawns({ monsterId }: { monsterId: number }) {
           </Link>
         ))}
       </div>
+    </div>
+  );
+}
+
+// ─── Map Thumbnail with fallback ────────────────────────────────────
+
+function MapThumb({ mapId, className }: { mapId: string; className?: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <div className={`${className || "w-full h-full"} bg-ro-surface flex items-center justify-center`}>
+        <svg className="w-8 h-8 text-ro-muted/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+        </svg>
+      </div>
+    );
+  }
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={mapImageUrl(mapId)}
+      alt={mapId}
+      className={className || "w-full h-full object-cover"}
+      loading="lazy"
+      referrerPolicy="no-referrer"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
+// ─── Map Detail ──────────────────────────────────────────────────────
+
+function MapDetail({ data, onMonsterClick }: { data: any; onMonsterClick: (id: number) => void }) {
+  const { map, monsters } = data;
+  if (!map) return null;
+
+  return (
+    <div>
+      {/* Header */}
+      <h2 className="text-xl font-bold text-ro-gold mb-1">{map.name}</h2>
+      <div className="flex items-center gap-2 mb-4">
+        <span className={`px-2 py-0.5 rounded-md text-[11px] font-medium border ${MAP_TYPE_BADGE[map.type] || MAP_TYPE_BADGE.other}`}>
+          {MAP_TYPE_LABELS[map.type] || map.type}
+        </span>
+        <span className="text-xs text-ro-muted">{map.mapId}</span>
+        {monsters.length > 0 && (
+          <span className="text-xs text-ro-muted">· {monsters.length} tipo{monsters.length > 1 ? "s" : ""} de monstro</span>
+        )}
+      </div>
+
+      {/* Minimap */}
+      <div className="rounded-lg overflow-hidden border border-ro-border bg-ro-surface mb-4">
+        <MapThumb mapId={map.mapId} className="w-full h-auto object-contain" />
+      </div>
+
+      {/* Monster list */}
+      {monsters.length > 0 && (
+        <div>
+          <div className="text-[10px] uppercase tracking-widest text-ro-gold-dim mb-2 font-medium">
+            Monstros ({monsters.length})
+          </div>
+          <div className="space-y-1 max-h-96 overflow-y-auto pr-1">
+            {monsters.map((s: any) => (
+              <button
+                key={s.monsterId}
+                onClick={() => onMonsterClick(s.monsterId)}
+                className="w-full bg-ro-surface rounded-lg px-3 py-2 text-xs flex items-center gap-2.5 border border-ro-border/50 hover:border-ro-gold/40 hover:bg-ro-panel transition-colors text-left"
+              >
+                <MonsterImage id={s.monsterId} className="w-10 h-10 object-contain flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <div className="text-[var(--ro-text-secondary)] font-medium truncate">
+                    {s.monsterData
+                      ? (s.monsterData.is_mvp ? "★ " : "") + (s.monsterData.name_pt || s.monsterData.name)
+                      : `Monstro #${s.monsterId}`}
+                  </div>
+                  {s.monsterData && (
+                    <div className="text-ro-muted text-[10px] flex gap-2">
+                      <span>Lv {s.monsterData.level}</span>
+                      <span className={ELEMENT_COLORS[s.monsterData.element] || ""}>{s.monsterData.element} {s.monsterData.element_level}</span>
+                      <span>{s.monsterData.race}</span>
+                    </div>
+                  )}
+                </div>
+                <div className="text-right flex-shrink-0">
+                  <div className="text-element-water font-mono font-medium">{s.count}x</div>
+                  <div className="text-ro-muted text-[10px]">{formatRespawn(s.respawnMs)}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {monsters.length === 0 && (
+        <p className="text-center text-ro-muted text-sm py-4">Nenhum monstro registrado neste mapa.</p>
+      )}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Database, Newspaper, Zap, Wand2, Map } from "lucide-react";
+import { Database, Newspaper, Zap, Wand2 } from "lucide-react";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -79,13 +79,6 @@ export default function RootLayout({
               >
                 <Wand2 size={16} />
                 <span>Skills</span>
-              </Link>
-              <Link
-                href="/maps"
-                className="flex items-center gap-2 text-sm font-medium text-ro-muted hover:text-ro-text transition-colors"
-              >
-                <Map size={16} />
-                <span>Mapas</span>
               </Link>
               <Link
                 href="/builds"
