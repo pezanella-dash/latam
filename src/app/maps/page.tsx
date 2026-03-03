@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useMemo, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import mapsData from "../../../data/database/maps.json";
 
 // ─── Types ──────────────────────────────────────────────────────────
@@ -43,7 +45,7 @@ const TYPE_BADGE: Record<string, string> = {
 const PAGE_SIZE = 60;
 
 function mapImageUrl(mapId: string): string {
-  return `https://static.divine-pride.net/images/maps/raw/${mapId}.png`;
+  return `https://www.divine-pride.net/img/map/raw/${mapId}`;
 }
 
 // ─── Map Image with Fallback ────────────────────────────────────────
@@ -133,7 +135,8 @@ function MapDetailModal({
 
 // ─── Page Component ─────────────────────────────────────────────────
 
-export default function MapsPage() {
+function MapsPageInner() {
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState<MapType>("all");
   const [selectedMap, setSelectedMap] = useState<MapEntry | null>(null);
@@ -141,6 +144,15 @@ export default function MapsPage() {
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   const allMaps = mapsData as MapEntry[];
+
+  // Auto-open map modal when coming from a link with ?mapId=xxx
+  useEffect(() => {
+    const mapId = searchParams.get("mapId");
+    if (!mapId) return;
+    const found = allMaps.find((m) => m.mapId === mapId);
+    if (found) setSelectedMap(found);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filtered = useMemo(() => {
     let list = allMaps;
@@ -308,5 +320,13 @@ export default function MapsPage() {
         />
       )}
     </main>
+  );
+}
+
+export default function MapsPage() {
+  return (
+    <Suspense>
+      <MapsPageInner />
+    </Suspense>
   );
 }

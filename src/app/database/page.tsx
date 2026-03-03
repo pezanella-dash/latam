@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   itemImageUrl,
   monsterImageUrl,
@@ -1057,7 +1058,7 @@ function formatRespawn(ms: number): string {
 }
 
 function mapImageUrl(mapId: string): string {
-  return `https://static.divine-pride.net/images/maps/raw/${mapId}.png`;
+  return `https://www.divine-pride.net/img/map/raw/${mapId}`;
 }
 
 function MonsterSpawns({ monsterId }: { monsterId: number }) {
@@ -1071,9 +1072,10 @@ function MonsterSpawns({ monsterId }: { monsterId: number }) {
       </div>
       <div className="space-y-1">
         {spawns.map((s) => (
-          <div
+          <Link
             key={s.mapId}
-            className="bg-ro-surface rounded-lg px-3 py-2 text-xs flex items-center gap-2.5 border border-ro-border/50"
+            href={`/maps?mapId=${s.mapId}`}
+            className="bg-ro-surface rounded-lg px-3 py-2 text-xs flex items-center gap-2.5 border border-ro-border/50 hover:border-ro-gold/40 hover:bg-ro-panel transition-colors cursor-pointer"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -1085,7 +1087,7 @@ function MonsterSpawns({ monsterId }: { monsterId: number }) {
               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
             />
             <div className="flex-1 min-w-0">
-              <div className="text-[var(--ro-text-secondary)] font-medium truncate">
+              <div className="text-[var(--ro-text-secondary)] font-medium truncate group-hover:text-ro-gold">
                 {mapNameLookup[s.mapId] || s.mapId}
               </div>
               <div className="text-ro-muted text-[10px]">{s.mapId}</div>
@@ -1094,7 +1096,7 @@ function MonsterSpawns({ monsterId }: { monsterId: number }) {
               <div className="text-element-water font-mono font-medium">{s.count}x</div>
               <div className="text-ro-muted text-[10px]">{formatRespawn(s.respawnMs)}</div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
