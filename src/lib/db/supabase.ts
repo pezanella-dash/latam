@@ -191,13 +191,21 @@ function rowToSkill(row: any): DbSkill {
   };
 }
 
-// ─── Text normalization (for client-side accent stripping) ──────────
+// ─── Text normalization ──────────────────────────────────────────────
+// The Supabase search_text column is: lower(name_pt || name_en || aegis_name)
+// It only lowercases — accents (ç, ã, ô, etc.) are preserved.
+// So we must NOT strip accents here, otherwise "traça" → "traca" and
+// ilike '%traca%' won't match "asas de traça".
+//
+// For full accent-insensitive search (user types "traca" → finds "traça"),
+// update the Supabase schema to wrap the search_text column with unaccent():
+//   search_text TEXT GENERATED ALWAYS AS (
+//     lower(unaccent(coalesce(name_pt,'') || ' ' || coalesce(name_en,'') || ' ' || coalesce(aegis_name,'')))
+//   ) STORED
+// The unaccent extension is already enabled in supabase-schema.sql.
 
 function normalizeText(text: string): string {
-  return text
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+  return text.toLowerCase();
 }
 
 // ─── JOB_ALIASES (identical to json-database.ts) ────────────────────
