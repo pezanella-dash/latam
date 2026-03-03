@@ -129293,6 +129293,84 @@
     "mvpDrops": []
   },
   {
+    "id": 3150,
+    "aegisName": "MG_AMDARAIS_H",
+    "name": "Amdarais",
+    "level": 180,
+    "hp": 42900000,
+    "sp": 0,
+    "baseExp": 0,
+    "jobExp": 0,
+    "mvpExp": 0,
+    "attack": 8899,
+    "magicAttack": 3900,
+    "defense": 30,
+    "magicDefense": 40,
+    "stats": {
+      "str": 255,
+      "agi": 39,
+      "vit": 90,
+      "int": 169,
+      "dex": 166,
+      "luk": 20
+    },
+    "attackRange": 3,
+    "skillRange": 10,
+    "chaseRange": 12,
+    "size": "Large",
+    "race": "Undead",
+    "element": "Neutral",
+    "elementLevel": 1,
+    "walkSpeed": 120,
+    "attackDelay": 312,
+    "attackMotion": 1200,
+    "damageMotion": 432,
+    "ai": 26,
+    "class": "Boss",
+    "isMvp": true,
+    "modes": [
+      "Mvp"
+    ],
+    "drops": [
+      {
+        "aegisName": "Old_Violet_Box",
+        "rate": 10000,
+        "stealProtected": false
+      },
+      {
+        "aegisName": "Yggdrasilberry",
+        "rate": 10000,
+        "stealProtected": false
+      },
+      {
+        "aegisName": "Patriotism_Marks",
+        "rate": 10000,
+        "stealProtected": false
+      },
+      {
+        "aegisName": "Old_Card_Album",
+        "rate": 5000,
+        "stealProtected": false
+      },
+      {
+        "aegisName": "Death_Guidance",
+        "rate": 1000,
+        "stealProtected": false
+      },
+      {
+        "aegisName": "Amdarais_H_Card",
+        "rate": 1,
+        "stealProtected": true
+      }
+    ],
+    "mvpDrops": [
+      {
+        "aegisName": "Old_Violet_Box",
+        "rate": 5500
+      }
+    ]
+  },
+  {
     "id": 3153,
     "aegisName": "EXCAVATOR_ROBOT",
     "name": "Excavator Robot",
@@ -155736,6 +155814,79 @@
     "modes": [],
     "drops": [],
     "mvpDrops": []
+  },
+  {
+    "id": 20573,
+    "aegisName": "MD_C_AMDARAIS",
+    "name": "Phantom Amdarais",
+    "level": 192,
+    "hp": 2000000000,
+    "sp": 0,
+    "baseExp": 0,
+    "jobExp": 0,
+    "mvpExp": 0,
+    "attack": 7565,
+    "magicAttack": 5000,
+    "defense": 446,
+    "magicDefense": 82,
+    "stats": {
+      "str": 365,
+      "agi": 328,
+      "vit": 175,
+      "int": 211,
+      "dex": 437,
+      "luk": 168
+    },
+    "attackRange": 3,
+    "skillRange": 10,
+    "chaseRange": 12,
+    "size": "Large",
+    "race": "Demon",
+    "element": "Dark",
+    "elementLevel": 3,
+    "walkSpeed": 120,
+    "attackDelay": 312,
+    "attackMotion": 1200,
+    "damageMotion": 432,
+    "ai": 26,
+    "class": "Boss",
+    "isMvp": true,
+    "modes": [
+      "Mvp"
+    ],
+    "drops": [
+      {
+        "aegisName": "Old_Card_Album",
+        "rate": 5000,
+        "stealProtected": false
+      },
+      {
+        "aegisName": "Old_Violet_Box",
+        "rate": 5000,
+        "stealProtected": false
+      },
+      {
+        "aegisName": "Patriotism_Marks",
+        "rate": 10000,
+        "stealProtected": false
+      },
+      {
+        "aegisName": "Temporal_Spell",
+        "rate": 500,
+        "stealProtected": false
+      },
+      {
+        "aegisName": "MD_C_Amdarais_Card",
+        "rate": 1,
+        "stealProtected": true
+      }
+    ],
+    "mvpDrops": [
+      {
+        "aegisName": "Old_Card_Album",
+        "rate": 5500
+      }
+    ]
   },
   {
     "id": 20592,

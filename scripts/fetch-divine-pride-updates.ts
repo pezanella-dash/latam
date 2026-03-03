@@ -74,6 +74,16 @@ function parseAvailableDates(html: string): string[] {
   return [...new Set(dates)].sort().reverse();
 }
 
+function decodeHtmlEntities(text: string): string {
+  return text
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n)))
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
 function parseItemsFromHTML(html: string): DPHistoryItem[] {
   const items: DPHistoryItem[] = [];
   const seen = new Set<number>();
@@ -83,7 +93,7 @@ function parseItemsFromHTML(html: string): DPHistoryItem[] {
   let match;
   while ((match = linkRegex.exec(html)) !== null) {
     const id = parseInt(match[1]);
-    const name = match[2].trim();
+    const name = decodeHtmlEntities(match[2].trim());
     if (!seen.has(id) && name) {
       seen.add(id);
       items.push({
