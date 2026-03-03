@@ -1,0 +1,1149 @@
+{
+  "_meta": {
+    "source": "browiki.org",
+    "scraped": "2026-03-03",
+    "server": "LATAM (bRO)",
+    "notes": "Data extracted from browiki.org Portuguese wiki. Formulas are Renewal system unless noted."
+  },
+  "items": {
+    "slots": {
+      "head_top": {
+        "name": "Equipamento para cabeça (Topo)",
+        "pt": "Cabeça Alta",
+        "visual": true,
+        "notes": "Visually displayed on the character"
+      },
+      "head_mid": {
+        "name": "Equipamento para cabeça (Meio)",
+        "pt": "Cabeça Média",
+        "visual": true,
+        "notes": "Visually displayed on the character"
+      },
+      "head_low": {
+        "name": "Equipamento para cabeça (Baixo)",
+        "pt": "Cabeça Baixa",
+        "visual": true,
+        "notes": "Visually displayed on the character"
+      },
+      "armor": {
+        "name": "Armadura",
+        "pt": "Armadura",
+        "visual": false,
+        "notes": "Not visible on character model"
+      },
+      "weapon": {
+        "name": "Arma",
+        "pt": "Arma / Mão Direita",
+        "visual": true,
+        "notes": "Also known as right hand slot"
+      },
+      "shield": {
+        "name": "Escudo",
+        "pt": "Escudo / Mão Esquerda",
+        "visual": true,
+        "notes": "Also known as left hand slot"
+      },
+      "garment": {
+        "name": "Capa",
+        "pt": "Capa",
+        "visual": true,
+        "notes": "Capes that display on the character's back"
+      },
+      "shoes": {
+        "name": "Calçado",
+        "pt": "Calçado",
+        "visual": false,
+        "notes": "Not visible on character model"
+      },
+      "accessory_right": {
+        "name": "Acessório Direito",
+        "pt": "Acessório Direito",
+        "visual": false,
+        "notes": "Some accessories equip exclusively in this slot"
+      },
+      "accessory_left": {
+        "name": "Acessório Esquerdo",
+        "pt": "Acessório Esquerdo",
+        "visual": false,
+        "notes": "If an accessory can equip in either slot, it won't specify which"
+      },
+      "shadow_armor": {
+        "name": "Sombra Armadura",
+        "pt": "Sombra Armadura",
+        "visual": false,
+        "tab": "shadow",
+        "notes": "Shadow equipment slot mirroring armor"
+      },
+      "shadow_weapon": {
+        "name": "Sombra Arma",
+        "pt": "Sombra Arma",
+        "visual": false,
+        "tab": "shadow",
+        "notes": "Shadow equipment slot mirroring weapon"
+      },
+      "shadow_shield": {
+        "name": "Sombra Escudo",
+        "pt": "Sombra Escudo",
+        "visual": false,
+        "tab": "shadow",
+        "notes": "Shadow equipment slot mirroring shield"
+      },
+      "shadow_shoes": {
+        "name": "Sombra Calçado",
+        "pt": "Sombra Calçado",
+        "visual": false,
+        "tab": "shadow",
+        "notes": "Shadow equipment slot mirroring shoes"
+      },
+      "shadow_accessory_right": {
+        "name": "Sombra Acessório Direito",
+        "pt": "Sombra Acessório Direito",
+        "visual": false,
+        "tab": "shadow",
+        "notes": "Shadow equipment slot mirroring right accessory"
+      },
+      "shadow_accessory_left": {
+        "name": "Sombra Acessório Esquerdo",
+        "pt": "Sombra Acessório Esquerdo",
+        "visual": false,
+        "tab": "shadow",
+        "notes": "Shadow equipment slot mirroring left accessory"
+      }
+    },
+    "weaponLevels": {
+      "1": "Lowest tier weapons. Safe refine to +7. Uses Fracon ore for refinement. Lowest ATK bonus per refine (+2 per level).",
+      "2": "Mid-low tier weapons. Safe refine to +6. Uses Emveretarcon ore. ATK bonus +3 per refine level.",
+      "3": "Mid-high tier weapons. Safe refine to +5. Uses Oridecon ore. ATK bonus +5 per refine level.",
+      "4": "Highest tier weapons. Safe refine to +4. Uses Oridecon ore. ATK bonus +7 per refine level. Highest damage potential."
+    },
+    "weaponSizeModifiers": {
+      "Adaga": { "pt": "Dagger", "small": 100, "medium": 75, "large": 50 },
+      "Espada": { "pt": "Sword (1H)", "small": 75, "medium": 100, "large": 75 },
+      "Espada de Duas Mãos": { "pt": "Two-Handed Sword", "small": 75, "medium": 75, "large": 100 },
+      "Cajado": { "pt": "Staff", "small": 100, "medium": 100, "large": 100 },
+      "Maça": { "pt": "Mace", "small": 75, "medium": 100, "large": 100 },
+      "Machado": { "pt": "Axe", "small": 50, "medium": 75, "large": 100 },
+      "Lança": { "pt": "Spear", "small": 75, "medium": 75, "large": 100 },
+      "Arco": { "pt": "Bow", "small": 100, "medium": 100, "large": 75 },
+      "Arma de Fogo": { "pt": "Firearm (Gun)", "small": 100, "medium": 100, "large": 100 },
+      "Soqueira": { "pt": "Knuckle", "small": 100, "medium": 100, "large": 75 },
+      "Katar": { "pt": "Katar", "small": 75, "medium": 100, "large": 75 },
+      "Instrumento Musical": { "pt": "Musical Instrument", "small": 75, "medium": 100, "large": 75 },
+      "Chicote": { "pt": "Whip", "small": 75, "medium": 100, "large": 50 },
+      "Livro": { "pt": "Book", "small": 100, "medium": 100, "large": 50 },
+      "Shuriken Huuma": { "pt": "Huuma Shuriken", "small": 75, "medium": 75, "large": 100 }
+    },
+    "inventoryCapacity": {
+      "base": 100,
+      "max": 200,
+      "expansion": "Expandable via tickets"
+    },
+    "itemProperties": {
+      "slots": "Support card insertion for stat enhancement",
+      "refinement": "Available for weapons and armor; failure can cause permanent item loss",
+      "enchantment": "Applied at specialized NPCs (e.g., Malangdo)",
+      "broken": "Broken equipment displays in dark red text; costs 5,000 Zeny to repair",
+      "rental": "Rental items auto-delete after duration expires"
+    },
+    "damageTypeModifiers": {
+      "physical": [
+        "Weapon ATK +x%",
+        "Physical damage +x% (all target types)",
+        "Distance physical damage +x%",
+        "Melee physical damage +x%",
+        "Race-specific physical damage +x%",
+        "Property-specific physical damage +x%",
+        "Size-specific physical damage +x%"
+      ],
+      "magical": [
+        "Magic damage +x%",
+        "Property-specific magic damage +x%",
+        "Race-specific magic damage +x%",
+        "Size-specific magic damage +x%"
+      ],
+      "resistances": [
+        "Property resistance (physical/magic split)",
+        "Race resistance",
+        "Status effect tolerance (100% = immunity)",
+        "Size-based damage reduction"
+      ]
+    },
+    "notes": "Equipment slots total 10 main slots + 6 shadow slots + 3 visual head slots + 1 visual cape = 20 total. Shadow equipment provides additional bonus stats but has no visual appearance."
+  },
+  "enchantments": {
+    "system": {
+      "description": "Enchantments are applied at specialized NPCs and add bonus stats to equipment.",
+      "armorCost": 400000,
+      "arcanjoWingsCost": 1000000,
+      "arcanjoFallenWingsCost": 0,
+      "colorCoding": {
+        "green": "1 enchantment",
+        "blue": "2 enchantments",
+        "orange": "3 enchantments",
+        "purple": "4 enchantments"
+      },
+      "failureRisk": {
+        "standardArmor": "Item can be permanently lost on failure",
+        "arcanjoWings": "Item can be permanently lost on failure; resettable with 5 MiauMiau items",
+        "arcanjoFallenWings": "No failure risk; always succeeds"
+      },
+      "arcanjoFallenSlotsByRefine": {
+        "+0_+6": 1,
+        "+7_+8": 2,
+        "+9_plus": 3
+      }
+    },
+    "bonusTypes": [
+      {
+        "code": "S.FOR",
+        "name": "Super Força",
+        "en": "Super Strength",
+        "stat": "STR",
+        "description": "Adds STR (Strength) points",
+        "values": "varies by tier (exact values not listed on wiki)"
+      },
+      {
+        "code": "S.AGI",
+        "name": "Super Agilidade",
+        "en": "Super Agility",
+        "stat": "AGI",
+        "description": "Adds AGI (Agility) points",
+        "values": "varies by tier"
+      },
+      {
+        "code": "S.VIT",
+        "name": "Super Vitalidade",
+        "en": "Super Vitality",
+        "stat": "VIT",
+        "description": "Adds VIT (Vitality) points",
+        "values": "varies by tier"
+      },
+      {
+        "code": "S.INT",
+        "name": "Super Inteligência",
+        "en": "Super Intelligence",
+        "stat": "INT",
+        "description": "Adds INT (Intelligence) points",
+        "values": "varies by tier"
+      },
+      {
+        "code": "S.DES",
+        "name": "Super Destreza",
+        "en": "Super Dexterity",
+        "stat": "DEX",
+        "description": "Adds DEX (Dexterity) points",
+        "values": "varies by tier"
+      },
+      {
+        "code": "S.SOR",
+        "name": "Super Sorte",
+        "en": "Super Luck",
+        "stat": "LUK",
+        "description": "Adds LUK (Luck) points",
+        "values": "varies by tier"
+      },
+      {
+        "code": "EL",
+        "name": "Espírito do Lutador",
+        "en": "Fighter Spirit",
+        "stat": "ATK",
+        "description": "Increases physical attack (fighter/melee focused)",
+        "values": "varies by tier"
+      },
+      {
+        "code": "MA",
+        "name": "Mira Apurada",
+        "en": "Improved Accuracy",
+        "stat": "HIT",
+        "description": "Increases precision/hit rate",
+        "values": "varies by tier"
+      },
+      {
+        "code": "PC",
+        "name": "Pedra de Crítico",
+        "en": "Critical Stone",
+        "stat": "CRIT",
+        "description": "Increases critical hit rate",
+        "values": "varies by tier"
+      },
+      {
+        "code": "F",
+        "name": "Fatal",
+        "en": "Fatal",
+        "stat": "CRIT_DMG",
+        "description": "Increases critical damage",
+        "values": "varies by tier"
+      },
+      {
+        "code": "PE",
+        "name": "Pedra de Encantamento",
+        "en": "Enchantment Stone",
+        "stat": "MATK",
+        "description": "Increases magical attack power",
+        "values": "varies by tier (up to level 7 for Arcanjo Wings)"
+      },
+      {
+        "code": "PF",
+        "name": "Pedra de Feitiço",
+        "en": "Spell Stone",
+        "stat": "MATK_misc",
+        "description": "Increases spell/magic power",
+        "values": "varies by tier"
+      },
+      {
+        "code": "FC",
+        "name": "Fator de Cura",
+        "en": "Healing Factor",
+        "stat": "HEAL",
+        "description": "Increases healing effectiveness",
+        "values": "varies by tier"
+      },
+      {
+        "code": "AA",
+        "name": "Anti-Atraso",
+        "en": "Anti-Delay",
+        "stat": "ASPD",
+        "description": "Reduces attack delay / increases attack speed",
+        "values": "varies by tier"
+      },
+      {
+        "code": "ESQV",
+        "name": "Esquiva",
+        "en": "Evasion",
+        "stat": "FLEE",
+        "description": "Increases flee/evasion rate",
+        "values": "varies by tier"
+      },
+      {
+        "code": "RN",
+        "name": "Redução Neutra",
+        "en": "Neutral Reduction",
+        "stat": "RESIST_NEUTRAL",
+        "description": "Reduces neutral property damage received",
+        "values": "varies by tier"
+      },
+      {
+        "code": "RH",
+        "name": "Redução Humanoide",
+        "en": "Humanoid Reduction",
+        "stat": "RESIST_HUMAN",
+        "description": "Reduces damage from humanoid race",
+        "values": "varies by tier"
+      },
+      {
+        "code": "Neut",
+        "name": "Neutralidade",
+        "en": "Neutrality",
+        "stat": "misc",
+        "description": "Neutrality enchantment",
+        "values": "varies by tier"
+      }
+    ],
+    "armorBasicEnchantRange": {
+      "min": 1,
+      "max": 3,
+      "statType": "random primary attribute (STR/AGI/VIT/INT/DEX/LUK)",
+      "notes": "Random bonus between +1 and +3 to one primary attribute"
+    },
+    "arcanjoFallenCategories": [
+      "Physical",
+      "Magical",
+      "Range",
+      "Critical",
+      "HP",
+      "SP",
+      "Attack Speed",
+      "STR",
+      "AGI",
+      "VIT",
+      "INT",
+      "DEX",
+      "LUK"
+    ],
+    "notes": "Exact numerical values per enchantment tier are not listed on browiki.org. Check Divine Pride API for item-specific enchantment values. The wiki uses color-coding for enchantment count, not letter grades."
+  },
+  "stats": {
+    "caps": {
+      "class1_2_trans_expanded": 99,
+      "class3_3expanded_summoner": 130,
+      "adopted_varying": "80-117 depending on class tier"
+    },
+    "STR": {
+      "meleeATK": "+1 base physical attack per STR point",
+      "meleeATKWeaponInfluenced": "+0.5% weapon-influenced physical attack per STR point",
+      "rangedATK": "Every 5 STR = +1 base physical attack",
+      "carryCapacity": "+30 carry capacity per STR point",
+      "otherEffects": "Crowd control duration reduction, status resistance bonuses",
+      "notes": "STR only contributes 1:1 to base ATK for melee weapons. For ranged (bow, gun), it is 1 ATK per 5 STR."
+    },
+    "AGI": {
+      "flee": "+1 flee per AGI point",
+      "aspd": "Increases attack speed (contributes to ASPD formula)",
+      "defPer5": "Every 5 AGI = +1 base physical defense",
+      "movementSpeed": "Does NOT affect movement speed",
+      "notes": "AGI contributes to ASPD via the formula: √((AGI² ÷ 2) + (DEX² ÷ 5)) ÷ 4 + (AGI + STD) ÷ 200"
+    },
+    "VIT": {
+      "hpFormula": "Max HP +1% (multiplicative) per VIT point. Exact formula considers base level, class, VIT, and sum/multiply modifiers.",
+      "defPer2": "Every 2 VIT = +1 base physical defense",
+      "mdefPer5": "Every 5 VIT = +1 base magical defense",
+      "hpRegen": "+1 HP per second natural regeneration per 5 VIT",
+      "notes": "VIT contributes to both physical and magical defense. HP formula is class and level-dependent."
+    },
+    "INT": {
+      "matkPerPoint": "+1.5 base magical attack per INT point",
+      "spFormula": "Max SP +1% (multiplicative) per INT point. Exact formula considers base level, class, INT, and sum/multiply modifiers.",
+      "mdefPer2": "Every 2 INT = +1 base magical defense",
+      "spRegenPer2": "Every 2 INT = +1 SP per second natural regeneration",
+      "castReduction": "Reduces variable casting time",
+      "notes": "INT formula for MATK: each INT gives +1.5 base MATK. INT also contributes to cast time reduction via formula: DEX×2 + INT = 530 for zero variable cast time."
+    },
+    "DEX": {
+      "rangedATK": "+1 base physical attack per DEX point (ranged weapons)",
+      "rangedATKWeaponInfluenced": "+0.5% weapon-influenced physical attack per DEX point (ranged)",
+      "meleeMATKPer5": "Every 5 DEX = +1 base physical attack (melee) + +1 base magical attack + +1 base magical defense",
+      "hit": "+1 HIT (precision) per DEX point",
+      "castReduction": "Reduces variable casting time",
+      "aspdContrib": "Contributes to ASPD via formula",
+      "notes": "DEX is the primary stat for ranged physical attack. Combined with INT in cast formula: DEX×2 + INT = 530 eliminates variable cast time."
+    },
+    "LUK": {
+      "critFormula": "CRIT = (LUK × 0.3) + Modifiers",
+      "critPer3": "Every 3 LUK = +1 critical attack",
+      "hitPer3": "Every 3 LUK = +1 precision (HIT)",
+      "fleePer5": "Every 5 LUK = +1 flee",
+      "critTolerancePer5": "Every 5 LUK = +1% tolerance to critical attacks received",
+      "perfectDodgePer10": "Every 10 LUK = +1 perfect dodge",
+      "notes": "LUK has minor contributions to HIT, FLEE, and significant contribution to CRIT rate."
+    },
+    "statusATK": {
+      "formula": "StatusATK = (STR contributions) + (DEX contributions) + (LUK contributions)",
+      "components": {
+        "STR_melee": "+1 base physical attack per STR (melee weapons)",
+        "STR_ranged": "+1 base physical attack per 5 STR (ranged weapons)",
+        "DEX_ranged": "+1 base physical attack per DEX (ranged weapons)",
+        "DEX_melee_per5": "+1 base physical attack per 5 DEX (melee)",
+        "LUK_per3": "+1 base physical attack per 3 LUK"
+      },
+      "notes": "StatusATK is the base physical attack derived from stats. It is separate from WeaponATK (item base attack) and EquipATK (bonus ATK from equipment). Renewal formula splits these three components."
+    },
+    "statusMATK": {
+      "formula": "StatusMATK = (INT contributions) + (DEX contributions) + (LUK contributions)",
+      "components": {
+        "INT": "+1.5 base MATK per INT point",
+        "DEX_per5": "+1 base MATK per 5 DEX",
+        "LUK": "minor contribution (exact formula not specified on wiki)"
+      },
+      "notes": "StatusMATK is the base magical attack from stats. Exact renewal formula includes BaseLv scaling but wiki does not provide the exact equation."
+    },
+    "HIT": {
+      "formula": "Chance de acerto = (Precisão do atacante - Esquiva do defensor)%",
+      "vsMonsters": "100 + (Precisão - required precision)%",
+      "cap": "95% maximum flee cap vs monsters",
+      "baseHit": "Base HIT = DEX + (LUK ÷ 3) + BaseLv + modifiers",
+      "notes": "Hit chance is attacker precision minus defender flee. Against monsters there is a minimum hit chance."
+    },
+    "FLEE": {
+      "formula": "Esquiva = AGI + (LUK ÷ 5) + BaseLv + modifiers",
+      "baseFlee": "+1 flee per AGI point",
+      "lukContrib": "+1 flee per 5 LUK",
+      "cap_vs_monsters": "95% maximum flee cap",
+      "notes": "Flee is primarily driven by AGI. Has a cap of 95% dodge chance versus monsters."
+    },
+    "CRIT": {
+      "formula": "Crítico = (LUK × 0.3) + Modifiers",
+      "lukContrib": "+1 CRIT per 3 LUK",
+      "cap": "Not specified on wiki",
+      "notes": "Critical hits deal additional damage and ignore DEF in some game modes. CRIT rate = LUK×0.3 + item/card bonuses."
+    },
+    "ASPD": {
+      "formula": "Vel.Atq = [(Classe + (Arma + Escudo)] + {[√((AGI² ÷ 2) + (DES² ÷ 5))] ÷ 4 + (AGI + STD) ÷ 200}",
+      "max_lv1_99": 190,
+      "max_lv100plus": 193,
+      "notes": "ASPD percentage bonuses apply to final values but don't multiply the displayed ASPD number directly. AGI and DEX both contribute."
+    },
+    "castTime": {
+      "variableCastFormula": "Conjuração = A × (1 - √[(DEX × 2 + INT) ÷ 530]) × (1 - B ÷ 100) + [(C - D) × (1 − E ÷ 100)]",
+      "fixedCastFormula": "Tempo de pós-conjuração = F × (1 − G ÷ 100)",
+      "zeroVariableCast": "DEX × 2 + INT = 530 eliminates variable cast time completely",
+      "formulaVariables": {
+        "A": "Base variable cast time of the skill",
+        "B": "Variable cast time reduction % from items/cards",
+        "C": "Base fixed cast time of the skill",
+        "D": "Fixed cast time reduction (flat)",
+        "E": "Fixed cast time reduction % from items/cards",
+        "F": "Base after-cast delay",
+        "G": "After-cast delay reduction %"
+      },
+      "notes": "INT reduces variable cast time. DEX×2+INT=530 is the threshold for instant variable cast."
+    },
+    "DEF": {
+      "formula": "Base physical DEF = (VIT ÷ 2) + (AGI ÷ 5) + equipment DEF",
+      "vitContrib": "+1 base physical defense per 2 VIT",
+      "agiContrib": "+1 base physical defense per 5 AGI",
+      "notes": "DEF in Renewal reduces damage using a formula. Equipment DEF stacks additively with stat-based DEF."
+    },
+    "MDEF": {
+      "formula": "Base magical DEF = (INT ÷ 2) + (VIT ÷ 5) + equipment MDEF",
+      "intContrib": "+1 base magical defense per 2 INT",
+      "vitContrib": "+1 base magical defense per 5 VIT",
+      "notes": "MDEF reduces magical damage. Both INT and VIT contribute."
+    },
+    "renewalVsPreRenewal": {
+      "renewalChanges": [
+        "ATK is split into StatusATK + WeaponATK + EquipATK (three separate components)",
+        "MATK is split into StatusMATK + WeaponMATK + EquipMATK",
+        "Level difference between attacker and defender affects damage significantly",
+        "DEF formula changed from flat reduction to percentage-based reduction",
+        "HIT and FLEE formulas updated",
+        "ASPD max increased for higher level characters (193 cap at lv100+)"
+      ],
+      "notes": "bRO/LATAM uses Renewal system. Pre-Renewal formulas no longer apply."
+    },
+    "notes": "Wiki provides qualitative descriptions but not always exact algebraic formulas. Renewal system splits ATK/MATK into multiple components. Stat caps are 99 for 2nd class / trans, 130 for 3rd class."
+  },
+  "refinement": {
+    "ores": {
+      "wlv1": "Fracon",
+      "wlv2": "Emveretarcon",
+      "wlv3": "Oridecon",
+      "wlv4": "Oridecon",
+      "equipment": "Elunium",
+      "wlv_any_10plus": "Bradium (weapons) / Carnium (armor)"
+    },
+    "safeRefine": {
+      "wlv1": 7,
+      "wlv2": 6,
+      "wlv3": 5,
+      "wlv4": 4,
+      "equipment": 4
+    },
+    "failureConsequences": {
+      "plus1_to_plus10": "Complete item destruction on failure",
+      "plus11_and_above": "Lose 3 refine levels on failure + 20% chance of complete item destruction"
+    },
+    "weaponBonus": {
+      "wlv1": {
+        "baseAtkPerRefine": 2,
+        "notes": "+2 ATK per refine level base",
+        "table": {
+          "+1":  { "base": 2,   "over": null },
+          "+2":  { "base": 4,   "over": null },
+          "+3":  { "base": 6,   "over": null },
+          "+4":  { "base": 8,   "over": null },
+          "+5":  { "base": 10,  "over": null },
+          "+6":  { "base": 12,  "over": null },
+          "+7":  { "base": 14,  "over": null },
+          "+8":  { "base": 16,  "over": "0~2" },
+          "+9":  { "base": 18,  "over": "0~4" },
+          "+10": { "base": 20,  "over": "0~6" },
+          "+11": { "base": 22,  "over": "0~8" },
+          "+12": { "base": 24,  "over": "0~10" },
+          "+13": { "base": 26,  "over": "0~12" },
+          "+14": { "base": 28,  "over": "0~14" },
+          "+15": { "base": 30,  "over": "0~16" },
+          "+16": { "base": 32,  "over": "0~18", "additional": 16 },
+          "+17": { "base": 34,  "over": "0~20", "additional": 17 },
+          "+18": { "base": 36,  "over": "0~22", "additional": 18 },
+          "+19": { "base": 38,  "over": "0~24", "additional": 19 },
+          "+20": { "base": 40,  "over": "0~26", "additional": 20 }
+        }
+      },
+      "wlv2": {
+        "baseAtkPerRefine": 3,
+        "notes": "+3 ATK per refine level base",
+        "table": {
+          "+1":  { "base": 3,   "over": null },
+          "+2":  { "base": 6,   "over": null },
+          "+3":  { "base": 9,   "over": null },
+          "+4":  { "base": 12,  "over": null },
+          "+5":  { "base": 15,  "over": null },
+          "+6":  { "base": 18,  "over": null },
+          "+7":  { "base": 21,  "over": "0~5" },
+          "+8":  { "base": 24,  "over": "0~10" },
+          "+9":  { "base": 27,  "over": "0~15" },
+          "+10": { "base": 30,  "over": "0~20" },
+          "+11": { "base": 33,  "over": "0~25" },
+          "+12": { "base": 36,  "over": "0~30" },
+          "+13": { "base": 39,  "over": "0~35" },
+          "+14": { "base": 42,  "over": "0~40" },
+          "+15": { "base": 45,  "over": "0~45" },
+          "+16": { "base": 48,  "over": "0~50", "additional": 32 },
+          "+17": { "base": 51,  "over": "0~55", "additional": 34 },
+          "+18": { "base": 54,  "over": "0~60", "additional": 36 },
+          "+19": { "base": 57,  "over": "0~65", "additional": 38 },
+          "+20": { "base": 60,  "over": "0~70", "additional": 40 }
+        }
+      },
+      "wlv3": {
+        "baseAtkPerRefine": 5,
+        "notes": "+5 ATK per refine level base",
+        "table": {
+          "+1":  { "base": 5,   "over": null },
+          "+2":  { "base": 10,  "over": null },
+          "+3":  { "base": 15,  "over": null },
+          "+4":  { "base": 20,  "over": null },
+          "+5":  { "base": 25,  "over": null },
+          "+6":  { "base": 30,  "over": "0~8" },
+          "+7":  { "base": 35,  "over": "0~16" },
+          "+8":  { "base": 40,  "over": "0~24" },
+          "+9":  { "base": 45,  "over": "0~32" },
+          "+10": { "base": 50,  "over": "0~40" },
+          "+11": { "base": 55,  "over": "0~48" },
+          "+12": { "base": 60,  "over": "0~56" },
+          "+13": { "base": 65,  "over": "0~64" },
+          "+14": { "base": 70,  "over": "0~72" },
+          "+15": { "base": 75,  "over": "0~80" },
+          "+16": { "base": 80,  "over": "0~88", "additional": 32 },
+          "+17": { "base": 85,  "over": "0~96", "additional": 34 },
+          "+18": { "base": 90,  "over": "0~104", "additional": 36 },
+          "+19": { "base": 95,  "over": "0~112", "additional": 38 },
+          "+20": { "base": 100, "over": "0~120", "additional": 40 }
+        }
+      },
+      "wlv4": {
+        "baseAtkPerRefine": 7,
+        "notes": "+7 ATK per refine level base",
+        "table": {
+          "+1":  { "base": 7,   "over": null },
+          "+2":  { "base": 14,  "over": null },
+          "+3":  { "base": 21,  "over": null },
+          "+4":  { "base": 28,  "over": null },
+          "+5":  { "base": 35,  "over": "0~14" },
+          "+6":  { "base": 42,  "over": "0~28" },
+          "+7":  { "base": 49,  "over": "0~42" },
+          "+8":  { "base": 56,  "over": "0~56" },
+          "+9":  { "base": 63,  "over": "0~70" },
+          "+10": { "base": 70,  "over": "0~84" },
+          "+11": { "base": 77,  "over": "0~98" },
+          "+12": { "base": 84,  "over": "0~112" },
+          "+13": { "base": 91,  "over": "0~126" },
+          "+14": { "base": 98,  "over": "0~140" },
+          "+15": { "base": 105, "over": "0~154" },
+          "+16": { "base": 112, "over": "0~168", "additional": 48 },
+          "+17": { "base": 119, "over": "0~182", "additional": 51 },
+          "+18": { "base": 126, "over": "0~196", "additional": 54 },
+          "+19": { "base": 133, "over": "0~210", "additional": 57 },
+          "+20": { "base": 140, "over": "0~224", "additional": 60 }
+        }
+      }
+    },
+    "armorBonus": {
+      "notes": "Armor refinement adds DEF. Same table applies to all armor regardless of level.",
+      "table": {
+        "+1":  { "def": 1 },
+        "+2":  { "def": 2 },
+        "+3":  { "def": 3 },
+        "+4":  { "def": 4 },
+        "+5":  { "def": 6 },
+        "+6":  { "def": 8 },
+        "+7":  { "def": 10 },
+        "+8":  { "def": 12 },
+        "+9":  { "def": 15 },
+        "+10": { "def": 18 },
+        "+11": { "def": 21 },
+        "+12": { "def": 24 },
+        "+13": { "def": 28 },
+        "+14": { "def": 32 },
+        "+15": { "def": 36 },
+        "+16": { "def": 40 },
+        "+17": { "def": 45 },
+        "+18": { "def": 50 },
+        "+19": { "def": 55 },
+        "+20": { "def": 60 }
+      }
+    },
+    "matkBonus": {
+      "notes": "MATK bonus from refinement uses the same bonus values as ATK (same table, ATQ/ATQM column). Ranged weapons (bows, guns) do NOT receive MATK bonus or Over bonus the same way as other weapons.",
+      "staves": "Use same wlv table as ATK (ATQ/ATQM combined column in the wiki table)",
+      "rangedWeapons": "Ranged weapons (arco/arma de fogo) do not receive MATK/Over refine bonuses the same way"
+    },
+    "overRefineNotes": {
+      "description": "Over-refine bonus is a RANDOM bonus (0 to max) applied on top of the base refine bonus. It starts at different refine levels depending on weapon level.",
+      "startLevels": {
+        "wlv1": "+8",
+        "wlv2": "+7",
+        "wlv3": "+6",
+        "wlv4": "+5"
+      },
+      "additionalBonus": "From +16 onwards, weapons gain an 'Additional' fixed bonus on top of base and over bonuses. This is the third column in the refine table."
+    },
+    "notes": "Refine goes up to +20 maximum. Safe refine levels vary by weapon type. Items above +10 use special ores (Bradium/Carnium). Over-refine bonus is random within a range."
+  },
+  "randomBonuses": [
+    {
+      "name": "bSTR",
+      "pt": "FOR",
+      "type": "flat_stat",
+      "affects": "STR",
+      "description": "Adds flat STR points",
+      "ranges": ["+1~3", "+1~5", "+1~7", "+1~10"]
+    },
+    {
+      "name": "bAGI",
+      "pt": "AGI",
+      "type": "flat_stat",
+      "affects": "AGI",
+      "description": "Adds flat AGI points",
+      "ranges": ["+1~3", "+1~5", "+1~7", "+1~10"]
+    },
+    {
+      "name": "bVIT",
+      "pt": "VIT",
+      "type": "flat_stat",
+      "affects": "VIT",
+      "description": "Adds flat VIT points",
+      "ranges": ["+1~3", "+1~5", "+1~7", "+1~10"]
+    },
+    {
+      "name": "bINT",
+      "pt": "INT",
+      "type": "flat_stat",
+      "affects": "INT",
+      "description": "Adds flat INT points",
+      "ranges": ["+1~3", "+1~5", "+1~7", "+1~10"]
+    },
+    {
+      "name": "bDEX",
+      "pt": "DES",
+      "type": "flat_stat",
+      "affects": "DEX",
+      "description": "Adds flat DEX points",
+      "ranges": ["+1~3", "+1~5", "+1~7", "+1~10"]
+    },
+    {
+      "name": "bLUK",
+      "pt": "SOR",
+      "type": "flat_stat",
+      "affects": "LUK",
+      "description": "Adds flat LUK points",
+      "ranges": ["+1~3", "+1~5", "+1~7", "+1~10"]
+    },
+    {
+      "name": "bATK",
+      "pt": "ATQ",
+      "type": "flat",
+      "affects": "ATK",
+      "description": "Adds flat ATK value",
+      "ranges": ["+1~15", "+1~30"]
+    },
+    {
+      "name": "bMATK",
+      "pt": "ATQM",
+      "type": "flat",
+      "affects": "MATK",
+      "description": "Adds flat MATK value",
+      "ranges": ["+1~15", "+1~30"]
+    },
+    {
+      "name": "bWeaponAtkRate",
+      "pt": "ATQ da arma",
+      "type": "percentage",
+      "affects": "weapon_atk",
+      "description": "Increases weapon ATK by percentage",
+      "ranges": ["+1~3%", "+1~7%"]
+    },
+    {
+      "name": "bMagicDmg",
+      "pt": "Dano mágico",
+      "type": "flat",
+      "affects": "magic_damage",
+      "description": "Adds flat magic damage",
+      "ranges": ["+1~8"]
+    },
+    {
+      "name": "bMagicDmgRate",
+      "pt": "Dano mágico %",
+      "type": "percentage",
+      "affects": "magic_damage",
+      "description": "Increases magic damage by percentage",
+      "ranges": ["+1~3%", "+1~5%", "+1~7%"]
+    },
+    {
+      "name": "bCritical",
+      "pt": "CRIT",
+      "type": "flat",
+      "affects": "critical_rate",
+      "description": "Increases CRIT rate",
+      "ranges": ["+1~5", "+1~10", "+2~3", "+3~10", "+5~10"]
+    },
+    {
+      "name": "bCritAtkRate",
+      "pt": "Dano crítico",
+      "type": "percentage",
+      "affects": "critical_damage",
+      "description": "Increases critical hit damage percentage",
+      "ranges": ["+1~5%", "+1~7%", "+3~10%", "+3~12%", "+5~8%", "+5~10%"]
+    },
+    {
+      "name": "bFlee",
+      "pt": "Esquiva",
+      "type": "flat",
+      "affects": "flee",
+      "description": "Increases flee/evasion rate",
+      "ranges": ["+5~15", "+1~50"]
+    },
+    {
+      "name": "bHit",
+      "pt": "Precisão",
+      "type": "flat",
+      "affects": "hit",
+      "description": "Increases hit/accuracy rate",
+      "ranges": ["+5~15", "+1~15"]
+    },
+    {
+      "name": "bAddRacePhysical",
+      "pt": "Dano físico contra [RAÇA]",
+      "type": "percentage",
+      "affects": "physical_damage_vs_race",
+      "description": "Increases physical damage against specific race",
+      "races": ["Peixe", "Demônio", "Planta", "Inseto", "Amorfo", "Anjo", "Morto-Vivo", "Humanoide", "Bruto", "Dragão"],
+      "ranges": ["+1~5%", "+3~20%"]
+    },
+    {
+      "name": "bMagicAddRace",
+      "pt": "Dano mágico contra [RAÇA]",
+      "type": "percentage",
+      "affects": "magic_damage_vs_race",
+      "description": "Increases magic damage against specific race",
+      "races": ["Peixe", "Demônio", "Planta", "Inseto", "Amorfo", "Anjo", "Morto-Vivo", "Humanoide", "Bruto", "Dragão"],
+      "ranges": ["+1~5%", "+3~20%", "+5~10%"]
+    },
+    {
+      "name": "bAddElePhysical",
+      "pt": "Dano físico contra oponentes [PROP.]",
+      "type": "percentage",
+      "affects": "physical_damage_vs_element",
+      "description": "Increases physical damage against specific element/property",
+      "elements": ["Água", "Fogo", "Terra", "Vento", "Veneno", "Sagrado", "Sombrio", "Fantasma", "Maldito", "Neutro"],
+      "ranges": ["+1~5%", "+3~20%"]
+    },
+    {
+      "name": "bMagicAddEle",
+      "pt": "Dano mágico contra oponentes [PROP.]",
+      "type": "percentage",
+      "affects": "magic_damage_vs_element",
+      "description": "Increases magic damage against specific element/property",
+      "elements": ["Água", "Fogo", "Terra", "Vento", "Veneno", "Sagrado", "Sombrio", "Fantasma", "Maldito", "Neutro"],
+      "ranges": ["+1~5%", "+3~20%"]
+    },
+    {
+      "name": "bMagicEleBonus",
+      "pt": "Dano mágico de [PROP.]",
+      "type": "percentage",
+      "affects": "magic_damage_of_element",
+      "description": "Increases magic damage dealt of a specific element",
+      "elements": ["Água", "Fogo", "Terra", "Vento", "Veneno", "Sagrado", "Sombrio", "Fantasma", "Maldito", "Neutro"],
+      "ranges": ["+1~7%", "+3~12%"]
+    },
+    {
+      "name": "bMagicAddAllEle",
+      "pt": "Dano mágico de todas as propriedades",
+      "type": "percentage",
+      "affects": "magic_damage_all_elements",
+      "description": "Increases magic damage for all elemental types",
+      "ranges": ["+1~5%"]
+    },
+    {
+      "name": "bMagicNeutral",
+      "pt": "Dano mágico Neutro",
+      "type": "percentage",
+      "affects": "magic_damage_neutral",
+      "description": "Increases neutral property magical damage",
+      "ranges": ["+3~10%"]
+    },
+    {
+      "name": "bMagicHoly",
+      "pt": "Dano mágico Sagrado",
+      "type": "percentage",
+      "affects": "magic_damage_holy",
+      "description": "Increases holy property magical damage",
+      "ranges": ["+3~10%"]
+    },
+    {
+      "name": "bMagicAddSize",
+      "pt": "Dano mágico contra [TAMANHO]",
+      "type": "percentage",
+      "affects": "magic_damage_vs_size",
+      "description": "Increases magic damage against specific size enemies",
+      "sizes": ["Pequeno", "Médio", "Grande"],
+      "ranges": ["+1~5%", "+3~10%", "+5~10%"]
+    },
+    {
+      "name": "bAddSize",
+      "pt": "Dano físico contra [TAMANHO]",
+      "type": "percentage",
+      "affects": "physical_damage_vs_size",
+      "description": "Increases physical damage against specific size enemies",
+      "sizes": ["Pequeno", "Médio", "Grande"],
+      "ranges": ["+5~10%"]
+    },
+    {
+      "name": "bDmgVsNormalMob",
+      "pt": "Dano físico contra monstros normais",
+      "type": "percentage",
+      "affects": "physical_damage_vs_normal_mob",
+      "description": "Increases physical damage against normal (non-boss) monsters",
+      "ranges": ["+1~10%", "+3~10%"]
+    },
+    {
+      "name": "bDmgVsBossMob",
+      "pt": "Dano físico contra monstros chefes",
+      "type": "percentage",
+      "affects": "physical_damage_vs_boss",
+      "description": "Increases physical damage against boss monsters",
+      "ranges": ["+1~10%", "+5~10%"]
+    },
+    {
+      "name": "bMagicDmgVsNormalMob",
+      "pt": "Dano mágico contra monstros normais",
+      "type": "percentage",
+      "affects": "magic_damage_vs_normal_mob",
+      "description": "Increases magic damage against normal monsters",
+      "ranges": ["+1~10%", "+5~10%"]
+    },
+    {
+      "name": "bMagicDmgVsBossMob",
+      "pt": "Dano mágico contra monstros chefes",
+      "type": "percentage",
+      "affects": "magic_damage_vs_boss",
+      "description": "Increases magic damage against boss monsters",
+      "ranges": ["+1~10%", "+5~10%"]
+    },
+    {
+      "name": "bRangedAtkRate",
+      "pt": "Dano físico a distância",
+      "type": "percentage",
+      "affects": "ranged_physical_damage",
+      "description": "Increases ranged physical damage",
+      "ranges": ["+1~3%", "+1~5%", "+1~7%", "+3~10%", "+5~10%"]
+    },
+    {
+      "name": "bMeleeAtkRate",
+      "pt": "Dano físico corpo a corpo",
+      "type": "percentage",
+      "affects": "melee_physical_damage",
+      "description": "Increases melee physical damage",
+      "ranges": ["+1~5%", "+1~7%", "+3~12%", "+5~10%"]
+    },
+    {
+      "name": "bIgnoreDefNormal",
+      "pt": "Ignora DEF de monstros Normais",
+      "type": "percentage",
+      "affects": "ignore_def_normal",
+      "description": "Ignores a percentage of normal monster's physical DEF",
+      "ranges": ["1~7%", "3~10%", "30~60%"]
+    },
+    {
+      "name": "bIgnoreDefBoss",
+      "pt": "Ignora DEF de monstros Chefes",
+      "type": "percentage",
+      "affects": "ignore_def_boss",
+      "description": "Ignores a percentage of boss monster's physical DEF",
+      "ranges": ["1~7%", "3~10%", "30~60%"]
+    },
+    {
+      "name": "bIgnoreMdefNormal",
+      "pt": "Ignora DEFM de monstros Normais",
+      "type": "percentage",
+      "affects": "ignore_mdef_normal",
+      "description": "Ignores a percentage of normal monster's MDEF",
+      "ranges": ["1~7%", "3~10%", "30~60%"]
+    },
+    {
+      "name": "bIgnoreMdefBoss",
+      "pt": "Ignora DEFM de monstros Chefes",
+      "type": "percentage",
+      "affects": "ignore_mdef_boss",
+      "description": "Ignores a percentage of boss monster's MDEF",
+      "ranges": ["1~7%", "3~10%", "30~60%"]
+    },
+    {
+      "name": "bIgnoreDefRace",
+      "pt": "Ignora DEF da [RAÇA]",
+      "type": "percentage",
+      "affects": "ignore_def_race",
+      "description": "Ignores a percentage of specific race's physical DEF",
+      "ranges": ["1~5%", "30~60%"]
+    },
+    {
+      "name": "bIgnoreMdefRace",
+      "pt": "Ignora DEFM da [RAÇA]",
+      "type": "percentage",
+      "affects": "ignore_mdef_race",
+      "description": "Ignores a percentage of specific race's MDEF",
+      "ranges": ["1~5%", "30~60%"]
+    },
+    {
+      "name": "bMaxHP",
+      "pt": "HP máx.",
+      "type": "flat_or_percentage",
+      "affects": "max_hp",
+      "description": "Increases maximum HP",
+      "ranges": ["+50~5000 (flat)", "+1~2% (percentage)", "+1~10%"]
+    },
+    {
+      "name": "bMaxSP",
+      "pt": "SP máx.",
+      "type": "flat_or_percentage",
+      "affects": "max_sp",
+      "description": "Increases maximum SP",
+      "ranges": ["+10~1000 (flat)", "+1~2% (percentage)", "+1~7%"]
+    },
+    {
+      "name": "bSPConsume",
+      "pt": "Consumo de SP",
+      "type": "percentage",
+      "affects": "sp_consumption",
+      "description": "Reduces SP consumption/cost for skills",
+      "ranges": ["-3~5%", "-1~10%", "-3~10%"]
+    },
+    {
+      "name": "bVariableCastrate",
+      "pt": "Conjuração variável",
+      "type": "percentage",
+      "affects": "variable_cast_time",
+      "description": "Reduces variable cast time",
+      "ranges": ["-1~3%", "-1~5%", "-3~5%", "-5~8%", "-5~10%", "-5~12%"]
+    },
+    {
+      "name": "bAfterCastDelay",
+      "pt": "Pós-conjuração",
+      "type": "percentage",
+      "affects": "after_cast_delay",
+      "description": "Reduces after-cast (skill cooldown) delay",
+      "ranges": ["-1~3%", "-1~5%", "-2~3%", "-3~8%", "-3~15%", "-5~15%"]
+    },
+    {
+      "name": "bASPD",
+      "pt": "Velocidade de ataque",
+      "type": "flat_or_percentage",
+      "affects": "aspd",
+      "description": "Increases attack speed",
+      "ranges": ["+1 (flat)", "+1~5%", "+1~12%"]
+    },
+    {
+      "name": "bDEF",
+      "pt": "DEF",
+      "type": "flat",
+      "affects": "def",
+      "description": "Adds flat physical defense",
+      "ranges": ["+10~25", "+10~200"]
+    },
+    {
+      "name": "bMDEF",
+      "pt": "DEFM",
+      "type": "flat",
+      "affects": "mdef",
+      "description": "Adds flat magical defense",
+      "ranges": ["+1~3", "+1~25"]
+    },
+    {
+      "name": "bHealEff",
+      "pt": "Efetividade de cura",
+      "type": "percentage",
+      "affects": "heal_effectiveness",
+      "description": "Increases healing effectiveness (heals done)",
+      "ranges": ["+3~5%", "+1~20%"]
+    },
+    {
+      "name": "bHealReceived",
+      "pt": "Cura recebida",
+      "type": "percentage",
+      "affects": "heal_received",
+      "description": "Increases healing received",
+      "ranges": ["+3~5%", "+1~15%"]
+    },
+    {
+      "name": "bNullSizePenalty",
+      "pt": "Anula a penalidade de tamanho",
+      "type": "boolean",
+      "affects": "size_penalty",
+      "description": "Nullifies weapon size penalty (deals 100% to all sizes)",
+      "ranges": ["active/inactive"]
+    },
+    {
+      "name": "bWeaponProperty",
+      "pt": "Armadura de propriedade [PROP.]",
+      "type": "property",
+      "affects": "armor_element",
+      "description": "Changes armor/weapon element/property",
+      "ranges": ["Neutro", "Fogo", "Água", "Vento", "Terra", "Sagrado", "Sombrio"]
+    },
+    {
+      "name": "bUnbreakableArmor",
+      "pt": "Armadura indestrutível em batalha",
+      "type": "boolean",
+      "affects": "armor_break",
+      "description": "Makes armor unbreakable in battle",
+      "ranges": ["active/inactive"]
+    },
+    {
+      "name": "bResistRace",
+      "pt": "Resistência a [RAÇA]",
+      "type": "percentage",
+      "affects": "damage_received_from_race",
+      "description": "Reduces damage received from specific race",
+      "races": ["Peixe", "Demônio", "Planta", "Inseto", "Amorfo", "Anjo", "Morto-Vivo", "Humanoide", "Bruto", "Dragão"],
+      "ranges": ["+2~7%"]
+    }
+  ],
+  "shadowEquipmentBonuses": {
+    "notes": "Shadow equipment (10 slots) provides additional bonus stats. Enchantable on shadow equipment with the following ranges.",
+    "bonusRanges": {
+      "stats": "FOR/AGI/VIT/INT/DES/SOR +1~10",
+      "def": "DEF +10~25",
+      "mdef": "DEFM +1~3",
+      "atk": "ATQ +1~15",
+      "matk": "ATQM +1~15",
+      "crit": "CRIT +1~5",
+      "maxHpFlat": "HP máx. +100~500",
+      "maxHpPct": "HP máx. +1~2%",
+      "maxSpFlat": "SP máx. +20~100",
+      "maxSpPct": "SP máx. +1~2%",
+      "flee": "Esquiva +5~15",
+      "hit": "Precisão +5~15",
+      "variableCast": "Conjuração variável -1~3%",
+      "magicDmg": "Dano mágico +1~3%",
+      "healEff": "Efetividade de cura +3~5%",
+      "healReceived": "Cura recebida +3~5%",
+      "weaponAtk": "ATQ da arma +1~3%",
+      "critDmg": "Dano crítico +1~5%",
+      "aspd": "Velocidade de ataque +1~5%",
+      "rangedDmg": "Dano físico a distância +1~5%"
+    }
+  },
+  "races": [
+    "Peixe (Fish)",
+    "Demônio (Demon)",
+    "Planta (Plant)",
+    "Inseto (Insect)",
+    "Amorfo (Formless/Amorphous)",
+    "Anjo (Angel)",
+    "Morto-Vivo (Undead)",
+    "Humanoide (Humanoid)",
+    "Bruto (Brute/Animal)",
+    "Dragão (Dragon)"
+  ],
+  "elements": [
+    "Neutro (Neutral)",
+    "Fogo (Fire)",
+    "Água (Water)",
+    "Vento (Wind)",
+    "Terra (Earth)",
+    "Veneno (Poison)",
+    "Sagrado (Holy)",
+    "Sombrio (Shadow/Dark)",
+    "Fantasma (Ghost)",
+    "Maldito (Undead)"
+  ],
+  "sizes": [
+    "Pequeno (Small)",
+    "Médio (Medium)",
+    "Grande (Large)"
+  ],
+  "monsterTypes": [
+    "Normal (non-boss)",
+    "Chefe/Boss (MVP/boss)"
+  ]
+}

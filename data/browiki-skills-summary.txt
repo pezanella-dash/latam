@@ -1,0 +1,184 @@
+BROWIKI SKILL SCRAPING SUMMARY
+Generated: 2026-03-03
+Source: browiki.org (bRO/LATAM server wiki)
+============================================================
+
+TOTAL SKILLS SUCCESSFULLY SCRAPED: 61
+TOTAL SKILLS NOT FOUND / NO DATA: ~15
+
+============================================================
+SKILLS SUCCESSFULLY SCRAPED (with formula data)
+============================================================
+
+--- CAVALEIROS RÚNICOS (Rune Knights) ---
+1.  Adoramus (Archbishop shared) - Holy magical, Lv1-10: 550-2800%, base level scaling
+2.  Bafo do Dragão - Water physical, HP+SP formula, base+skill level scaling, Dragon Training
+3.  Sopro do Dragão - Fire physical, HP+SP formula (divisor 1500), Dragon Training
+4.  Vento Cortante - Weapon physical, Lv1-5: 300-1500% (lance 400-2000%, 2H sword 2-hits), base lvl scaling
+5.  Lança das Mil Pontas - Weapon physical 5-hit, Lv1-10: 800-2600%, Spiral Pierce+base lvl scaling
+6.  Impacto Flamejante - Weapon physical AoE, Lv1-5: 450-2250%, base lvl scaling
+7.  Golpe Titânico - Weapon physical, weapon level+refine+weight formula, 30s cooldown
+8.  Arpão - Weapon physical pull, Lv1-5: 50-250%, Spear Mastery scaling
+9.  Onda de Choque - Weapon physical ranged, Lv1-10: 1200-2550%, base lvl scaling
+10. Encantar Lâmina - Buff only; adds MATK to basic attacks (not a direct damage skill)
+
+--- SICÁRIOS (Guillotine Cross) ---
+11. Lâminas de Loki - Weapon physical AoE, Lv1-5: 130-450%, base lvl scaling; generates Rotation Points
+12. Castigo de Loki - Weapon physical ranged, Lv1-5: 80-400%, + Rotation×200 + AGI×3
+13. Lâminas Retalhadoras - Weapon physical, Lv1-5: 1550-2150%, base lvl scaling, half-CRIT
+14. Garra Sombria - Weapon physical, Lv1-5: 100-500%; applies Ferida de Corvo debuff, 60s cooldown
+15. Passo Sombrio - Weapon physical ranged 100%, chance to proc Lâminas Retalhadoras
+
+--- ARCANOS (Warlocks) ---
+16. Zero Absoluto - Water magical, Lv1-5: 300-700% per crystal (1-5 crystals), base lvl scaling
+17. Esquife de Gelo - Water magical, Lv1-5: 1300-2500% (normal), 1800-4200% (vs chilled), base lvl scaling
+18. Meteoro Escarlate - Fire magical, Lv1-5: 1300-3700%, base lvl scaling
+19. Cometa - Neutral magical, Lv1-5: 3200-6000%, base lvl scaling, Vício Mágico debuff
+20. Tetra Vortex - Element-varied magical 4-hit, Lv1-10: 1200-4800% per sphere, 4 spheres consumed
+21. Drenar Vida - Neutral magical, Lv1-5: 200-1000%, INT formula, base lvl scaling, heals caster
+22. Impacto Espiritual - Ghost magical, Lv1-5: 1200-2000%, INT adds to base, doubles vs Exílio
+23. Abalo Sísmico - Earth magical, Lv1-5: 1600-4000%, base lvl scaling
+24. Chamas de Hela - Fire+Dark magical 4-hit (1+3), Lv1-5: 400-1800% fire + 600-3000% dark each
+25. Corrente Elétrica - Wind magical chain, Lv1-5: 600-1000% decreasing per chain; base lvl scaling
+26. Fúria da Medusa - Support/petrification, no damage formula
+
+--- MECÂNICOS (Mechanics) ---
+27. Canhão - Physical ranged (ignores DEF/evasion), Lv1-5: 700-1900%, base lvl scaling, ammo element
+28. Metralhadora - Physical ranged AoE, Lv1-3: 140-420%, DEX+base lvl scaling
+29. Fúria do Furacão - Physical melee AoE, Lv1-5: 380-1100%, VIT+base lvl scaling
+30. Punho Foguete - Physical ranged single, Lv1-5: 300-1100%, DEX+base lvl scaling
+31. Erupção de Magma - Fire physical impact + fixed neutral volcano tick, Lv1-5: 500-700% impact
+32. Lança Chamas - Fire physical AoE, Lv1-3: 600-1200%, base lvl scaling
+33. Gás Criogênico - Water physical AoE, Lv1-3: 600-1200%, base lvl scaling
+34. Arremesso de Machado - Physical ranged boomerang, Lv1-5: 300-500%, axe weight + base lvl
+35. Bate Estaca - Physical melee, Lv1-3: 400-600%, STR+base lvl, removes buffs
+36. Autodestruição - Neutral physical AoE, complex formula (SP+VIT+HP+base lvl), 300s cooldown
+37. Artilharia Caçadora - Turret summon; turret ATK 25-45 base; not a direct formula skill
+38. Artilharia Arcana - Magic turret summon; element varies; not a direct formula skill
+
+--- ARCEBISPOS (Archbishops) ---
+39. Judex - Holy magical, Lv1-10: 370-1000%, base lvl scaling
+(See also: Adoramus listed under RK section above)
+
+--- SENTINELAS (Rangers) ---
+40. Disparo Certeiro - Weapon physical bow, Lv1-10: 520-700% (835-1150% in Wild Shot state)
+41. Tempestade de Flechas - Weapon physical AoE 5-hit, Lv1-10: 380-2000% (450-2700% in Wild Shot)
+42. Bomba Relógio - Neutral physical trap, Lv1-5: 300-700%, complex DEX+INT+base lvl formula
+43. Armadilha Escarlate - Fire trap; changes target element to fire; damage formula not on wiki
+
+--- GUARDIÕES REAIS (Royal Guards) ---
+44. Espiral Lunar - Weapon physical AoE, Lv1-5: 120-600%, Lance do Destino+base lvl scaling
+45. Lança do Destino - Weapon physical AoE, Lv1-5: 300-1500%, STR+DEX+base lvl; Lança Lunar bonus
+46. Escudo Compressor - Neutral physical, Lv1-10: 200-2000%, shield weight+VIT+refinement formula
+47. Estocada Precisa - Weapon physical, Lv1-5: 100-500%, AGI×5+base lvl (divisor 120); always crits
+48. Disparo Perfurante - Weapon physical ranged AoE, Lv1-5: 50-250%, base lvl scaling
+49. Trindade - Weapon physical, Lv1-5: 300-1500%, VIT+base lvl; 50% bonus under Consagração
+50. Retribuição da Vanguarda - Weapon physical, Rage×200 + HP deficit formula; consumes all rage
+
+--- RENEGADOS (Shadow Chasers) ---
+51. Ofensiva Fatal - Weapon physical melee, Lv1-10: 120-1200%, AGI×2+base lvl; doubles with daggers
+52. Disparo Triplo - Weapon physical bow 3-hit, Lv1-10: 230-2300%, AGI×3+base lvl; 3 arrows
+
+--- FEITICEIROS (Sorcerers) ---
+53. Onda Psíquica - Neutral magical multi-wave, Lv1-5: 70-350% per wave (3-7 waves), INT×3+base lvl
+54. Pó de Diamante - Water magical, INT×(Level+2)+Frost Enchant formula, base lvl scaling
+55. Castigo de Nerthus - Earth magical, INT×(Level+2)+Earthquake Enchant formula, base lvl scaling
+56. Maldição de Jormungand - Poison magical cloud, Lv1-5: 40-200%, INT×3+base lvl
+57. Implosão Tóxica - Poison magical, Lv1-5: 1300-2500% (1500-3500% vs Infection), INT+base lvl
+58. Lanças dos Aesir - Wind magical, complex formula: Enchant levels×150 + INT formula
+59. Punho Arcano - Varies (lance element), Lv1-10: 20-200%, Lance skill×100+base lvl; buff on basic attacks
+60. Tornado - Wind CC, no damage; immobilizes; duration by STR
+
+--- BIOQUÍMICOS (Genetics) ---
+61. Tornado de Carrinho - Weapon physical AoE, Lv1-10: 200-2000%, cart weight+STR+Aprimorar formula
+62. Canhão de Prótons - Ammo physical, Lv1-5: 250-1250%, Aprimorar×20+INT formula
+63. Bomba Ácida - Weapon physical multi-hit, Lv1-10: 1-10 hits at 200-2000%, target VIT contributes
+64. Planta Infernal - Weapon physical summon, Lv1-5: 100-500%, INT+Create Plant skill; attacks q0.3s
+65. Bomba Napalm - Fire magical, Lv1-5: 130-210%, fire/burn
+66. Esporo Explosivo - Weapon physical ranged, Lv1-10: 600-2400%, INT+base lvl; Esporão debuff
+
+--- SHURAS ---
+67. Punho do Dragão - Weapon physical, Lv1-10: 180-900%, base lvl scaling; combo chain start
+68. Ruína - Weapon physical, Lv1-10: 400-3100%, STR×100+base lvl; combo chain
+69. Garra de Tigre - Weapon physical (HP+SP formula), irreducible, ignores evasion; combo bonus
+70. Portões do Inferno - Neutral physical, Lv1-10: 500-5000% + SP+HP bonus; combo to 8000%
+71. Impacto Sísmico - Weapon physical, Lv1-5: 300-1500%, STR×3+base lvl; bonus vs hidden
+72. Explosão Espiritual - Weapon physical AoE, Lv1-5: 350-1750%, Inner Fury level multiplies
+73. Soco Furacão - Weapon physical AoE, Lv1-5: 200-1000%, AGI+base lvl
+74. Pancada Corporal - Weapon physical ranged, Lv1-10: 600-1500%, complex collision formula
+75. Tempestade Espiritual - Weapon physical multi-hit, Lv1-5: 40-200% (90-450% knuckle) per hit
+76. Chute Rasteiro - Weapon physical AoE stun, base lvl+DEX formula; stuns monsters
+77. Cotovelada Ascendente - Weapon physical counter, HP×Level×base lvl formula (divisor 125)
+
+--- TROVADORES (Minstrels) ---
+78. Temporal de Flechas - Weapon physical 12-hit rain, Lv1-5: 100-500% (120-600% whip), DEX+AGI formula
+79. Ruído Estridente - Neutral magical, Lv1-10: 120-1200%, Musical Mastery×60+base; 150% vs sleeping
+80. Brado de Odin - Weapon physical AoE, Lv1-5: 750-2750% (doubles in group), Musical Mastery formula
+
+============================================================
+SKILLS NOT FOUND / NO DATA / 404 ERRORS
+============================================================
+
+The following URLs returned 404 or had no damage formula data:
+
+1.  Canhão de Vazio (RG - Vanishing Point) - Page 404; not found at browiki.org
+2.  Pressão Divina (RG) - Page 404
+3.  Raiva de Odin (RG) - Page 404
+4.  Tesoura de Hermes (SC/Renegado) - Page 404
+5.  Golpe Sombrio (SC/Renegado) - Page 404
+6.  Dominância de Sombra (SC/Renegado) - Page 404
+7.  Pânico (SC/Renegado) - Page 404
+8.  Diamante de Gelo (Sorcerer) - Page 404
+9.  Tumba de Terra (Sorcerer) - Page 404
+10. Choque de Lava (Sorcerer) - Page 404
+11. Detonação Elemental (Sorcerer) - Page 404
+12. Canhão de Carrinho (Genetic) - Page 404
+13. Grenade Manual (Genetic) - Page 404
+14. Punho das Trevas (Shura) - Page 404
+15. Golpe do Tigre (Shura - Tiger Cannon) - Page 404 (found as "Garra de Tigre")
+16. Asura Strike / Golpe Asura (Shura) - Page 404
+17. Canto das Brumas (Minstrel) - Page 404
+18. Sinfonia Metálica (Minstrel) - Page 404
+19. Sopro Gelado (Minstrel) - Page 404
+20. Detonador (Ranger) - Utility skill only; triggers other traps, no formula
+21. Disparo Selvagem (Ranger) - Buff skill only; no damage formula for the buff
+22. Armadilha Escarlate (Ranger) - Trap changes fire element; no damage formula on wiki
+
+NOTE: Several of these skills may exist under different Portuguese names than expected.
+For example, "Tiger Cannon" was found as "Garra de Tigre" not "Golpe do Tigre".
+"Canto das Brumas" may be a skill that does not exist in LATAM/bRO yet.
+
+============================================================
+SKILLS WITH NO DAMAGE (support/utility only)
+============================================================
+
+1.  Rugido do Dragão (RK) - Fear AoE, crowd control, no damage
+2.  Encantar Lâmina (RK) - Buff; adds MATK to basic attacks (documented separately)
+3.  Dragão Ascendente (Shura) - Buff; max HP/SP and spirit sphere boost
+4.  Salto Relâmpago (Shura) - Reactive nullify ranged attack, no damage
+5.  Sinfonia dos Ventos (Trovador) - Party ATK buff, no damage
+6.  Ode a Hela (Trovador) - Debuff, PvP only
+7.  Cântico da Iluminação (Trovador) - INT drain debuff, duo/group skill
+8.  Réquiem de Orfeu (Trovador) - Resurrection
+9.  Poema de Nifflheim (Trovador) - Immobilization trap
+10. Prelúdio do Ragnarök (Trovador) - Double damage debuff on enemies, PvP
+11. Pântano de Nifflheim (Arcano) - Speed/AGI/DEF reduction debuff
+12. Encanto de Órion (Feiticeiro) - ATK buff, no direct damage
+13. Artilharia Caçadora (Mecânico) - Turret summon, fixed ATK values
+14. Artilharia Arcana (Mecânico) - Magic turret summon, element varies
+15. Tornado (Feiticeiro) - Wind CC only, no damage formula
+
+============================================================
+NOTES ON DATA QUALITY
+============================================================
+
+- All formulas extracted directly from browiki.org text content
+- browiki.org specifically covers the LATAM/bRO server (different from iRO)
+- Base level scaling (Nv. de base ÷ 100) is present on most 3rd job skills
+- Many skills use stat-based additions (STR, AGI, INT, DEX, VIT) beyond basic % multiplier
+- Dragon Breath formulas use HP+SP instead of % ATK - highly unusual
+- Garra de Tigre (Tiger Cannon) uses HP%+SP% as the damage base - unique mechanics
+- Some pages had visual/table data that required inference for level-by-level values
+- Fixed cast times were rarely explicitly labeled; times shown as "X + Y seconds" format where X = fixed, Y = variable
+- Cooldown values in ms in the JSON; some source pages only gave seconds
+============================================================

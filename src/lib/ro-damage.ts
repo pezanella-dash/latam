@@ -159,7 +159,7 @@ const SIZE_PENALTY: Record<string, [number, number, number]> = {
   Gatling: [100, 100, 100],
   Shotgun: [100, 100, 100],
   Grenade: [100, 100, 100],
-  Huuma: [75, 100, 100],
+  Huuma: [75, 75, 100],
   Shuriken: [75, 75, 100],
 };
 
@@ -272,22 +272,19 @@ function calcBaseLvMod(skill: SkillFormula, baseLevel: number): number {
 }
 
 // ─── Special Formula: Dragon Breath ─────────────────────────────────
-// rAthena battle.cpp: damagevalue = (sstatus->hp / 50 + status_get_max_sp(src) / 4) * skill_lv
-// if BaseLv > 100: damagevalue *= BaseLv / 150
-// then: damagevalue *= (90 + 10 * dragonTraining) / 100
-// NOTE: Uses CURRENT HP (sstatus->hp), not max HP!
-// RE_LVL_DMOD(150) — LATAM server uses divisor 150, NOT 100.
-// kRO 185/65 rebalance changed to /100, but LATAM has NOT applied this yet.
+// LATAM browiki formulas (source of truth):
+//   Bafo do Dragão (water): (HP/50 + maxSP/4) × (skillLv × baseLv / 100)  × dragonTrainingMult
+//   Sopro do Dragão (fire): (HP/50 + maxSP/4) × (skillLv × baseLv / 1500) × dragonTrainingMult
+// dragonTrainingMult = (90 + dragonTraining×10) / 100; assumed lv5 → ×1.4
+// NOTE: Uses CURRENT HP, not max HP. Applied always (not conditional on baseLv > 100).
 
-function calcDragonBreath(input: DamageInput): number {
+function calcDragonBreath(input: DamageInput, element: string): number {
   const { currentHp, maxSp, skillLevel, baseLevel } = input;
-  let damage = Math.floor(currentHp / 50 + maxSp / 4) * skillLevel;
-  // RE_LVL_DMOD(150): LATAM server uses /150 divisor
-  if (baseLevel > 100) {
-    damage = Math.floor(damage * baseLevel / 150);
-  }
+  const base = currentHp / 50 + maxSp / 4;
+  // Fire variant has divisor 1500 (much weaker); water uses 100
+  const divisor = element === "fire" ? 1500 : 100;
+  let damage = Math.floor(base * skillLevel * baseLevel / divisor);
   // Dragon Training assumed at lv5 (most builds max it): (90 + 50) / 100 = 1.4
-  // TODO: Add dragonTraining level to input when available
   damage = Math.floor(damage * 140 / 100);
   return damage;
 }
@@ -459,7 +456,7 @@ export function calculateDamage(input: DamageInput): DamageResult {
   // ── Dragon Breath: completely separate formula ──────────────────
   // rAthena flow: base HP/SP damage → cardfix (additive) → bSkillAtk → bLongAtkRate → element table → DEF
   if (skill.formulaType === "dragonBreath") {
-    let damage = calcDragonBreath(input);
+    let damage = calcDragonBreath(input, skill.element);
 
     // rAthena cardfix: race/ele/size/class bonuses are ADDITIVE (not multiplicative)
     // battle_calc_cardfix(): cardfix = 1000 + sum(bonuses*10), then damage * cardfix / 1000

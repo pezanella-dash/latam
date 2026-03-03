@@ -639,6 +639,7 @@ export function parseScriptBonuses(
   baseStats?: BaseStats,
   weaponLevel: number = 1,
   slotRefines?: Partial<Record<EquipSlot, number>>,
+  skillLevels?: Record<string, number>,
 ): EquipBonus {
   if (!script) return {};
   const bonus: EquipBonus = {};
@@ -668,7 +669,9 @@ export function parseScriptBonuses(
     .replace(/readparam\(bSpl\)/g, "1")
     .replace(/readparam\(bCon\)/g, "1")
     .replace(/readparam\(bCrt\)/g, "1")
-    .replace(/getskilllv\([^)]*\)/g, "10")
+    .replace(/getskilllv\(\s*["']?(\w+)["']?\s*\)/g, (_full, skillName: string) => {
+      return String(skillLevels?.[skillName] ?? 0);
+    })
     .replace(/getequipweaponlv\([^)]*\)/g, String(weaponLevel))
     // getequiprefinerycnt(EQI_X) → refine of that slot (0 if unknown/not equipped)
     .replace(/getequiprefinerycnt\(\s*(\w+)\s*\)/g, (_full, eqi: string) => {
@@ -1323,10 +1326,12 @@ export interface BuildConfig {
   activeBuffs?: string[]; // Array of Buff IDs from ro-buffs
   /** Cumulative job stat bonuses at max job level (rAthena db/re/job_stats.yml) */
   jobBonus?: { str?: number; agi?: number; vit?: number; int?: number; dex?: number; luk?: number };
+  /** Skill levels allocated by the player (aegisName → level). Used to evaluate getskilllv() in item scripts. */
+  skillLevels?: Record<string, number>;
 }
 
 export function calculateDerivedStats(build: BuildConfig): DerivedStats {
-  const { baseLevel, baseStats, equipment, hpFactor = 1, spFactor = 1, isTrans = true, activeBuffs = [] } = build;
+  const { baseLevel, baseStats, equipment, hpFactor = 1, spFactor = 1, isTrans = true, activeBuffs = [], skillLevels } = build;
   const s = baseStats;
   const transMod = isTrans ? 1.25 : 1.0;
 
@@ -1391,7 +1396,7 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
       ...(item.enchants || []).filter(Boolean).map((e) => e!.script),
     ];
     for (const scr of scripts) {
-      const sb = parseScriptBonuses(scr, item.refine, baseLevel, baseStats, mainWeaponLevel, slotRefines);
+      const sb = parseScriptBonuses(scr, item.refine, baseLevel, baseStats, mainWeaponLevel, slotRefines, skillLevels);
       mergeBonus(totalBonus, sb);
     }
   }

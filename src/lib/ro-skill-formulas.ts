@@ -123,13 +123,12 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     cooldown: flat(2000, 5), spCost: [18, 21, 24, 27, 30], maxLevel: 5, jobs: ["Lord_Knight", "Rune_Knight"]
   },
   // ---------------------------------------------------------
-  // RK_SONICWAVE: kRO Rebalance 185/65 -> 1050 + (150 * skill_lv) % ATK. Base Lv Scaling.
+  // RK_SONICWAVE: LATAM browiki: 1 hit, 1200-2550%. RE_LVL_DMOD(100). Base Lv Scaling.
   {
-    id: 2002, aegisName: "RK_SONICWAVE", namePt: "Onda de Choque", type: "physical", element: "weapon", hitCount: 3,
-    perHitDamage: true,  // 3 separate hits, each at full skillratio
+    id: 2002, aegisName: "RK_SONICWAVE", namePt: "Onda de Choque", type: "physical", element: "weapon", hitCount: 1,
     damagePercent: [1200, 1350, 1500, 1650, 1800, 1950, 2100, 2250, 2400, 2550], baseLvScaling: true,
-    isMelee: false, canCrit: true, castTime: flat(500, 10), fixedCast: flat(500, 10), cooldown: flat(1750, 10),
-    spCost: [50, 52, 54, 56, 58, 60, 62, 64, 66, 70], maxLevel: 10, jobs: ["Rune_Knight"]
+    isMelee: false, canCrit: true, castTime: flat(500, 10), cooldown: flat(1750, 10),
+    afterCastDelay: flat(500, 10), spCost: [33, 36, 39, 42, 45, 48, 51, 54, 57, 60], maxLevel: 10, jobs: ["Rune_Knight"]
   },
   // RK_IGNITIONBREAK: kRO Rebalance 185/65 -> (450 * skill_lv)% ATK. Base Lv Scaling.
   {
@@ -146,11 +145,12 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     isMelee: false, canCrit: false, fixedCast: flat(1000, 10), cooldown: flat(2000, 10),
     spCost: levels(55, 5, 10), maxLevel: 10, jobs: ["Rune_Knight"]
   },
-  // RK_WINDCUTTER: kRO Rebalance 185/65 -> (400 * skill_lv)% ATK (assume Spear/Max)
+  // RK_WINDCUTTER: LATAM browiki base: 300-1500%. With lance: 400-2000%. With 2H sword: 2 hits 250-1250% each.
   {
     id: 2005, aegisName: "RK_WINDCUTTER", namePt: "Vento Cortante", type: "physical", element: "weapon", hitCount: 1,
-    damagePercent: [400, 800, 1200, 1600, 2000], baseLvScaling: true,
-    isMelee: true, canCrit: false, cooldown: [290, 280, 270, 260, 250], spCost: [20, 24, 28, 32, 36], maxLevel: 5,
+    damagePercent: [300, 600, 900, 1200, 1500], baseLvScaling: true,
+    isMelee: true, canCrit: false, castTime: flat(500, 5), afterCastDelay: flat(500, 5),
+    cooldown: [500, 470, 440, 410, 380], spCost: [20, 24, 28, 32, 36], maxLevel: 5,
     jobs: ["Rune_Knight"]
   },
   // RK_DRAGONBREATH: special formula in battle.cpp — (currentHP/50 + maxSP/4) × skillLv × BaseLv/150
@@ -176,6 +176,13 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     id: 2011, aegisName: "RK_STORMBLAST", namePt: "Explosão Rúnica", type: "physical", element: "neutral", hitCount: 1,
     damagePercent: [3000], baseLvScaling: true, baseLvDivisor: 100,
     isMelee: true, canCrit: true, spCost: [50], maxLevel: 1, jobs: ["Rune_Knight"]
+  },
+
+  // RK_HARPOON (Arpão): browiki: ranged spear throw, 50-250%, pulls target. Formula uses spear mastery + baseLv.
+  {
+    id: 2015, aegisName: "RK_HARPOON", namePt: "Arpão", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [50, 100, 150, 200, 250], baseLvScaling: false,
+    isMelee: false, canCrit: false, spCost: [15, 17, 19, 21, 23], maxLevel: 5, jobs: ["Rune_Knight"]
   },
 
   // CR_HOLYCROSS: skillratio += 35 * skill_lv; hit = 2
@@ -219,47 +226,62 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     isMelee: false, canCrit: true, halfCritBonus: true, fixedCast: flat(500, 5), cooldown: flat(2000, 5),
     spCost: [30, 36, 42, 48, 54], maxLevel: 5, jobs: ["Royal_Guard"]
   },
-  // LG_OVERBRAND: skillratio = 350 * skill_lv (normal) / 500 * skill_lv (with OverbrandReady); RE_LVL_DMOD(100)
-  // + SpearQuicken_lv*50. Using normal (350*lv) base.
+  // LG_OVERBRAND: kRO Rebalance 185/65 -> single hit. LATAM browiki: 300*skill_lv%. + STR + DEX. RE_LVL_DMOD(100).
+  // Under Lança Lunar buff: 450*skill_lv% (1.5× multiplier, handled separately).
   {
-    id: 2317, aegisName: "LG_OVERBRAND", namePt: "Lança do Destino", type: "physical", element: "weapon", hitCount: 3,
-    perHitDamage: true,  // 3 hits, each at full skillratio
-    damagePercent: [350, 700, 1050, 1400, 1750], baseLvScaling: true,
+    id: 2317, aegisName: "LG_OVERBRAND", namePt: "Lança do Destino", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [300, 600, 900, 1200, 1500], baseLvScaling: true,
+    statScaling: { str: 1, dex: 1 }, statScalingPerLevel: false,
     isMelee: true, canCrit: false, fixedCast: flat(500, 5), cooldown: flat(300, 5),
     spCost: [20, 30, 40, 50, 60], maxLevel: 5, jobs: ["Royal_Guard"]
   },
-  // LG_SHIELDPRESS: skillratio += -100 + 200 * skill_lv + STR + shield_weight/10; RE_LVL_DMOD(100)
+  // LG_SHIELDPRESS: LATAM browiki: 1 hit, 200-2000%, neutral element, STR+VIT+shield weight formula.
   {
-    id: 2310, aegisName: "LG_SHIELDPRESS", namePt: "Escudo Compressor", type: "physical", element: "weapon", hitCount: 5,
-    perHitDamage: true,  // 5 hits, each at full skillratio
+    id: 2310, aegisName: "LG_SHIELDPRESS", namePt: "Escudo Compressor", type: "physical", element: "neutral", hitCount: 1,
     damagePercent: [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000], baseLvScaling: true,
-    statScaling: { str: 1 },
-    isMelee: true, canCrit: false, spCost: levels(10, 2, 10), maxLevel: 10, jobs: ["Royal_Guard"]
+    statScaling: { str: 1, vit: 1 },
+    isMelee: true, canCrit: false, cooldown: flat(2000, 10), spCost: levels(10, 2, 10), maxLevel: 10, jobs: ["Royal_Guard"]
   },
-  // LG_EARTHDRIVE: kRO Rebalance 185/65 -> (380 * skill_lv)% ATK. Replaces shield weight with Lv, STR and VIT. Base Lv Scaling.
+  // LG_EARTHDRIVE: kRO Rebalance 185/65 -> single hit. LATAM browiki: 380*skill_lv% + STR + VIT. RE_LVL_DMOD(100).
   {
-    id: 2323, aegisName: "LG_EARTHDRIVE", namePt: "Aegis Inferi", type: "physical", element: "weapon", hitCount: 5,
-    perHitDamage: true,  // 5 hits, each at full skillratio
+    id: 2323, aegisName: "LG_EARTHDRIVE", namePt: "Aegis Inferi", type: "physical", element: "weapon", hitCount: 1,
     damagePercent: [380, 760, 1140, 1520, 1900], baseLvScaling: true,
-    statScaling: { str: 1, vit: 1 }, statScalingPerLevel: false, // STR+VIT are flat additions, not per-level
+    statScaling: { str: 1, vit: 1 }, statScalingPerLevel: false,
     isMelee: true, canCrit: false, fixedCast: flat(1000, 5), cooldown: flat(3000, 5),
     spCost: [40, 50, 60, 70, 80], maxLevel: 5, jobs: ["Royal_Guard"]
   },
-  // LG_MOONSLASHER: skillratio += -100 + 120 * skill_lv + Overbrand_lv*80; RE_LVL_DMOD(100)
+  // LG_MOONSLASHER: LATAM browiki: 1 hit, 120-600%. RE_LVL_DMOD(100). Overbrand grants Lança Lunar buff.
   {
-    id: 2320, aegisName: "LG_MOONSLASHER", namePt: "Espiral Lunar", type: "physical", element: "weapon", hitCount: 5,
-    perHitDamage: true,  // 5 hits, each at full skillratio
+    id: 2320, aegisName: "LG_MOONSLASHER", namePt: "Espiral Lunar", type: "physical", element: "weapon", hitCount: 1,
     damagePercent: [120, 240, 360, 480, 600], baseLvScaling: true,
-    isMelee: true, canCrit: false, cooldown: flat(2000, 5), spCost: [18, 22, 26, 30, 34], maxLevel: 5, jobs: ["Royal_Guard"]
+    isMelee: true, canCrit: false, castTime: flat(1000, 5), cooldown: [6000, 5000, 4000, 3000, 2000],
+    afterCastDelay: flat(1000, 5), spCost: [18, 22, 26, 30, 34], maxLevel: 5, jobs: ["Royal_Guard"]
   },
-  // LG_RAYOFGENESIS: skillratio = 350 * skill_lv + INT*3; RE_LVL_DMOD(100)
+  // LG_RAYOFGENESIS: kRO Rebalance 185/65 -> single hit. LATAM browiki: 230*skill_lv% + INT×2. RE_LVL_DMOD(100).
+  // (Pre-rebalance rAthena was 7 hits × 350*lv% each — changed to 1 hit in LATAM)
   {
-    id: 2321, aegisName: "LG_RAYOFGENESIS", namePt: "Luz da Criação", type: "magical", element: "holy", hitCount: 7,
-    perHitDamage: true,  // 7 magical hits, each at full skillratio (like Storm Gust)
-    damagePercent: [350, 700, 1050, 1400, 1750, 2100, 2450, 2800, 3150, 3500], baseLvScaling: true,
-    statScaling: { int: 3 }, statScalingPerLevel: false,
-    isMelee: false, canCrit: false, castTime: flat(3000, 10), fixedCast: flat(1000, 10), cooldown: flat(5000, 10), // HP cost removed, mapped as fixed property in engine.
+    id: 2321, aegisName: "LG_RAYOFGENESIS", namePt: "Luz da Criação", type: "magical", element: "holy", hitCount: 1,
+    damagePercent: [230, 460, 690, 920, 1150, 1380, 1610, 1840, 2070, 2300], baseLvScaling: true,
+    statScaling: { int: 2 }, statScalingPerLevel: false,
+    isMelee: false, canCrit: false, castTime: flat(3000, 10), fixedCast: flat(1000, 10), cooldown: flat(5000, 10),
     spCost: levels(60, 10, 10), maxLevel: 10, jobs: ["Royal_Guard"]
+  },
+
+  // LG_PINPOINTATTACK (Estocada Precisa): browiki: always crit, AGI×5, baseLv÷120. 100-500%.
+  {
+    id: 2318, aegisName: "LG_PINPOINTATTACK", namePt: "Estocada Precisa", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [100, 200, 300, 400, 500], baseLvScaling: true, baseLvDivisor: 120,
+    statScaling: { agi: 5 },
+    isMelee: false, canCrit: true, castTime: flat(1000, 5), cooldown: flat(5000, 5),
+    spCost: [30, 35, 40, 45, 50], maxLevel: 5, jobs: ["Royal_Guard"]
+  },
+  // LG_TRINITY (Trindade): browiki: melee, VIT bonus, 300-1500%. RE_LVL_DMOD(100). +50% under Consagração.
+  {
+    id: 2322, aegisName: "LG_TRINITY", namePt: "Trindade", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [300, 600, 900, 1200, 1500], baseLvScaling: true,
+    statScaling: { vit: 1 },
+    isMelee: true, canCrit: false, castTime: flat(1000, 5), cooldown: flat(20000, 5),
+    afterCastDelay: flat(3000, 5), spCost: [40, 50, 60, 70, 80], maxLevel: 5, jobs: ["Royal_Guard"]
   },
 
   // ━━━ Archer / Hunter (rAthena: src/map/skills/archer/) ━━━
@@ -293,14 +315,13 @@ export const SKILL_FORMULAS: SkillFormula[] = [
   },
 
   // ━━━ Ranger (rAthena: src/map/skills/archer/) ━━━
-  // RA_ARROWSTORM: skillratio += -100 + 200 + 180 * skill_lv; RE_LVL_DMOD(100)
-  // (Fear Breeze variant: 200 + 250*lv — not tracked here)
+  // RA_ARROWSTORM: LATAM browiki: 5 arrows, each at 380-2000%. RE_LVL_DMOD(100).
   {
-    id: 2233, aegisName: "RA_ARROWSTORM", namePt: "Tempestade de Flechas", type: "physical", element: "weapon", hitCount: 3,
-    perHitDamage: true,  // 3 hits on target, each at full skillratio
+    id: 2233, aegisName: "RA_ARROWSTORM", namePt: "Tempestade de Flechas", type: "physical", element: "weapon", hitCount: 5,
+    perHitDamage: true,  // 5 arrows, each at full skillratio
     damagePercent: [380, 560, 740, 920, 1100, 1280, 1460, 1640, 1820, 2000], baseLvScaling: true,
-    isMelee: false, canCrit: false, fixedCast: flat(500, 10), cooldown: flat(3000, 10),
-    spCost: levels(25, 5, 10), maxLevel: 10, jobs: ["Ranger"]
+    isMelee: false, canCrit: false, castTime: flat(2000, 10), fixedCast: flat(300, 10), cooldown: flat(3200, 10),
+    afterCastDelay: flat(2000, 10), spCost: levels(25, 5, 10), maxLevel: 10, jobs: ["Ranger"]
   },
   // RA_AIMEDBOLT: kRO Rebalance -> With Fear Breeze active it deals (800 + 35 * skill_lv)% ATK per hit. 5 hits. Base Lv Scaling.
   {
@@ -315,6 +336,13 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     id: 2243, aegisName: "RA_WUGSTRIKE", namePt: "Investida de Worg", type: "physical", element: "weapon",
     hitCount: 1, damagePercent: [200, 400, 600, 800, 1000], baseLvScaling: false,
     isMelee: false, canCrit: false, spCost: [20, 22, 24, 26, 28], maxLevel: 5, jobs: ["Ranger"]
+  },
+
+  // RA_CLUSTERBOMB (Bomba Relógio): browiki: neutral trap, 300-700% + DEX/INT formula, baseLvScaling.
+  {
+    id: 2232, aegisName: "RA_CLUSTERBOMB", namePt: "Bomba Relógio", type: "physical", element: "neutral", hitCount: 1,
+    damagePercent: [300, 400, 500, 600, 700], baseLvScaling: true,
+    isMelee: false, canCrit: false, spCost: [10, 12, 14, 16, 18], maxLevel: 5, jobs: ["Ranger"]
   },
 
   // ━━━ Assassin / Guillotine Cross (rAthena: src/map/skills/thief/) ━━━
@@ -356,12 +384,12 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     jobs: ["Rogue", "Stalker", "Shadow_Chaser"]
   },
 
-  // GC_CROSSIMPACT: skillratio = 1400 + 150 * skill_lv; RE_LVL_DMOD(100)
+  // GC_CROSSIMPACT: LATAM browiki: 1 hit, 1550-2150%. RE_LVL_DMOD(100). Can crit.
   {
-    id: 2022, aegisName: "GC_CROSSIMPACT", namePt: "Lâminas Retalhadoras", type: "physical", element: "weapon", hitCount: 7,
-    perHitDamage: true,  // 7 slashes, each at full skillratio
+    id: 2022, aegisName: "GC_CROSSIMPACT", namePt: "Lâminas Retalhadoras", type: "physical", element: "weapon", hitCount: 1,
     damagePercent: [1550, 1700, 1850, 2000, 2150], baseLvScaling: true, baseLvDivisor: 100,
-    isMelee: true, canCrit: true, fixedCast: flat(500, 5), cooldown: flat(700, 5),
+    isMelee: true, canCrit: true, halfCritBonus: true, fixedCast: flat(500, 5), cooldown: flat(350, 5),
+    afterCastDelay: [2500, 2000, 1500, 1000, 500],
     spCost: flat(40, 5), maxLevel: 5, jobs: ["Guillotine_Cross"]
   },
   // GC_ROLLINGCUTTER: kRO Rebalance 185/65 -> 50 + (80 * skill_lv)% ATK. Base Lv Scaling.
@@ -390,6 +418,21 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     spCost: [25, 28, 31, 34, 37, 40, 43, 46, 49, 52], maxLevel: 10, jobs: ["Guillotine_Cross"]
   },
 
+  // GC_DARKCLAW (Garra Sombria): browiki: 100-500%, melee, 60s CD. Applies Ferida de Corvo debuff.
+  {
+    id: 2030, aegisName: "GC_DARKCLAW", namePt: "Garra Sombria", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [100, 200, 300, 400, 500], baseLvScaling: false,
+    isMelee: true, canCrit: false, cooldown: flat(60000, 5), spCost: flat(20, 5), maxLevel: 5,
+    jobs: ["Guillotine_Cross"]
+  },
+  // GC_SHADOWSTEP (Passo Sombrio): browiki: 100% ranged, chance to proc Lâminas Retalhadoras per level.
+  {
+    id: 2031, aegisName: "GC_SHADOWSTEP", namePt: "Passo Sombrio", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: flat(100, 5), baseLvScaling: false,
+    isMelee: false, canCrit: false, afterCastDelay: flat(1500, 5), spCost: flat(20, 5), maxLevel: 5,
+    jobs: ["Guillotine_Cross"]
+  },
+
   // ━━━ Shadow Chaser (rAthena: src/map/skills/thief/) ━━━
   // SC_TRIANGLESHOT: skillratio += -100 + 230 * skill_lv + AGI*3; RE_LVL_DMOD(100)
   {
@@ -399,13 +442,13 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     statScaling: { agi: 3 },
     isMelee: false, canCrit: false, spCost: levels(18, 2, 10), maxLevel: 10, jobs: ["Shadow_Chaser"]
   },
-  // SC_FATALMENACE: skillratio += -100 + 100 + 120 * skill_lv + AGI; RE_LVL_DMOD(100)
+  // SC_FATALMENACE: LATAM browiki: 120-1200% (120 per level), AGI×2 bonus. RE_LVL_DMOD(100).
   {
     id: 2284, aegisName: "SC_FATALMENACE", namePt: "Ofensiva Fatal", type: "physical", element: "weapon", hitCount: 1,
-    damagePercent: [220, 340, 460, 580, 700, 820, 940, 1060, 1180, 1300], baseLvScaling: true,
-    statScaling: { agi: 1 },
-    isMelee: true, canCrit: false, cooldown: flat(3000, 10), spCost: levels(20, 4, 10), maxLevel: 10,
-    jobs: ["Shadow_Chaser"]
+    damagePercent: [120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200], baseLvScaling: true,
+    statScaling: { agi: 2 },
+    isMelee: true, canCrit: false, afterCastDelay: flat(500, 10), cooldown: flat(3000, 10),
+    spCost: levels(20, 4, 10), maxLevel: 10, jobs: ["Shadow_Chaser"]
   },
   // SC_FEINTBOMB: skillratio += -100 + (skill_lv + 1) * DEX/2 * (JobLv/10); RE_LVL_DMOD(120)
   // Complex stat formula — engine handles via formulaType
@@ -516,12 +559,11 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     isMelee: false, canCrit: false, castTime: [1000, 1500, 2000, 2500, 3000], fixedCast: flat(500, 5),
     cooldown: flat(2000, 5), spCost: [40, 45, 50, 55, 60], maxLevel: 5, jobs: ["Warlock"]
   },
-  // WL_CRIMSONROCK: kRO Rebalance 185/65 -> 700 + (600 * skill_lv)% MATK. Entire Formula Base Level Scaled.
+  // WL_CRIMSONROCK: LATAM browiki: 1 hit, 1300-3700%. RE_LVL_DMOD(100).
   {
-    id: 2211, aegisName: "WL_CRIMSONROCK", namePt: "Meteoro Escarlate", type: "magical", element: "fire", hitCount: 7,
-    perHitDamage: true,  // 7 magical hits, each at full skillratio
+    id: 2211, aegisName: "WL_CRIMSONROCK", namePt: "Meteoro Escarlate", type: "magical", element: "fire", hitCount: 1,
     damagePercent: [1300, 1900, 2500, 3100, 3700], baseLvScaling: true,
-    isMelee: false, canCrit: false, castTime: [3000, 3500, 4000, 4500, 5000], fixedCast: flat(1000, 5),
+    isMelee: false, canCrit: false, castTime: flat(5000, 5), fixedCast: flat(1000, 5),
     cooldown: flat(5000, 5), spCost: [60, 70, 80, 90, 100], maxLevel: 5, jobs: ["Warlock"]
   },
   // WL_CHAINLIGHTNING: skillratio += 400 + 100 * skill_lv; + 100*chain_count; RE_LVL_DMOD(100)
@@ -531,27 +573,25 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     isMelee: false, canCrit: false, castTime: [3000, 3500, 4000, 4500, 5000], fixedCast: flat(1000, 5),
     cooldown: flat(3000, 5), spCost: [80, 90, 100, 110, 120], maxLevel: 5, jobs: ["Warlock"]
   },
-  // WL_EARTHSTRAIN: kRO Rebalance 185/65 -> 1000 + (600 * skill_lv)% MATK. Base Lv Scaling.
+  // WL_EARTHSTRAIN: LATAM browiki: 1 hit, 1600-4000%. RE_LVL_DMOD(100).
   {
-    id: 2216, aegisName: "WL_EARTHSTRAIN", namePt: "Abalo Sísmico", type: "magical", element: "earth", hitCount: 10,
-    perHitDamage: true,  // 10 hits, each at full skillratio
+    id: 2216, aegisName: "WL_EARTHSTRAIN", namePt: "Abalo Sísmico", type: "magical", element: "earth", hitCount: 1,
     damagePercent: [1600, 2200, 2800, 3400, 4000], baseLvScaling: true,
     isMelee: false, canCrit: false, castTime: [3000, 3500, 4000, 4500, 5000], fixedCast: flat(1000, 5),
     cooldown: flat(5000, 5), spCost: [70, 80, 90, 100, 110], maxLevel: 5, jobs: ["Warlock"]
   },
-  // WL_COMET: skillratio += -100 + 2500 + 700 * skill_lv; RE_LVL_DMOD(100)
+  // WL_COMET: LATAM browiki: 1 hit, 3200-6000%. RE_LVL_DMOD(100). Cast time 2+level seconds.
   {
-    id: 2213, aegisName: "WL_COMET", namePt: "Cometa", type: "magical", element: "neutral", hitCount: 10,
-    perHitDamage: true,  // 10 hits, each at full skillratio
+    id: 2213, aegisName: "WL_COMET", namePt: "Cometa", type: "magical", element: "neutral", hitCount: 1,
     damagePercent: [3200, 3900, 4600, 5300, 6000], baseLvScaling: true,
-    isMelee: false, canCrit: false, castTime: [8000, 9000, 10000, 11000, 12000], fixedCast: flat(2000, 5),
+    isMelee: false, canCrit: false, castTime: [7000, 8000, 9000, 10000, 11000], fixedCast: flat(2000, 5),
     cooldown: flat(20000, 5), spCost: flat(400, 5), maxLevel: 5, jobs: ["Warlock"]
   },
-  // WL_HELLINFERNO: Fire hit: (skill_lv * 400)% MATK.
-  // Shadow hit (kRO rebalance): (skill_lv * 600)% MATK. Displayed in 3 hits. (Calculated together as 1000*skill_lv)
+  // WL_HELLINFERNO: LATAM browiki: Fire=400/800/1200/1600/1800%, Dark=600/1200/1800/2400/3000%.
+  // Total = Fire+Dark = 1000/2000/3000/4000/4800% (lv5 fire is 1800 not 2000, per browiki).
   {
     id: 2212, aegisName: "WL_HELLINFERNO", namePt: "Chamas de Hela", type: "magical", element: "fire", hitCount: 1,
-    damagePercent: [1000, 2000, 3000, 4000, 5000], baseLvScaling: true, // Merged Fire (400) + Shadow (600) into flat 1000 multiplier per level
+    damagePercent: [1000, 2000, 3000, 4000, 4800], baseLvScaling: true,
     isMelee: false, canCrit: false, castTime: flat(2000, 5), fixedCast: flat(500, 5),
     cooldown: flat(3000, 5), spCost: [64, 70, 76, 82, 88], maxLevel: 5, jobs: ["Warlock"]
   },
@@ -566,14 +606,34 @@ export const SKILL_FORMULAS: SkillFormula[] = [
 
   // (GC_ROLLINGCUTTER and GC_CROSSRIPPERSLASHER defined above with kRO Rebalance values)
 
-  // ━━━ Sorcerer (rAthena: src/map/skills/mage/) ━━━
-  // SO_PSYCHIC_WAVE: skillratio += -100 + 70 * skill_lv + 3 * INT; RE_LVL_DMOD(100)
+  // WL_JACKFROST (Zero Absoluto): browiki: 1-5 ice crystals (= skill lv), each at 300-700% per crystal. RE_LVL_DMOD(100).
   {
-    id: 2449, aegisName: "SO_PSYCHIC_WAVE", namePt: "Onda Psíquica", type: "magical", element: "neutral", hitCount: 7,
-    perHitDamage: true,  // 7 hits, each at full skillratio
+    id: 2215, aegisName: "WL_JACKFROST", namePt: "Zero Absoluto", type: "magical", element: "water",
+    hitCount: [1, 2, 3, 4, 5], perHitDamage: true,  // crystals = skill level, each at per-crystal ratio
+    damagePercent: [300, 400, 500, 600, 700], baseLvScaling: true,
+    isMelee: false, canCrit: false, castTime: [2000, 2500, 3000, 3500, 4000], fixedCast: flat(500, 5),
+    cooldown: flat(8000, 5), afterCastDelay: flat(1000, 5), spCost: [60, 68, 76, 84, 92], maxLevel: 5, jobs: ["Warlock"]
+  },
+  // WL_TETRAVORTEX (Tetra Vortex): browiki: 4 elemental sphere hits, each at 1200-4800% MATK. No baseLvScaling.
+  {
+    id: 2219, aegisName: "WL_TETRAVORTEX", namePt: "Tetra Vortex", type: "magical", element: "neutral",
+    hitCount: 4, perHitDamage: true,  // 4 spheres, each at per-sphere ratio
+    damagePercent: [1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000, 4400, 4800], baseLvScaling: false,
+    isMelee: false, canCrit: false,
+    castTime: [5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000],
+    fixedCast: flat(1000, 10), cooldown: flat(15000, 10), spCost: levels(100, 20, 10), maxLevel: 10, jobs: ["Warlock"]
+  },
+
+  // ━━━ Sorcerer (rAthena: src/map/skills/mage/) ━━━
+  // SO_PSYCHIC_WAVE: LATAM browiki: 3/4/5/6/7 waves per level, each at 70-350% MATK. RE_LVL_DMOD(100).
+  // Hit count = 3+skill_lv-1. With staff: doubled (6/8/10/12/14).
+  {
+    id: 2449, aegisName: "SO_PSYCHIC_WAVE", namePt: "Onda Psíquica", type: "magical", element: "neutral",
+    hitCount: [3, 4, 5, 6, 7],
+    perHitDamage: true,  // each wave is a separate calculation
     damagePercent: [70, 140, 210, 280, 350], baseLvScaling: true,
     statScaling: { int: 3 },
-    isMelee: false, canCrit: false, castTime: flat(5000, 5), fixedCast: flat(1000, 5),
+    isMelee: false, canCrit: false, castTime: [1000, 900, 800, 700, 600], fixedCast: flat(0, 5),
     cooldown: flat(5000, 5), spCost: [48, 56, 64, 72, 80], maxLevel: 5, jobs: ["Sorcerer"]
   },
   // SO_DIAMONDDUST: skillratio += -100 + 2*INT + 300*FrostWeapon + INT*skill_lv; RE_LVL_DMOD(100)
@@ -586,15 +646,13 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     isMelee: false, canCrit: false, castTime: flat(5000, 5), fixedCast: flat(1000, 5),
     cooldown: flat(5000, 5), spCost: [48, 56, 64, 72, 80], maxLevel: 5, jobs: ["Sorcerer"]
   },
-  // SO_VARETYR_SPEAR: skillratio += -100 + (2*INT + 150*(Striking+LightLoad) + INT*lv/2)/3; RE_LVL_DMOD(100)
-  // Depends on Striking/Lightning Loader levels — engine handles via formulaType
+  // SO_VARETYR_SPEAR: LATAM browiki: 1 hit, INT-based + Enchant bonuses. RE_LVL_DMOD(100).
   {
-    id: 2454, aegisName: "SO_VARETYR_SPEAR", namePt: "Lanças dos Aesir", type: "magical", element: "wind", hitCount: 3,
-    perHitDamage: true,  // 3 hits, each at full skillratio (rAthena fires skill_attack 3 times)
+    id: 2454, aegisName: "SO_VARETYR_SPEAR", namePt: "Lanças dos Aesir", type: "magical", element: "wind", hitCount: 1,
     damagePercent: [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000], baseLvScaling: true,
     formulaType: "varetyrSpear",
-    isMelee: false, canCrit: false, castTime: [2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500], fixedCast: flat(500, 10),
-    cooldown: flat(2000, 10), spCost: levels(55, 7, 10), maxLevel: 10, jobs: ["Sorcerer"]
+    isMelee: false, canCrit: false, castTime: [2200, 2400, 2600, 2800, 3000], fixedCast: flat(3000, 5),
+    cooldown: flat(5000, 5), spCost: levels(55, 7, 5), maxLevel: 5, jobs: ["Sorcerer"]
   },
   // SO_POISON_BUSTER: skillratio += -100 + 1000 + 300 * skill_lv + INT; RE_LVL_DMOD(100)
   // +200*skill_lv if target has Poison Cloud
@@ -630,23 +688,32 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     cooldown: flat(2000, 5), spCost: [30, 40, 50, 60, 70], maxLevel: 5, jobs: ["Sorcerer"]
   },
 
-  // ━━━ Arch Bishop (rAthena: src/map/skills/acolyte/) ━━━
-  // AB_JUDEX: skillratio = 300 + 70 * skill_lv; RE_LVL_DMOD(100)
+  // SO_JORMUNGANDR_CURSE (Maldição de Jormungand): browiki: poison cloud, 40-200% MATK + INT×3. RE_LVL_DMOD(100).
+  // Creates a 5s poison cloud that reduces enemy poison resistance -5% to -25%.
   {
-    id: 2038, aegisName: "AB_JUDEX", namePt: "Judex", type: "magical", element: "holy", hitCount: 3,
-    perHitDamage: true,  // 3 hits, each at full skillratio (rAthena fires skill_attack 3 times)
+    id: 2460, aegisName: "SO_JORMUNGANDR_CURSE", namePt: "Maldição de Jormungand", type: "magical", element: "poison", hitCount: 1,
+    damagePercent: [40, 80, 120, 160, 200], baseLvScaling: true,
+    statScaling: { int: 3 },
+    isMelee: false, canCrit: false,
+    castTime: [700, 600, 500, 400, 0], fixedCast: [2300, 2400, 2500, 2600, 3100],
+    cooldown: flat(5000, 5), spCost: [50, 55, 60, 65, 70], maxLevel: 5, jobs: ["Sorcerer"]
+  },
+
+  // ━━━ Arch Bishop (rAthena: src/map/skills/acolyte/) ━━━
+  // AB_JUDEX: LATAM browiki: 1 hit, 370-1000%. RE_LVL_DMOD(100).
+  {
+    id: 2038, aegisName: "AB_JUDEX", namePt: "Judex", type: "magical", element: "holy", hitCount: 1,
     damagePercent: [370, 440, 510, 580, 650, 720, 790, 860, 930, 1000], baseLvScaling: true,
-    isMelee: false, canCrit: false, fixedCast: flat(500, 10), cooldown: flat(500, 10),
+    isMelee: false, canCrit: false, castTime: flat(2000, 10), fixedCast: flat(500, 10), cooldown: flat(500, 10),
     spCost: levels(20, 3, 10), maxLevel: 10, jobs: ["Arch_Bishop"]
   },
-  // AB_ADORAMUS: rAthena master (kRO Rebalance) -> skillratio = 300 + 250 * skill_lv. RE_LVL_DMOD(100).
-  // Confirmed on LATAM/bRO via RagnaPlace & Divine Pride: 550-2800%.
-  // 10 hits, each hit is a SEPARATE full calculation (same as bolt spells) — not one calc split across hits.
+  // AB_ADORAMUS: LATAM browiki: 10 hits. Total skillratio 550-2800% (per-hit = total/10 = 55-280%).
+  // RE_LVL_DMOD(100). Browiki scraper incorrectly set hitCount:1; skill visually shows 10 damage numbers.
   {
     id: 2040, aegisName: "AB_ADORAMUS", namePt: "Adoramus", type: "magical", element: "holy", hitCount: 10,
-    perHitDamage: true,  // each of 10 hits is a separate skillRatio calculation (rAthena bolt behavior)
-    damagePercent: [550, 800, 1050, 1300, 1550, 1800, 2050, 2300, 2550, 2800], baseLvScaling: true,
-    isMelee: false, canCrit: false, castTime: levels(1000, 200, 10), fixedCast: flat(1000, 10),
+    perHitDamage: true,  // 10 hits each at per-hit ratio (total = 10 × per-hit)
+    damagePercent: [55, 80, 105, 130, 155, 180, 205, 230, 255, 280], baseLvScaling: true,
+    isMelee: false, canCrit: false, castTime: flat(2000, 10), fixedCast: flat(500, 10),
     cooldown: flat(2500, 10), spCost: levels(20, 8, 10), maxLevel: 10, jobs: ["Arch_Bishop"]
   },
   // AB_DUPLELIGHT_PHYS: base_skillratio += 50 + 15 * skill_lv. No RE_LVL_DMOD.
@@ -701,19 +768,19 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     spCost: [10, 10, 10, 10, 10], maxLevel: 5, jobs: ["Monk", "Champion", "Sura"]
   },
   // ---------------------------------------------------------
-  // SR_DRAGONCOMBO: skillratio += 100 + 80 * skill_lv; RE_LVL_DMOD(100). Final = 200 + 80*lv
+  // SR_DRAGONCOMBO: LATAM browiki: 1 hit, 180-900% (with some irregular values).
   {
-    id: 2326, aegisName: "SR_DRAGONCOMBO", namePt: "Punho do Dragão", type: "physical", element: "weapon", hitCount: 2,
-    perHitDamage: true,  // 2 hits, each at full skillratio
-    damagePercent: [280, 360, 440, 520, 600, 680, 760, 840, 920, 1000], baseLvScaling: true,
+    id: 2326, aegisName: "SR_DRAGONCOMBO", namePt: "Punho do Dragão", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [180, 260, 340, 500, 580, 340, 660, 740, 820, 900], baseLvScaling: true,
     isMelee: true, canCrit: false, spCost: levels(5, 2, 10), maxLevel: 10, jobs: ["Sura"]
   },
-  // SR_FALLENEMPIRE: kRO Rebalance 185/65 -> (100 + 300 * skill_lv)% ATK. Bonus based on weight/size removed. Note: we remove baseLvDivisor=150 since standard baseLv / 100 is usually the unified approach, but text didn't explicitly mention it changing, let's keep base as is unless specified, wait Text says: Removes bonus damage from target's carrying weight. No longer immobilize.
+  // SR_FALLENEMPIRE: LATAM browiki: 1 hit, 400-3100%, STR×100 flat bonus. RE_LVL_DMOD(100).
+  // Note: browiki formula adds STR×100 as flat damage, not a skillratio multiplier.
+  // statScaling cannot represent flat bonuses, so omitted here. Damage shown is skillratio only.
   {
-    id: 2329, aegisName: "SR_FALLENEMPIRE", namePt: "Ruína", type: "physical", element: "weapon", hitCount: 2,
-    perHitDamage: true,  // 2 hits, each at full skillratio
-    damagePercent: [400, 700, 1000, 1300, 1600, 1900, 2200, 2500, 2800, 3100], baseLvScaling: true, baseLvDivisor: 150,
-    isMelee: true, canCrit: false, spCost: levels(20, 5, 10), maxLevel: 10, jobs: ["Sura"]
+    id: 2329, aegisName: "SR_FALLENEMPIRE", namePt: "Ruína", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [400, 700, 1000, 1300, 1600, 1900, 2200, 2500, 2800, 3100], baseLvScaling: true,
+    isMelee: true, canCrit: false, cooldown: flat(1000, 10), spCost: levels(20, 5, 10), maxLevel: 10, jobs: ["Sura"]
   },
   // SR_EARTHSHAKER: non-hidden: skillratio = 400 * skill_lv; RE_LVL_DMOD(100); + STR*2 (post-baseLv)
   {
@@ -722,11 +789,11 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     statScaling: { str: 2 },
     isMelee: true, canCrit: false, spCost: levels(30, 2, 5), maxLevel: 5, jobs: ["Sura"]
   },
-  // SR_LIGHTNINGWALK (Lightning Ride?): kRO Rebalance -> changes to 90 * skilllv if Knuckle. Default 40 * skilllv.
+  // SR_RIDEINLIGHTNING: browiki: spheres = skill_lv (1 to 5). Each sphere deals 40*skill_lv% per hit. RE_LVL_DMOD(100).
   {
-    id: 2335, aegisName: "SR_RIDEINLIGHTNING", namePt: "Investida de Shura", type: "physical", element: "wind", hitCount: 5, // We default to 5 hits (1 per sphere max)
-    perHitDamage: true,  // each sphere hit is a separate full calculation
-    damagePercent: [90, 180, 270, 360, 450], baseLvScaling: true, // Assuming max knuckle dmg.
+    id: 2335, aegisName: "SR_RIDEINLIGHTNING", namePt: "Tempestade Espiritual", type: "physical", element: "wind",
+    hitCount: [1, 2, 3, 4, 5], perHitDamage: true,  // spheres = skill level, each at per-sphere ratio
+    damagePercent: [40, 80, 120, 160, 200], baseLvScaling: true,
     isMelee: false, canCrit: false, spCost: levels(30, 5, 5), maxLevel: 5, jobs: ["Sura"]
   },
   // SR_TIGERCANNON: special formula in tigercannon.cpp
@@ -759,23 +826,37 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     isMelee: false, canCrit: false, castTime: flat(1000, 5), fixedCast: flat(500, 5),
     cooldown: flat(5000, 5), spCost: [100, 100, 100, 100, 100], maxLevel: 5, jobs: ["Sura"] // SP consumption reduced from 150 to 100
   },
-  // SR_SKYNETBLOW: kRO Rebalance 185/65 -> (200 * skill_lv)% ATK.
+  // SR_SKYNETBLOW: LATAM browiki: 1 hit, 200-1000%, AGI bonus. RE_LVL_DMOD(100).
   {
-    id: 2327, aegisName: "SR_SKYNETBLOW", namePt: "Soco Furacão", type: "physical", element: "weapon", hitCount: 3,
-    perHitDamage: true,  // 3 hits, each at full skillratio
+    id: 2327, aegisName: "SR_SKYNETBLOW", namePt: "Soco Furacão", type: "physical", element: "weapon", hitCount: 1,
     damagePercent: [200, 400, 600, 800, 1000], baseLvScaling: true,
-    isMelee: true, canCrit: false, cooldown: flat(500, 5), spCost: [10, 14, 18, 22, 26], maxLevel: 5, jobs: ["Sura"]
+    statScaling: { agi: 1 },
+    isMelee: true, canCrit: false, afterCastDelay: flat(500, 5), cooldown: flat(500, 5),
+    spCost: [10, 14, 18, 22, 26], maxLevel: 5, jobs: ["Sura"]
   },
-  // SR_GATEOFHELL: Without combo: skillratio += -100 + 500 * skill_lv; RE_LVL_DMOD(100)
-  // With Fallen Empire combo: skillratio += -100 + 800 * skill_lv
-  // Plus flat bonus from battle.cpp: (MaxHP-CurHP) + CurSP*(1+Lv*2/10) + BaseLv*10
+  // SR_GATEOFHELL: kRO Rebalance 185/65 -> single hit. LATAM browiki: single hit, 500-5000%.
+  // Damage increases as current HP drops. Bonus from (MaxHP-CurHP) + CurSP*(1+Lv*2/10) + BaseLv*10.
   {
-    id: 2343, aegisName: "SR_GATEOFHELL", namePt: "Portões do Inferno", type: "physical", element: "neutral", hitCount: 7,
-    perHitDamage: true,  // 7 hits, each at full skillratio (calcPhysicalDamage applies hitMult)
+    id: 2343, aegisName: "SR_GATEOFHELL", namePt: "Portões do Inferno", type: "physical", element: "neutral", hitCount: 1,
     damagePercent: [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000], baseLvScaling: true,
     formulaType: "gatesOfHell",
     isMelee: true, canCrit: false, castTime: flat(1000, 10), fixedCast: flat(1000, 10),
     cooldown: flat(5000, 10), spCost: flat(200, 10), maxLevel: 10, jobs: ["Sura"]
+  },
+
+  // SR_CRESCENTELBOW (Cotovelada Ascendente): browiki: reactive counter, 200-1000%, baseLv÷125. Target HP-based.
+  {
+    id: 2337, aegisName: "SR_CRESCENTELBOW", namePt: "Cotovelada Ascendente", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [200, 400, 600, 800, 1000], baseLvScaling: true, baseLvDivisor: 125,
+    isMelee: true, canCrit: false, castTime: flat(1000, 5), cooldown: flat(5000, 5),
+    spCost: [30, 40, 50, 60, 70], maxLevel: 5, jobs: ["Sura"]
+  },
+  // SR_SEISMICWAVE (Impacto Sísmico): browiki: AoE melee, 300-1500%, STR×3 bonus. RE_LVL_DMOD(100).
+  {
+    id: 2341, aegisName: "SR_SEISMICWAVE", namePt: "Impacto Sísmico", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [300, 600, 900, 1200, 1500], baseLvScaling: true,
+    statScaling: { str: 3 },
+    isMelee: true, canCrit: false, cooldown: flat(3000, 5), spCost: [30, 35, 40, 45, 50], maxLevel: 5, jobs: ["Sura"]
   },
 
   // ━━━ Mechanic (rAthena: src/map/skills/merchant/) ━━━
@@ -786,11 +867,10 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     isMelee: false, canCrit: false, castTime: [1000, 1500, 2000, 2500, 3000], fixedCast: flat(500, 5),
     cooldown: flat(2000, 5), spCost: [30, 35, 40, 45, 50], maxLevel: 5, jobs: ["Mechanic"]
   },
-  // NC_AXETORNADO: kRO Rebalance 185/65 -> (200 + 180 * skill_lv)% ATK. Base Lv / 100.
+  // NC_AXETORNADO: kRO Rebalance 185/65 -> single hit. LATAM browiki: 380-1100% (200+180*lv). RE_LVL_DMOD(100).
   {
-    id: 2280, aegisName: "NC_AXETORNADO", namePt: "Fúria do Furacão", type: "physical", element: "weapon", hitCount: 6,
-    perHitDamage: true,  // 6 hits, each at full skillratio
-    damagePercent: [380, 560, 740, 920, 1100], baseLvScaling: true, baseLvDivisor: 100,
+    id: 2280, aegisName: "NC_AXETORNADO", namePt: "Fúria do Furacão", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [380, 560, 740, 920, 1100], baseLvScaling: true,
     isMelee: true, canCrit: false, fixedCast: flat(500, 5), cooldown: flat(2000, 5),
     spCost: [18, 20, 22, 24, 26], maxLevel: 5, jobs: ["Mechanic"]
   },
@@ -862,6 +942,36 @@ export const SKILL_FORMULAS: SkillFormula[] = [
   },
   // (NC_VULCANARM and NC_POWERSWING defined above with kRO Rebalance values)
 
+  // NC_FLAMETHROWER (Lança Chamas): browiki: fire AoE, 600-1200%. RE_LVL_DMOD(100). 30-50% burn chance.
+  {
+    id: 2268, aegisName: "NC_FLAMETHROWER", namePt: "Lança Chamas", type: "physical", element: "fire", hitCount: 1,
+    damagePercent: [600, 900, 1200], baseLvScaling: true,
+    isMelee: false, canCrit: false, castTime: [500, 1000, 1500], afterCastDelay: [1500, 1000, 500],
+    spCost: [30, 35, 40], maxLevel: 3, jobs: ["Mechanic"]
+  },
+  // NC_COLDSLOWER (Gás Criogênico): browiki: water AoE, 600-1200%. RE_LVL_DMOD(100). Freeze/Hypothermia chance.
+  {
+    id: 2263, aegisName: "NC_COLDSLOWER", namePt: "Gás Criogênico", type: "physical", element: "water", hitCount: 1,
+    damagePercent: [600, 900, 1200], baseLvScaling: true,
+    isMelee: false, canCrit: false, castTime: flat(1000, 3), afterCastDelay: [1000, 2000, 3000],
+    spCost: [25, 30, 35], maxLevel: 3, jobs: ["Mechanic"]
+  },
+  // NC_PILEBUNKER (Bate Estaca): browiki: weapon, 400-600%, STR bonus. RE_LVL_DMOD(100). Removes target buffs.
+  {
+    id: 2271, aegisName: "NC_PILEBUNKER", namePt: "Bate Estaca", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [400, 500, 600], baseLvScaling: true,
+    statScaling: { str: 1 },
+    isMelee: true, canCrit: false, cooldown: flat(5000, 3), afterCastDelay: flat(2000, 3),
+    spCost: [40, 50, 60], maxLevel: 3, jobs: ["Mechanic"]
+  },
+  // NC_MAGMA_ERUPTION (Erupção de Magma): browiki: fire impact 500-700%, 90% stun. Secondary volcano field.
+  {
+    id: 2264, aegisName: "NC_MAGMA_ERUPTION", namePt: "Erupção de Magma", type: "physical", element: "fire", hitCount: 1,
+    damagePercent: [500, 550, 600, 650, 700], baseLvScaling: false,
+    isMelee: false, canCrit: false, fixedCast: flat(1000, 5), cooldown: [10000, 9000, 8000, 7000, 6000],
+    afterCastDelay: flat(500, 5), spCost: [40, 45, 50, 55, 60], maxLevel: 5, jobs: ["Mechanic"]
+  },
+
   // ━━━ Genetic (rAthena: src/map/skills/merchant/) ━━━
   // GN_CARTCANNON: skillratio += -100 + (250 + 20*CartRemodel) * skill_lv + 2*INT/(6-CartRemodel); RE_LVL_DMOD(100)
   // Complex formula depends on Cart Remodeling skill level — engine handles via formulaType
@@ -896,6 +1006,21 @@ export const SKILL_FORMULAS: SkillFormula[] = [
     cooldown: flat(2000, 10), spCost: levels(55, 5, 10), maxLevel: 10, jobs: ["Genetic"]
   },
 
+  // GN_HELL_PLANT (Planta Infernal): browiki: weapon summon, 100-500%, INT scale. RE_LVL_DMOD(100). Attacks every 0.3s.
+  {
+    id: 2538, aegisName: "GN_HELL_PLANT", namePt: "Planta Infernal", type: "physical", element: "weapon", hitCount: 1,
+    damagePercent: [100, 200, 300, 400, 500], baseLvScaling: true,
+    isMelee: true, canCrit: false, castTime: [2500, 3000, 3500, 4000, 4500], fixedCast: flat(0, 5),
+    afterCastDelay: flat(500, 5), spCost: levels(60, 10, 5), maxLevel: 5, jobs: ["Genetic"]
+  },
+  // GN_NAPALM_VULCAN (Bomba Napalm): browiki: fire magical, 130-210%, no baseLvScaling. Burn DoT chance.
+  {
+    id: 2472, aegisName: "GN_NAPALM_VULCAN", namePt: "Bomba Napalm", type: "magical", element: "fire", hitCount: 1,
+    damagePercent: [130, 150, 170, 190, 210], baseLvScaling: false,
+    isMelee: false, canCrit: false, castTime: [3000, 3500, 4000, 4500, 5000], cooldown: flat(5000, 5),
+    afterCastDelay: flat(500, 5), spCost: levels(24, 4, 5), maxLevel: 5, jobs: ["Genetic"]
+  },
+
   // ━━━ Minstrel / Wanderer (rAthena: src/map/skills/archer/) ━━━
   // WM_METALICSOUND: skillratio = 120 * skill_lv + 60 * WM_LESSON_lv; RE_LVL_DMOD(100). +50% vs Sound Blend.
   {
@@ -914,7 +1039,7 @@ export const SKILL_FORMULAS: SkillFormula[] = [
   },
   // WA_GREAT_ECHO: skillratio = 250 + 500 * skill_lv + WM_LESSON*50; RE_LVL_DMOD(100). x2 if partner performer.
   {
-    id: 2419, aegisName: "WA_GREAT_ECHO", namePt: "Ressonância Metálica", type: "physical", element: "neutral", hitCount: 1,
+    id: 2419, aegisName: "WA_GREAT_ECHO", namePt: "Brado de Odin", type: "physical", element: "neutral", hitCount: 1,
     damagePercent: [750, 1250, 1750, 2250, 2750], baseLvScaling: true,
     isMelee: false, canCrit: false,
     castTime: flat(2000, 5), fixedCast: flat(500, 5), cooldown: flat(10000, 5),
