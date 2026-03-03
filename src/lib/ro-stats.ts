@@ -1425,10 +1425,11 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   const totalDex = s.dex + bonusDex + (jb.dex || 0);
   const totalLuk = s.luk + bonusLuk + (jb.luk || 0);
 
-  // Base ATK: floor(BaseLv/4) + STR + DEX/5 + LUK/3  (melee formula — matches game client display)
-  // Equipment flat ATK (+bAtk) is shown in left number alongside statusATK, just like the game client.
-  const baseAtk = Math.floor(baseLevel / 4) + Math.floor(totalStr) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3) + (totalBonus.atk || 0);
-  const totalWeaponAtk = weaponAtk;
+  // Status ATK (A): floor(BaseLv/4) + STR + DEX/5 + LUK/3  (melee formula, game client left number)
+  // Weapon ATK (B): weapon base ATK + flat equipment ATK — game client right number
+  // Mastery bonuses are NOT shown here; they apply during actual battle calculation only.
+  const baseAtk = Math.floor(baseLevel / 4) + Math.floor(totalStr) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
+  const totalWeaponAtk = weaponAtk + (totalBonus.atk || 0);
 
   // Base MATK (rAthena Renewal: BaseLv/4 + INT + INT/2 + DEX/5 + LUK/3)
   const baseMatk = Math.floor(baseLevel / 4) + Math.floor(totalInt) + Math.floor(totalInt / 2) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
@@ -1745,13 +1746,20 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
 
 /**
  * Cost in stat points to raise a stat from `currentValue` to `currentValue + 1`.
- * bRO/LATAM formula (verified in-game): floor(stat / 4) + 2
- * At stat 120 the cost is 32, matching the game client.
- * (Standard rAthena uses 1 + floor(stat/10) which gives 13 at 120 — wrong for LATAM.)
+ * iROWiki Renewal formula (same for ALL 6 stats):
+ *   1–99:  floor((stat − 1) / 10) + 2
+ *   100+:  4 × floor((stat − 100) / 5) + 16
+ *
+ * Verified in-game (bRO/LATAM screenshot):
+ *   STR 120 → 32,  AGI 92 → 11,  VIT 110 → 24,
+ *   INT 1 → 2,     DEX 35 → 5,   LUK 120 → 32  ✓
  */
 export function getStatCost(currentValue: number): number {
   if (currentValue < 1) return 2;
-  return Math.floor(currentValue / 4) + 2;
+  if (currentValue < 100) {
+    return Math.floor((currentValue - 1) / 10) + 2;
+  }
+  return 4 * Math.floor((currentValue - 100) / 5) + 16;
 }
 
 /**

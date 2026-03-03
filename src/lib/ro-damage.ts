@@ -821,12 +821,14 @@ function calcPhysicalDamage(
 
   // 1. Status ATK (Base Stats only, never affected by Weapon Size or EDP)
   const isRangedWeapon = ["Bow", "Revolver", "Rifle", "Gatling", "Shotgun", "Grenade", "Musical", "Whip"].includes(input.weaponSubType || "");
-  const statusAtkBase = isRangedWeapon
+  const statusAtk = isRangedWeapon
     ? Math.floor(baseLevel / 4) + Math.floor(totalStr / 5) + totalDex + Math.floor(totalLuk / 3)
     : Math.floor(baseLevel / 4) + totalStr + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
-  // Passive mastery flat ATK (always counted at max level)
+
+  // Passive mastery flat ATK — added to the weapon ATK pool (NOT status ATK).
+  // rAthena: ATK_ADD(wd.damage, mastery) after base calc; scales with skill ratio.
+  // Not shown in the character stat window (that shows status ATK + weapon ATK separately).
   const masteryAtk = getJobMasteryFlatAtk(skill.aegisName, input.weaponSubType);
-  const statusAtk = statusAtkBase + masteryAtk;
 
   // 2. Weapon ATK with stat scaling
   const wpnMultiplierStat = isRangedWeapon ? totalDex : totalStr;
@@ -866,8 +868,9 @@ function calcPhysicalDamage(
     rangeMod = (totalBonus.longAtkRate || 0);
   }
 
-  // Raw damage = (StatusATK + WeaponATK_EDP + EquipATK_EDP) * AtkRate
-  const calcRawDamage = (wAtk: number, eAtk: number) => Math.floor((statusAtk + wAtk + eAtk) * atkRate);
+  // Raw damage = (StatusATK + MasteryATK + WeaponATK_EDP + EquipATK_EDP) * AtkRate
+  // masteryAtk is in the weapon-ATK pool (scales with atkRate and skill ratio)
+  const calcRawDamage = (wAtk: number, eAtk: number) => Math.floor((statusAtk + masteryAtk + wAtk + eAtk) * atkRate);
 
   // Weapon variance: skills always use max weapon ATK, only normal attacks have 80-100% variance
   const varianceMod = skill.aegisName === "NORMAL_ATTACK" ? 0.8 : 1;
