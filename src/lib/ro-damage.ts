@@ -748,6 +748,45 @@ export function calculateDamage(input: DamageInput): DamageResult {
   }
 }
 
+// ─── Passive Mastery Flat ATK ────────────────────────────────────────
+// rAthena: weapon mastery skills add flat ATK BEFORE skill ratio (part of status ATK).
+// Assumed always at max level (these are passive damage skills, always maxed in endgame builds).
+//
+// Swordsman tree (SM/KN/CR/LG/RK): Sword Mastery Lv10 → +40 with Sword/Dagger
+//                                   Spear Mastery Lv10 → +40 with Spear
+// Thief tree      (TF/AS/GC):       Katar Mastery Lv10 → +30 with Katar
+// Monk tree       (MO/CH/SR):       Iron Fist Lv10     → +30 with Knuckle
+// Smith tree      (BS/WS/NC):       Axe Mastery Lv10   → +30 with Axe
+//                                   Hilt Binding Lv1   → +4 all weapons
+
+function getJobMasteryFlatAtk(skillAegisName: string, weaponSubType: string | undefined): number {
+  const w = weaponSubType || "Fist";
+  const prefix = skillAegisName.split("_")[0];
+  let flat = 0;
+
+  // Swordsman branch
+  if (["SM", "KN", "CR", "LG", "RK"].includes(prefix)) {
+    if (["Dagger", "1hSword", "2hSword"].includes(w)) flat += 40; // Sword Mastery Lv10
+    if (["1hSpear", "2hSpear"].includes(w)) flat += 40;           // Spear Mastery Lv10
+  }
+  // Thief branch
+  if (["TF", "AS", "GC"].includes(prefix)) {
+    if (w === "Katar") flat += 30; // Katar Mastery Lv10
+  }
+  // Monk branch
+  if (["MO", "CH", "SR"].includes(prefix)) {
+    if (w === "Knuckle") flat += 30; // Iron Fist Lv10
+  }
+  // Blacksmith branch
+  if (["BS", "WS", "NC"].includes(prefix)) {
+    if (["1hAxe", "2hAxe"].includes(w)) flat += 30; // Axe Mastery Lv10
+    flat += 4; // Hilt Binding always applies
+  }
+  // Hunter branch: no flat mastery (no Bow Mastery)
+  // Mage/Acolyte: no weapon mastery with ATK
+  return flat;
+}
+
 // ─── Physical Damage Helper (shared by standard + special skills) ───
 
 function calcPhysicalDamage(
@@ -782,9 +821,12 @@ function calcPhysicalDamage(
 
   // 1. Status ATK (Base Stats only, never affected by Weapon Size or EDP)
   const isRangedWeapon = ["Bow", "Revolver", "Rifle", "Gatling", "Shotgun", "Grenade", "Musical", "Whip"].includes(input.weaponSubType || "");
-  const statusAtk = isRangedWeapon
+  const statusAtkBase = isRangedWeapon
     ? Math.floor(baseLevel / 4) + Math.floor(totalStr / 5) + totalDex + Math.floor(totalLuk / 3)
     : Math.floor(baseLevel / 4) + totalStr + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
+  // Passive mastery flat ATK (always counted at max level)
+  const masteryAtk = getJobMasteryFlatAtk(skill.aegisName, input.weaponSubType);
+  const statusAtk = statusAtkBase + masteryAtk;
 
   // 2. Weapon ATK with stat scaling
   const wpnMultiplierStat = isRangedWeapon ? totalDex : totalStr;
