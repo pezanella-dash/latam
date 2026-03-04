@@ -1425,10 +1425,14 @@ export function calculateDerivedStats(build: BuildConfig): DerivedStats {
   const totalDex = s.dex + bonusDex + (jb.dex || 0);
   const totalLuk = s.luk + bonusLuk + (jb.luk || 0);
 
-  // Status ATK (A): floor(BaseLv/4) + STR + DEX/5 + LUK/3  (melee formula, game client left number)
-  // Weapon ATK (B): weapon base ATK + flat equipment ATK — game client right number
+  // Status ATK (A): game client left number.
+  // Ranged weapons (Bow, Musical, Whip, Guns): DEX is primary — floor(BaseLv/4) + floor(STR/5) + DEX + floor(LUK/3)
+  // Melee weapons: STR is primary             — floor(BaseLv/4) + STR + floor(DEX/5) + floor(LUK/3)
   // Mastery bonuses are NOT shown here; they apply during actual battle calculation only.
-  const baseAtk = Math.floor(baseLevel / 4) + Math.floor(totalStr) + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
+  const isRangedWeaponStat = ["Bow", "Revolver", "Rifle", "Gatling", "Shotgun", "Grenade", "Musical", "Whip"].includes(mainWeaponSubType || "");
+  const baseAtk = isRangedWeaponStat
+    ? Math.floor(baseLevel / 4) + Math.floor(totalStr / 5) + totalDex + Math.floor(totalLuk / 3)
+    : Math.floor(baseLevel / 4) + totalStr + Math.floor(totalDex / 5) + Math.floor(totalLuk / 3);
   const totalWeaponAtk = weaponAtk + (totalBonus.atk || 0);
 
   // Base MATK (rAthena Renewal: BaseLv/4 + INT + INT/2 + DEX/5 + LUK/3)
